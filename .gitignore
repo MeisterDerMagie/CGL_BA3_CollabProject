@@ -1,0 +1,102 @@
+# =============== #
+# Unity generated #
+# =============== #
+Temp/
+Library/
+Logs/
+UserSettings/
+
+# =========== #
+# Plastic SCM #
+# =========== #
+.plastic/
+/ignore.conf
+
+# ===================================== #
+# Visual Studio / MonoDevelop generated #
+# ===================================== #
+ExportedObj/
+obj/
+*.svd
+*.userprefs
+*.csproj
+*.pidb
+*.suo
+*.sln
+*.user
+*.unityproj
+*.booproj
+
+# ==== #
+# FMOD #
+# ==== #
+!/[Aa]ssets/Plugins/FMOD//lib/*
+
+# Don't ignore images and gizmos used by FMOD in the Unity Editor.
+!/[Aa]ssets/Gizmos/FMOD/*
+!/[Aa]ssets/Editor Default Resources/FMOD/*
+
+# Ignore the Cache folder since it is updated locally.
+/[Aa]ssets/Plugins/FMOD/Cache/*
+
+# Ignore bank files in the StreamingAssets folder.
+/[Aa]ssets/StreamingAssets//.bank
+/[Aa]ssets/StreamingAssets/**/.bank.meta
+# If the source bank files are kept outside of the StreamingAssets folder then these can be ignored.
+
+# Log files can be ignored.
+fmod_editor.log
+
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+bin
+pkg
+obj
+*.sublime-workspace
+*.DS_Store
+
+Assembly-CSharp-vs.csproj
+Assembly-CSharp.csproj
+Assets/Takomat/EpigeneCore
+sysinfo.txt
+.vs/DBM/xs/sqlite3/db.lock
+.vs/DBM/xs/UserPrefs.xml
+
+# Common IntelliJ Platform excludes
+
+# User specific
+**/.idea/**/workspace.xml
+**/.idea/**/tasks.xml
+**/.idea/shelf/*
+**/.idea/dictionaries
+
+# Sensitive or high-churn files
+**/.idea/**/dataSources/
+**/.idea/**/dataSources.ids
+**/.idea/**/dataSources.xml
+**/.idea/**/dataSources.local.xml
+**/.idea/**/sqlDataSources.xml
+**/.idea/**/dynamic.xml
+
+# Rider
+# Rider auto-generates .iml files, and contentModel.xml
+**/.idea/**/*.iml
+**/.idea/**/contentModel.xml
+**/.idea/**/modules.xml
+
+.vs/
+[Bb]in/
+[Oo]bj/
+_UpgradeReport_Files/
+#[Pp]ackages/
+
+Desktop.ini
