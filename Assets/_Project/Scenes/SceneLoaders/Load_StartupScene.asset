@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0276a7f24aeb40448175d48d25ff489, type: 3}
+  m_Name: Load_StartupScene
+  m_EditorClassIdentifier: 
+  loadAdditively: 1
+  unloadScenesBefore: 0
+  loadingScreen: {fileID: 0}
+  additionalFakeLoadingTime: 0
+  scenesToUnloadBefore: []
+  newScene:
+    sceneAsset: {fileID: 0}
+    scenePath: 
+  scenesToLoadAdditively:
+  - sceneAsset: {fileID: 102900000, guid: e61179c21df1a624f9b7420e0503b670, type: 3}
+    scenePath: Assets/_Project/Scenes/Startup.unity
+  loadSaveGameData: 0
+  saveLoadController: {fileID: 0}
