@@ -47,7 +47,7 @@ internal class ServerProviderClient
             _Client.Keepalive.TcpKeepAliveTime = 1;
             _Client.Keepalive.TcpKeepAliveRetryCount = 3;   
         }
-
+        
         _Client.Connect();
     }
 
