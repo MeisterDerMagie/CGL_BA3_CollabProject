@@ -12,7 +12,12 @@ public class TEST_SimpleUDP : MonoBehaviour
 
     [SerializeField] private float offsetX, offsetY;
     private UDPSocket _server;
-    
+
+    private void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     private void OnGUI()
     {
         GUILayout.BeginArea(new Rect(10 + offsetX, 300 + offsetY, 300, 300));
