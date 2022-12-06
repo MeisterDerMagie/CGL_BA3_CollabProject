@@ -107,7 +107,7 @@ public class ServerProviderCommunication : MonoBehaviour
         Transport.SetConnectionData(serverIp, port);
         
         //set lobby code
-        //Manager.lobbyCode = lobbyCode;
+        LobbyManager.Instance.lobbyCode = lobbyCode;
         
         //start client
         NetworkManager.Singleton.StartClient();
