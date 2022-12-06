@@ -62,6 +62,7 @@ namespace UDP
         {
             if (_asyncResult == null) return;
             _socket.EndReceiveFrom(_asyncResult, ref epFrom);
+            _socket.Shutdown(SocketShutdown.Both);
         }
     }
 }
