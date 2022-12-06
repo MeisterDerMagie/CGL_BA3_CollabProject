@@ -50,6 +50,6 @@ public class TEST_SimpleUDP : MonoBehaviour
 
     private void OnDestroy()
     {
-        _server?.EndReceive();
+        //_server?.EndReceive();
     }
 }
