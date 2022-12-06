@@ -1,6 +1,7 @@
 ﻿//(c) copyright by Martin M. Klöckener
 using System;
 using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 
 public class TEST_ClientConnection : NetworkBehaviour
