@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using UnityEngine;
+using Wichtel.Threading;
 
 namespace UDP
 {
@@ -13,6 +14,7 @@ namespace UDP
         private State state = new State();
         private EndPoint epFrom = new IPEndPoint(IPAddress.Any, 0);
         private AsyncCallback recv = null;
+        private IAsyncResult _asyncResult;
 
         public class State
         {
@@ -44,14 +46,22 @@ namespace UDP
         }
 
         private void Receive()
-        {            
-            _socket.BeginReceiveFrom(state.buffer, 0, bufSize, SocketFlags.None, ref epFrom, recv = (ar) =>
+        {
+            Debug.Log("Begin Receive");
+            
+            _asyncResult = _socket.BeginReceiveFrom(state.buffer, 0, bufSize, SocketFlags.None, ref epFrom, recv = (ar) =>
             {
                 State so = (State)ar.AsyncState;
                 int bytes = _socket.EndReceiveFrom(ar, ref epFrom);
                 _socket.BeginReceiveFrom(so.buffer, 0, bufSize, SocketFlags.None, ref epFrom, recv, so);
-                Debug.Log($"RECV: {epFrom}: {bytes}, {Encoding.ASCII.GetString(so.buffer, 0, bytes)}");
+                UnityThread.ExecuteInUpdate(()=> Debug.Log($"RECV: {epFrom}: {bytes}, {Encoding.ASCII.GetString(so.buffer, 0, bytes)}"));
             }, state);
+        }
+
+        public void EndReceive()
+        {
+            if (_asyncResult == null) return;
+            _socket.EndReceiveFrom(_asyncResult, ref epFrom);
         }
     }
 }

@@ -11,6 +11,7 @@ public class TEST_SimpleUDP : MonoBehaviour
     public ushort port;
 
     [SerializeField] private float offsetX, offsetY;
+    private UDPSocket _server;
     
     private void OnGUI()
     {
@@ -40,5 +41,10 @@ public class TEST_SimpleUDP : MonoBehaviour
         UDPSocket c = new UDPSocket();
         c.Client(clientIP, port);
         c.Send("TEST!");
+    }
+
+    private void OnDestroy()
+    {
+        _server.EndReceive();
     }
 }
