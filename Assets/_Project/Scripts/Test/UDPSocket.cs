@@ -62,7 +62,7 @@ namespace UDP
         {
             Debug.Log("End Receive");
             
-            if (_asyncResult == null) return;
+            if (_asyncResult == null || _socket == null) return;
             _socket.EndReceiveFrom(_asyncResult, ref epFrom);
             _socket.Shutdown(SocketShutdown.Both);
         }
