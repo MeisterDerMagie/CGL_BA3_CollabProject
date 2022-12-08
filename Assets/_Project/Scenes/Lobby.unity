@@ -268,7 +268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shutdownAfter: 10
-  isEnabled: 0
+  isEnabled: 1
 --- !u!4 &776814692
 Transform:
   m_ObjectHideFlags: 0
