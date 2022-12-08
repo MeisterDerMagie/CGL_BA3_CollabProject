@@ -10,15 +10,16 @@ using Random = UnityEngine.Random;
 
 public class PlayerData : NetworkBehaviour
 {
+    
     [SerializeField] private NetworkVariable<int> testInt = new(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-    [SerializeField] private NetworkVariable<FixedString64Bytes> testString = new(string.Empty, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    [SerializeField] public NetworkVariable<FixedString64Bytes> testString = new(string.Empty, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     private CoroutineHandle coroutine;
     
     #if !UNITY_SERVER
     public override void OnNetworkSpawn()
     {
-        Debug.Log($"OnNetworkSpawn: {OwnerClientId}");
+        Debug.Log($"OnNetworkSpawn: {OwnerClientId.ToString()}");
 
         testString.OnValueChanged += OnTestStringChanged;
         if(IsLocalPlayer) coroutine = Timing.RunCoroutine(_NewInt());
@@ -42,8 +43,5 @@ public class PlayerData : NetworkBehaviour
     {
         if (coroutine.IsRunning) Timing.KillCoroutines(coroutine);
     }
-
-    [Button]
-    private void SaySomething(string text) => testString.Value = text;
     #endif
 }
