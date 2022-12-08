@@ -9,16 +9,11 @@ using Wichtel.SceneManagement;
 public class ReturnToMainMenuOnDisconnect : NetworkBehaviour
 {
     [SerializeField] private SceneLoader mainMenuLoader;
-    private bool _wasClientBefore;
     
     #if !UNITY_SERVER
-    private void Start() => DontDestroyOnLoad(gameObject);
-
-    private void Update()
+    public override void OnDestroy()
     {
-        Debug.Log($"IsClient: {IsClient}");
-        
-        if(!IsClient && _wasClientBefore) mainMenuLoader.Load();
+        if(IsLocalPlayer) mainMenuLoader.Load();
     }
     #endif
 }

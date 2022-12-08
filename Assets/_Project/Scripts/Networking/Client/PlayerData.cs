@@ -9,13 +9,15 @@ using Random = UnityEngine.Random;
 public class PlayerData : NetworkBehaviour
 {
     [SerializeField] private NetworkVariable<int> testInt = new(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-
+    private CoroutineHandle coroutine;
+    
     #if !UNITY_SERVER
     public override void OnNetworkSpawn()
     {
-        Debug.Log("OnNetworkSpawn");
+        Debug.Log($"OnNetworkSpawn: {OwnerClientId}");
         
-        Timing.RunCoroutine(_NewInt());
+        
+        if(IsLocalPlayer) coroutine = Timing.RunCoroutine(_NewInt());
     }
 
     private IEnumerator<float> _NewInt()
@@ -25,6 +27,11 @@ public class PlayerData : NetworkBehaviour
             yield return Timing.WaitForSeconds(2);
             testInt.Value = Random.Range(0, 100);
         }
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        if (coroutine.IsRunning) Timing.KillCoroutines(coroutine);
     }
     #endif
 }

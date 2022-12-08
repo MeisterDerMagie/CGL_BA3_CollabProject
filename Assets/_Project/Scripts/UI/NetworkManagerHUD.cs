@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
@@ -23,6 +24,38 @@ public class NetworkManagerHUD : MonoBehaviour
         {
             StatusLabels();
             StopButtons();
+        }
+        
+        //Connection status
+        var connectionStatus = ConnectionStatus.Unknown;
+        if (!NetworkManager.Singleton.IsClient && !NetworkManager.Singleton.IsServer && !NetworkManager.Singleton.IsConnectedClient)
+            connectionStatus = ConnectionStatus.Disconnected;
+        if (NetworkManager.Singleton.IsClient && !NetworkManager.Singleton.IsConnectedClient)
+            connectionStatus = ConnectionStatus.Client_AttemptConnection;
+        else if (NetworkManager.Singleton.IsConnectedClient)
+            connectionStatus = ConnectionStatus.Client_Connected;
+        else if (NetworkManager.Singleton.IsServer)
+            connectionStatus = ConnectionStatus.Server_Running;
+
+        switch (connectionStatus)
+        {
+            case ConnectionStatus.Disconnected:
+                GUILayout.Label("<color=orange>Disconnected</color>");
+                break;
+            case ConnectionStatus.Client_AttemptConnection:
+                GUILayout.Label("<color=yellow>Connecting client</color>");
+                break;
+            case ConnectionStatus.Client_Connected:
+                GUILayout.Label("<color=green>Client connected</color>");
+                break;
+            case ConnectionStatus.Server_Running:
+                GUILayout.Label("<color=green>Server running</color>");
+                break;
+            case ConnectionStatus.Unknown:
+                GUILayout.Label("Unknown connection status");
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
 
         GUILayout.EndArea();
@@ -58,5 +91,14 @@ public class NetworkManagerHUD : MonoBehaviour
         GUILayout.Label("Transport: " +
                         NetworkManager.Singleton.NetworkConfig.NetworkTransport.GetType().Name);
         GUILayout.Label("Mode: " + mode);
+    }
+
+    private enum ConnectionStatus
+    {
+        Unknown,
+        Disconnected,
+        Client_AttemptConnection,
+        Client_Connected,
+        Server_Running
     }
 }
