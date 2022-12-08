@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using MEC;
 using Sirenix.OdinInspector;
+using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -10,7 +11,7 @@ using Random = UnityEngine.Random;
 public class PlayerData : NetworkBehaviour
 {
     [SerializeField] private NetworkVariable<int> testInt = new(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-    [SerializeField] private NetworkVariable<string> testString = new(string.Empty, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    [SerializeField] private NetworkVariable<FixedString64Bytes> testString = new(string.Empty, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     private CoroutineHandle coroutine;
     
@@ -23,9 +24,9 @@ public class PlayerData : NetworkBehaviour
         if(IsLocalPlayer) coroutine = Timing.RunCoroutine(_NewInt());
     }
 
-    private void OnTestStringChanged(string previousvalue, string newvalue)
+    private void OnTestStringChanged(FixedString64Bytes previousvalue, FixedString64Bytes newvalue)
     {
-        Debug.Log($"Player {OwnerClientId.ToString()} said: {newvalue}");
+        Debug.Log($"Player {OwnerClientId.ToString()} said: {newvalue.ToString()}");
     }
 
     private IEnumerator<float> _NewInt()
