@@ -22,7 +22,7 @@ public class ServerSetup : MonoBehaviour
         if (args.ContainsKey("port"))
         {
             bool couldParse = ushort.TryParse(args["port"], out ushort port);
-            transport.SetConnectionData(transport.ConnectionData.Address, couldParse ? port : transport.ConnectionData.Port);
+            transport.SetConnectionData(transport.ConnectionData.Address, couldParse ? port : transport.ConnectionData.Port, listenAddress: transport.ConnectionData.ServerListenAddress);
 
             if(couldParse) Debug.Log($"Set server port to {port}");
         }
