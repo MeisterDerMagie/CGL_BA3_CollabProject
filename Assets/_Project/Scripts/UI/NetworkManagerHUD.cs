@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -64,8 +65,16 @@ public class NetworkManagerHUD : MonoBehaviour
     private static void StartButtons()
     {
         //if (GUILayout.Button("Start local Host")) NetworkManager.Singleton.StartHost();
-        if (GUILayout.Button("Start local Client")) NetworkManager.Singleton.StartClient();
-        if (GUILayout.Button("Start local Server")) NetworkManager.Singleton.StartServer();
+        if (GUILayout.Button("Start local Client"))
+        {
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetConnectionData("127.0.0.1", 7777, "0.0.0.0");
+            NetworkManager.Singleton.StartClient();
+        }
+        if (GUILayout.Button("Start local Server"))
+        {
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetConnectionData("127.0.0.1", 7777, "0.0.0.0");
+            NetworkManager.Singleton.StartServer();
+        }
     }
 
     private static void StopButtons()

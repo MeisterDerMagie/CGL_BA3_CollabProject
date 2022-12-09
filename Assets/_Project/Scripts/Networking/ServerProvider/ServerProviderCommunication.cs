@@ -6,7 +6,6 @@ using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ServerProviderCommunication : MonoBehaviour
@@ -67,6 +66,11 @@ public class ServerProviderCommunication : MonoBehaviour
     public void HostRequest()
     {
         ServerProviderClient.SendMessage("host", null);
+    }
+
+    public void CancelHostRequest()
+    {
+        ServerProviderClient.SendMessage("cancelHost", null);
     }
 
     public void JoinRequest(string lobbyCode)
