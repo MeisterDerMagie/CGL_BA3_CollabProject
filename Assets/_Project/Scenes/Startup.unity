@@ -646,8 +646,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lobbyScene:
-    sceneAsset: {fileID: 102900000, guid: 063a4e4689a19474cb76cf23be0dbbdc, type: 3}
-    scenePath: Assets/_Project/Scenes/Game.unity
+    sceneAsset: {fileID: 102900000, guid: 5272a0cd8dd8fbf42bd4bd98ed166f49, type: 3}
+    scenePath: Assets/_Project/Scenes/Lobby.unity
 --- !u!4 &837529800
 Transform:
   m_ObjectHideFlags: 0
