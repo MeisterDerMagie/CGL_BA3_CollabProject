@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [DisallowMultipleComponent]
 [RequireComponent(typeof(NetworkManager))]
@@ -74,6 +75,7 @@ public class NetworkManagerHUD : MonoBehaviour
         {
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetConnectionData("127.0.0.1", 7777, "0.0.0.0");
             NetworkManager.Singleton.StartServer();
+            NetworkManager.Singleton.SceneManager.LoadScene("Lobby", LoadSceneMode.Single);
         }
     }
 
