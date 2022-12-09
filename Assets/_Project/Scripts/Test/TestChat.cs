@@ -8,6 +8,6 @@ public class TestChat : MonoBehaviour
     [Button]
     private void SaySomething(string text)
     {
-        GetComponent<PlayerData>().testString.Value = text;
+        GetComponent<TEST_NetworkVariables>().testString.Value = text;
     }
 }

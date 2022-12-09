@@ -8,7 +8,7 @@ using Unity.Netcode;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class PlayerData : NetworkBehaviour
+public class TEST_NetworkVariables : NetworkBehaviour
 {
     
     [SerializeField] private NetworkVariable<int> testInt = new(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
