@@ -17,6 +17,7 @@ public class ShutdownServerWhenNoClientsConnected : NetworkBehaviour
     {
         if (!isEnabled) return;
         _coroutine = Timing.RunCoroutine(_WaitThenShutdown());
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Update()
