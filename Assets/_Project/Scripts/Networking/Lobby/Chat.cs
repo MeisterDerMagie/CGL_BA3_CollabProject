@@ -11,30 +11,21 @@ public class Chat : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI chatLog;
     [SerializeField] private InputHelper chatInputField;
     
-    /*
-    private readonly SyncList<ChatMessage> chatMessages = new SyncList<ChatMessage>();
-    private readonly NetworkList<ChatMessage>
-    private string chatMessagesFormatted = string.Empty;
-    */
+    private readonly NetworkList<ChatMessage> _chatMessages = new();
+    private readonly Dictionary<ulong/*clientId*/, string/*playerName*/> _playerNamesHistory = new();
+    private string _chatMessagesFormatted = string.Empty;
 
-    //private readonly SyncDictionary<uint /*netId*/, string /*playerName*/> playerNames = new SyncDictionary<uint, string>();
-    //private Dictionary<uint /*netId*/, string /*playerName*/> playerNames = new Dictionary<uint, string>();
-
-    /*
-    private NetworkRoomManager manager;
-
+    
     private void Initialize()
     {
-        manager = FindObjectOfType<NetworkRoomManager>();
-        if (manager == null)
+        if (NetworkManager.Singleton == null)
         {
             Debug.LogError("Could not find network manager! Chat will not be available.");
             return;
         }
         
         //subscribe to server callback
-        chatMessages.Callback += OnChatMessagesChanged;
-        playerNames.Callback += OnPlayerNamesChanged;
+        _chatMessages.OnListChanged += OnChatMessagesChanged;
         
         //subscribe to user input
         chatInputField.OnUserEnteredMessage += CreateChatMessage;
@@ -42,11 +33,18 @@ public class Chat : NetworkBehaviour
         //show messages if there are any
         DisplayChatLog();
     }
+    
+    public override void OnDestroy()
+    {
+        //unsubscribe from server callback
+        _chatMessages.OnListChanged -= OnChatMessagesChanged;
+        
+        //unsubscribe from user input
+        chatInputField.OnUserEnteredMessage -= CreateChatMessage;
+    }
 
     private void Start() => Initialize();
-    private void OnChatMessagesChanged(SyncList<ChatMessage>.Operation _op, int _itemindex, ChatMessage _olditem, ChatMessage _newitem) => DisplayChatLog();
-    private void OnPlayerNamesChanged(SyncIDictionary<uint, string>.Operation _op, uint _key, string _item) => DisplayChatLog();
-
+    private void OnChatMessagesChanged(NetworkListEvent<ChatMessage> changeEvent) => DisplayChatLog();
 
     private void DisplayChatLog()
     {
@@ -56,93 +54,118 @@ public class Chat : NetworkBehaviour
 
     private void Update()
     {
-        if (!isServer) return;
+        if (!IsServer) return;
         UpdatePlayerNames();
     }
 
-    private void CreateChatMessage(string _message)
+    private void CreateChatMessage(string message)
     {
-        //get local player
-        NetworkRoomPlayer localPlayer = null;
-        foreach (var roomPlayer in manager.roomSlots)
-        {
-            if (roomPlayer.isLocalPlayer) localPlayer = roomPlayer;
-        }
-
-        //get netId
-        uint netId = localPlayer.netId;
+        //get local player ID and player name
+        ulong localClientId = NetworkManager.Singleton.LocalClientId;
+        string playerName = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerData>().PlayerName;
         
         //create chatMessageStruct
-        var chatMessage = new ChatMessage(netId, _message);
+        var chatMessage = new ChatMessage(localClientId, playerName, message);
 
         //add to syncList in order to let other clients know about the message
-        SendChatMessage(chatMessage);
+        SendChatMessageServerRpc(chatMessage);
     }
 
-    [Command(requiresAuthority = false)]
-    private void SendChatMessage(ChatMessage _message)
+    [ServerRpc(RequireOwnership = false)]
+    private void SendChatMessageServerRpc(ChatMessage message)
     {
-        chatMessages.Add(_message);
+        _chatMessages.Add(message);
     }
 
     private void FormatChatMessages()
     {
-        chatMessagesFormatted = "Welcome in chat!";
+        _chatMessagesFormatted = "Welcome in chat!";
 
-        if (chatMessages.Count > 0) chatMessagesFormatted += "\n\n";
+        if (_chatMessages.Count > 0) _chatMessagesFormatted += "\n\n";
         
-        foreach (ChatMessage message in chatMessages)
+        foreach (ChatMessage message in _chatMessages)
         {
-            string playerName = playerNames.ContainsKey(message.netId) ? playerNames[message.netId] : "Unknown Player";
-            chatMessagesFormatted += $"{playerName}: {message.message}\n";
+            _chatMessagesFormatted += $"{message.PlayerName.ToString()}: {message.Message.ToString()}\n";
         }
     }
 
     private void PrintChatMessages()
     {
-        chatLog.SetText(chatMessagesFormatted);
+        chatLog.SetText(_chatMessagesFormatted);
     }
 
-    [Server]
     private void UpdatePlayerNames()
     {
-        foreach (NetworkRoomPlayer roomPlayer in manager.roomSlots)
+        foreach (KeyValuePair<ulong, NetworkClient> connectedClient in NetworkManager.ConnectedClients)
         {
-            string playerName = roomPlayer.GetComponent<RoomPlayerData>().PlayerName;
+            var playerData = connectedClient.Value.PlayerObject.GetComponent<PlayerData>();
+            bool playerNamesDirty = false;
             
             //update names of connected players and still keep old names of disconnected players
-            if (playerNames.ContainsKey(roomPlayer.netId))
+            if (_playerNamesHistory.ContainsKey(connectedClient.Key))
             {
                 //if the player name has changed...
-                if (playerNames[roomPlayer.netId] != playerName)
+                if (_playerNamesHistory[connectedClient.Key] != playerData.PlayerName)
                 {
-                    //... update it ... 
-                    playerNames[roomPlayer.netId] = playerName;
+                    //... update it ...
+                    _playerNamesHistory[connectedClient.Key] = playerData.PlayerName;
+                    playerNamesDirty = true;
                 }
             }
 
+            //if the player name is not yet registered, add it to the dictionary
             else
             {
-                playerNames.Add(roomPlayer.netId, playerName);
+                _playerNamesHistory.Add(connectedClient.Key, playerData.PlayerName);
+                playerNamesDirty = true;
             }
+            
+            //if the player names have changed, update the chat messages
+            if(playerNamesDirty) UpdateNamesInMessageLog();
         }
     }
 
-    private void OnDestroy()
+    private void UpdateNamesInMessageLog()
     {
-        //unsubscribe from user input
-        chatInputField.OnUserEnteredMessage -= CreateChatMessage;
+        for (int i = _chatMessages.Count - 1; i >= 0; i--)
+        {
+            if (_playerNamesHistory.ContainsKey(_chatMessages[i].ClientId))
+            {
+                ChatMessage message = _chatMessages[i];
+                message.PlayerName = _playerNamesHistory[message.ClientId];
+                _chatMessages[i] = message;
+            }
+            else
+            {
+                ChatMessage message = _chatMessages[i];
+                message.PlayerName = "Unkown Player";
+                _chatMessages[i] = message;
+            }
+        }
     }
 }
 
-public struct ChatMessage
+public struct ChatMessage : INetworkSerializable, IEquatable<ChatMessage>
 {
-    public uint netId;
-    public FixedString512Bytes message;
+    public ulong ClientId;
+    public FixedString32Bytes PlayerName;
+    public FixedString512Bytes Message;
 
-    public ChatMessage(uint _netId, FixedString512Bytes _message)
+    public ChatMessage(ulong clientId, FixedString32Bytes playerName, FixedString512Bytes message)
     {
-        netId = _netId;
-        message = _message;
-    }*/
+        PlayerName = playerName;
+        Message = message;
+        ClientId = clientId;
+    }
+
+    public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+    {
+        serializer.SerializeValue(ref ClientId);
+        serializer.SerializeValue(ref PlayerName);
+        serializer.SerializeValue(ref Message);
+    }
+
+    public bool Equals(ChatMessage other) => ClientId == other.ClientId && PlayerName.Equals(other.PlayerName) && Message.Equals(other.Message);
+    public override bool Equals(object obj) => obj is ChatMessage other && Equals(other);
+    public override int GetHashCode() => HashCode.Combine(ClientId, PlayerName, Message);
 }
