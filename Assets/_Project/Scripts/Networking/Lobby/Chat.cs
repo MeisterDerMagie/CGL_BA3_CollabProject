@@ -15,11 +15,13 @@ public class Chat : NetworkBehaviour
     private readonly Dictionary<ulong/*clientId*/, string/*playerName*/> _playerNamesHistory = new();
     private string _chatMessagesFormatted = string.Empty;
 
-    
-    private void Initialize()
+    private void Awake()
     {
         _chatMessages = new NetworkList<ChatMessage>();
-        
+    }
+
+    private void Initialize()
+    {
         if (NetworkManager.Singleton == null)
         {
             Debug.LogError("Could not find network manager! Chat will not be available.");
