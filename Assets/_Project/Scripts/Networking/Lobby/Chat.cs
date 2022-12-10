@@ -146,7 +146,7 @@ public class Chat : NetworkBehaviour
             else
             {
                 ChatMessage message = _chatMessages[i];
-                message.PlayerName = "Unkown Player";
+                message.PlayerName = "Unknown Player";
                 _chatMessages[i] = message;
             }
         }
@@ -156,10 +156,10 @@ public class Chat : NetworkBehaviour
 public struct ChatMessage : INetworkSerializable, IEquatable<ChatMessage>
 {
     public ulong ClientId;
-    public FixedString32Bytes PlayerName;
+    public FixedString128Bytes PlayerName;
     public FixedString512Bytes Message;
 
-    public ChatMessage(ulong clientId, FixedString32Bytes playerName, FixedString512Bytes message)
+    public ChatMessage(ulong clientId, FixedString128Bytes playerName, FixedString512Bytes message)
     {
         PlayerName = playerName;
         Message = message;

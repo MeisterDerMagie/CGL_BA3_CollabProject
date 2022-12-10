@@ -19,7 +19,12 @@ public class InputHelper : MonoBehaviour
     
     public Action<string> OnUserEnteredMessage = delegate(string _message) {  };
 
-    private void Start() => ClearInputFieldAndFocusIt();
+    private void Start()
+    {
+        if(inputField.lineType != TMP_InputField.LineType.MultiLineNewline) Debug.LogWarning("For the input helper to work, LineType must be MultiLineNewLine.");
+        
+        ClearInputFieldAndFocusIt();
+    }
 
     private void OnEnable() => ClearInputFieldAndFocusIt();
 
@@ -34,6 +39,7 @@ public class InputHelper : MonoBehaviour
         
         //if the user pressed Enter...
         if (!UserSubmittedInputField) return;
+        
         //...remove line breaks from input text...
         string input = inputField.text;
         input = Regex.Replace(input, @"\r\n?|\n", string.Empty);
