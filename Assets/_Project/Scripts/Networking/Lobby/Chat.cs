@@ -93,7 +93,7 @@ public class Chat : NetworkBehaviour
         
         foreach (ChatMessage message in _chatMessages)
         {
-            _chatMessagesFormatted += $"{message.PlayerName.ToString()}: {message.Message.ToString()}\n";
+            _chatMessagesFormatted += $"{message.PlayerName.Value}: {message.Message.Value}\n";
         }
     }
 
