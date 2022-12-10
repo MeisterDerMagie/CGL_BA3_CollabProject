@@ -140,13 +140,13 @@ public class Chat : NetworkBehaviour
             if (_playerNamesHistory.ContainsKey(_chatMessages[i].ClientId))
             {
                 ChatMessage message = _chatMessages[i];
-                message.PlayerName = _playerNamesHistory[message.ClientId];
+                message.PlayerName = new FixedString128Bytes(_playerNamesHistory[message.ClientId]);
                 _chatMessages[i] = message;
             }
             else
             {
                 ChatMessage message = _chatMessages[i];
-                message.PlayerName = "Unknown Player";
+                message.PlayerName = new FixedString128Bytes("Unknown Player");
                 _chatMessages[i] = message;
             }
         }
