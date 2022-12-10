@@ -60,6 +60,9 @@ public class Chat : NetworkBehaviour
 
     private void CreateChatMessage(string message)
     {
+        //DEBUG
+        Debug.Log("You entered a chat message.");
+        
         //get local player ID and player name
         ulong localClientId = NetworkManager.Singleton.LocalClientId;
         string playerName = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerData>().PlayerName;
@@ -74,6 +77,7 @@ public class Chat : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void SendChatMessageServerRpc(ChatMessage message)
     {
+        UpdateNamesInMessageLog();
         _chatMessages.Add(message);
     }
 

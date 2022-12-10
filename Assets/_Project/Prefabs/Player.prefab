@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1969484060223258982}
   - component: {fileID: 1969484060223258983}
+  - component: {fileID: 6726222969197353659}
   - component: {fileID: 6987952706064552644}
   - component: {fileID: 8217671546101724848}
   - component: {fileID: 1841196529920237346}
@@ -52,6 +53,18 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &6726222969197353659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969484060223259000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e337db5eb004cf698f9a2b57008f92d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6987952706064552644
 MonoBehaviour:
   m_ObjectHideFlags: 0
