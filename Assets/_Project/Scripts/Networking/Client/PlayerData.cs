@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Sirenix.OdinInspector;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
@@ -12,31 +11,145 @@ using Random = System.Random;
 public class PlayerData : NetworkBehaviour
 {
     public string PlayerName => _playerName.Value.ToString();
+    public uint CharacterId => _characterId.Value;
+    public string Prompt => _prompt.Value.ToString();
+    public int PointsCreativity => _pointsCreativity.Value;
+    public int PointsPlayability => _pointsPlayability.Value;
+    public int PointsPerformance => _pointsPerformance.Value;
 
     //Network Variables
     private NetworkVariable<FixedString128Bytes> _playerName;
+    private NetworkVariable<uint> _characterId;
+    private NetworkVariable<FixedString512Bytes> _prompt;
 
+    private NetworkVariable<int> _pointsCreativity;
+    private NetworkVariable<int> _pointsPlayability;
+    private NetworkVariable<int> _pointsPerformance;
+
+    //Initialization
     private void Awake()
     {
-        _playerName = new NetworkVariable<FixedString128Bytes>(new FixedString128Bytes("Unknown Player"));
+        //instantiate NetworkVariables
+        _playerName = new NetworkVariable<FixedString128Bytes>(string.Empty);
+        _characterId = new NetworkVariable<uint>(0);
+        _prompt = new NetworkVariable<FixedString512Bytes>(string.Empty);
+        _pointsCreativity = new NetworkVariable<int>(0);
+        _pointsPlayability = new NetworkVariable<int>(0);
+        _pointsPerformance = new NetworkVariable<int>(0);
+        
+        //load player prefs
+        if (!IsLocalPlayer) return;
+        
+        //load last name and characterId from player prefs ... or create default if it's the first time playing
+        if (PlayerPrefs.HasKey("playerName"))
+        {
+            //load previous name
+            string previousName = PlayerPrefs.GetString("playerName");
+            if(previousName == null) SetPlayerNameServerRpc($"Player {OwnerClientId.ToString()}");
+            //if the name is longer than 20 characters, it was not the real previous name but was changed in the registry. Set it to something default to avoid bugs.
+            if (previousName.Length > 20) previousName = "Little Hacker";
+            SetPlayerNameServerRpc(previousName);
+        }
+        else
+        {
+            SetPlayerNameServerRpc($"Player {OwnerClientId.ToString()}");
+            //_playerName = new NetworkVariable<FixedString128Bytes>(new FixedString128Bytes($"Player {OwnerClientId.ToString()}"));
+        }
+
+        if (PlayerPrefs.HasKey("characterId"))
+        {
+            //load previous characterId
+            int previousCharacterId = PlayerPrefs.GetInt("characterId");
+            //set the id
+            SetCharacterIdServerRpc((uint)previousCharacterId);
+        }
+        else
+        {
+            _characterId = new NetworkVariable<uint>(0);
+        }
     }
 
+    public override void OnDestroy()
+    {
+        //dispose NetworkVariables (if we don't do this, there will be memory leaks)
+        _playerName.Dispose();
+        _characterId.Dispose();
+        _prompt.Dispose();
+        _pointsCreativity.Dispose();
+        _pointsPlayability.Dispose();
+        _pointsPerformance.Dispose();
+    }
+
+    //DEBUG
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F1)) RandomName();
-    }
-
-    public void RandomName()
-    {
-        _playerName.Value = new FixedString128Bytes(RandomString(7));
+        if(Input.GetKeyDown(KeyCode.F1)) SetPlayerName(RandomString(6));
     }
     
     private static Random random = new Random();
-
+    
     public static string RandomString(int length)
     {
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         return new string(Enumerable.Repeat(chars, length)
             .Select(s => s[random.Next(s.Length)]).ToArray());
     }
+    
+    //__DEBUG__
+
+    //Setters
+    //here we set the player name and save it in the player prefs. 
+    public void SetPlayerName(string newName)
+    {
+        PlayerPrefs.SetString("playerName", newName);
+        SetPlayerNameServerRpc(newName);
+    }
+    
+    //here we actually set the name, but it doesn't get saved to the player prefs. This is needed for initializing the playerName. We don't want the game to save "Player 1" to the prefs.
+    [ServerRpc]
+    private void SetPlayerNameServerRpc(string newName)
+    {
+        _playerName.Value = new FixedString128Bytes(newName);
+    }
+
+    //here we check if the characterId is valid (aka there exists a corresponding character), then save it to the playerPrefs and call the ServerRPC
+    public void SetCharacterId(uint newCharacterId)
+    {
+        //check if id is valid
+        if (!CharacterManager.Instance.IsValidCharacterId(newCharacterId))
+        {
+            Debug.LogWarning("You managed to choose a non-existent character. Congratulations!");
+            return;
+        }
+        
+        //load player pref
+        PlayerPrefs.SetInt("characterId", (int)newCharacterId);
+        
+        //call serverRPC to actually set the variable
+        SetCharacterIdServerRpc(newCharacterId);
+    }
+    
+    [ServerRpc]
+    private void SetCharacterIdServerRpc(uint newCharacterId)
+    {
+        //check if id is valid (yes we need to do this in ServerRPC and the non-rpc method in order to prevent invalid ids by users hacking in the registry)
+        if (!CharacterManager.Instance.IsValidCharacterId(newCharacterId))
+        {
+            Debug.LogWarning("You managed to choose a non-existent character. Congratulations!");
+            return;
+        }
+        
+        _characterId.Value = newCharacterId;
+    }
+
+    [ServerRpc]
+    public void SetPromptServerRpc(string newPrompt)
+    {
+        _prompt.Value = new FixedString512Bytes(newPrompt);
+    }
+    
+    //The points should not have a ServerRPC (the client should not have the authority to set its points). The server should calculate those based on the user input
+    public void SetPointsCreativity(int newValue) => _pointsCreativity.Value = newValue;
+    public void SetPointsPlayability(int newValue) => _pointsPlayability.Value = newValue;
+    public void SetPointsPerformance(int newValue) => _pointsPerformance.Value = newValue;
 }

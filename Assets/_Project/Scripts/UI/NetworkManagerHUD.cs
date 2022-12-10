@@ -87,8 +87,14 @@ public class NetworkManagerHUD : MonoBehaviour
             return;
         }
 
-        if(NetworkManager.Singleton.IsServer)
-            if(GUILayout.Button("Stop Server")) NetworkManager.Singleton.Shutdown();
+        if (NetworkManager.Singleton.IsServer)
+        {
+            if (GUILayout.Button("Stop Server"))
+            {
+                NetworkManager.Singleton.Shutdown();
+                SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+            }
+        }
         
         if(NetworkManager.Singleton.IsClient)
             if(GUILayout.Button("Stop Client")) NetworkManager.Singleton.Shutdown();

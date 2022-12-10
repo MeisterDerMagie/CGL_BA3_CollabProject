@@ -45,6 +45,9 @@ public class Chat : NetworkBehaviour
         
         //unsubscribe from user input
         chatInputField.OnUserEnteredMessage -= CreateChatMessage;
+        
+        //dispose NetworkVariables (if we don't do this, there will be memory leaks)
+        _chatMessages.Dispose();
     }
 
     private void Start() => Initialize();
@@ -64,9 +67,6 @@ public class Chat : NetworkBehaviour
 
     private void CreateChatMessage(string message)
     {
-        //DEBUG
-        Debug.Log("You entered a chat message.");
-        
         //get local player ID and player name
         ulong localClientId = NetworkManager.Singleton.LocalClientId;
         string playerName = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerData>().PlayerName;
