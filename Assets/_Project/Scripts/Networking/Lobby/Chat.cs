@@ -11,13 +11,15 @@ public class Chat : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI chatLog;
     [SerializeField] private InputHelper chatInputField;
     
-    private readonly NetworkList<ChatMessage> _chatMessages = new();
+    private NetworkList<ChatMessage> _chatMessages;
     private readonly Dictionary<ulong/*clientId*/, string/*playerName*/> _playerNamesHistory = new();
     private string _chatMessagesFormatted = string.Empty;
 
     
     private void Initialize()
     {
+        _chatMessages = new NetworkList<ChatMessage>();
+        
         if (NetworkManager.Singleton == null)
         {
             Debug.LogError("Could not find network manager! Chat will not be available.");
