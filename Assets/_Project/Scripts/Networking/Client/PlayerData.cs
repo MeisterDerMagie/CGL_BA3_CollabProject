@@ -10,6 +10,7 @@ using Random = System.Random;
 
 public class PlayerData : NetworkBehaviour
 {
+    public Guid ClientGuid => Guid.Parse(_clientGuid.Value.ToString());
     public string PlayerName => _playerName.Value.ToString();
     public uint CharacterId => _characterId.Value;
     public string Prompt => _prompt.Value.ToString();
@@ -18,6 +19,7 @@ public class PlayerData : NetworkBehaviour
     public int PointsPerformance => _pointsPerformance.Value;
 
     //Network Variables
+    private NetworkVariable<FixedString64Bytes> _clientGuid;
     private NetworkVariable<FixedString128Bytes> _playerName;
     private NetworkVariable<uint> _characterId;
     private NetworkVariable<FixedString512Bytes> _prompt;
@@ -30,15 +32,33 @@ public class PlayerData : NetworkBehaviour
     private void Awake()
     {
         //instantiate NetworkVariables
+        _clientGuid = new NetworkVariable<FixedString64Bytes>(Guid.NewGuid().ToString());
         _playerName = new NetworkVariable<FixedString128Bytes>(string.Empty);
         _characterId = new NetworkVariable<uint>(0);
         _prompt = new NetworkVariable<FixedString512Bytes>(string.Empty);
         _pointsCreativity = new NetworkVariable<int>(0);
         _pointsPlayability = new NetworkVariable<int>(0);
         _pointsPerformance = new NetworkVariable<int>(0);
-        
+    }
+
+    private void Start()
+    {
         //load player prefs
         if (!IsLocalPlayer) return;
+        
+        //load client guid
+        if (PlayerPrefs.HasKey("clientGuid"))
+        {
+            string clientGuidAsString = PlayerPrefs.GetString("clientGuid");
+            Guid clientGuid = Guid.Parse(clientGuidAsString);
+            SetClientGuidServerRpc(clientGuid.ToString());
+        }
+        else
+        {
+            Guid newGuid = Guid.NewGuid();
+            SetClientGuidServerRpc(newGuid.ToString());
+            PlayerPrefs.SetString("clientGuid", newGuid.ToString());
+        }
         
         //load last name and characterId from player prefs ... or create default if it's the first time playing
         if (PlayerPrefs.HasKey("playerName"))
@@ -72,6 +92,7 @@ public class PlayerData : NetworkBehaviour
     public override void OnDestroy()
     {
         //dispose NetworkVariables (if we don't do this, there will be memory leaks)
+        _clientGuid.Dispose();
         _playerName.Dispose();
         _characterId.Dispose();
         _prompt.Dispose();
@@ -80,25 +101,14 @@ public class PlayerData : NetworkBehaviour
         _pointsPerformance.Dispose();
     }
 
-    //DEBUG
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.F1)) SetPlayerName(RandomString(6));
-    }
-    
-    private static Random random = new Random();
-    
-    public static string RandomString(int length)
-    {
-        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        return new string(Enumerable.Repeat(chars, length)
-            .Select(s => s[random.Next(s.Length)]).ToArray());
-    }
-    
-    //__DEBUG__
-
     //Setters
-    //here we set the player name and save it in the player prefs. 
+    [ServerRpc]
+    private void SetClientGuidServerRpc(FixedString64Bytes newGuid)
+    {
+        _clientGuid.Value = newGuid;
+    }
+    
+    //Call this on the client! Here we set the player name and save it in the player prefs. 
     public void SetPlayerName(string newName)
     {
         PlayerPrefs.SetString("playerName", newName);
@@ -112,7 +122,7 @@ public class PlayerData : NetworkBehaviour
         _playerName.Value = new FixedString128Bytes(newName);
     }
 
-    //here we check if the characterId is valid (aka there exists a corresponding character), then save it to the playerPrefs and call the ServerRPC
+    //Call this on the client! here we check if the characterId is valid (aka there exists a corresponding character), then save it to the playerPrefs and call the ServerRPC
     public void SetCharacterId(uint newCharacterId)
     {
         //check if id is valid

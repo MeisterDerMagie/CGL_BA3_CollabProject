@@ -12,7 +12,7 @@ public class Chat : NetworkBehaviour
     [SerializeField] private InputHelper chatInputField;
     
     private NetworkList<ChatMessage> _chatMessages;
-    private readonly Dictionary<ulong/*clientId*/, string/*playerName*/> _playerNamesHistory = new();
+    private readonly Dictionary<Guid/*clientGuid*/, string/*playerName*/> _playerNamesHistory = new();
     private string _chatMessagesFormatted = string.Empty;
 
     private void Awake()
@@ -68,11 +68,12 @@ public class Chat : NetworkBehaviour
     private void CreateChatMessage(string message)
     {
         //get local player ID and player name
-        ulong localClientId = NetworkManager.Singleton.LocalClientId;
-        string playerName = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerData>().PlayerName;
+        var playerData = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerData>();
+        string playerName = playerData.PlayerName;
+        Guid clientGuid = playerData.ClientGuid;
         
         //create chatMessageStruct
-        var chatMessage = new ChatMessage(localClientId, playerName, message);
+        var chatMessage = new ChatMessage(clientGuid, playerName, message);
 
         //add to syncList in order to let other clients know about the message
         SendChatMessageServerRpc(chatMessage);
@@ -106,17 +107,21 @@ public class Chat : NetworkBehaviour
     {
         foreach (KeyValuePair<ulong, NetworkClient> connectedClient in NetworkManager.ConnectedClients)
         {
+            
             var playerData = connectedClient.Value.PlayerObject.GetComponent<PlayerData>();
+            Guid clientGuid = playerData.ClientGuid;
             bool playerNamesDirty = false;
             
+            Debug.Log($"clientGuid: {clientGuid.ToString()}");
+            
             //update names of connected players and still keep old names of disconnected players
-            if (_playerNamesHistory.ContainsKey(connectedClient.Key))
+            if (_playerNamesHistory.ContainsKey(clientGuid))
             {
                 //if the player name has changed...
-                if (_playerNamesHistory[connectedClient.Key] != playerData.PlayerName)
+                if (_playerNamesHistory[clientGuid] != playerData.PlayerName)
                 {
                     //... update it ...
-                    _playerNamesHistory[connectedClient.Key] = playerData.PlayerName;
+                    _playerNamesHistory[clientGuid] = playerData.PlayerName;
                     playerNamesDirty = true;
                 }
             }
@@ -124,7 +129,7 @@ public class Chat : NetworkBehaviour
             //if the player name is not yet registered, add it to the dictionary
             else
             {
-                _playerNamesHistory.Add(connectedClient.Key, playerData.PlayerName);
+                _playerNamesHistory.Add(clientGuid, playerData.PlayerName);
                 playerNamesDirty = true;
             }
             
@@ -137,10 +142,10 @@ public class Chat : NetworkBehaviour
     {
         for (int i = _chatMessages.Count - 1; i >= 0; i--)
         {
-            if (_playerNamesHistory.ContainsKey(_chatMessages[i].ClientId))
+            if (_playerNamesHistory.ContainsKey(_chatMessages[i].ClientGuid))
             {
                 ChatMessage message = _chatMessages[i];
-                message.PlayerName = new FixedString128Bytes(_playerNamesHistory[message.ClientId]);
+                message.PlayerName = new FixedString128Bytes(_playerNamesHistory[message.ClientGuid]);
                 _chatMessages[i] = message;
             }
             else
@@ -155,25 +160,27 @@ public class Chat : NetworkBehaviour
 
 public struct ChatMessage : INetworkSerializable, IEquatable<ChatMessage>
 {
-    public ulong ClientId;
+    public Guid ClientGuid => Guid.Parse(_clientGuid.Value);
+    
+    private FixedString64Bytes _clientGuid;
     public FixedString128Bytes PlayerName;
     public FixedString512Bytes Message;
 
-    public ChatMessage(ulong clientId, FixedString128Bytes playerName, FixedString512Bytes message)
+    public ChatMessage(Guid clientGuid, FixedString128Bytes playerName, FixedString512Bytes message)
     {
+        _clientGuid = new FixedString64Bytes(clientGuid.ToString());
         PlayerName = playerName;
         Message = message;
-        ClientId = clientId;
     }
 
     public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
     {
-        serializer.SerializeValue(ref ClientId);
+        serializer.SerializeValue(ref _clientGuid);
         serializer.SerializeValue(ref PlayerName);
         serializer.SerializeValue(ref Message);
     }
 
-    public bool Equals(ChatMessage other) => ClientId == other.ClientId && PlayerName.Equals(other.PlayerName) && Message.Equals(other.Message);
+    public bool Equals(ChatMessage other) => _clientGuid.Equals(other._clientGuid) && PlayerName.Equals(other.PlayerName) && Message.Equals(other.Message);
     public override bool Equals(object obj) => obj is ChatMessage other && Equals(other);
-    public override int GetHashCode() => HashCode.Combine(ClientId, PlayerName, Message);
+    public override int GetHashCode() => HashCode.Combine(_clientGuid, PlayerName, Message);
 }
