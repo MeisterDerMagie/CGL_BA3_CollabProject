@@ -30,7 +30,7 @@ public class ServerSetup : MonoBehaviour
         //lobbyCode
         if (args.ContainsKey("lobbyCode"))
         {
-            LobbyManager.Instance.lobbyCode = args["lobbyCode"];
+            LobbyCode.Instance.code = args["lobbyCode"];
             Debug.Log($"Set lobby code to {args["lobbyCode"]}");
         }
         
