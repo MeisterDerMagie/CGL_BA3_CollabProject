@@ -82,7 +82,7 @@ public class Chat : NetworkBehaviour
         //remove own messages
         if (!IsServer)
         {
-            Guid ownGuid = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerData>().ClientGuid;
+            Guid ownGuid = PlayerData.LocalPlayerData.ClientGuid;
             for (int i = newMessages.Count - 1; i >= 0; i--)
             {
                 if(newMessages[i].ClientGuid == ownGuid) newMessages.RemoveAt(i);
@@ -132,7 +132,7 @@ public class Chat : NetworkBehaviour
         }
 
         //get local player ID and player name
-        var playerData = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerData>();
+        var playerData = PlayerData.LocalPlayerData;
         string playerName = playerData.PlayerName;
         Guid clientGuid = playerData.ClientGuid;
         

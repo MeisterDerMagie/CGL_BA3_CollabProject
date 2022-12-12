@@ -2,26 +2,59 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
-using Random = System.Random;
 
 public class PlayerData : NetworkBehaviour
 {
+    public static PlayerData LocalPlayerData => (localPlayerDataCached == null) ? CacheLocalPlayerData() : localPlayerDataCached;
+    private static PlayerData localPlayerDataCached;
+
+    private static PlayerData CacheLocalPlayerData()
+    {
+        localPlayerDataCached = (NetworkManager.Singleton == null || NetworkManager.Singleton.LocalClient == null || NetworkManager.Singleton.LocalClient.PlayerObject == null) ? null : NetworkManager.Singleton.LocalClient?.PlayerObject.GetComponent<PlayerData>();
+        return localPlayerDataCached;
+    }
+    
     public Guid ClientGuid => Guid.Parse(_clientGuid.Value.ToString());
-    public string PlayerName => _playerName.Value.ToString();
-    public uint CharacterId => _characterId.Value;
+    public string PlayerName
+    {
+        get
+        {
+            if (!IsLocalPlayer) return _playerName.Value.ToString();
+            return _playerNameIsSynced ? _playerName.Value.ToString() : _loadedPlayerName;
+        }
+    }
+
+    public uint CharacterId
+    {
+        get
+        {
+            if (!IsLocalPlayer) return _characterId.Value;
+
+            return _characterIdIsSynced ? _characterId.Value : _loadedCharacterId;
+        }
+    }
+
+    public bool IsReadyInLobby => _isReadyInLobby.Value;
     public string Prompt => _prompt.Value.ToString();
     public int PointsCreativity => _pointsCreativity.Value;
     public int PointsPlayability => _pointsPlayability.Value;
     public int PointsPerformance => _pointsPerformance.Value;
 
+    //we need these pre-loaded values because even if the player name was loaded from player prefs, it's only set in the first sync from the server. With these values we can access the correct name and characterId right from the beginning
+    private string _loadedPlayerName = string.Empty;
+    private uint _loadedCharacterId = 0;
+
+    private bool _playerNameIsSynced = false;
+    private bool _characterIdIsSynced = false;
+    
     //Network Variables
     private NetworkVariable<FixedString64Bytes> _clientGuid;
     private NetworkVariable<FixedString128Bytes> _playerName;
     private NetworkVariable<uint> _characterId;
+    private NetworkVariable<bool> _isReadyInLobby;
     private NetworkVariable<FixedString512Bytes> _prompt;
 
     private NetworkVariable<int> _pointsCreativity;
@@ -35,6 +68,7 @@ public class PlayerData : NetworkBehaviour
         _clientGuid = new NetworkVariable<FixedString64Bytes>(Guid.NewGuid().ToString());
         _playerName = new NetworkVariable<FixedString128Bytes>(string.Empty);
         _characterId = new NetworkVariable<uint>(0);
+        _isReadyInLobby = new NetworkVariable<bool>(false);
         _prompt = new NetworkVariable<FixedString512Bytes>(string.Empty);
         _pointsCreativity = new NetworkVariable<int>(0);
         _pointsPlayability = new NetworkVariable<int>(0);
@@ -65,15 +99,23 @@ public class PlayerData : NetworkBehaviour
         {
             //load previous name
             string previousName = PlayerPrefs.GetString("playerName");
-            if(previousName == null) SetPlayerNameServerRpc($"Player {OwnerClientId.ToString()}");
-            //if the name is longer than 20 characters, it was not the real previous name but was changed in the registry. Set it to something default to avoid bugs.
-            if (previousName.Length > 20) previousName = "Little Hacker";
+            if (previousName == null)
+            {
+                string genericPlayerName = $"Player {OwnerClientId.ToString()}";
+                _loadedPlayerName = genericPlayerName;
+                SetPlayerNameServerRpc(genericPlayerName);
+            }
+            //if the name is longer than 18 characters, it was not the real previous name but was changed in the registry. Set it to something default to avoid bugs.
+            else if (previousName.Length > 18) previousName = "Little Hacker";
+
+            _loadedPlayerName = previousName;
             SetPlayerNameServerRpc(previousName);
         }
         else
         {
-            SetPlayerNameServerRpc($"Player {OwnerClientId.ToString()}");
-            //_playerName = new NetworkVariable<FixedString128Bytes>(new FixedString128Bytes($"Player {OwnerClientId.ToString()}"));
+            string genericPlayerName = $"Player {OwnerClientId.ToString()}";
+            _loadedPlayerName = genericPlayerName;
+            SetPlayerNameServerRpc(genericPlayerName);
         }
 
         if (PlayerPrefs.HasKey("characterId"))
@@ -81,25 +123,40 @@ public class PlayerData : NetworkBehaviour
             //load previous characterId
             int previousCharacterId = PlayerPrefs.GetInt("characterId");
             //set the id
+            _loadedCharacterId = (uint)previousCharacterId;
             SetCharacterIdServerRpc((uint)previousCharacterId);
         }
         else
         {
+            _loadedCharacterId = 0;
             _characterId = new NetworkVariable<uint>(0);
         }
+        
+        //subscribe to change events
+        _playerName.OnValueChanged += OnPlayerNameChanged;
+        _characterId.OnValueChanged += OnCharacterIdChanged;
     }
 
     public override void OnDestroy()
     {
+        //unsubscribe form events
+        _playerName.OnValueChanged -= OnPlayerNameChanged;
+        _characterId.OnValueChanged -= OnCharacterIdChanged;
+        
         //dispose NetworkVariables (if we don't do this, there will be memory leaks)
         _clientGuid.Dispose();
         _playerName.Dispose();
         _characterId.Dispose();
+        _isReadyInLobby.Dispose();
         _prompt.Dispose();
         _pointsCreativity.Dispose();
         _pointsPlayability.Dispose();
         _pointsPerformance.Dispose();
     }
+
+    //Change events
+    private void OnPlayerNameChanged(FixedString128Bytes previousvalue, FixedString128Bytes newvalue) => _playerNameIsSynced = true;
+    private void OnCharacterIdChanged(uint previousvalue, uint newvalue) => _characterIdIsSynced = true;
 
     //Setters
     [ServerRpc]
@@ -150,6 +207,12 @@ public class PlayerData : NetworkBehaviour
         }
         
         _characterId.Value = newCharacterId;
+    }
+
+    [ServerRpc]
+    public void SetReadyStateServerRpc(bool newState)
+    {
+        _isReadyInLobby.Value = newState;
     }
 
     [ServerRpc]

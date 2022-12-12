@@ -9,7 +9,7 @@ using UnityEngine;
 public class LobbySeat : MonoBehaviour
 {
     [ReadOnly]
-    public int slotIndex;
+    public int seatIndex;
     
     [SerializeField] private Transform ready, notReady;
     [SerializeField] private TextMeshProUGUI playerName;
@@ -18,7 +18,11 @@ public class LobbySeat : MonoBehaviour
     [SerializeField] private List<Transform> activeObjectsOnLocalAndRemotePlayers;
     [SerializeField] private List<Transform> activeObjectsOnRemotePlayers;
 
-    /*
+    private readonly List<PlayerData> _playerDatas = new List<PlayerData>();
+
+    public PlayerData AssociatedPlayer => _associatedPlayer;
+    private PlayerData _associatedPlayer;
+    
     private void Start()
     {
         //initially deactivate all objects
@@ -30,45 +34,40 @@ public class LobbySeat : MonoBehaviour
     {
         GetAssociatedPlayer();
         UpdateSlotUI();
-        UpdatePlayerColor();
+        UpdateCharacterId();
         UpdatePlayerName();
     }
 
     //gets the player that's associated to this slot
     private void GetAssociatedPlayer()
     {
-        networkRoomPlayers = roomManager.roomSlots;
+        //update player list (yes, FindObjectsOfType is very inefficient and inelegant. But other "proper" solutions would be much more complex right now, so we'll live with this hack)
+        _playerDatas.Clear();
+        PlayerData[] players = FindObjectsOfType<PlayerData>();
+        //sort players by ID
+        Array.Sort(players, (player1, player2) => player1.OwnerClientId.CompareTo(player2.OwnerClientId));
+        _playerDatas.AddRange(players);
 
         //reset in case a player left the room
-        associatedNetworkRoomPlayer = null;
-        associatedRoomPlayerData = null;
+        _associatedPlayer = null;
         
         //assign player to slot
-        foreach (var roomPlayer in networkRoomPlayers)
-        {
-            if (roomPlayer.index != slotIndex)
-                continue;
-            
-            //get network room player
-            associatedNetworkRoomPlayer = roomPlayer;
-            
-            //get room player data
-            associatedRoomPlayerData = roomPlayer.GetComponent<RoomPlayerData>();
-        }
+        if (_playerDatas.Count >= seatIndex + 1)
+            _associatedPlayer = _playerDatas[seatIndex];
     }
     
     //show / hide UI elements
     private void UpdateSlotUI()
     {
         //hide all UI elements, if this slot has no player assigned
-        if (associatedNetworkRoomPlayer == null)
+        if (_associatedPlayer == null)
         {
             DeactivateAllUIElements();
             return;
         }
         
         //activate ui elements for local player
-        if(associatedNetworkRoomPlayer.isLocalPlayer) 
+        if(_associatedPlayer.IsLocalPlayer) 
         {
             foreach (Transform t in activeObjectsOnLocalPlayer)
             {
@@ -102,7 +101,7 @@ public class LobbySeat : MonoBehaviour
         }
         
         //update ready status
-        if (associatedNetworkRoomPlayer.readyToBegin)
+        if (_associatedPlayer.IsReadyInLobby)
         {
             ready.gameObject.SetActive(true);
             notReady.gameObject.SetActive(false);
@@ -124,26 +123,24 @@ public class LobbySeat : MonoBehaviour
         notReady.gameObject.SetActive(false);
     }
 
-    private void UpdatePlayerColor()
+    private void UpdateCharacterId()
     {
-        if (associatedNetworkRoomPlayer == null) return;
-        
-        var playerColorComponent = GetComponentInChildren<PlayerColor>();
-        playerColorComponent.SetColor(associatedRoomPlayerData.PlayerColor);
+        if (_associatedPlayer == null) return;
+
+        Debug.LogWarning("Update the displayed character in lobby here. (just the view)");
     }
 
     private void UpdatePlayerName()
     {
-        if (associatedNetworkRoomPlayer == null) return;
+        if (_associatedPlayer == null) return;
         
-        playerName.SetText(associatedRoomPlayerData.PlayerName);
+        playerName.SetText(_associatedPlayer.PlayerName);
     }
-    */
-    
+
     #if UNITY_EDITOR
     private void OnValidate()
     {
-        slotIndex = transform.GetSiblingIndex();
+        seatIndex = transform.GetSiblingIndex();
     }
     #endif
 }
