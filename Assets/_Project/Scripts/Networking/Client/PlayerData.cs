@@ -32,7 +32,6 @@ public class PlayerData : NetworkBehaviour
         get
         {
             if (!IsLocalPlayer) return _characterId.Value;
-
             return _characterIdIsSynced ? _characterId.Value : _loadedCharacterId;
         }
     }
@@ -189,7 +188,7 @@ public class PlayerData : NetworkBehaviour
             return;
         }
         
-        //load player pref
+        //set player pref
         PlayerPrefs.SetInt("characterId", (int)newCharacterId);
         
         //call serverRPC to actually set the variable

@@ -13,6 +13,7 @@ public class LobbySeat : MonoBehaviour
     
     [SerializeField] private Transform ready, notReady;
     [SerializeField] private TextMeshProUGUI playerName;
+    [SerializeField] private SpriteRenderer characterImage;
     
     [SerializeField] private List<Transform> activeObjectsOnLocalPlayer;
     [SerializeField] private List<Transform> activeObjectsOnLocalAndRemotePlayers;
@@ -22,6 +23,8 @@ public class LobbySeat : MonoBehaviour
 
     public PlayerData AssociatedPlayer => _associatedPlayer;
     private PlayerData _associatedPlayer;
+
+    private uint _characterIdBefore = uint.MaxValue;
     
     private void Start()
     {
@@ -34,7 +37,7 @@ public class LobbySeat : MonoBehaviour
     {
         GetAssociatedPlayer();
         UpdateSlotUI();
-        UpdateCharacterId();
+        UpdateCharacterImage();
         UpdatePlayerName();
     }
 
@@ -123,11 +126,18 @@ public class LobbySeat : MonoBehaviour
         notReady.gameObject.SetActive(false);
     }
 
-    private void UpdateCharacterId()
+    private void UpdateCharacterImage()
     {
         if (_associatedPlayer == null) return;
 
-        Debug.LogWarning("Update the displayed character in lobby here. (just the view)");
+        //only update the character image if the player changed it
+        if (_associatedPlayer.CharacterId == _characterIdBefore) return;
+        
+        //
+        characterImage.sprite = CharacterManager.Instance.GetCharacter(_associatedPlayer.CharacterId).characterImage;
+
+        //cache the currentId
+        _characterIdBefore = _associatedPlayer.CharacterId;
     }
 
     private void UpdatePlayerName()
