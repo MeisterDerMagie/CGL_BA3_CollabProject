@@ -1,10 +1,12 @@
 ﻿//(c) copyright by Martin M. Klöckener
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using TMPro;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
+using Wichtel;
 
 public class Chat : NetworkBehaviour
 {
@@ -12,12 +14,14 @@ public class Chat : NetworkBehaviour
     [SerializeField] private InputHelper chatInputField;
     
     private NetworkList<ChatMessage> _chatMessages;
+    private List<ChatMessage> _chatMessagesLocal;
     private readonly Dictionary<Guid/*clientGuid*/, string/*playerName*/> _playerNamesHistory = new();
     private string _chatMessagesFormatted = string.Empty;
 
     private void Awake()
     {
         _chatMessages = new NetworkList<ChatMessage>();
+        _chatMessagesLocal = new List<ChatMessage>();
     }
 
     private void Initialize()
@@ -35,7 +39,7 @@ public class Chat : NetworkBehaviour
         chatInputField.OnUserEnteredMessage += CreateChatMessage;
         
         //show messages if there are any
-        DisplayChatLog();
+        SyncAndDisplay();
     }
     
     public override void OnDestroy()
@@ -51,10 +55,24 @@ public class Chat : NetworkBehaviour
     }
 
     private void Start() => Initialize();
-    private void OnChatMessagesChanged(NetworkListEvent<ChatMessage> changeEvent) => DisplayChatLog();
+    private void OnChatMessagesChanged(NetworkListEvent<ChatMessage> changeEvent) => SyncAndDisplay();
 
+    private void SyncAndDisplay()
+    {
+        //sync localMessages to the server-validated messages
+        _chatMessagesLocal.Clear();
+        foreach (ChatMessage chatMessage in _chatMessages)
+        {
+            _chatMessagesLocal.Add(chatMessage);
+        }
+        
+        //display the log
+        DisplayChatLog();
+    }
+    
     private void DisplayChatLog()
     {
+        //format messages and display them
         FormatChatMessages();
         PrintChatMessages();
     }
@@ -67,6 +85,12 @@ public class Chat : NetworkBehaviour
 
     private void CreateChatMessage(string message)
     {
+        if (IsServer)
+        {
+            Debug.LogWarning("You can't send chat messages from from the server.");
+            return;
+        }
+
         //get local player ID and player name
         var playerData = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerData>();
         string playerName = playerData.PlayerName;
@@ -74,6 +98,10 @@ public class Chat : NetworkBehaviour
         
         //create chatMessageStruct
         var chatMessage = new ChatMessage(clientGuid, playerName, message);
+
+        //add to local message to show it locally before it was validated by the server (feels less laggy)
+        _chatMessagesLocal.Add(chatMessage);
+        DisplayChatLog();
 
         //add to syncList in order to let other clients know about the message
         SendChatMessageServerRpc(chatMessage);
@@ -83,6 +111,15 @@ public class Chat : NetworkBehaviour
     private void SendChatMessageServerRpc(ChatMessage message)
     {
         UpdateNamesInMessageLog();
+        
+        //censor message
+        DateTime start = DateTime.Now;
+        message.Message = ProfanityFilter.Instance.CensorAndReplaceWholeInput(message.Message.Value);
+        TimeSpan deltaTime = DateTime.Now - start;
+
+        Debug.Log($"DeltaTime: {deltaTime.TotalMilliseconds.ToString(CultureInfo.InvariantCulture)}");
+
+        //then send it to all clients
         _chatMessages.Add(message);
     }
 
@@ -90,9 +127,9 @@ public class Chat : NetworkBehaviour
     {
         _chatMessagesFormatted = "Welcome in chat!";
 
-        if (_chatMessages.Count > 0) _chatMessagesFormatted += "\n\n";
+        if (_chatMessagesLocal.Count > 0) _chatMessagesFormatted += "\n\n";
         
-        foreach (ChatMessage message in _chatMessages)
+        foreach (ChatMessage message in _chatMessagesLocal)
         {
             _chatMessagesFormatted += $"{message.PlayerName.Value}: {message.Message.Value}\n";
         }
@@ -111,8 +148,6 @@ public class Chat : NetworkBehaviour
             var playerData = connectedClient.Value.PlayerObject.GetComponent<PlayerData>();
             Guid clientGuid = playerData.ClientGuid;
             bool playerNamesDirty = false;
-            
-            Debug.Log($"clientGuid: {clientGuid.ToString()}");
             
             //update names of connected players and still keep old names of disconnected players
             if (_playerNamesHistory.ContainsKey(clientGuid))
