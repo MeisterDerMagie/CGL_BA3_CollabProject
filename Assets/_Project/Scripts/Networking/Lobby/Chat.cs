@@ -2,17 +2,22 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using TMPro;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Events;
 using Wichtel;
 
 public class Chat : NetworkBehaviour
 {
     [SerializeField] private TextMeshProUGUI chatLog;
     [SerializeField] private InputHelper chatInputField;
-    
+
+    public UnityEvent<int> onNewMessages; //int is the amount of new messages
+    public UnityEvent<ChatMessage> onNewMessage; //string is the new message
+
     private NetworkList<ChatMessage> _chatMessages;
     private List<ChatMessage> _chatMessagesLocal;
     private readonly Dictionary<Guid/*clientGuid*/, string/*playerName*/> _playerNamesHistory = new();
@@ -39,7 +44,10 @@ public class Chat : NetworkBehaviour
         chatInputField.OnUserEnteredMessage += CreateChatMessage;
         
         //show messages if there are any
-        SyncAndDisplay();
+        if(IsServer)
+            DisplayChatLog();
+        else
+            SyncAndDisplay();
     }
     
     public override void OnDestroy()
@@ -59,6 +67,38 @@ public class Chat : NetworkBehaviour
 
     private void SyncAndDisplay()
     {
+        //--- events ---
+        //get new messages and call OnNewMessage event if there are any
+        //NetworkList doesn't have .Except(), so we need to create a new list of it
+        var chatMessagesFromServer = new List<ChatMessage>();
+        foreach (var chatMessage in _chatMessages)
+        {
+            chatMessagesFromServer.Add(chatMessage);
+        }
+
+        //extract all new messages
+        var newMessages = chatMessagesFromServer.Except(_chatMessagesLocal).ToList();
+
+        //remove own messages
+        if (!IsServer)
+        {
+            Guid ownGuid = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerData>().ClientGuid;
+            for (int i = newMessages.Count - 1; i >= 0; i--)
+            {
+                if(newMessages[i].ClientGuid == ownGuid) newMessages.RemoveAt(i);
+            }   
+        }
+
+        //call event that there genereally have been new messages (e.g. for a notification sound)
+        if (newMessages.Count > 0) onNewMessages.Invoke(newMessages.Count);
+
+        //call events for each new individual message
+        foreach (ChatMessage chatMessage in newMessages)
+        {
+            onNewMessage.Invoke(chatMessage);
+        }
+        //-- end of events --
+        
         //sync localMessages to the server-validated messages
         _chatMessagesLocal.Clear();
         foreach (ChatMessage chatMessage in _chatMessages)
@@ -97,7 +137,7 @@ public class Chat : NetworkBehaviour
         Guid clientGuid = playerData.ClientGuid;
         
         //create chatMessageStruct
-        var chatMessage = new ChatMessage(clientGuid, playerName, message);
+        var chatMessage = new ChatMessage(clientGuid, playerName, message, DateTime.Now.Ticks);
 
         //add to local message to show it locally before it was validated by the server (feels less laggy)
         _chatMessagesLocal.Add(chatMessage);
@@ -200,12 +240,14 @@ public struct ChatMessage : INetworkSerializable, IEquatable<ChatMessage>
     private FixedString64Bytes _clientGuid;
     public FixedString128Bytes PlayerName;
     public FixedString512Bytes Message;
+    private long _timestamp; //we need this for the "new message" event to work. otherwise two same messages are not considered a new message
 
-    public ChatMessage(Guid clientGuid, FixedString128Bytes playerName, FixedString512Bytes message)
+    public ChatMessage(Guid clientGuid, FixedString128Bytes playerName, FixedString512Bytes message, long timestamp)
     {
         _clientGuid = new FixedString64Bytes(clientGuid.ToString());
         PlayerName = playerName;
         Message = message;
+        _timestamp = timestamp;
     }
 
     public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
@@ -213,9 +255,10 @@ public struct ChatMessage : INetworkSerializable, IEquatable<ChatMessage>
         serializer.SerializeValue(ref _clientGuid);
         serializer.SerializeValue(ref PlayerName);
         serializer.SerializeValue(ref Message);
+        serializer.SerializeValue(ref _timestamp);
     }
 
-    public bool Equals(ChatMessage other) => _clientGuid.Equals(other._clientGuid) && PlayerName.Equals(other.PlayerName) && Message.Equals(other.Message);
+    public bool Equals(ChatMessage other) => _clientGuid.Equals(other._clientGuid) && PlayerName.Equals(other.PlayerName) && Message.Equals(other.Message) && _timestamp == other._timestamp;
     public override bool Equals(object obj) => obj is ChatMessage other && Equals(other);
-    public override int GetHashCode() => HashCode.Combine(_clientGuid, PlayerName, Message);
+    public override int GetHashCode() => HashCode.Combine(_clientGuid, PlayerName, Message, _timestamp);
 }

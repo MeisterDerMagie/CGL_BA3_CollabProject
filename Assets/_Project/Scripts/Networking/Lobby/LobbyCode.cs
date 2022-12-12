@@ -5,13 +5,13 @@ using Unity.Netcode;
 using UnityEngine;
 using Wichtel;
 
-public class LobbyManager : MonoBehaviour
+public class LobbyCode : MonoBehaviour
 {
-    [DisplayAsString] public string lobbyCode;
+    [DisplayAsString] public string code;
     
     #region Singleton
-    private static LobbyManager instance;
-    public static LobbyManager Instance => instance;
+    private static LobbyCode instance;
+    public static LobbyCode Instance => instance;
     
     public void Awake()
     {
@@ -33,5 +33,5 @@ public class LobbyManager : MonoBehaviour
     }
 
     //Reset lobby code
-    private void ResetLobbyCode() => lobbyCode = string.Empty;
+    private void ResetLobbyCode() => code = string.Empty;
 }

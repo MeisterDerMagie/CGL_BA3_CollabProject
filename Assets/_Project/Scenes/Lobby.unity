@@ -2363,6 +2363,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chatLog: {fileID: 49698842}
   chatInputField: {fileID: 701379092}
+  onNewMessages:
+    m_PersistentCalls:
+      m_Calls: []
+  onNewMessage:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1816034950
 Transform:
   m_ObjectHideFlags: 0

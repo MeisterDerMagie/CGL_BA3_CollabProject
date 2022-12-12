@@ -13,8 +13,8 @@ public class DisplayLobbyCode : MonoBehaviour
     private void Start()
     {
         //hide lobby code if none exists (this will happen if you play locally)
-        lobbyCodeUI.gameObject.SetActive(LobbyManager.Instance.lobbyCode != string.Empty);
+        lobbyCodeUI.gameObject.SetActive(LobbyCode.Instance.code != string.Empty);
 
-        lobbyCodeText.SetText(LobbyManager.Instance.lobbyCode);
+        lobbyCodeText.SetText(LobbyCode.Instance.code);
     }
 }

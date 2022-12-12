@@ -11,7 +11,7 @@ public class CopyLobbyCodeToClipboard : MonoBehaviour
     
     public void Copy()
     {
-        LobbyManager.Instance.lobbyCode.CopyToClipboard();
+        LobbyCode.Instance.code.CopyToClipboard();
         animation.DORestart();
     }
 }

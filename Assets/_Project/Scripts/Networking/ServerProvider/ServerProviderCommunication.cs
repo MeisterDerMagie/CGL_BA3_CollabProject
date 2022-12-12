@@ -84,21 +84,21 @@ public class ServerProviderCommunication : MonoBehaviour
     public void ServerStarted()
     {
         var metadata = new Dictionary<object, object>();
-        metadata.Add("lobbyCode", LobbyManager.Instance.lobbyCode);
+        metadata.Add("lobbyCode", LobbyCode.Instance.code);
         ServerProviderClient.SendMessage("serverStarted", metadata);
     }
 
     public void ServerInGame()
     {
         var metadata = new Dictionary<object, object>();
-        metadata.Add("lobbyCode", LobbyManager.Instance.lobbyCode);
+        metadata.Add("lobbyCode", LobbyCode.Instance.code);
         ServerProviderClient.SendMessage("serverInGame", metadata);
     }
 
     public void ServerStopped()
     {
         var metadata = new Dictionary<object, object>();
-        metadata.Add("lobbyCode", LobbyManager.Instance.lobbyCode);
+        metadata.Add("lobbyCode", LobbyCode.Instance.code);
         ServerProviderClient.SendMessage("serverStopped", metadata);
     }
     #endregion
@@ -111,7 +111,7 @@ public class ServerProviderCommunication : MonoBehaviour
         Transport.SetConnectionData(serverIp, port);
         
         //set lobby code
-        LobbyManager.Instance.lobbyCode = lobbyCode;
+        LobbyCode.Instance.code = lobbyCode;
         
         //start client
         NetworkManager.Singleton.StartClient();
