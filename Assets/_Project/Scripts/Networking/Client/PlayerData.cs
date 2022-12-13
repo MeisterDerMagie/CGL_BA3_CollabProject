@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
+using Wichtel;
 
 public class PlayerData : NetworkBehaviour
 {
@@ -23,7 +24,7 @@ public class PlayerData : NetworkBehaviour
         get
         {
             if (!IsLocalPlayer) return _playerName.Value.ToString();
-            return _playerNameIsSynced ? _playerName.Value.ToString() : _loadedPlayerName;
+            return _playerNameIsSynced ? _playerName.Value.ToString() : _playerNameLocal;
         }
     }
 
@@ -32,7 +33,7 @@ public class PlayerData : NetworkBehaviour
         get
         {
             if (!IsLocalPlayer) return _characterId.Value;
-            return _characterIdIsSynced ? _characterId.Value : _loadedCharacterId;
+            return _characterIdIsSynced ? _characterId.Value : _characterIdLocal;
         }
     }
 
@@ -43,12 +44,14 @@ public class PlayerData : NetworkBehaviour
     public int PointsPerformance => _pointsPerformance.Value;
 
     //we need these pre-loaded values because even if the player name was loaded from player prefs, it's only set in the first sync from the server. With these values we can access the correct name and characterId right from the beginning
-    private string _loadedPlayerName = string.Empty;
-    private uint _loadedCharacterId = 0;
+    private string _playerNameLocal = string.Empty;
+    private uint _characterIdLocal = 0;
 
     private bool _playerNameIsSynced = false;
     private bool _characterIdIsSynced = false;
-    
+
+    private string _defaultPlayerName;
+
     //Network Variables
     private NetworkVariable<FixedString64Bytes> _clientGuid;
     private NetworkVariable<FixedString128Bytes> _playerName;
@@ -76,6 +79,9 @@ public class PlayerData : NetworkBehaviour
 
     private void Start()
     {
+        //default playerName
+        _defaultPlayerName = $"Player {OwnerClientId.ToString()}";
+        
         //load player prefs
         if (!IsLocalPlayer) return;
         
@@ -100,21 +106,20 @@ public class PlayerData : NetworkBehaviour
             string previousName = PlayerPrefs.GetString("playerName");
             if (previousName == null)
             {
-                string genericPlayerName = $"Player {OwnerClientId.ToString()}";
-                _loadedPlayerName = genericPlayerName;
-                SetPlayerNameServerRpc(genericPlayerName);
+                _playerNameLocal = _defaultPlayerName;
+                SetPlayerNameServerRpc(_defaultPlayerName);
             }
             //if the name is longer than 18 characters, it was not the real previous name but was changed in the registry. Set it to something default to avoid bugs.
             else if (previousName.Length > 18) previousName = "Little Hacker";
 
-            _loadedPlayerName = previousName;
+            _playerNameLocal = previousName;
             SetPlayerNameServerRpc(previousName);
         }
         else
         {
-            string genericPlayerName = $"Player {OwnerClientId.ToString()}";
-            _loadedPlayerName = genericPlayerName;
-            SetPlayerNameServerRpc(genericPlayerName);
+            //if there is no previous name in player prefs, create default name ("Player 1")
+            _playerNameLocal = _defaultPlayerName;
+            SetPlayerNameServerRpc(_defaultPlayerName);
         }
 
         if (PlayerPrefs.HasKey("characterId"))
@@ -122,12 +127,12 @@ public class PlayerData : NetworkBehaviour
             //load previous characterId
             int previousCharacterId = PlayerPrefs.GetInt("characterId");
             //set the id
-            _loadedCharacterId = (uint)previousCharacterId;
+            _characterIdLocal = (uint)previousCharacterId;
             SetCharacterIdServerRpc((uint)previousCharacterId);
         }
         else
         {
-            _loadedCharacterId = 0;
+            _characterIdLocal = 0;
             _characterId = new NetworkVariable<uint>(0);
         }
         
@@ -154,8 +159,30 @@ public class PlayerData : NetworkBehaviour
     }
 
     //Change events
-    private void OnPlayerNameChanged(FixedString128Bytes previousvalue, FixedString128Bytes newvalue) => _playerNameIsSynced = true;
-    private void OnCharacterIdChanged(uint previousvalue, uint newvalue) => _characterIdIsSynced = true;
+    private void OnPlayerNameChanged(FixedString128Bytes previousvalue, FixedString128Bytes newvalue)
+    {
+        //save the name to the player prefs (we do it here instead of in SetPlayerName() to avoid names with profanity being saved to the prefs)
+        if (IsLocalPlayer)
+        {
+            //if the new name is the default player name, remove the entry from player prefs. This prevents old names to be retrieved if the player chose to play with the default name.
+            if (newvalue == _defaultPlayerName)
+                PlayerPrefs.DeleteKey("playerName");
+            //otherwise, save it to the prefs
+            else
+                PlayerPrefs.SetString("playerName", newvalue.Value);
+        }
+
+        Debug.Log("OnPlayerNameChanged");
+        
+        _playerNameIsSynced = true;
+    }
+
+    private void OnCharacterIdChanged(uint previousvalue, uint newvalue)
+    {
+        //if the local characterId matches the one that came from the server, it's synced
+        //ja, dadurch geben wir dem Client die volle Kontrolle --> cheatinganfällig. Bei der Charakterauswahl ist das aber nicht tragisch.
+        if(newvalue == _characterIdLocal) _characterIdIsSynced = true;
+    }
 
     //Setters
     [ServerRpc]
@@ -164,18 +191,27 @@ public class PlayerData : NetworkBehaviour
         _clientGuid.Value = newGuid;
     }
     
-    //Call this on the client! Here we set the player name and save it in the player prefs. 
+    //Call this on the client!
     public void SetPlayerName(string newName)
     {
-        PlayerPrefs.SetString("playerName", newName);
+        _playerNameIsSynced = false;
+        _playerNameLocal = string.IsNullOrWhiteSpace(newName) ? _defaultPlayerName : newName;
         SetPlayerNameServerRpc(newName);
     }
-    
-    //here we actually set the name, but it doesn't get saved to the player prefs. This is needed for initializing the playerName. We don't want the game to save "Player 1" to the prefs.
+
+    //here we check the name for profanity and then set it (default name if profanity was found)
     [ServerRpc]
     private void SetPlayerNameServerRpc(string newName)
     {
-        _playerName.Value = new FixedString128Bytes(newName);
+        //set the name to something different so that the onChanged event always gets called, even if the name didn't change (we need this in order to update the view correctly on clients)
+        _playerName.Value = "DEFAULT_TEXT_SO_THAT_CHANGED_EVENT_GETS_CALLED";
+        
+        //if the new value is empty or whitespace, use the default name instead
+        if (string.IsNullOrWhiteSpace(newName))
+            _playerName.Value = _defaultPlayerName;
+        //then check if the name contains profanity. if it does, use the default name. if it doesn't use the new name
+        else
+            _playerName.Value = ProfanityFilter.Instance.ContainsProfanity(newName) ? _defaultPlayerName :  new FixedString128Bytes(newName);
     }
 
     //Call this on the client! here we check if the characterId is valid (aka there exists a corresponding character), then save it to the playerPrefs and call the ServerRPC
@@ -187,6 +223,10 @@ public class PlayerData : NetworkBehaviour
             Debug.LogWarning("You managed to choose a non-existent character. Congratulations!");
             return;
         }
+        
+        //set the local characterID (to avoid a laggy feel when selecting the character)
+        _characterIdLocal = newCharacterId;
+        _characterIdIsSynced = false;
         
         //set player pref
         PlayerPrefs.SetInt("characterId", (int)newCharacterId);

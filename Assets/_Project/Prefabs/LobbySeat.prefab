@@ -1238,6 +1238,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51623a4a42eb4733836d972280aab476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onNewCharacterSelected:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &6325279453342909295
 GameObject:
   m_ObjectHideFlags: 0

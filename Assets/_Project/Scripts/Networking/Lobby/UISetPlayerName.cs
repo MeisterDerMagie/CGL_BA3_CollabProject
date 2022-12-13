@@ -39,6 +39,12 @@ public class UISetPlayerName : MonoBehaviour
         Debug.Log("ended poll for player name");
     }
 
+    private void Update()
+    {
+        //Update the player name
+        if(!NetworkManager.Singleton.IsServer && !inputField.isFocused) inputField.SetTextWithoutNotify(PlayerData.LocalPlayerData.PlayerName);
+    }
+
     public void ConfirmPlayerName()
     {
         if (!_lobbySeat.AssociatedPlayer.IsLocalPlayer) return;
