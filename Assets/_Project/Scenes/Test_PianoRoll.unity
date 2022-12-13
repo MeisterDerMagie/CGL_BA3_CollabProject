@@ -426,7 +426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 743de06108c296b4b96b75bf36ff987d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bpm: 100
+  bpm: 110
   lines: 4
   beats: 8
   beatObj: {fileID: 6277914542332746976, guid: 0e09f88532672b64b9b4c352dfc77e52, type: 3}

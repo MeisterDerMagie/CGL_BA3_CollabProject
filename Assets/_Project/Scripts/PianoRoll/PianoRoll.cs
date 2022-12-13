@@ -15,7 +15,7 @@ public class PianoRoll : MonoBehaviour
     [SerializeField] private GameObject bg;
 
     float xPos; // where new notes should be spawned
-    float length4s; // length of the quarter notes
+    float length4s; // duration of the quarter notes in s
     float timer;
     int beatCounter;
     bool playing;
@@ -25,7 +25,7 @@ public class PianoRoll : MonoBehaviour
     {
         // get the right corner of the piano roll (where objects will be spawned)
         xPos = transform.position.x + bg.transform.localScale.x / 2f;
-        length4s = bpm / 60f / 4f;
+        length4s = 60f / bpm;
         timer = 0;
         beatCounter = 0;
     }
@@ -61,7 +61,7 @@ public class PianoRoll : MonoBehaviour
         {
             timer += Time.deltaTime;
 
-            if (timer >= bpm / 60f / 4f * beatCounter)
+            if (timer >= 60f / bpm * beatCounter)
             {
                 SpawnQuarterLine();
                 beatCounter++;
