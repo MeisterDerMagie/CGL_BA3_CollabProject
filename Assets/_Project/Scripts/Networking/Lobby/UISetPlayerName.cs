@@ -42,7 +42,7 @@ public class UISetPlayerName : MonoBehaviour
     private void Update()
     {
         //Update the player name
-        if(!NetworkManager.Singleton.IsServer && !inputField.isFocused) inputField.SetTextWithoutNotify(PlayerData.LocalPlayerData.PlayerName);
+        if(!NetworkManager.Singleton.IsServer && !inputField.isFocused && PlayerData.LocalPlayerData != null) inputField.SetTextWithoutNotify(PlayerData.LocalPlayerData.PlayerName);
     }
 
     public void ConfirmPlayerName()

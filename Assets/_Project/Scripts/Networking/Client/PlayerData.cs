@@ -6,10 +6,11 @@ using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using Wichtel;
+using Wichtel.Extensions;
 
 public class PlayerData : NetworkBehaviour
 {
-    public static PlayerData LocalPlayerData => (localPlayerDataCached == null) ? CacheLocalPlayerData() : localPlayerDataCached;
+    public static PlayerData LocalPlayerData => (localPlayerDataCached == null || localPlayerDataCached.IsDestroyed()) ? CacheLocalPlayerData() : localPlayerDataCached;
     private static PlayerData localPlayerDataCached;
 
     private static PlayerData CacheLocalPlayerData()
@@ -37,7 +38,6 @@ public class PlayerData : NetworkBehaviour
         }
     }
 
-    public bool IsReadyInLobby => _isReadyInLobby.Value;
     public string Prompt => _prompt.Value.ToString();
     public int PointsCreativity => _pointsCreativity.Value;
     public int PointsPlayability => _pointsPlayability.Value;
@@ -56,7 +56,6 @@ public class PlayerData : NetworkBehaviour
     private NetworkVariable<FixedString64Bytes> _clientGuid;
     private NetworkVariable<FixedString128Bytes> _playerName;
     private NetworkVariable<uint> _characterId;
-    private NetworkVariable<bool> _isReadyInLobby;
     private NetworkVariable<FixedString512Bytes> _prompt;
 
     private NetworkVariable<int> _pointsCreativity;
@@ -70,7 +69,6 @@ public class PlayerData : NetworkBehaviour
         _clientGuid = new NetworkVariable<FixedString64Bytes>(Guid.NewGuid().ToString());
         _playerName = new NetworkVariable<FixedString128Bytes>(string.Empty);
         _characterId = new NetworkVariable<uint>(0);
-        _isReadyInLobby = new NetworkVariable<bool>(false);
         _prompt = new NetworkVariable<FixedString512Bytes>(string.Empty);
         _pointsCreativity = new NetworkVariable<int>(0);
         _pointsPlayability = new NetworkVariable<int>(0);
@@ -143,6 +141,9 @@ public class PlayerData : NetworkBehaviour
 
     public override void OnDestroy()
     {
+        //reset local data
+        if (IsLocalPlayer) localPlayerDataCached = null;
+        
         //unsubscribe form events
         _playerName.OnValueChanged -= OnPlayerNameChanged;
         _characterId.OnValueChanged -= OnCharacterIdChanged;
@@ -151,7 +152,6 @@ public class PlayerData : NetworkBehaviour
         _clientGuid.Dispose();
         _playerName.Dispose();
         _characterId.Dispose();
-        _isReadyInLobby.Dispose();
         _prompt.Dispose();
         _pointsCreativity.Dispose();
         _pointsPlayability.Dispose();
@@ -246,12 +246,6 @@ public class PlayerData : NetworkBehaviour
         }
         
         _characterId.Value = newCharacterId;
-    }
-
-    [ServerRpc]
-    public void SetReadyStateServerRpc(bool newState)
-    {
-        _isReadyInLobby.Value = newState;
     }
 
     [ServerRpc]

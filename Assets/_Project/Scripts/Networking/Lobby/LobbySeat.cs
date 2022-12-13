@@ -5,6 +5,7 @@ using Sirenix.OdinInspector;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
+using Wichtel.Extensions;
 
 public class LobbySeat : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class LobbySeat : MonoBehaviour
 
     public PlayerData AssociatedPlayer => _associatedPlayer;
     private PlayerData _associatedPlayer;
+    private PlayerLobbyData _associatedLobbyData;
 
     private uint _characterIdBefore = uint.MaxValue;
     
@@ -53,10 +55,14 @@ public class LobbySeat : MonoBehaviour
 
         //reset in case a player left the room
         _associatedPlayer = null;
+        _associatedLobbyData = null;
         
         //assign player to slot
         if (_playerDatas.Count >= seatIndex + 1)
+        {
             _associatedPlayer = _playerDatas[seatIndex];
+            _associatedLobbyData = _associatedPlayer.GetComponent<PlayerLobbyData>();
+        }
     }
     
     //show / hide UI elements
@@ -70,7 +76,7 @@ public class LobbySeat : MonoBehaviour
         }
         
         //activate ui elements for local player
-        if(_associatedPlayer.IsLocalPlayer) 
+        if(_associatedPlayer.IsLocalPlayer && !PlayerLobbyData.LocalPlayerLobbyData.IsReadyInLobby)
         {
             foreach (Transform t in activeObjectsOnLocalPlayer)
             {
@@ -104,7 +110,7 @@ public class LobbySeat : MonoBehaviour
         }
         
         //update ready status
-        if (_associatedPlayer.IsReadyInLobby)
+        if (_associatedLobbyData.IsReadyInLobby)
         {
             ready.gameObject.SetActive(true);
             notReady.gameObject.SetActive(false);
@@ -130,10 +136,41 @@ public class LobbySeat : MonoBehaviour
     {
         if (_associatedPlayer == null) return;
 
+        var charactersOfOtherPlayers = new List<uint>(); 
+        
+        //check if the character is available
+        if (!NetworkManager.Singleton.IsServer)
+        {
+            foreach (PlayerData playerData in _playerDatas)
+            {
+                if (playerData.IsLocalPlayer) continue;
+                charactersOfOtherPlayers.Add(playerData.CharacterId);
+            }
+
+            bool characterIsPickedBySomeoneElse = false;
+            foreach (uint id in charactersOfOtherPlayers)
+            {
+                if (id == PlayerData.LocalPlayerData.CharacterId) characterIsPickedBySomeoneElse = true;
+            }
+        
+            //if your character is also picked by someone else --> show a hint (gray out the character sprite) and block the ready-button
+            if (characterIsPickedBySomeoneElse)
+            {
+                PlayerLobbyData.LocalPlayerLobbyData.pickedUniqueCharacter = false;
+                characterImage.color = characterImage.color.With(a: 0.5f);
+            }
+            //if not, don't gray out
+            else
+            {
+                PlayerLobbyData.LocalPlayerLobbyData.pickedUniqueCharacter = true;
+                characterImage.color = characterImage.color.With(a: 1f);
+            }   
+        }
+
         //only update the character image if the player changed it
         if (_associatedPlayer.CharacterId == _characterIdBefore) return;
         
-        //
+        //get the character image that belongs to the characterId
         characterImage.sprite = CharacterManager.Instance.GetCharacter(_associatedPlayer.CharacterId).characterImage;
 
         //cache the currentId

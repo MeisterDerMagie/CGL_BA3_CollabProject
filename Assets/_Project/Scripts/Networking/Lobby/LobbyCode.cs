@@ -13,7 +13,7 @@ public class LobbyCode : MonoBehaviour
     private static LobbyCode instance;
     public static LobbyCode Instance => instance;
     
-    public void Awake()
+    private void Awake()
     {
         if (instance == null)
         {

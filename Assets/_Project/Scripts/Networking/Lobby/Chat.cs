@@ -44,7 +44,7 @@ public class Chat : NetworkBehaviour
         chatInputField.OnUserEnteredMessage += CreateChatMessage;
         
         //show messages if there are any
-        if(IsServer)
+        if(NetworkManager.IsServer)
             DisplayChatLog();
         else
             SyncAndDisplay();
@@ -80,7 +80,7 @@ public class Chat : NetworkBehaviour
         var newMessages = chatMessagesFromServer.Except(_chatMessagesLocal).ToList();
 
         //remove own messages
-        if (!IsServer)
+        if (!NetworkManager.IsServer)
         {
             Guid ownGuid = PlayerData.LocalPlayerData.ClientGuid;
             for (int i = newMessages.Count - 1; i >= 0; i--)

@@ -14,7 +14,7 @@ public class UISetReadyState : MonoBehaviour
             return; 
         }
         
-        PlayerData.LocalPlayerData.SetReadyStateServerRpc(true);
+        PlayerLobbyData.LocalPlayerLobbyData.SetReadyState(true);
     }
 
     public void Unready()
@@ -25,6 +25,6 @@ public class UISetReadyState : MonoBehaviour
             return;
         }
         
-        PlayerData.LocalPlayerData.SetReadyStateServerRpc(false);
+        PlayerLobbyData.LocalPlayerLobbyData.SetReadyState(false);
     }
 }

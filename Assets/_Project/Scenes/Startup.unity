@@ -718,7 +718,7 @@ GameObject:
   - component: {fileID: 1539646744}
   - component: {fileID: 1539646743}
   m_Layer: 0
-  m_Name: LobbyManager
+  m_Name: LobbyCode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -863,9 +863,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 253c39c13e4ad4d4e9a24979baaf0a8c, type: 2}
   - {fileID: 11400000, guid: 9536b0c3fa4076444bd1a699dcd9bca9, type: 2}
   - {fileID: 11400000, guid: a692a0efe4d87fe4b9e2a7cc6a6f5ead, type: 2}
+  - {fileID: 11400000, guid: 7aef3dfaecc444641a960129716f3930, type: 2}
   - {fileID: 11400000, guid: 23fa5916146e52949989f671b57ab028, type: 2}
   - {fileID: 11400000, guid: 285dd13f42ab453449b52971b40a5c46, type: 2}
-  - {fileID: 11400000, guid: 7aef3dfaecc444641a960129716f3930, type: 2}
 --- !u!4 &1813043653
 Transform:
   m_ObjectHideFlags: 0
