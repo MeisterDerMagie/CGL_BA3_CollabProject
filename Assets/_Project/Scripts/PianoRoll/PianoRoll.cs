@@ -24,8 +24,8 @@ public class PianoRoll : MonoBehaviour
     void Start()
     {
         // get the right corner of the piano roll (where objects will be spawned)
-        xPos = transform.position.x + bg.transform.localScale.x / 2;
-        length4s = bpm / 60 / 4;
+        xPos = transform.position.x + bg.transform.localScale.x / 2f;
+        length4s = bpm / 60f / 4f;
         timer = 0;
         beatCounter = 0;
     }
@@ -61,7 +61,7 @@ public class PianoRoll : MonoBehaviour
         {
             timer += Time.deltaTime;
 
-            if (timer >= bpm / 60 / 4 * beatCounter)
+            if (timer >= bpm / 60f / 4f * beatCounter)
             {
                 SpawnQuarterLine();
                 beatCounter++;
@@ -83,7 +83,7 @@ public class PianoRoll : MonoBehaviour
     {
         GameObject clone = Instantiate(beatObj, this.gameObject.transform);
         clone.transform.position = new Vector3(xPos, 0, 0);
-        clone.GetComponent<Notes>().NoteSetUp(bpm, beats, transform.position.x - bg.transform.localScale.x / 2);
+        clone.GetComponent<Notes>().NoteSetUp(bpm, beats, transform.position.x - bg.transform.localScale.x / 2f);
         clone.SetActive(true);
     }
 
@@ -92,6 +92,6 @@ public class PianoRoll : MonoBehaviour
         GameObject clone = Instantiate(noteObj, this.gameObject.transform);
         // missing: set correct y Pos according to line
         clone.transform.position = new Vector3(xPos, 0, 0);
-        clone.GetComponent<Notes>().NoteSetUp(bpm, beats, transform.position.x - bg.transform.localScale.x / 2);
+        clone.GetComponent<Notes>().NoteSetUp(bpm, beats, transform.position.x - bg.transform.localScale.x / 2f);
     }
 }

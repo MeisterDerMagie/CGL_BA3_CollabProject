@@ -14,7 +14,7 @@ public class Notes : MonoBehaviour
         // total duration of travelling length of the piano roll
         // quarter note = bpm/60/4
         // beat length = length of piano roll measured in quarter notes
-        float duration = bpm / 60 / 4 * beatLength;
+        float duration = bpm / 60f / 4f * beatLength;
 
         StartCoroutine(MoveToLeft(duration));
     }
