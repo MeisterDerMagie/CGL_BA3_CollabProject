@@ -15,6 +15,6 @@ public class LobbyReadyButtonEnabler : MonoBehaviour
 
     private void Update()
     {
-        if(!NetworkManager.Singleton.IsServer) _button.interactable = PlayerLobbyData.LocalPlayerLobbyData.pickedUniqueCharacter;
+        if(!NetworkManager.Singleton.IsServer) _button.interactable = (PlayerLobbyData.LocalPlayerLobbyData != null && PlayerLobbyData.LocalPlayerLobbyData.pickedUniqueCharacter);
     }
 }
