@@ -26,10 +26,10 @@ public class PianoRoll : MonoBehaviour
     float length4s; // duration of the quarter notes in s
     float timer; // keeps track of time passed
     public int beatCounter; // keeps track of which beat we are currently on
-    bool playing;
+    bool musicPlaying;
+    bool waitForBars;
+    bool barsPlaying;
     int beats; // how often are lines spawned, every beat or if 2 every other beat
-
-    private List<Bar> playbackBars;
 
     //idle lines when piano roll is not playing
     private List<Transform> idleLines;
@@ -38,7 +38,7 @@ public class PianoRoll : MonoBehaviour
     void Start()
     {
         // get the right corner of the piano roll (where objects will be spawned)
-        xPos = transform.position.x + bg.transform.localScale.x / 2f;
+        xPos = transform.localPosition.x + bg.transform.localScale.x / 2f;
         length4s = 60f / bpm;
         timer = 0;
         beatCounter = 1;
@@ -48,7 +48,7 @@ public class PianoRoll : MonoBehaviour
         posLines = new List<float>();
         beats = 2;
 
-        float x = transform.position.x - bg.transform.localScale.x / 2f;
+        float x = transform.localPosition.x - bg.transform.localScale.x / 2f;
 
         for (int i = 0; i <= beatLength / beats - 1; i++)
         {
@@ -69,13 +69,13 @@ public class PianoRoll : MonoBehaviour
         }
 
         // set up first idle line at left hand corner of piano roll
-        idleLines[0].position = new Vector3(-xPos, 0, 0);
+        idleLines[0].localPosition = new Vector3(-xPos, 0, 0);
 
         // set up all other lines
         for (int i = 1; i < idleLines.Count; i++)
         {
             idleLines[i].gameObject.SetActive(true);
-            idleLines[i].position = new Vector3(posLines[i-1], 0, 0); 
+            idleLines[i].localPosition = new Vector3(posLines[i-1], 0, 0); 
         }
         #endregion
     }
@@ -86,8 +86,8 @@ public class PianoRoll : MonoBehaviour
         // for testing if quarter lines spawn correctly on time; start and stop by pressing space bar; should be triggered by FMOD instead
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            playing = !playing;
-            if (playing)
+            musicPlaying = !musicPlaying;
+            if (musicPlaying)
             {
                 ActivateIdleLines(false);
             }
@@ -98,7 +98,7 @@ public class PianoRoll : MonoBehaviour
         }
 
 
-        if (playing)
+        if (musicPlaying)
         {
             // increase timer by amount of ms passed between frames
             timer += Time.deltaTime;
@@ -115,6 +115,14 @@ public class PianoRoll : MonoBehaviour
                     timer = 0;
                 }
 
+                // check if bars should be counted in
+                if (waitForBars)
+                {
+                    if (beatCounter == 3) barsPlaying = true;
+                    waitForBars = false;
+                }
+
+                if (barsPlaying) PlayBars();
                 PlayLines();
             }
         }
@@ -135,10 +143,10 @@ public class PianoRoll : MonoBehaviour
     {
         //intantiate a new quarternote line and set position to the far right of the piano roll:
         GameObject clone = Instantiate(beatObj, this.gameObject.transform);
-        clone.transform.position = new Vector3(xPos, 0, 0);
+        clone.transform.localPosition = new Vector3(xPos, 0, 0);
 
         // tell the clone the current bpm, the length of the piano roll in beats, and the target value of position.x (how far it needs to travel to the left)
-        clone.GetComponent<Notes>().NoteSetUp(bpm, beatLength, transform.position.x - bg.transform.localScale.x / 2f, this);
+        clone.GetComponent<Notes>().NoteSetUp(bpm, beatLength, transform.localPosition.x - bg.transform.localScale.x / 2f, this);
 
         currentNotes.Add(clone);
     }
@@ -173,21 +181,25 @@ public class PianoRoll : MonoBehaviour
             {
                 // instantiate a new line and set position to what is saved in posLines
                 GameObject clone = Instantiate(beatObj, this.gameObject.transform);
-                clone.transform.position = new Vector3(posLines[i], 0, 0);
+                clone.transform.localPosition = new Vector3(posLines[i], 0, 0);
 
                 // tell the clone the current bpm, length of piano roll in beats, and target value of poision x (how far it needs to travel to the left)
-                clone.GetComponent<Notes>().NoteSetUp(bpm, (i + 1) * beats, transform.position.x - bg.transform.localScale.x / 2f, this);
+                clone.GetComponent<Notes>().NoteSetUp(bpm, (i + 1) * beats, transform.localPosition.x - bg.transform.localScale.x / 2f, this);
 
                 currentNotes.Add(clone);
             }
         }
     }
 
-    public void PlayBackBars()
+    public void PlayBars(bool withSound = false)
     {
 
     }
 
+    public void StartPlayback()
+    {
+        waitForBars = true;
+    }
 
 
 
@@ -199,8 +211,8 @@ public class PianoRoll : MonoBehaviour
     {
         GameObject clone = Instantiate(noteObj, this.gameObject.transform);
         // missing: set correct y Pos according to line
-        clone.transform.position = new Vector3(xPos, 0, 0);
-        clone.GetComponent<Notes>().NoteSetUp(bpm, beatLength, transform.position.x - bg.transform.localScale.x / 2f, this);
+        clone.transform.localPosition = new Vector3(xPos, 0, 0);
+        clone.GetComponent<Notes>().NoteSetUp(bpm, beatLength, transform.localPosition.x - bg.transform.localScale.x / 2f, this);
 
         currentNotes.Add(clone);
     }

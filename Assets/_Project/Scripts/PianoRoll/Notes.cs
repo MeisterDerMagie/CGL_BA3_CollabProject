@@ -23,7 +23,7 @@ public class Notes : MonoBehaviour
         _pianoroll = script;
 
         // set target position on the right side of the Piano Roll
-        Vector3 targetPos = new Vector3(_targetX, transform.position.y, transform.position.z);
+        Vector3 targetPos = new Vector3(_targetX, transform.localPosition.y, transform.localPosition.z);
 
         StartCoroutine(MoveToLeft(duration, targetPos));
     }
@@ -31,12 +31,12 @@ public class Notes : MonoBehaviour
     IEnumerator MoveToLeft(float duration, Vector3 targetPosition)
     {
         float time = 0;
-        Vector3 startPosition = transform.position;
+        Vector3 startPosition = transform.localPosition;
 
         // move note towards target Pos with a fixed duration of movement by using Vector3.Lerp
         while (time < duration)
         {
-            transform.position = Vector3.Lerp(startPosition, targetPosition, time / duration);
+            transform.localPosition = Vector3.Lerp(startPosition, targetPosition, time / duration);
             time += Time.deltaTime;
             yield return null;
         }
