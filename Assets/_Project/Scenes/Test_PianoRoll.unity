@@ -390,6 +390,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1743980089}
   - component: {fileID: 1743980090}
+  - component: {fileID: 1743980091}
   m_Layer: 0
   m_Name: PianoRoll
   m_TagString: Untagged
@@ -427,8 +428,58 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bpm: 110
-  lines: 4
-  beats: 8
+  lineHeight: 4
+  beatLength: 8
+  previewLength: 6
   beatObj: {fileID: 6277914542332746976, guid: 0e09f88532672b64b9b4c352dfc77e52, type: 3}
   noteObj: {fileID: 1761876749553087292, guid: fce7bc25ea6d51e46997e42ec10263f3, type: 3}
   bg: {fileID: 1264820006}
+  posLines: []
+  beatCounter: 0
+--- !u!114 &1743980091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743980088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06cc486a0a90e2f4caef5b0b9fa4a919, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bars:
+  - notes:
+    - contains: 1
+      s: 0
+    - contains: 0
+      s: 0
+    - contains: 1
+      s: 1
+    - contains: 0
+      s: 0
+    - contains: 1
+      s: 2
+    - contains: 0
+      s: 0
+    - contains: 1
+      s: 3
+    - contains: 0
+      s: 0
+  - notes:
+    - contains: 0
+      s: 0
+    - contains: 1
+      s: 3
+    - contains: 0
+      s: 0
+    - contains: 1
+      s: 2
+    - contains: 0
+      s: 0
+    - contains: 1
+      s: 1
+    - contains: 0
+      s: 0
+    - contains: 1
+      s: 0

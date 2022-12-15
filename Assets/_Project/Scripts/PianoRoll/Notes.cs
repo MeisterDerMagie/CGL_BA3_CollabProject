@@ -11,13 +11,16 @@ using UnityEngine;
 
 public class Notes : MonoBehaviour
 {
-    public void NoteSetUp(float bpm, int beatLength, float _targetX)
+    private PianoRoll _pianoroll;
+    public void NoteSetUp(float bpm, int beatLength, float _targetX, PianoRoll script)
     {
         // calculate total duration of travelling length of the piano roll in seconds
         // duration of quarter note = 60 seconds / bpm
         // beat length = length of piano roll measured in quarter notes
         // --> total duration is quarter notes times beat length
         float duration = 60f / bpm * beatLength;
+
+        _pianoroll = script;
 
         // set target position on the right side of the Piano Roll
         Vector3 targetPos = new Vector3(_targetX, transform.position.y, transform.position.z);
@@ -37,7 +40,8 @@ public class Notes : MonoBehaviour
             time += Time.deltaTime;
             yield return null;
         }
-        
+
+        _pianoroll.RemoveNote(this.gameObject);
         Destroy(this.gameObject);
     }
 }
