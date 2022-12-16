@@ -123,6 +123,68 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &459808163
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 459808164}
+  m_Layer: 0
+  m_Name: Spawns
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &459808164
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 459808163}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1743980089}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &464468771
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 464468772}
+  m_Layer: 0
+  m_Name: Idle lines
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &464468772
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 464468771}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1743980089}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &893630038
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,6 +453,7 @@ GameObject:
   - component: {fileID: 1743980089}
   - component: {fileID: 1743980090}
   - component: {fileID: 1743980091}
+  - component: {fileID: 1743980092}
   m_Layer: 0
   m_Name: PianoRoll
   m_TagString: Untagged
@@ -412,6 +475,8 @@ Transform:
   m_Children:
   - {fileID: 1264820007}
   - {fileID: 1665291479}
+  - {fileID: 464468772}
+  - {fileID: 459808164}
   m_Father: {fileID: 1961762787}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -429,17 +494,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resetPrevCounter: 5
   bpm: 110
-  lineHeight: 4
-  beatLength: 8
-  previewLength: 6
-  beatObj: {fileID: 6277914542332746976, guid: 0e09f88532672b64b9b4c352dfc77e52, type: 3}
-  noteObj: {fileID: 1761876749553087292, guid: fce7bc25ea6d51e46997e42ec10263f3, type: 3}
-  bg: {fileID: 1264820006}
-  posLines: []
   prevBeatCounter: 0
   locBeatCounter: 0
   prevBarCounter: 0
   locBarCounter: 0
+  bars: []
 --- !u!114 &1743980091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -487,6 +546,26 @@ MonoBehaviour:
       s: 0
     - contains: 1
       s: 0
+--- !u!114 &1743980092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743980088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c777d6cb31eeb214baea5d5c9ca8813f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  beatObj: {fileID: 6277914542332746976, guid: 0e09f88532672b64b9b4c352dfc77e52, type: 3}
+  noteObj: {fileID: 1761876749553087292, guid: fce7bc25ea6d51e46997e42ec10263f3, type: 3}
+  bg: {fileID: 1264820006}
+  idleL: {fileID: 464468771}
+  spawns: {fileID: 459808163}
+  lineHeight: 4
+  beatLength: 8
+  previewLength: 6
 --- !u!1 &1961762786
 GameObject:
   m_ObjectHideFlags: 0

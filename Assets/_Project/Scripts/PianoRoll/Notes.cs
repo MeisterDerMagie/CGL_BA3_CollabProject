@@ -4,15 +4,15 @@ using UnityEngine;
 
 /// <summary>
 /// should sit on all notes and quarter note lines in the piano roll
-/// gets current bpm, length of piano roll and target x position from the Piano roll
+/// gets current bpm, length of piano roll and target x position from the Note Spawner
 /// calculates duration of movement from this and moves notes with Vector3Lerp Movement in fixed duration
 /// deletes game object at the end
 /// </summary>
 
 public class Notes : MonoBehaviour
 {
-    private PianoRoll _pianoroll;
-    public void NoteSetUp(float bpm, int beatLength, float _targetX, PianoRoll script)
+    private NoteSpawner spawner;
+    public void NoteSetUp(float bpm, int beatLength, float _targetX, NoteSpawner script)
     {
         // calculate total duration of travelling length of the piano roll in seconds
         // duration of quarter note = 60 seconds / bpm
@@ -20,7 +20,7 @@ public class Notes : MonoBehaviour
         // --> total duration is quarter notes times beat length
         float duration = 60f / bpm * beatLength;
 
-        _pianoroll = script;
+        spawner = script;
 
         // set target position on the right side of the Piano Roll
         Vector3 targetPos = new Vector3(_targetX, transform.localPosition.y, transform.localPosition.z);
@@ -41,7 +41,7 @@ public class Notes : MonoBehaviour
             yield return null;
         }
 
-        _pianoroll.RemoveNote(this.gameObject);
+        spawner.RemoveNote(this.gameObject);
         Destroy(this.gameObject);
     }
 }
