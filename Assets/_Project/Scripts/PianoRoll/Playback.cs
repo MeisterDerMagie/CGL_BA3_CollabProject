@@ -22,14 +22,38 @@ public struct Bar
 
 }
 
+public struct AudioNote
+{
+    public float timeStamp;
+    public int sample;
+}
+
+public struct AudioBar
+{
+    public List<AudioNote> notes;
+
+    public AudioBar(List<AudioNote> _n)
+    {
+        notes = new List<AudioNote>();
+        notes = _n;
+    }
+}
+
 public class Playback : MonoBehaviour
 {
     private PianoRoll _pianoRoll;
     public List<Bar> bars;
+    public List<AudioBar> barsAudio;
+
+    private void Start()
+    {
+        //barsAudio = new List<AudioBar>();
+        _pianoRoll = GetComponent<PianoRoll>();
+    }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return)) PlaybackBars();
+        if (Input.GetKeyDown(KeyCode.P)) PlaybackBars();
     }
 
     public void AddNewBar()
@@ -43,7 +67,7 @@ public class Playback : MonoBehaviour
 
     public void PlaybackBars()
     {
-        _pianoRoll.StartPlayback();
+        _pianoRoll.StartPlayback(bars);
     }
 
     /*

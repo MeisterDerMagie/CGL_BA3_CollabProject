@@ -9,6 +9,7 @@ using UnityEngine;
 
 public class PianoRoll : MonoBehaviour
 {
+    [SerializeField] private int resetPrevCounter = 7;
     [SerializeField] private float bpm = 110f;
     [Tooltip("Amount of lines in piano roll, so how many different kinds of notes spawned on top of each other")]
     [SerializeField] private int lineHeight = 4;
@@ -25,7 +26,10 @@ public class PianoRoll : MonoBehaviour
     float xPos; // where new notes should be spawned
     float length4s; // duration of the quarter notes in s
     float timer; // keeps track of time passed
-    public int beatCounter; // keeps track of which beat we are currently on
+    public int prevBeatCounter; // keeps track of which beat we are currently on to preview
+    public int locBeatCounter; // keeps track of which beat the location marker is currently on
+    public int prevBarCounter; //keeps track which bar the preview is currently in
+    public int locBarCounter; // keeps track which bar location marker is currently in
     bool musicPlaying;
     bool waitForBars;
     bool barsPlaying;
@@ -35,14 +39,20 @@ public class PianoRoll : MonoBehaviour
     private List<Transform> idleLines;
     private List<GameObject> currentNotes;
 
+    [SerializeField] private List<Bar> bars;
+    private List<AudioBar> barsAudio;
+
     void Start()
     {
         // get the right corner of the piano roll (where objects will be spawned)
         xPos = transform.localPosition.x + bg.transform.localScale.x / 2f;
         length4s = 60f / bpm;
         timer = 0;
-        beatCounter = 1;
+        prevBeatCounter = resetPrevCounter;
+        locBeatCounter = 1;
         currentNotes = new List<GameObject>();
+        bars = new List<Bar>();
+        barsAudio = new List<AudioBar>();
 
         #region Calculate Positions for all lines
         posLines = new List<float>();
@@ -90,6 +100,7 @@ public class PianoRoll : MonoBehaviour
             if (musicPlaying)
             {
                 ActivateIdleLines(false);
+                barsPlaying = false;
             }
             else
             {
@@ -106,20 +117,29 @@ public class PianoRoll : MonoBehaviour
             // keep track of current beat in eights:
             // 60f/bpm is the duration of one beat in s, divide by 2 for eights
             // we multiply by the beatCounter to get the accurate time of the next beat at which to play the quarternote line
-            if (timer >= 60f / bpm / 2f * beatCounter)
+            if (timer >= 60f / bpm / 2f * locBeatCounter)
             {
-                beatCounter++;
-                if (beatCounter == 9)
+                prevBeatCounter++;
+                if (prevBeatCounter == 9)
                 {
-                    beatCounter = 1;
+                    prevBeatCounter = 1;
+                    prevBarCounter++;
+                }
+                locBeatCounter++;
+                if(locBeatCounter == 9)
+                {
+                    locBeatCounter = 1;
+                    locBarCounter++;
                     timer = 0;
                 }
 
                 // check if bars should be counted in
                 if (waitForBars)
                 {
-                    if (beatCounter == 3) barsPlaying = true;
+                    if (prevBeatCounter == resetPrevCounter) barsPlaying = true;
                     waitForBars = false;
+                    locBarCounter = -1;
+                    prevBarCounter = 0;
                 }
 
                 if (barsPlaying) PlayBars();
@@ -129,14 +149,15 @@ public class PianoRoll : MonoBehaviour
         else
         {
             timer = 0;
-            beatCounter = 1;
+            prevBeatCounter = resetPrevCounter;
+            locBeatCounter = 1;
         }
     }
 
     void PlayLines()
     {
         // only spawn on 1s and 3s, so on first and fifth eighth
-        if (beatCounter == 1 || beatCounter == 5) SpawnLines();
+        if (prevBeatCounter == 1 || prevBeatCounter == 5) SpawnLines();
     }
 
     void SpawnLines()
@@ -191,14 +212,38 @@ public class PianoRoll : MonoBehaviour
         }
     }
 
-    public void PlayBars(bool withSound = false)
+    public void PlayBars()
     {
-
+        if (prevBarCounter == 0) return;
+        if (prevBarCounter >= bars.Count) return;
+        
+        // play preview notes:
+        if (bars[prevBarCounter - 1].notes[prevBeatCounter - 1].contains)
+        {
+            Debug.Log("note should be spawned");
+            SpawnNote(0);
+        }
     }
 
-    public void StartPlayback()
+    public void StartPlayback(List<Bar> _bars)
     {
         waitForBars = true;
+        //bars.Clear();
+        bars = _bars;
+        /*
+        for (int i = 0; i < _bars.Count; i++)
+        {
+            Bar nb = new Bar();
+            bars.Add(nb);
+
+            for (int a = 0; a < _bars[i].notes.Count; a++)
+            {
+                Note n = new Note();
+                n = _bars[i].notes[a];
+                bars[i].notes.Add(n);
+            }
+        }
+        */
     }
 
 
@@ -207,7 +252,7 @@ public class PianoRoll : MonoBehaviour
     //----------- not yet up to date:
 
 
-    void SpawnNote()
+    void SpawnNote(int sample)
     {
         GameObject clone = Instantiate(noteObj, this.gameObject.transform);
         // missing: set correct y Pos according to line

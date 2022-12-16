@@ -238,7 +238,7 @@ Transform:
   m_GameObject: {fileID: 1264820006}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10.58, y: 4, z: 1}
+  m_LocalScale: {x: 8, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1743980089}
@@ -427,6 +427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 743de06108c296b4b96b75bf36ff987d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetPrevCounter: 5
   bpm: 110
   lineHeight: 4
   beatLength: 8
@@ -435,7 +436,10 @@ MonoBehaviour:
   noteObj: {fileID: 1761876749553087292, guid: fce7bc25ea6d51e46997e42ec10263f3, type: 3}
   bg: {fileID: 1264820006}
   posLines: []
-  beatCounter: 0
+  prevBeatCounter: 0
+  locBeatCounter: 0
+  prevBarCounter: 0
+  locBarCounter: 0
 --- !u!114 &1743980091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -448,6 +452,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06cc486a0a90e2f4caef5b0b9fa4a919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bars:
+  - notes:
+    - contains: 1
+      s: 0
+    - contains: 0
+      s: 0
+    - contains: 1
+      s: 0
+    - contains: 0
+      s: 0
+    - contains: 1
+      s: 0
+    - contains: 0
+      s: 0
+    - contains: 1
+      s: 0
+    - contains: 0
+      s: 0
+  - notes:
+    - contains: 0
+      s: 0
+    - contains: 1
+      s: 0
+    - contains: 0
+      s: 0
+    - contains: 1
+      s: 0
+    - contains: 0
+      s: 0
+    - contains: 1
+      s: 0
+    - contains: 0
+      s: 0
+    - contains: 1
+      s: 0
 --- !u!1 &1961762786
 GameObject:
   m_ObjectHideFlags: 0
