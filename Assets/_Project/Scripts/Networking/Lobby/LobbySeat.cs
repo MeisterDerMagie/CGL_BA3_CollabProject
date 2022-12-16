@@ -139,7 +139,7 @@ public class LobbySeat : MonoBehaviour
         var charactersOfOtherPlayers = new List<uint>(); 
         
         //check if the character is available
-        if (!NetworkManager.Singleton.IsServer)
+        if (!NetworkManager.Singleton.IsServer && _associatedPlayer.IsLocalPlayer)
         {
             foreach (PlayerData playerData in _playerDatas)
             {

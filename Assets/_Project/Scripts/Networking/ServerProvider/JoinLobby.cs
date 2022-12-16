@@ -42,7 +42,7 @@ public class JoinLobby : MonoBehaviour
         }
     }
 
-    private void SendJoinRequest(string _lobbyCode)
+    private void SendJoinRequest(string lobbyCode)
     {
         errorMessageUI.gameObject.SetActive(false);
         
@@ -53,7 +53,7 @@ public class JoinLobby : MonoBehaviour
         }
         else
         {
-            ServerProviderCommunication.Instance.JoinRequest(inputField.text.ToUpper());
+            ServerProviderCommunication.Instance.JoinRequest(lobbyCode);
         }
     }
 
