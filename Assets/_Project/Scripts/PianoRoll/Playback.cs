@@ -47,7 +47,6 @@ public class Playback : MonoBehaviour
 
     private void Start()
     {
-        //barsAudio = new List<AudioBar>();
         _pianoRoll = GetComponent<PianoRoll>();
     }
 
@@ -69,42 +68,4 @@ public class Playback : MonoBehaviour
     {
         _pianoRoll.StartPlayback(bars);
     }
-
-    /*
-    [ContextMenu("testwrite bar")]
-    public void Test()
-    {
-        List<Note> bar = new List<Note>();
-        Bar testBar= new Bar();
-        List<Bar> testBars = new List<Bar>();
-
-        Note note = new Note();
-
-        testBar.notes = new List<Note>();
-        testBars = new List<Bar>();
-        
-
-        for (int x = 0; x < 2; x++)
-        {
-            Bar bar = new Bar();
-            bar.notes = new List<Note>();
-            testBars.Add(bar);
-
-            for (int i = 0; i < 8; i++)
-            {
-                note.contains = true;
-                note.s = 0;
-                testBars[x].notes.Add(note);
-            }
-        }
-
-        for (int i = 0; i < 8; i++)
-        {
-            note.contains = true;
-            note.s = 0;
-
-            testBar.notes.Add(note);
-        }
-    }
-    */
 }

@@ -23,6 +23,7 @@ public class PianoRoll : MonoBehaviour
     bool musicPlaying;
     bool waitForBars;
     bool barsPlaying;
+    bool barsWithAudio;
 
     [SerializeField] private List<Bar> bars;
     private List<AudioBar> barsAudio;
@@ -88,13 +89,17 @@ public class PianoRoll : MonoBehaviour
                 // check if bars should be counted in
                 if (waitForBars)
                 {
-                    if (prevBeatCounter == resetPrevCounter) barsPlaying = true;
-                    waitForBars = false;
-                    locBarCounter = -1;
-                    prevBarCounter = 0;
+                    if (prevBeatCounter == resetPrevCounter)
+                    {
+                        barsPlaying = true;
+                        waitForBars = false;
+                        locBarCounter = -1;
+                        prevBarCounter = 0;
+                    }
                 }
 
                 if (barsPlaying) PlayBars();
+                if (barsWithAudio) PlaybackBarAudio();
                 
                 // only spawn lines on 1s and 3s, so on first and fifth eighth
                 if (prevBeatCounter == 1 || prevBeatCounter == 5) spawner.SpawnLines(bpm);
@@ -108,63 +113,64 @@ public class PianoRoll : MonoBehaviour
         }
     }
 
-    public void PlayBars()
+    void PlayBars()
     {
+        // if the prevbar counter is still one bar too early, don't start yet
         if (prevBarCounter == 0) return;
-        if (prevBarCounter >= bars.Count) return;
-        
-        // play preview notes:
-        if (bars[prevBarCounter - 1].notes[prevBeatCounter - 1].contains)
+        // likewise, if the prevbar counter is beyond the limit of the list, stop playing back bars
+        // since we start playing back bars on prevBarCounter 1 --> don't have to do >= bars.Count
+        if (prevBarCounter > bars.Count)
         {
-            Debug.Log("note should be spawned");
-            spawner.SpawnNote(0, bpm);
+            barsPlaying = false;
+            barsWithAudio = true;
+            return;
         }
 
-        // if prevBeatCounter is 9 --> set new current Bar
-        // wenn letzter current bar --> play with audio
-        // wenn kein current Bar mehr übrig --> done with playback
+        // play preview notes:
+        if (bars[prevBarCounter - 1].notes[prevBeatCounter - 1].contains)
+            spawner.SpawnNote(bars[prevBarCounter - 1].notes[prevBeatCounter - 1].s, bpm);
     }
+
+    void PlaybackBarAudio()
+    {
+        if (locBarCounter < bars.Count) return;
+
+        if (locBarCounter > bars.Count)
+        {
+            barsWithAudio = false;
+            return;
+        }
+
+        // trigger Audio MISSING
+        if (bars[locBarCounter - 1].notes[locBeatCounter - 1].contains)
+            Debug.Log("trigger audio sample now");
+    }
+    
 
     public void StartPlayback(List<Bar> _bars)
     {
         waitForBars = true;
-        //bars.Clear();
-        bars = _bars;
-        /*
+        bars.Clear();
+        //bars = _bars;
+        
+        // for every bar that is sent over
         for (int i = 0; i < _bars.Count; i++)
         {
+            // create a new bar and initialise the list of notes
             Bar nb = new Bar();
-            bars.Add(nb);
+            nb.notes = new List<Note>();
 
+            // create a note and add values from the note sent over for every note in that bar
             for (int a = 0; a < _bars[i].notes.Count; a++)
             {
                 Note n = new Note();
-                n = _bars[i].notes[a];
-                bars[i].notes.Add(n);
+                n.contains = _bars[i].notes[a].contains;
+                n.s = _bars[i].notes[a].s;
+                nb.notes.Add(n);
             }
-        }
-        */
-    }
 
-
-
-
-    //----------- not yet up to date:
-
-
-    
-
-    /*
-    // different way of doing it:
-    // spawn one bar at a time
-    IEnumerator SpawnQuarterTicks()
-    {
-        SpawnLines();
-        for (int i = 0; i < 3; i++)
-        {
-            yield return new WaitForSeconds(length4s);
-            spawner.SpawnLines(bpm);
+            // add new bar to the list of bars waiting to be played back
+            bars.Add(nb);
         }
     }
-    */
 }

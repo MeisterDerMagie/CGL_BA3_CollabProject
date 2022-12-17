@@ -518,34 +518,34 @@ MonoBehaviour:
     - contains: 0
       s: 0
     - contains: 1
-      s: 0
+      s: 1
     - contains: 0
       s: 0
     - contains: 1
-      s: 0
+      s: 2
     - contains: 0
       s: 0
     - contains: 1
-      s: 0
+      s: 3
     - contains: 0
       s: 0
   - notes:
     - contains: 0
       s: 0
     - contains: 1
-      s: 0
+      s: 2
     - contains: 0
       s: 0
+    - contains: 1
+      s: 3
+    - contains: 1
+      s: 1
     - contains: 1
       s: 0
     - contains: 0
       s: 0
     - contains: 1
-      s: 0
-    - contains: 0
-      s: 0
-    - contains: 1
-      s: 0
+      s: 1
 --- !u!114 &1743980092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -566,6 +566,7 @@ MonoBehaviour:
   lineHeight: 4
   beatLength: 8
   previewLength: 6
+  yPos: []
 --- !u!1 &1961762786
 GameObject:
   m_ObjectHideFlags: 0

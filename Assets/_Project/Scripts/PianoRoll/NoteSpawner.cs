@@ -4,6 +4,7 @@ using UnityEngine;
 
 /// <summary>
 /// This script sits on the Piano Roll. The Piano roll keeps track of bars / time and tells the Spawner when to spawn which objects.
+/// The Spawner spawns notes, lines, and activates/deactivates idle lines
 /// </summary>
 
 public class NoteSpawner : MonoBehaviour
@@ -27,12 +28,12 @@ public class NoteSpawner : MonoBehaviour
     [SerializeField] private int previewLength = 6;
 
     float xPos; // where new notes should be spawned
+    [SerializeField]List<float> yPos; // height of spawned notes which depends on the lineHeight of piano roll
     int beats; // how often are lines spawned, every beat or if 2 every other beat
 
     List<float> posLines; // where all lines should be spawned idle, where the downbeats are on piano roll
-    //idle lines when piano roll is not playing
-    private List<Transform> idleLines;
-    private List<GameObject> currentNotes;
+    private List<Transform> idleLines; // keep track of all idle lines
+    private List<GameObject> currentNotes; // keep track of currently active lines and notes to deactivate when hitting pause
 
     // Start is called before the first frame update
     void Start()
@@ -77,6 +78,19 @@ public class NoteSpawner : MonoBehaviour
             idleLines[i].gameObject.SetActive(true);
             idleLines[i].localPosition = new Vector3(posLines[i - 1], 0, 0);
         }
+        #endregion
+
+        #region Calculate Height for all notes to be spawned
+        float yTop = transform.localPosition.y + bg.transform.localScale.y / 2;
+        float distance = bg.transform.localScale.y / lineHeight;
+
+        yPos = new List<float>();
+        yPos.Add(yTop - distance / 2);
+        for (int i = 1; i < lineHeight; i++)
+        {
+            yPos.Add(yPos[i - 1] - distance);
+        }
+
         #endregion
     }
 
@@ -126,9 +140,12 @@ public class NoteSpawner : MonoBehaviour
 
     public void SpawnNote(int sample, float bpm)
     {
+        // instantiate a new note and set position to the far right of the piano roll
         GameObject clone = Instantiate(noteObj, spawns.transform);
-        // missing: set correct y Pos according to line
-        clone.transform.localPosition = new Vector3(xPos, 0, 0);
+        // y Pos is dependent on which note it is; calculation of the List happens in the start function of this script
+        clone.transform.localPosition = new Vector3(xPos, yPos[sample], 0);
+
+        // tell the clone the current bpm, length of roll in beats, target position x
         clone.GetComponent<Notes>().NoteSetUp(bpm, beatLength, transform.localPosition.x - bg.transform.localScale.x / 2f, this);
 
         currentNotes.Add(clone);
@@ -138,4 +155,5 @@ public class NoteSpawner : MonoBehaviour
     {
         currentNotes.Remove(obj);
     }
+
 }
