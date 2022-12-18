@@ -51,6 +51,9 @@ public class PlayerData : NetworkBehaviour
     private bool _characterIdIsSynced = false;
 
     private string _defaultPlayerName;
+    
+    //Events
+    public event Action<PromptResponse> OnPromptResponse = delegate {  };
 
     //Network Variables
     private NetworkVariable<FixedString64Bytes> _clientGuid;
@@ -248,14 +251,41 @@ public class PlayerData : NetworkBehaviour
         _characterId.Value = newCharacterId;
     }
 
-    [ServerRpc]
-    public void SetPromptServerRpc(string newPrompt)
+    public void SetPrompt(string newPrompt)
     {
-        _prompt.Value = new FixedString512Bytes(newPrompt);
+        SetPromptServerRpc(newPrompt);
+    }
+
+    [ServerRpc]
+    private void SetPromptServerRpc(string newPrompt)
+    {
+        if (ProfanityFilter.Instance.ContainsProfanity(newPrompt))
+        {
+            PromptResponseClientRpc(PromptResponse.Declined_Profanity);
+        }
+        else
+        {
+            _prompt.Value = new FixedString512Bytes(newPrompt);
+            PromptResponseClientRpc(PromptResponse.Accepted);
+        }
+        
+    }
+
+    [ClientRpc]
+    private void PromptResponseClientRpc(PromptResponse response)
+    {
+        OnPromptResponse?.Invoke(response);
     }
     
     //The points should not have a ServerRPC (the client should not have the authority to set its points). The server should calculate those based on the user input
     public void SetPointsCreativity(int newValue) => _pointsCreativity.Value = newValue;
     public void SetPointsPlayability(int newValue) => _pointsPlayability.Value = newValue;
     public void SetPointsPerformance(int newValue) => _pointsPerformance.Value = newValue;
+    
+    public enum PromptResponse
+    {
+        NONE,
+        Accepted,
+        Declined_Profanity
+    }
 }

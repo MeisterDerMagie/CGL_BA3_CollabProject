@@ -14,7 +14,8 @@ public class ReadyCountdown : NetworkBehaviour
     [SerializeField] private float countdownDuration = 4.99f;
     [SerializeField] private Transform countdownUI;
     [SerializeField] private TextMeshProUGUI countdownNumberText;
-    [SerializeField] private SceneReference sceneToLoadAfterCountdownFinished;
+    //[SerializeField] private SceneReference sceneToLoadAfterCountdownFinished;
+    [SerializeField] private NetworkSceneLoader sceneToLoadAfterCountdownFinished;
 
     [HideInInspector] public bool readyCountdownHasStarted = false;
     private NetworkVariable<float> countdown;
@@ -98,7 +99,8 @@ public class ReadyCountdown : NetworkBehaviour
 
     private void StartGame()
     {
-        NetworkManager.SceneManager.LoadScene(sceneToLoadAfterCountdownFinished, LoadSceneMode.Single);
+        NetworkSceneLoading.LoadNetworkScene(sceneToLoadAfterCountdownFinished, LoadSceneMode.Single);
+        //NetworkManager.SceneManager.LoadScene(sceneToLoadAfterCountdownFinished, LoadSceneMode.Single);
     }
 
     private IEnumerator<float> _TickCountdown()

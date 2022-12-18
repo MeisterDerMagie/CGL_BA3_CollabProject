@@ -2379,9 +2379,7 @@ MonoBehaviour:
   countdownDuration: 4.99
   countdownUI: {fileID: 828288146}
   countdownNumberText: {fileID: 646306778}
-  sceneToLoadAfterCountdownFinished:
-    sceneAsset: {fileID: 102900000, guid: 063a4e4689a19474cb76cf23be0dbbdc, type: 3}
-    scenePath: Assets/_Project/Scenes/Game.unity
+  sceneToLoadAfterCountdownFinished: {fileID: 11400000, guid: 314f75b4f083d9c49948d0ecce4a5e45, type: 2}
   readyCountdownHasStarted: 0
 --- !u!4 &1401380175
 Transform:
