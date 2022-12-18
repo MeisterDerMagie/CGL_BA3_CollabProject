@@ -253,6 +253,7 @@ public class PlayerData : NetworkBehaviour
 
     public void SetPrompt(string newPrompt)
     {
+        Debug.Log("Set prompt");
         SetPromptServerRpc(newPrompt);
     }
 

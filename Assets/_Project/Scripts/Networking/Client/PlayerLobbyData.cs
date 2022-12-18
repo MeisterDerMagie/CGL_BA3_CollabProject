@@ -17,7 +17,7 @@ public class PlayerLobbyData : NetworkBehaviour
         return localPlayerLobbyDataCached;
     }
 
-    public bool pickedUniqueCharacter = false; //this is only checked locally. In theory, it's possible to bypass this and two players end up with the same character. In practice this is inprobable and even if, it's not tragic.
+    [HideInInspector] public bool pickedUniqueCharacter = false; //this is only checked locally. In theory, it's possible to bypass this and two players end up with the same character. In practice this is inprobable and even if, it's not tragic.
     
     public bool IsReadyInLobby
     {

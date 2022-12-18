@@ -6,7 +6,7 @@ using UnityEngine;
 using Wichtel.Animation;
 
 [RequireComponent(typeof(LoadingScreenAnimations))]
-public class LoadingScreen : MonoBehaviour
+public class LoadingScreen : NetworkBehaviour
 {
     private AnimatorStateReference inAnim => GetComponent<LoadingScreenAnimations>().inAnim;
     private AnimatorStateReference outAnim => GetComponent<LoadingScreenAnimations>().outAnim;
@@ -22,6 +22,8 @@ public class LoadingScreen : MonoBehaviour
     [ClientRpc]
     public void PlayOutAnimationClientRpc()
     {
+        Debug.Log("Play out animation.");
+        
         //play out-animation
         outAnim.Play();
     }

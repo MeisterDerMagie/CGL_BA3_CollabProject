@@ -68,7 +68,7 @@ public class NetworkSceneLoading : MonoBehaviour
         }
         
         //remember the scene we are loading so that we can wait until it's done
-        CurrentlyLoadingScenes[sceneLoader.scene] = false;
+        CurrentlyLoadingScenes[sceneLoader.scene.SceneName] = false;
         
         //load scene
         NetworkManager.Singleton.SceneManager.LoadScene(sceneLoader.scene, loadSceneMode);
@@ -76,21 +76,24 @@ public class NetworkSceneLoading : MonoBehaviour
         //if we didn't have a loading screen, we are done here
         if (loadingScreenInstance == null)
         {
-            if (CurrentlyLoadingScenes.ContainsKey(sceneLoader.scene)) CurrentlyLoadingScenes.Remove(sceneLoader.scene);
+            if (CurrentlyLoadingScenes.ContainsKey(sceneLoader.scene.SceneName)) CurrentlyLoadingScenes.Remove(sceneLoader.scene.SceneName);
             yield break;
         }
         
-        //otherwise, wait until every client has loaded and is synced, then hide the loading screen
-        Timing.WaitUntilTrue(()=> CurrentlyLoadingScenes[sceneLoader.scene]);
+        //otherwise, wait until every client has loaded the scene
+        yield return Timing.WaitUntilTrue(()=> CurrentlyLoadingScenes[sceneLoader.scene.SceneName]);
         
         //remove the loaded scene the dictionary
-        if (CurrentlyLoadingScenes.ContainsKey(sceneLoader.scene)) CurrentlyLoadingScenes.Remove(sceneLoader.scene);
+        if (CurrentlyLoadingScenes.ContainsKey(sceneLoader.scene.SceneName)) CurrentlyLoadingScenes.Remove(sceneLoader.scene.SceneName);
 
-       //play outAnimation of the loading screen on clients (on the server the out anim will not be played, but that's not an issue)
+        //wait for an additional short time, just because it looks weird if the loading screen is too short
+        yield return Timing.WaitForSeconds(0.25f);
+        
+        //play outAnimation of the loading screen on clients (on the server the out anim will not be played, but that's not an issue)
         loadingScreenScript.PlayOutAnimationClientRpc();
         
-        //wait until the loading screens out-animation is done
-        yield return Timing.WaitForSeconds(loadingScreenScript.OutAnimDuration);
+        //wait until the loading screens out-animation is done (plus a short buffer time to prevent destroying the screen before the out-anim on the clients is finished)
+        yield return Timing.WaitForSeconds(loadingScreenScript.OutAnimDuration + 0.25f);
         
         //then despawn/destroy the loading screen
         loadingScreenInstance.GetComponent<NetworkObject>().Despawn();

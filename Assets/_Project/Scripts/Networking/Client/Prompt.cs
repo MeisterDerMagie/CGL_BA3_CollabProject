@@ -25,11 +25,9 @@ public class Prompt : MonoBehaviour
     private void OnDestroy()
     {
         if (NetworkManager.Singleton.IsServer) return;
-
         
         promptInputHelper.OnUserEnteredMessage -= SubmitPrompt;
-        PlayerData.LocalPlayerData.OnPromptResponse -= ProcessPromptResponse;
-
+        if(PlayerData.LocalPlayerData != null) PlayerData.LocalPlayerData.OnPromptResponse -= ProcessPromptResponse;
     }
 
     public void SubmitPrompt()
