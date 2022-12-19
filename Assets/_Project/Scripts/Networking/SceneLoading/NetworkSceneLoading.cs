@@ -49,6 +49,12 @@ public class NetworkSceneLoading : MonoBehaviour
             return;
         }
 
+        if (sceneLoader == null)
+        {
+            Debug.LogError("SceneLoader is null. Didn't load next scene.");
+            return;
+        }
+
         Timing.RunCoroutine(_LoadNetworkScene(sceneLoader, loadSceneMode));
     }
 

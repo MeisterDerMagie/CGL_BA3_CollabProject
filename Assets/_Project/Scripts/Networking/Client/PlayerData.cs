@@ -39,6 +39,7 @@ public class PlayerData : NetworkBehaviour
     }
 
     public string Prompt => _prompt.Value.ToString();
+    public bool SubmittedPrompt => _submittedPrompt.Value;
     public int PointsCreativity => _pointsCreativity.Value;
     public int PointsPlayability => _pointsPlayability.Value;
     public int PointsPerformance => _pointsPerformance.Value;
@@ -60,6 +61,7 @@ public class PlayerData : NetworkBehaviour
     private NetworkVariable<FixedString128Bytes> _playerName;
     private NetworkVariable<uint> _characterId;
     private NetworkVariable<FixedString512Bytes> _prompt;
+    private NetworkVariable<bool> _submittedPrompt;
 
     private NetworkVariable<int> _pointsCreativity;
     private NetworkVariable<int> _pointsPlayability;
@@ -73,6 +75,7 @@ public class PlayerData : NetworkBehaviour
         _playerName = new NetworkVariable<FixedString128Bytes>(string.Empty);
         _characterId = new NetworkVariable<uint>(0);
         _prompt = new NetworkVariable<FixedString512Bytes>(string.Empty);
+        _submittedPrompt = new NetworkVariable<bool>(false);
         _pointsCreativity = new NetworkVariable<int>(0);
         _pointsPlayability = new NetworkVariable<int>(0);
         _pointsPerformance = new NetworkVariable<int>(0);
@@ -156,6 +159,7 @@ public class PlayerData : NetworkBehaviour
         _playerName.Dispose();
         _characterId.Dispose();
         _prompt.Dispose();
+        _submittedPrompt.Dispose();
         _pointsCreativity.Dispose();
         _pointsPlayability.Dispose();
         _pointsPerformance.Dispose();
@@ -260,13 +264,20 @@ public class PlayerData : NetworkBehaviour
     [ServerRpc]
     private void SetPromptServerRpc(string newPrompt)
     {
-        if (ProfanityFilter.Instance.ContainsProfanity(newPrompt))
+        if (string.IsNullOrWhiteSpace(newPrompt))
+        {
+            PromptResponseClientRpc(PromptResponse.Declined_EmptyString);
+            return;
+        }
+        else if (ProfanityFilter.Instance.ContainsProfanity(newPrompt))
         {
             PromptResponseClientRpc(PromptResponse.Declined_Profanity);
+            return;
         }
         else
         {
             _prompt.Value = new FixedString512Bytes(newPrompt);
+            _submittedPrompt.Value = true;
             PromptResponseClientRpc(PromptResponse.Accepted);
         }
         
@@ -287,6 +298,7 @@ public class PlayerData : NetworkBehaviour
     {
         NONE,
         Accepted,
-        Declined_Profanity
+        Declined_Profanity,
+        Declined_EmptyString
     }
 }

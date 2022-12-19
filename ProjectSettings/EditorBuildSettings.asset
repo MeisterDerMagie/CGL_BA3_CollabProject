@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Project/Scenes/Game_PromptInput.unity
     guid: 063a4e4689a19474cb76cf23be0dbbdc
+  - enabled: 1
+    path: Assets/_Project/Scenes/Game_PickSounds.unity
+    guid: b71d04baa6bb92940b9bcf22b42234be
   m_configObjects: {}
