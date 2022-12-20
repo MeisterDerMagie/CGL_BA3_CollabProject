@@ -55,7 +55,7 @@ public class Notes : MonoBehaviour
     {
         if (sample != -1) // -1 is set if it shouldn't play
         {
-            _audioRoll.PlaySound(sample);
+            //_audioRoll.PlaySound(sample);
         }
     }
 }

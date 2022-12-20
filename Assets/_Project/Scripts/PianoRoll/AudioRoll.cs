@@ -26,7 +26,6 @@ public class AudioRoll : MonoBehaviour
 
     private void Update()
     {
-        /*
         if (!playing) return;
 
         timer += Time.deltaTime;
@@ -52,7 +51,6 @@ public class AudioRoll : MonoBehaviour
                 currentNote++;
             }
         }
-        */
     }
 
     public void StartPlaying(int current)
