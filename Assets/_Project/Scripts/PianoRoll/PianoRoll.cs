@@ -14,12 +14,15 @@ public class PianoRoll : MonoBehaviour
     public float bpm = 110f;
 
     float length4s; // duration of the quarter notes in s
-    float timer; // keeps track of time passed
+    public float timer; // keeps track of time passed
 
     public int prevBeatCounter; // keeps track of which beat we are currently on to preview
     public int locBeatCounter; // keeps track of which beat the location marker is currently on
     public int prevBarCounter; //keeps track which bar the preview is currently in
     public int locBarCounter; // keeps track which bar location marker is currently in
+
+    int totalBeats;
+    public float zeitVerzögerung;
 
     bool musicPlaying;
     bool waitForBars;
@@ -42,6 +45,7 @@ public class PianoRoll : MonoBehaviour
         barsAudio = new List<AudioBar>();
         
         spawner = GetComponent<NoteSpawner>();
+        totalBeats = 1;
     }
 
 
@@ -59,7 +63,7 @@ public class PianoRoll : MonoBehaviour
             else
             {
                 spawner.ActivateIdleLines(true, bpm);
-                _audioRoll.StopPlaying();
+                //_audioRoll.StopPlaying();
             }
         }
 
@@ -72,8 +76,10 @@ public class PianoRoll : MonoBehaviour
             // keep track of current beat in eights:
             // 60f/bpm is the duration of one beat in s, divide by 2 for eights
             // we multiply by the beatCounter to get the accurate time of the next beat at which to play the quarternote line
-            if (timer >= 60f / bpm / 2f * locBeatCounter)
+            if (timer >= (60f / bpm / 2f * totalBeats) - zeitVerzögerung)
             {
+                totalBeats++;
+
                 prevBeatCounter++;
                 if (prevBeatCounter == 9)
                 {
@@ -85,8 +91,17 @@ public class PianoRoll : MonoBehaviour
                 {
                     locBeatCounter = 1;
                     locBarCounter++;
-                    if (playAudio && locBarCounter == 1) _audioRoll.StartPlaying(0);
-                    timer = 0;
+                    /*
+                    if (playAudio) 
+                    {
+                        if (locBarCounter == 1) _audioRoll.StartPlaying(0);
+                        else
+                        {
+                            _audioRoll.currentBar++;
+                            _audioRoll.currentNote = 0;
+                        }
+                    }
+                    */
                 }
 
                 // check if bars should be counted in
@@ -103,7 +118,7 @@ public class PianoRoll : MonoBehaviour
                 }
 
                 if (barsPlaying) PlayBars();
-                //if (playAudio) PlaybackBarAudio();
+                if (playAudio) PlaybackBarAudio();
                 
                 // only spawn lines on 1s and 3s, so on first and fifth eighth
                 if (prevBeatCounter == 1 || prevBeatCounter == 5) spawner.SpawnLines(bpm);
@@ -114,6 +129,7 @@ public class PianoRoll : MonoBehaviour
             timer = 0;
             prevBeatCounter = resetPrevCounter;
             locBeatCounter = 1;
+            totalBeats = 1;
         }
     }
 

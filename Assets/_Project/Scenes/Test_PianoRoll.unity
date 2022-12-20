@@ -507,6 +507,7 @@ MonoBehaviour:
     Path: event:/Instrument Samples/Perc_Tambourine
   _pianoRoll: {fileID: 1743980090}
   currentBar: 0
+  currentNote: 0
   audioBars: []
 --- !u!1 &1665291478
 GameObject:
@@ -694,10 +695,12 @@ MonoBehaviour:
   _audioRoll: {fileID: 1270709877}
   resetPrevCounter: 5
   bpm: 110
+  timer: 0
   prevBeatCounter: 0
   locBeatCounter: 0
   prevBarCounter: 0
   locBarCounter: 0
+  "zeitVerz\xF6gerung": 0.05
   bars: []
 --- !u!114 &1743980091
 MonoBehaviour:

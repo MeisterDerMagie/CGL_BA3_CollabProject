@@ -70,6 +70,6 @@ public class Playback : MonoBehaviour
     public void PlaybackBars()
     {
         _pianoRoll.StartPlayback(bars);
-        _audioRoll.ReceiveAudioBars(bars);
+        //_audioRoll.ReceiveAudioBars(bars);
     }
 }

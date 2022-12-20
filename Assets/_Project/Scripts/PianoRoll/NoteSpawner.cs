@@ -25,8 +25,10 @@ public class NoteSpawner : MonoBehaviour
     [SerializeField] private int lineHeight = 4;
     [Tooltip("Length of Piano Roll in beats, how many beats fit into piano roll")]
     [SerializeField] private int beatLength = 8;
+    /*
     [Tooltip("how many beats are to the right side of the location marker; how many beats can you preview before they need to be played")]
     [SerializeField] private int previewLength = 6;
+    */
 
     float xPos; // where new notes should be spawned
     [SerializeField]List<float> yPos; // height of spawned notes which depends on the lineHeight of piano roll
