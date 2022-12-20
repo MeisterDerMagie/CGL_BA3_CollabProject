@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterId: 2
   characterImage: {fileID: 21300000, guid: 9d887ee6405e3104f82cbe214283438f, type: 3}
+  characterIcon: {fileID: 21300000, guid: fabe17d9941247e40b48bcc4f2a52fac, type: 3}

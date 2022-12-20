@@ -17,7 +17,7 @@ public class PromptController : NetworkBehaviour
     [SerializeField] private InputHelper promptInputHelper;
     [SerializeField] private TextMeshProUGUI errorMessage;
     [SerializeField] private Button okButton;
-    [SerializeField] private Transform acceptedPromptScreen;
+    [SerializeField] private WaitingScreenController_Prompt waitingScreen;
     [SerializeField] private Timer timer;
     [SerializeField] private NetworkSceneLoader sceneToLoadAfterAllPlayersEnteredPrompt;
 
@@ -27,24 +27,17 @@ public class PromptController : NetworkBehaviour
 
     private void Start()
     {
-        timer.OnTimerEndedServer += OnTimerEndedServer;
-        
-        if (NetworkManager.Singleton.IsServer) return;
+        if (NetworkManager.Singleton.IsServer)
+        {
+            timer.OnTimerEndedServer += OnTimerEndedServer;
+            return;
+        }
         
         promptInputHelper.OnUserEnteredMessage += SubmitPrompt;
-        PlayerData.LocalPlayerData.OnPromptResponse += ProcessPromptResponse;
+        PlayerData.LocalPlayerData.OnPromptResponseClient += ProcessPromptResponseClient;
         timer.OnTimerEndedClient += OnTimerEndedClient;
         
         errorMessage.gameObject.SetActive(false);
-        acceptedPromptScreen.gameObject.SetActive(false);
-    }
-
-    public override void OnNetworkSpawn()
-    {
-        if (IsServer)
-        {
-            
-        }
     }
 
     public override void OnDestroy()
@@ -54,7 +47,7 @@ public class PromptController : NetworkBehaviour
         if (NetworkManager.Singleton == null || NetworkManager.Singleton.IsServer) return;
         
         promptInputHelper.OnUserEnteredMessage -= SubmitPrompt;
-        if(PlayerData.LocalPlayerData != null) PlayerData.LocalPlayerData.OnPromptResponse -= ProcessPromptResponse;
+        if(PlayerData.LocalPlayerData != null) PlayerData.LocalPlayerData.OnPromptResponseClient -= ProcessPromptResponseClient;
     }
 
     private void Update()
@@ -96,7 +89,7 @@ public class PromptController : NetworkBehaviour
         okButton.interactable = false;
     }
 
-    private void ProcessPromptResponse(PlayerData.PromptResponse response)
+    private void ProcessPromptResponseClient(PlayerData.PromptResponse response)
     {
         if (response == PlayerData.PromptResponse.Declined_EmptyString)
         {
@@ -123,7 +116,7 @@ public class PromptController : NetworkBehaviour
         else if (response == PlayerData.PromptResponse.Accepted)
         {
             onPromptAccepted?.Invoke();
-            acceptedPromptScreen.gameObject.SetActive(true);
+            waitingScreen.Show();
         }
     }
 
@@ -146,7 +139,7 @@ public class PromptController : NetworkBehaviour
         }
         
         //show the endscreen of this section
-        acceptedPromptScreen.gameObject.SetActive(true);
+        waitingScreen.Show();
     }
 
     private IEnumerator<float> _WaitThenLoadNextScene()

@@ -54,7 +54,8 @@ public class PlayerData : NetworkBehaviour
     private string _defaultPlayerName;
     
     //Events
-    public event Action<PromptResponse> OnPromptResponse = delegate {  };
+    public event Action<PromptResponse> OnPromptResponseClient = delegate {  };
+    public static event Action<ulong, PromptResponse> OnPromptResponseServer = delegate {  };
 
     //Network Variables
     private NetworkVariable<FixedString64Bytes> _clientGuid;
@@ -257,28 +258,31 @@ public class PlayerData : NetworkBehaviour
 
     public void SetPrompt(string newPrompt)
     {
-        Debug.Log("Set prompt");
-        SetPromptServerRpc(newPrompt);
+        SetPromptServerRpc(NetworkManager.LocalClientId, newPrompt);
     }
 
     [ServerRpc]
-    private void SetPromptServerRpc(string newPrompt)
+    private void SetPromptServerRpc(ulong clientId, string newPrompt)
     {
         if (string.IsNullOrWhiteSpace(newPrompt))
         {
             PromptResponseClientRpc(PromptResponse.Declined_EmptyString);
+            OnPromptResponseServer?.Invoke(clientId, PromptResponse.Declined_EmptyString);
             return;
         }
         else if (ProfanityFilter.Instance.ContainsProfanity(newPrompt))
         {
             PromptResponseClientRpc(PromptResponse.Declined_Profanity);
+            OnPromptResponseServer?.Invoke(clientId, PromptResponse.Declined_Profanity);
             return;
         }
         else
         {
             _prompt.Value = new FixedString512Bytes(newPrompt);
             _submittedPrompt.Value = true;
+
             PromptResponseClientRpc(PromptResponse.Accepted);
+            OnPromptResponseServer?.Invoke(clientId, PromptResponse.Accepted);
         }
         
     }
@@ -286,7 +290,7 @@ public class PlayerData : NetworkBehaviour
     [ClientRpc]
     private void PromptResponseClientRpc(PromptResponse response)
     {
-        OnPromptResponse?.Invoke(response);
+        OnPromptResponseClient?.Invoke(response);
     }
     
     //The points should not have a ServerRPC (the client should not have the authority to set its points). The server should calculate those based on the user input

@@ -138,8 +138,15 @@ public class Timer : NetworkBehaviour
     {
         if (timerView == null) return;
         
-        string timerFormatted = Mathf.FloorToInt(_timerLocal).ToString();
-        timerView.SetText(timerFormatted);
+        timerView.SetText(FormatTimer(_timerLocal));
+    }
+
+    private string FormatTimer(float seconds)
+    {
+        int secondsInt = Mathf.FloorToInt(_timerLocal);
+        var timespan = new TimeSpan(0, 0, 0, secondsInt);
+
+        return timespan.ToString(@"mm\:ss");
     }
 
     [ClientRpc]

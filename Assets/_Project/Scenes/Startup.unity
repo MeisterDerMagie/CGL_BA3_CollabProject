@@ -256,9 +256,9 @@ MonoBehaviour:
     Port: 7777
     ServerListenAddress: 0.0.0.0
   DebugSimulator:
-    PacketDelayMS: 1000
-    PacketJitterMS: 500
-    PacketDropRate: 50
+    PacketDelayMS: 100
+    PacketJitterMS: 50
+    PacketDropRate: 25
 --- !u!114 &439776392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,6 +280,11 @@ MonoBehaviour:
     NetworkPrefabs:
     - Override: 0
       Prefab: {fileID: 41708880123253851, guid: 5047600c8dad99942809d91f20c3f5a9, type: 3}
+      SourcePrefabToOverride: {fileID: 0}
+      SourceHashToOverride: 0
+      OverridingTargetPrefab: {fileID: 0}
+    - Override: 0
+      Prefab: {fileID: 5411401474293719782, guid: 570dcc77f0929754995675c375a2b0e1, type: 3}
       SourcePrefabToOverride: {fileID: 0}
       SourceHashToOverride: 0
       OverridingTargetPrefab: {fileID: 0}

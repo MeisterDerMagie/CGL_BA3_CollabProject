@@ -9,4 +9,5 @@ public class Character : ScriptableObject
 {
     public uint characterId;
     public Sprite characterImage;
+    public Sprite characterIcon;
 }
