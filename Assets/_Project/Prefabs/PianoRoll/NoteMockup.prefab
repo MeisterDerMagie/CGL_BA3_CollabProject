@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1761876749553087295}
   - component: {fileID: 1761876749553087294}
   - component: {fileID: 1761876749553087289}
+  - component: {fileID: 7472705170201640367}
   m_Layer: 0
   m_Name: NoteMockup
   m_TagString: Untagged
@@ -97,3 +98,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0e99cb0ca560794eb97f242a3e56e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sample: 0
+--- !u!58 &7472705170201640367
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761876749553087292}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5

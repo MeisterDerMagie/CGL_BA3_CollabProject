@@ -9,8 +9,9 @@ using UnityEngine;
 
 public class PianoRoll : MonoBehaviour
 {
+    [SerializeField] private AudioRoll _audioRoll;
     [SerializeField] private int resetPrevCounter = 5;
-    [SerializeField] private float bpm = 110f;
+    public float bpm = 110f;
 
     float length4s; // duration of the quarter notes in s
     float timer; // keeps track of time passed
@@ -23,7 +24,7 @@ public class PianoRoll : MonoBehaviour
     bool musicPlaying;
     bool waitForBars;
     bool barsPlaying;
-    bool barsWithAudio;
+    bool playAudio;
 
     [SerializeField] private List<Bar> bars;
     private List<AudioBar> barsAudio;
@@ -58,6 +59,7 @@ public class PianoRoll : MonoBehaviour
             else
             {
                 spawner.ActivateIdleLines(true, bpm);
+                _audioRoll.StopPlaying();
             }
         }
 
@@ -83,6 +85,7 @@ public class PianoRoll : MonoBehaviour
                 {
                     locBeatCounter = 1;
                     locBarCounter++;
+                    if (playAudio && locBarCounter == 1) _audioRoll.StartPlaying(0);
                     timer = 0;
                 }
 
@@ -95,11 +98,12 @@ public class PianoRoll : MonoBehaviour
                         waitForBars = false;
                         locBarCounter = -1;
                         prevBarCounter = 0;
+                        playAudio = true;
                     }
                 }
 
                 if (barsPlaying) PlayBars();
-                if (barsWithAudio) PlaybackBarAudio();
+                //if (playAudio) PlaybackBarAudio();
                 
                 // only spawn lines on 1s and 3s, so on first and fifth eighth
                 if (prevBeatCounter == 1 || prevBeatCounter == 5) spawner.SpawnLines(bpm);
@@ -122,7 +126,7 @@ public class PianoRoll : MonoBehaviour
         if (prevBarCounter > bars.Count)
         {
             barsPlaying = false;
-            barsWithAudio = true;
+            playAudio = true;
             return;
         }
 
@@ -133,17 +137,18 @@ public class PianoRoll : MonoBehaviour
 
     void PlaybackBarAudio()
     {
-        if (locBarCounter < bars.Count) return;
+        //if (locBarCounter < bars.Count) return;
+        if (locBarCounter < 1) return;
 
         if (locBarCounter > bars.Count)
         {
-            barsWithAudio = false;
+            playAudio = false;
             return;
         }
 
-        // trigger Audio MISSING
+        // trigger Audio
         if (bars[locBarCounter - 1].notes[locBeatCounter - 1].contains)
-            Debug.Log("trigger audio sample now");
+            _audioRoll.PlaySound(bars[locBarCounter - 1].notes[locBeatCounter - 1].s);
     }
     
 
@@ -151,7 +156,6 @@ public class PianoRoll : MonoBehaviour
     {
         waitForBars = true;
         bars.Clear();
-        //bars = _bars;
         
         // for every bar that is sent over
         for (int i = 0; i < _bars.Count; i++)

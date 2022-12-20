@@ -10,6 +10,7 @@ using UnityEngine;
 public class NoteSpawner : MonoBehaviour
 {
     PianoRoll pianoRoll;
+    [SerializeField] private AudioRoll _audioRoll;
 
     [Header("Game Objects for spawning lines and notes")]
     [SerializeField] private GameObject beatObj; // the quarternote lines marking every beat
@@ -119,7 +120,7 @@ public class NoteSpawner : MonoBehaviour
                 clone.transform.localPosition = new Vector3(posLines[i], 0, 0);
 
                 // tell the clone the current bpm, length of piano roll in beats, and target value of poision x (how far it needs to travel to the left)
-                clone.GetComponent<Notes>().NoteSetUp(bpm, (i + 1) * beats, transform.localPosition.x - bg.transform.localScale.x / 2f, this);
+                clone.GetComponent<Notes>().NoteSetUp(bpm, (i + 1) * beats, transform.localPosition.x - bg.transform.localScale.x / 2f, this, _audioRoll, -1);
 
                 currentNotes.Add(clone);
             }
@@ -133,7 +134,7 @@ public class NoteSpawner : MonoBehaviour
         clone.transform.localPosition = new Vector3(xPos, 0, 0);
 
         // tell the clone the current bpm, the length of the piano roll in beats, and the target value of position.x (how far it needs to travel to the left)
-        clone.GetComponent<Notes>().NoteSetUp(bpm, beatLength, transform.localPosition.x - bg.transform.localScale.x / 2f, this);
+        clone.GetComponent<Notes>().NoteSetUp(bpm, beatLength, transform.localPosition.x - bg.transform.localScale.x / 2f, this, _audioRoll, -1);
 
         currentNotes.Add(clone);
     }
@@ -146,7 +147,7 @@ public class NoteSpawner : MonoBehaviour
         clone.transform.localPosition = new Vector3(xPos, yPos[sample], 0);
 
         // tell the clone the current bpm, length of roll in beats, target position x
-        clone.GetComponent<Notes>().NoteSetUp(bpm, beatLength, transform.localPosition.x - bg.transform.localScale.x / 2f, this);
+        clone.GetComponent<Notes>().NoteSetUp(bpm, beatLength, transform.localPosition.x - bg.transform.localScale.x / 2f, this, _audioRoll, sample);
 
         currentNotes.Add(clone);
     }

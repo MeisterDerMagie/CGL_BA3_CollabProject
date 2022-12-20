@@ -358,6 +358,187 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1270709875
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1270709876}
+  - component: {fileID: 1270709878}
+  - component: {fileID: 1270709877}
+  m_Layer: 0
+  m_Name: Audio
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1270709876
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270709875}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1961762787}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1270709877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270709875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4473800c27ae3de489587f7a10e77240, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound:
+  - Guid:
+      Data1: 1044958180
+      Data2: 1299195099
+      Data3: -2039040128
+      Data4: 1581391162
+    Path: event:/Instrument Samples/Perc_Snare
+  - Guid:
+      Data1: -1082663445
+      Data2: 1255927833
+      Data3: -272862586
+      Data4: -264505466
+    Path: event:/Instrument Samples/Animal_Sheep
+  - Guid:
+      Data1: -1574102228
+      Data2: 1163098834
+      Data3: 2064327332
+      Data4: 250252675
+    Path: event:/Instrument Samples/Inst_Akkordeon
+  - Guid:
+      Data1: -1709136606
+      Data2: 1285905082
+      Data3: -804408647
+      Data4: 1307526430
+    Path: event:/Instrument Samples/Inst_Bagpipe
+  - Guid:
+      Data1: 478387551
+      Data2: 1225142638
+      Data3: -209920077
+      Data4: 347263421
+    Path: event:/Instrument Samples/Inst_Bell
+  - Guid:
+      Data1: 792117807
+      Data2: 1245053989
+      Data3: -1696791111
+      Data4: -1422183662
+    Path: event:/Instrument Samples/Inst_Didgeridoo
+  - Guid:
+      Data1: 1249792540
+      Data2: 1170023823
+      Data3: -1465357432
+      Data4: -777569441
+    Path: event:/Instrument Samples/Inst_Flexatone
+  - Guid:
+      Data1: 1702724892
+      Data2: 1162142468
+      Data3: -366997832
+      Data4: 657655858
+    Path: event:/Instrument Samples/Inst_Flute
+  - Guid:
+      Data1: 883921347
+      Data2: 1126755535
+      Data3: -1911501667
+      Data4: 402596381
+    Path: event:/Instrument Samples/Inst_Glockenspiel
+  - Guid:
+      Data1: -1284033492
+      Data2: 1248209832
+      Data3: 1394472351
+      Data4: 386284782
+    Path: event:/Instrument Samples/Inst_Kazoo
+  - Guid:
+      Data1: -1976166797
+      Data2: 1201772481
+      Data3: -138638716
+      Data4: -2079106010
+    Path: event:/Instrument Samples/Inst_SlideWhistle
+  - Guid:
+      Data1: -1444080916
+      Data2: 1246019333
+      Data3: -1904316279
+      Data4: 2134823348
+    Path: event:/Instrument Samples/MISC_Dogtoy
+  - Guid:
+      Data1: -783282544
+      Data2: 1249993218
+      Data3: 2012002220
+      Data4: 1809253377
+    Path: event:/Instrument Samples/MISC_Knockout
+  - Guid:
+      Data1: -710122455
+      Data2: 1321236921
+      Data3: -1004151132
+      Data4: -1305145122
+    Path: event:/Instrument Samples/Perc_BD
+  - Guid:
+      Data1: -285643216
+      Data2: 1305215359
+      Data3: -753767539
+      Data4: 468411598
+    Path: event:/Instrument Samples/Perc_HiHat
+  - Guid:
+      Data1: 1044958180
+      Data2: 1299195099
+      Data3: -2039040128
+      Data4: 1581391162
+    Path: event:/Instrument Samples/Perc_Snare
+  - Guid:
+      Data1: 1984687637
+      Data2: 1121674750
+      Data3: -1428043370
+      Data4: 155968175
+    Path: event:/Instrument Samples/Perc_Tambourine
+  _pianoRoll: {fileID: 1743980090}
+  currentBar: 0
+  audioBars: []
+--- !u!114 &1270709878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270709875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  Event: 
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: -1
+  OverrideMaxDistance: -1
 --- !u!1 &1665291478
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,6 +549,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1665291479}
   - component: {fileID: 1665291480}
+  - component: {fileID: 1665291482}
+  - component: {fileID: 1665291481}
   m_Layer: 0
   m_Name: Location Marker
   m_TagString: Untagged
@@ -442,6 +625,53 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &1665291481
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665291478}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &1665291482
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665291478}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.11260873, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.2252175, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1743980088
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,6 +722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 743de06108c296b4b96b75bf36ff987d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _audioRoll: {fileID: 1270709877}
   resetPrevCounter: 5
   bpm: 110
   prevBeatCounter: 0
@@ -511,6 +742,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06cc486a0a90e2f4caef5b0b9fa4a919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _audioRoll: {fileID: 1270709877}
   bars:
   - notes:
     - contains: 1
@@ -546,6 +778,7 @@ MonoBehaviour:
       s: 0
     - contains: 1
       s: 1
+  barsAudio: []
 --- !u!114 &1743980092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -558,6 +791,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c777d6cb31eeb214baea5d5c9ca8813f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _audioRoll: {fileID: 1270709877}
   beatObj: {fileID: 6277914542332746976, guid: 0e09f88532672b64b9b4c352dfc77e52, type: 3}
   noteObj: {fileID: 1761876749553087292, guid: fce7bc25ea6d51e46997e42ec10263f3, type: 3}
   bg: {fileID: 1264820006}
@@ -596,6 +830,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1743980089}
+  - {fileID: 1270709876}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

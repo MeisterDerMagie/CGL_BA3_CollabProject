@@ -11,8 +11,12 @@ using UnityEngine;
 
 public class Notes : MonoBehaviour
 {
+    public int sample;
+
     private NoteSpawner spawner;
-    public void NoteSetUp(float bpm, int beatLength, float _targetX, NoteSpawner script)
+    private AudioRoll _audioRoll;
+
+    public void NoteSetUp(float bpm, int beatLength, float _targetX, NoteSpawner script, AudioRoll audio, int s)
     {
         // calculate total duration of travelling length of the piano roll in seconds
         // duration of quarter note = 60 seconds / bpm
@@ -21,6 +25,8 @@ public class Notes : MonoBehaviour
         float duration = 60f / bpm * beatLength;
 
         spawner = script;
+        _audioRoll = audio;
+        sample = s;
 
         // set target position on the right side of the Piano Roll
         Vector3 targetPos = new Vector3(_targetX, transform.localPosition.y, transform.localPosition.z);
@@ -43,5 +49,13 @@ public class Notes : MonoBehaviour
 
         spawner.RemoveNote(this.gameObject);
         Destroy(this.gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (sample != -1) // -1 is set if it shouldn't play
+        {
+            _audioRoll.PlaySound(sample);
+        }
     }
 }

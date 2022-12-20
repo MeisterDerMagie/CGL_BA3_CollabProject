@@ -22,12 +22,14 @@ public struct Bar
 
 }
 
+[System.Serializable]
 public struct AudioNote
 {
     public float timeStamp;
     public int sample;
 }
 
+[System.Serializable]
 public struct AudioBar
 {
     public List<AudioNote> notes;
@@ -42,6 +44,7 @@ public struct AudioBar
 public class Playback : MonoBehaviour
 {
     private PianoRoll _pianoRoll;
+    [SerializeField] private AudioRoll _audioRoll;
     public List<Bar> bars;
     public List<AudioBar> barsAudio;
 
@@ -67,5 +70,6 @@ public class Playback : MonoBehaviour
     public void PlaybackBars()
     {
         _pianoRoll.StartPlayback(bars);
+        _audioRoll.ReceiveAudioBars(bars);
     }
 }
