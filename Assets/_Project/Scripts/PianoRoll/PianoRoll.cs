@@ -119,9 +119,8 @@ public class PianoRoll : MonoBehaviour
 
                 if (barsPlaying) PlayBars();
                 if (playAudio) PlaybackBarAudio();
-                
-                // only spawn lines on 1s and 3s, so on first and fifth eighth
-                if (prevBeatCounter == 1 || prevBeatCounter == 5) spawner.SpawnLines(bpm);
+
+                PlayQuarterNote();
             }
         }
         else
@@ -131,6 +130,12 @@ public class PianoRoll : MonoBehaviour
             locBeatCounter = 1;
             totalBeats = 1;
         }
+    }
+
+    void PlayQuarterNote()
+    {
+        // only spawn lines on 1s and 3s, so on first and fifth eighth
+        if (prevBeatCounter == 1 || prevBeatCounter == 5) spawner.SpawnLines(bpm);
     }
 
     void PlayBars()
@@ -146,9 +151,9 @@ public class PianoRoll : MonoBehaviour
             return;
         }
 
-        // play preview notes:
-        if (bars[prevBarCounter - 1].notes[prevBeatCounter - 1].contains)
-            spawner.SpawnNote(bars[prevBarCounter - 1].notes[prevBeatCounter - 1].s, bpm);
+        // play preview notes if there is a note on the eighth:
+        if (bars[prevBarCounter - 1].eighth[prevBeatCounter - 1].contains)
+            spawner.SpawnNote(bars[prevBarCounter - 1].eighth[prevBeatCounter - 1].soundID, bpm);
     }
 
     void PlaybackBarAudio()
@@ -163,8 +168,8 @@ public class PianoRoll : MonoBehaviour
         }
 
         // trigger Audio
-        if (bars[locBarCounter - 1].notes[locBeatCounter - 1].contains)
-            _audioRoll.PlaySound(bars[locBarCounter - 1].notes[locBeatCounter - 1].s);
+        if (bars[locBarCounter - 1].eighth[locBeatCounter - 1].contains)
+            _audioRoll.PlaySound(bars[locBarCounter - 1].eighth[locBeatCounter - 1].soundID);
     }
     
 
@@ -178,15 +183,15 @@ public class PianoRoll : MonoBehaviour
         {
             // create a new bar and initialise the list of notes
             Bar nb = new Bar();
-            nb.notes = new List<Note>();
+            nb.eighth = new List<Eighth>();
 
             // create a note and add values from the note sent over for every note in that bar
-            for (int a = 0; a < _bars[i].notes.Count; a++)
+            for (int a = 0; a < _bars[i].eighth.Count; a++)
             {
-                Note n = new Note();
-                n.contains = _bars[i].notes[a].contains;
-                n.s = _bars[i].notes[a].s;
-                nb.notes.Add(n);
+                Eighth n = new Eighth();
+                n.contains = _bars[i].eighth[a].contains;
+                n.soundID = _bars[i].eighth[a].soundID;
+                nb.eighth.Add(n);
             }
 
             // add new bar to the list of bars waiting to be played back

@@ -99,6 +99,6 @@ public class AudioRoll : MonoBehaviour
 
     public void PlaySound(int sample)
     {
-        RuntimeManager.PlayOneShot(sound[0]);
+        RuntimeManager.PlayOneShot(sound[sample]);
     }
 }

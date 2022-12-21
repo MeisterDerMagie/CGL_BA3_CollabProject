@@ -700,7 +700,7 @@ MonoBehaviour:
   locBeatCounter: 0
   prevBarCounter: 0
   locBarCounter: 0
-  "zeitVerz\xF6gerung": 0.05
+  "zeitVerz\xF6gerung": 0.17
   bars: []
 --- !u!114 &1743980091
 MonoBehaviour:
@@ -771,7 +771,6 @@ MonoBehaviour:
   spawns: {fileID: 459808163}
   lineHeight: 4
   beatLength: 8
-  previewLength: 6
   yPos: []
 --- !u!1 &1961762786
 GameObject:

@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public struct Note
+public struct Eighth
 {
     public bool contains;
-    public int s;
+    public int soundID;
 }
 
 [System.Serializable]
 public struct Bar
 {
-    public List<Note> notes;
+    public List<Eighth> eighth;
 
-    public Bar(List<Note> _n)
+    public Bar(List<Eighth> _n)
     {
-        notes = new List<Note>();
-        notes = _n;
+        eighth = new List<Eighth>();
+        eighth = _n;
     }
 
 }
