@@ -1421,12 +1421,18 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6046905706122264679, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
   m_PrefabInstance: {fileID: 6046905707237858873}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1166188127 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6046905706122264678, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
+--- !u!114 &1166188129 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5454067373991263851, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
   m_PrefabInstance: {fileID: 6046905707237858873}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1166188128
+  m_GameObject: {fileID: 1166188126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 559e74a83df00e444aa4a01bed23e46e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1166188131
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1439,17 +1445,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitingScreen: {fileID: 1166188129}
---- !u!114 &1166188129 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5454067373991263851, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
-  m_PrefabInstance: {fileID: 6046905707237858873}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1166188126}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 559e74a83df00e444aa4a01bed23e46e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1270947135
 GameObject:
   m_ObjectHideFlags: 0
@@ -1753,7 +1748,7 @@ MonoBehaviour:
   promptInputHelper: {fileID: 625802469}
   errorMessage: {fileID: 1030174885}
   okButton: {fileID: 2006439935}
-  waitingScreen: {fileID: 1166188127}
+  waitingScreen: {fileID: 1166188131}
   timer: {fileID: 1895691973}
   sceneToLoadAfterAllPlayersEnteredPrompt: {fileID: 11400000, guid: 941144328907ffc4ca0a08d0b68e87f4, type: 2}
   onPromptAccepted:
