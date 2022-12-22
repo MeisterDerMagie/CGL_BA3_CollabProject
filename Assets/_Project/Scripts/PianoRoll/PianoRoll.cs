@@ -4,34 +4,31 @@ using UnityEngine;
 
 
 /// <summary>
-/// The Piano Roll keeps track of the current beat + time (gets accurate info from FMOD) and tells the NoteSpawner to spawn lines and notes at the right time
+/// The Piano Roll gets the current beat and bar from the PianoRollTimer
+/// it then checks for the preview of the notes if any should be spawned + the lines as well
+/// And tells the spawner to spawn them and which one
+/// It also tells the AudioRoll script to play the audio at the correct position in the bar
 /// </summary>
 
 public class PianoRoll : MonoBehaviour
 {
-    private AudioRoll _audioRoll;
     private BackingTrack _backingTrack;
-    [SerializeField] private int resetPrevCounter = 5;
+    private AudioRoll _audioRoll;
+    private PianoRollTimer _timer;
+    
     public float bpm = 110f;
-
-    float length4s; // duration of the quarter notes in s
-    public float timer; // keeps track of time passed
-
-    public int previewBeat; // keeps track of which beat we are currently on to preview
-    public int timeLineBeat; // keeps track of which beat the location marker is currently on
-    public int previewBar; //keeps track which bar the preview is currently in
-    public int timeLineBar; // keeps track which bar location marker is currently in
-
-    int totalBeats;
-    public float zeitVerzögerung;
 
     bool musicPlaying;
     bool waitForPlayback;
     bool playingBack;
     bool playWithAudio;
 
+    int previewBeat;
+    int previewBar;
+    int timelineBeat;
+    int timelineBar;
+
     [SerializeField] private List<Bar> bars;
-    private List<AudioBar> barsAudio;
 
     private NoteSpawner spawner;
 
@@ -39,27 +36,13 @@ public class PianoRoll : MonoBehaviour
     {
         _audioRoll = GetComponentInChildren<AudioRoll>();
         _backingTrack = GetComponentInChildren<BackingTrack>();
-
-        length4s = 60f / bpm;
-        timer = 0;
-        previewBeat = resetPrevCounter;
-        timeLineBeat = 0;
+        _timer = GetComponent<PianoRollTimer>();
 
         bars = new List<Bar>();
-        barsAudio = new List<AudioBar>();
         
         spawner = GetComponent<NoteSpawner>();
-        totalBeats = 1;
-
-        _backingTrack.beatUpdated += NextBeat;
-        _backingTrack.barUpdated += NextBar;
     }
 
-    private void OnDestroy()
-    {
-        _backingTrack.beatUpdated -= NextBeat;
-        _backingTrack.barUpdated -= NextBar;
-    }
 
     void Update()
     {
@@ -76,94 +59,27 @@ public class PianoRoll : MonoBehaviour
             else
             {
                 spawner.ActivateIdleLines(true, bpm);
-                //_audioRoll.StopPlaying();
                 _backingTrack.StopMusic();
 
-                previewBeat = resetPrevCounter;
-                timeLineBeat = 0;
-                totalBeats = 1;
+                _timer.ResetTimer();
             }
         }
-
-        /*
-        if (musicPlaying)
-        {
-            // increase timer by amount of ms passed between frames
-            timer += Time.deltaTime;
-
-            // keep track of current beat in eights:
-            // 60f/bpm is the duration of one beat in s, divide by 2 for eights
-            // we multiply by the beatCounter to get the accurate time of the next beat at which to play the quarternote line
-            if (timer >= (60f / bpm / 2f * totalBeats) - zeitVerzögerung)
-            {
-                totalBeats++;
-
-                previewBeat++;
-                if (previewBeat == 9)
-                {
-                    previewBeat = 1;
-                    previewBar++;
-                }
-                timeLineBeat++;
-                if(timeLineBeat == 9)
-                {
-                    timeLineBeat = 1;
-                    timeLineBar++;
-                }
-
-                // check if bars should be counted in
-                if (waitForPlayback)
-                {
-                    if (previewBeat == resetPrevCounter)
-                    {
-                        playingBack = true;
-                        waitForPlayback = false;
-                        timeLineBar = -1;
-                        previewBar = 0;
-                        playWithAudio = true;
-                    }
-                }
-
-                if (playingBack) PlayBars();
-                if (playWithAudio) PlaybackBarAudio();
-
-                PlayQuarterNote();
-            }
-        }
-        else
-        {
-            timer = 0;
-            previewBeat = resetPrevCounter;
-            timeLineBeat = 1;
-            totalBeats = 1;
-        }
-        */
     }
 
-    // called from FMOD events via BackingTrack script
-    void NextBeat()
+    public void NextBeat()
     {
-        timeLineBeat++;
-        if (timeLineBeat == 9)
-        {
-            timeLineBeat = 1;
-            timeLineBar++;
-        }
-        previewBeat++;
-        if (previewBeat == 9)
-        {
-            previewBeat = 1;
-            previewBar++;
-        }
-
+        timelineBar = _timer.timeLineBar;
+        timelineBeat = _timer.timelineBeat;
+        previewBeat = _timer.previewBeat;
+        previewBar = _timer.previewBar;
         if (waitForPlayback)
         {
             if (previewBeat == 1)
             {
                 playingBack = true;
                 waitForPlayback = false;
-                timeLineBar = -1;
-                previewBar = 1;
+                _timer.timeLineBar = -1;
+                _timer.previewBar = 1;
                 playWithAudio = true;
             }
         }
@@ -175,10 +91,6 @@ public class PianoRoll : MonoBehaviour
         if (playWithAudio) PlaybackBarAudio();
     }
 
-    // called from FMOD events via BackingTrack script
-    void NextBar()
-    {
-    }
 
     void PlayQuarterNote()
     {
@@ -190,12 +102,7 @@ public class PianoRoll : MonoBehaviour
         if (previewBeat == 7) spawner.SpawnLines(bpm, 4);
     }
 
-#if UNITY_EDITOR
-    private void OnGUI()
-    {
-        GUILayout.Box($"timeline beat = {timeLineBeat}, preview beat = {previewBeat}");
-    }
-#endif
+
 
     void PlayBars()
     {
@@ -217,17 +124,17 @@ public class PianoRoll : MonoBehaviour
     void PlaybackBarAudio()
     {
         //if (locBarCounter < bars.Count) return;
-        if (timeLineBar < 1) return;
+        if (timelineBar < 1) return;
 
-        if (timeLineBar > bars.Count)
+        if (timelineBar > bars.Count)
         {
             playWithAudio = false;
             return;
         }
 
         // trigger Audio
-        if (bars[timeLineBar - 1].eighth[timeLineBeat - 1].contains)
-            _audioRoll.PlaySound(bars[timeLineBar - 1].eighth[timeLineBeat - 1].soundID);
+        if (bars[timelineBar - 1].eighth[timelineBeat - 1].contains)
+            _audioRoll.PlaySound(bars[timelineBar - 1].eighth[timelineBeat - 1].soundID);
     }
     
 
