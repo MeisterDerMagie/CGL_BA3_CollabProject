@@ -44,13 +44,14 @@ public struct AudioBar
 public class Playback : MonoBehaviour
 {
     private PianoRoll _pianoRoll;
-    [SerializeField] private AudioRoll _audioRoll;
+    private AudioRoll _audioRoll;
     public List<Bar> bars;
     public List<AudioBar> barsAudio;
 
     private void Start()
     {
         _pianoRoll = GetComponent<PianoRoll>();
+        _audioRoll = GetComponentInChildren<AudioRoll>();
     }
 
     private void Update()

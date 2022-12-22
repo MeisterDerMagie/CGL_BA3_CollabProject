@@ -152,7 +152,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1743980089}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &464468771
 GameObject:
@@ -183,7 +183,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1743980089}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &893630038
 GameObject:
@@ -304,7 +304,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1743980089}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1264820008
 SpriteRenderer:
@@ -368,6 +368,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1270709876}
   - component: {fileID: 1270709877}
+  - component: {fileID: 1270709878}
   m_Layer: 0
   m_Name: Audio
   m_TagString: Untagged
@@ -382,13 +383,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1270709875}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1961762787}
-  m_RootOrder: 1
+  m_Father: {fileID: 1743980089}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1270709877
 MonoBehaviour:
@@ -509,6 +510,25 @@ MonoBehaviour:
   currentBar: 0
   currentNote: 0
   audioBars: []
+--- !u!114 &1270709878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270709875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae7dee569dee07d45a76996ecb2af8cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  track:
+    Guid:
+      Data1: -1228922034
+      Data2: 1197749216
+      Data3: 1377092251
+      Data4: -121171411
+    Path: event:/Music/BackingTrack
 --- !u!1 &1665291478
 GameObject:
   m_ObjectHideFlags: 0
@@ -541,7 +561,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1743980089}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1665291480
 SpriteRenderer:
@@ -673,6 +693,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1270709876}
   - {fileID: 1264820007}
   - {fileID: 1665291479}
   - {fileID: 464468772}
@@ -692,9 +713,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 743de06108c296b4b96b75bf36ff987d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioRoll: {fileID: 1270709877}
   resetPrevCounter: 5
-  bpm: 110
+  bpm: 120
   timer: 0
   prevBeatCounter: 0
   locBeatCounter: 0
@@ -714,42 +734,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06cc486a0a90e2f4caef5b0b9fa4a919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioRoll: {fileID: 1270709877}
   bars:
-  - notes:
+  - eighth:
     - contains: 1
-      s: 0
+      soundID: 0
     - contains: 0
-      s: 0
+      soundID: 0
     - contains: 1
-      s: 1
+      soundID: 0
     - contains: 0
-      s: 0
+      soundID: 0
     - contains: 1
-      s: 2
+      soundID: 0
     - contains: 0
-      s: 0
+      soundID: 0
     - contains: 1
-      s: 3
+      soundID: 0
     - contains: 0
-      s: 0
-  - notes:
+      soundID: 0
+  - eighth:
     - contains: 0
-      s: 0
+      soundID: 0
     - contains: 1
-      s: 2
+      soundID: 0
     - contains: 0
-      s: 0
+      soundID: 0
     - contains: 1
-      s: 3
+      soundID: 0
     - contains: 1
-      s: 1
+      soundID: 0
     - contains: 1
-      s: 0
+      soundID: 0
     - contains: 0
-      s: 0
+      soundID: 0
     - contains: 1
-      s: 1
+      soundID: 0
   barsAudio: []
 --- !u!114 &1743980092
 MonoBehaviour:
@@ -801,7 +820,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1743980089}
-  - {fileID: 1270709876}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -643,6 +643,8 @@ MonoBehaviour:
   MasterBanks:
   - Desktop/Master
   Banks:
+  - Desktop/Bank A
+  - Desktop/Music
   - Desktop/Samples
   BanksToLoad: []
   LiveUpdatePort: 9264

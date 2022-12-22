@@ -9,7 +9,8 @@ using UnityEngine;
 
 public class PianoRoll : MonoBehaviour
 {
-    [SerializeField] private AudioRoll _audioRoll;
+    private AudioRoll _audioRoll;
+    private BackingTrack _backingTrack;
     [SerializeField] private int resetPrevCounter = 5;
     public float bpm = 110f;
 
@@ -36,6 +37,9 @@ public class PianoRoll : MonoBehaviour
 
     void Start()
     {
+        _audioRoll = GetComponentInChildren<AudioRoll>();
+        _backingTrack = GetComponentInChildren<BackingTrack>();
+
         length4s = 60f / bpm;
         timer = 0;
         prevBeatCounter = resetPrevCounter;
@@ -59,11 +63,13 @@ public class PianoRoll : MonoBehaviour
             {
                 spawner.ActivateIdleLines(false, bpm);
                 barsPlaying = false;
+                _backingTrack.StartMusic();
             }
             else
             {
                 spawner.ActivateIdleLines(true, bpm);
                 //_audioRoll.StopPlaying();
+                _backingTrack.StopMusic();
             }
         }
 
