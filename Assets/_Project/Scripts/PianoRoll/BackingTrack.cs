@@ -116,7 +116,6 @@ public class BackingTrack : MonoBehaviour
                         var parameter = (FMOD.Studio.TIMELINE_BEAT_PROPERTIES)Marshal.PtrToStructure(parameterPtr, typeof(FMOD.Studio.TIMELINE_BEAT_PROPERTIES));
                         timelineInfo.currentBeat = parameter.beat;
                         timelineInfo.currentBar = parameter.bar;
-
                     }
                     break;
             }

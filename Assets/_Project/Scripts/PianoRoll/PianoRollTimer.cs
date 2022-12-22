@@ -12,7 +12,7 @@ public class PianoRollTimer : MonoBehaviour
 {
     public int previewBeat; // keeps track of which beat we are currently on to preview
     public int timelineBeat; // keeps track of which beat the location marker is currently on
-    public int previewBar; //keeps track which bar the preview is currently in
+    public int previewBar; // keeps track which bar the preview is currently in
     public int timeLineBar; // keeps track which bar location marker is currently in
 
     private BackingTrack _backingTrack;

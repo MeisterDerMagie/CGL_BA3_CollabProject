@@ -17,7 +17,8 @@ public class Notes : MonoBehaviour
     private AudioRoll _audioRoll;
 
     public Sprite[] numbers;
-    public SpriteRenderer renderer;
+    public SpriteRenderer _renderer;
+    public SpriteRenderer _lineRenderer;
 
     public void NoteSetUp(float bpm, int beatLength, float _targetX, NoteSpawner script, AudioRoll audio, int s, int number = -1)
     {
@@ -29,11 +30,18 @@ public class Notes : MonoBehaviour
 
         if (number != -1)
         {
-            renderer.sprite = numbers[number - 1];
+            _renderer.sprite = numbers[number - 1];
+            //_renderer.gameObject.SetActive(false);
+            if (number == 2 || number == 4)
+            {
+                Color c = _lineRenderer.color;
+                c.a = 0.4f;
+                _lineRenderer.color = c;
+            }
         }
         else
         {
-            if (renderer != null) renderer.gameObject.SetActive(false);
+            if (_renderer != null) _renderer.gameObject.SetActive(false);
         }
 
         spawner = script;
@@ -61,13 +69,5 @@ public class Notes : MonoBehaviour
 
         spawner.RemoveNote(this.gameObject);
         Destroy(this.gameObject);
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (sample != -1) // -1 is set if it shouldn't play
-        {
-            //_audioRoll.PlaySound(sample);
-        }
     }
 }

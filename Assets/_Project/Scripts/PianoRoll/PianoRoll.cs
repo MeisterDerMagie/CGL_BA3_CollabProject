@@ -72,6 +72,7 @@ public class PianoRoll : MonoBehaviour
         timelineBeat = _timer.timelineBeat;
         previewBeat = _timer.previewBeat;
         previewBar = _timer.previewBar;
+
         if (waitForPlayback)
         {
             if (previewBeat == 1)
@@ -80,6 +81,8 @@ public class PianoRoll : MonoBehaviour
                 waitForPlayback = false;
                 _timer.timeLineBar = -1;
                 _timer.previewBar = 1;
+                timelineBar = -1;
+                previewBar = 1;
                 playWithAudio = true;
             }
         }
@@ -102,13 +105,9 @@ public class PianoRoll : MonoBehaviour
         if (previewBeat == 7) spawner.SpawnLines(bpm, 4);
     }
 
-
-
     void PlayBars()
     {
-        // if the prevbar counter is still one bar too early, don't start yet
-        if (previewBar < 1) return;
-        // likewise, if the prevbar counter is beyond the limit of the list, stop playing back bars
+        // if the prevbar counter is beyond the limit of the list, stop playing back bars
         // since we start playing back bars on prevBarCounter 1 --> don't have to do >= bars.Count
         if (previewBar > bars.Count)
         {
@@ -141,6 +140,8 @@ public class PianoRoll : MonoBehaviour
     public void StartPlayback(List<Bar> _bars)
     {
         waitForPlayback = true;
+        playWithAudio = false;
+        playingBack = false;
         bars.Clear();
         
         // for every bar that is sent over
