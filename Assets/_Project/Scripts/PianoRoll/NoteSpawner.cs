@@ -50,7 +50,7 @@ public class NoteSpawner : MonoBehaviour
 
         #region Calculate Positions for all idle and start lines
         posLines = new List<float>();
-        beats = 2;
+        beats = 1;
 
         float x = transform.localPosition.x - bg.transform.localScale.x / 2f;
 
@@ -80,6 +80,7 @@ public class NoteSpawner : MonoBehaviour
         {
             idleLines[i].gameObject.SetActive(true);
             idleLines[i].localPosition = new Vector3(posLines[i - 1], 0, 0);
+            if (i == 1 || i == 3 || i == 5 || i  == 7 ||  i == 9 || i == 11) idleLines[i].GetComponent<Notes>().MakeOpaque();
         }
         #endregion
 
@@ -102,8 +103,6 @@ public class NoteSpawner : MonoBehaviour
         // de/activate idleLines
         idleL.SetActive(var);
 
-        return;
-
         // if idle lines are activated, remove all other active notes
         // better alternative if time --> let them move until they hit the next beat
         if (var)
@@ -123,8 +122,10 @@ public class NoteSpawner : MonoBehaviour
                 GameObject clone = Instantiate(beatObj, spawns.transform);
                 clone.transform.localPosition = new Vector3(posLines[i], 0, 0);
 
+                int a= -1;
                 // tell the clone the current bpm, length of piano roll in beats, and target value of poision x (how far it needs to travel to the left)
-                clone.GetComponent<Notes>().NoteSetUp(bpm, (i + 1) * beats, transform.localPosition.x - bg.transform.localScale.x / 2f, this, _audioRoll, -1);
+                if (i == 1 || i == 3 || i == 5 || i == 7 || i == 9 || i == 11 || i == 13) a = 2;
+                clone.GetComponent<Notes>().NoteSetUp(bpm, (i + 1) * beats, transform.localPosition.x - bg.transform.localScale.x / 2f, this, _audioRoll, -1, a);
 
                 currentNotes.Add(clone);
             }
