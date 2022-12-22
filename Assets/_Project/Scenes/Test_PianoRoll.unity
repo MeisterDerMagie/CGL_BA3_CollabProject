@@ -529,6 +529,8 @@ MonoBehaviour:
       Data3: 1377092251
       Data4: -121171411
     Path: event:/Music/BackingTrack
+  lastBeat: 0
+  lastBar: 0
 --- !u!1 &1665291478
 GameObject:
   m_ObjectHideFlags: 0
@@ -672,6 +674,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1743980089}
   - component: {fileID: 1743980090}
+  - component: {fileID: 1743980093}
   - component: {fileID: 1743980091}
   - component: {fileID: 1743980092}
   m_Layer: 0
@@ -713,13 +716,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 743de06108c296b4b96b75bf36ff987d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resetPrevCounter: 5
+  resetPrevCounter: 3
   bpm: 120
   timer: 0
-  prevBeatCounter: 0
-  locBeatCounter: 0
-  prevBarCounter: 0
-  locBarCounter: 0
+  previewBeat: 0
+  timeLineBeat: 0
+  previewBar: 0
+  timeLineBar: 0
   "zeitVerz\xF6gerung": 0.17
   bars: []
 --- !u!114 &1743980091
@@ -791,6 +794,18 @@ MonoBehaviour:
   lineHeight: 4
   beatLength: 8
   yPos: []
+--- !u!114 &1743980093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743980088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bd63515b28ec3c41a0df62f013ab84d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1961762786
 GameObject:
   m_ObjectHideFlags: 0

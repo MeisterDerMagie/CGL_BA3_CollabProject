@@ -102,6 +102,8 @@ public class NoteSpawner : MonoBehaviour
         // de/activate idleLines
         idleL.SetActive(var);
 
+        return;
+
         // if idle lines are activated, remove all other active notes
         // better alternative if time --> let them move until they hit the next beat
         if (var)
@@ -129,14 +131,14 @@ public class NoteSpawner : MonoBehaviour
         }
     }
 
-    public void SpawnLines(float bpm)
+    public void SpawnLines(float bpm, int number)
     {
         //intantiate a new quarternote line and set position to the far right of the piano roll:
         GameObject clone = Instantiate(beatObj, spawns.transform);
         clone.transform.localPosition = new Vector3(xPos, 0, 0);
 
         // tell the clone the current bpm, the length of the piano roll in beats, and the target value of position.x (how far it needs to travel to the left)
-        clone.GetComponent<Notes>().NoteSetUp(bpm, beatLength, transform.localPosition.x - bg.transform.localScale.x / 2f, this, _audioRoll, -1);
+        clone.GetComponent<Notes>().NoteSetUp(bpm, beatLength, transform.localPosition.x - bg.transform.localScale.x / 2f, this, _audioRoll, -1, number);
 
         currentNotes.Add(clone);
     }

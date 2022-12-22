@@ -17,18 +17,18 @@ public class PianoRoll : MonoBehaviour
     float length4s; // duration of the quarter notes in s
     public float timer; // keeps track of time passed
 
-    public int prevBeatCounter; // keeps track of which beat we are currently on to preview
-    public int locBeatCounter; // keeps track of which beat the location marker is currently on
-    public int prevBarCounter; //keeps track which bar the preview is currently in
-    public int locBarCounter; // keeps track which bar location marker is currently in
+    public int previewBeat; // keeps track of which beat we are currently on to preview
+    public int timeLineBeat; // keeps track of which beat the location marker is currently on
+    public int previewBar; //keeps track which bar the preview is currently in
+    public int timeLineBar; // keeps track which bar location marker is currently in
 
     int totalBeats;
     public float zeitVerzögerung;
 
     bool musicPlaying;
-    bool waitForBars;
-    bool barsPlaying;
-    bool playAudio;
+    bool waitForPlayback;
+    bool playingBack;
+    bool playWithAudio;
 
     [SerializeField] private List<Bar> bars;
     private List<AudioBar> barsAudio;
@@ -42,27 +42,35 @@ public class PianoRoll : MonoBehaviour
 
         length4s = 60f / bpm;
         timer = 0;
-        prevBeatCounter = resetPrevCounter;
-        locBeatCounter = 1;
+        previewBeat = resetPrevCounter;
+        timeLineBeat = 0;
 
         bars = new List<Bar>();
         barsAudio = new List<AudioBar>();
         
         spawner = GetComponent<NoteSpawner>();
         totalBeats = 1;
+
+        _backingTrack.beatUpdated += NextBeat;
+        _backingTrack.barUpdated += NextBar;
     }
 
+    private void OnDestroy()
+    {
+        _backingTrack.beatUpdated -= NextBeat;
+        _backingTrack.barUpdated -= NextBar;
+    }
 
     void Update()
     {
-        // for testing if quarter lines spawn correctly on time; start and stop by pressing space bar; should be triggered by FMOD instead
+        // for testing if quarter lines spawn correctly on time; start and stop by pressing space bar; should be triggered from somewhere else obvs
         if (Input.GetKeyDown(KeyCode.Space))
         {
             musicPlaying = !musicPlaying;
             if (musicPlaying)
             {
                 spawner.ActivateIdleLines(false, bpm);
-                barsPlaying = false;
+                playingBack = false;
                 _backingTrack.StartMusic();
             }
             else
@@ -70,10 +78,14 @@ public class PianoRoll : MonoBehaviour
                 spawner.ActivateIdleLines(true, bpm);
                 //_audioRoll.StopPlaying();
                 _backingTrack.StopMusic();
+
+                previewBeat = resetPrevCounter;
+                timeLineBeat = 0;
+                totalBeats = 1;
             }
         }
 
-
+        /*
         if (musicPlaying)
         {
             // increase timer by amount of ms passed between frames
@@ -86,45 +98,34 @@ public class PianoRoll : MonoBehaviour
             {
                 totalBeats++;
 
-                prevBeatCounter++;
-                if (prevBeatCounter == 9)
+                previewBeat++;
+                if (previewBeat == 9)
                 {
-                    prevBeatCounter = 1;
-                    prevBarCounter++;
+                    previewBeat = 1;
+                    previewBar++;
                 }
-                locBeatCounter++;
-                if(locBeatCounter == 9)
+                timeLineBeat++;
+                if(timeLineBeat == 9)
                 {
-                    locBeatCounter = 1;
-                    locBarCounter++;
-                    /*
-                    if (playAudio) 
-                    {
-                        if (locBarCounter == 1) _audioRoll.StartPlaying(0);
-                        else
-                        {
-                            _audioRoll.currentBar++;
-                            _audioRoll.currentNote = 0;
-                        }
-                    }
-                    */
+                    timeLineBeat = 1;
+                    timeLineBar++;
                 }
 
                 // check if bars should be counted in
-                if (waitForBars)
+                if (waitForPlayback)
                 {
-                    if (prevBeatCounter == resetPrevCounter)
+                    if (previewBeat == resetPrevCounter)
                     {
-                        barsPlaying = true;
-                        waitForBars = false;
-                        locBarCounter = -1;
-                        prevBarCounter = 0;
-                        playAudio = true;
+                        playingBack = true;
+                        waitForPlayback = false;
+                        timeLineBar = -1;
+                        previewBar = 0;
+                        playWithAudio = true;
                     }
                 }
 
-                if (barsPlaying) PlayBars();
-                if (playAudio) PlaybackBarAudio();
+                if (playingBack) PlayBars();
+                if (playWithAudio) PlaybackBarAudio();
 
                 PlayQuarterNote();
             }
@@ -132,56 +133,107 @@ public class PianoRoll : MonoBehaviour
         else
         {
             timer = 0;
-            prevBeatCounter = resetPrevCounter;
-            locBeatCounter = 1;
+            previewBeat = resetPrevCounter;
+            timeLineBeat = 1;
             totalBeats = 1;
         }
+        */
+    }
+
+    // called from FMOD events via BackingTrack script
+    void NextBeat()
+    {
+        timeLineBeat++;
+        if (timeLineBeat == 9)
+        {
+            timeLineBeat = 1;
+            timeLineBar++;
+        }
+        previewBeat++;
+        if (previewBeat == 9)
+        {
+            previewBeat = 1;
+            previewBar++;
+        }
+
+        if (waitForPlayback)
+        {
+            if (previewBeat == 1)
+            {
+                playingBack = true;
+                waitForPlayback = false;
+                timeLineBar = -1;
+                previewBar = 1;
+                playWithAudio = true;
+            }
+        }
+
+        if (!musicPlaying) return;
+        PlayQuarterNote();
+
+        if (playingBack) PlayBars();
+        if (playWithAudio) PlaybackBarAudio();
+    }
+
+    // called from FMOD events via BackingTrack script
+    void NextBar()
+    {
     }
 
     void PlayQuarterNote()
     {
         // only spawn lines on 1s and 3s, so on first and fifth eighth
-        if (prevBeatCounter == 1 || prevBeatCounter == 5) spawner.SpawnLines(bpm);
+        //if (previewBeat == 1 || previewBeat == 5) spawner.SpawnLines(bpm);
+        if (previewBeat == 1) spawner.SpawnLines(bpm, 1);
+        if (previewBeat == 3) spawner.SpawnLines(bpm, 2);
+        if (previewBeat == 5) spawner.SpawnLines(bpm, 3);
+        if (previewBeat == 7) spawner.SpawnLines(bpm, 4);
     }
+
+#if UNITY_EDITOR
+    private void OnGUI()
+    {
+        GUILayout.Box($"timeline beat = {timeLineBeat}, preview beat = {previewBeat}");
+    }
+#endif
 
     void PlayBars()
     {
         // if the prevbar counter is still one bar too early, don't start yet
-        if (prevBarCounter == 0) return;
+        if (previewBar < 1) return;
         // likewise, if the prevbar counter is beyond the limit of the list, stop playing back bars
         // since we start playing back bars on prevBarCounter 1 --> don't have to do >= bars.Count
-        if (prevBarCounter > bars.Count)
+        if (previewBar > bars.Count)
         {
-            barsPlaying = false;
-            playAudio = true;
+            playingBack = false;
             return;
         }
 
         // play preview notes if there is a note on the eighth:
-        if (bars[prevBarCounter - 1].eighth[prevBeatCounter - 1].contains)
-            spawner.SpawnNote(bars[prevBarCounter - 1].eighth[prevBeatCounter - 1].soundID, bpm);
+        if (bars[previewBar - 1].eighth[previewBeat - 1].contains)
+            spawner.SpawnNote(bars[previewBar - 1].eighth[previewBeat - 1].soundID, bpm);
     }
 
     void PlaybackBarAudio()
     {
         //if (locBarCounter < bars.Count) return;
-        if (locBarCounter < 1) return;
+        if (timeLineBar < 1) return;
 
-        if (locBarCounter > bars.Count)
+        if (timeLineBar > bars.Count)
         {
-            playAudio = false;
+            playWithAudio = false;
             return;
         }
 
         // trigger Audio
-        if (bars[locBarCounter - 1].eighth[locBeatCounter - 1].contains)
-            _audioRoll.PlaySound(bars[locBarCounter - 1].eighth[locBeatCounter - 1].soundID);
+        if (bars[timeLineBar - 1].eighth[timeLineBeat - 1].contains)
+            _audioRoll.PlaySound(bars[timeLineBar - 1].eighth[timeLineBeat - 1].soundID);
     }
     
 
     public void StartPlayback(List<Bar> _bars)
     {
-        waitForBars = true;
+        waitForPlayback = true;
         bars.Clear();
         
         // for every bar that is sent over

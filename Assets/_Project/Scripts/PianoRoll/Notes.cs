@@ -16,13 +16,25 @@ public class Notes : MonoBehaviour
     private NoteSpawner spawner;
     private AudioRoll _audioRoll;
 
-    public void NoteSetUp(float bpm, int beatLength, float _targetX, NoteSpawner script, AudioRoll audio, int s)
+    public Sprite[] numbers;
+    public SpriteRenderer renderer;
+
+    public void NoteSetUp(float bpm, int beatLength, float _targetX, NoteSpawner script, AudioRoll audio, int s, int number = -1)
     {
         // calculate total duration of travelling length of the piano roll in seconds
         // duration of quarter note = 60 seconds / bpm
         // beat length = length of piano roll measured in quarter notes
         // --> total duration is quarter notes times beat length
-        float duration = 60f / bpm * beatLength;
+        float duration = 60f / bpm * (beatLength);
+
+        if (number != -1)
+        {
+            renderer.sprite = numbers[number - 1];
+        }
+        else
+        {
+            if (renderer != null) renderer.gameObject.SetActive(false);
+        }
 
         spawner = script;
         _audioRoll = audio;
