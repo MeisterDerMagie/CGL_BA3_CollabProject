@@ -1,0 +1,14 @@
+skeleton.png
+size:1153,524
+filter:Linear,Linear
+pma:true
+characterImage_00_Cat
+bounds:2,2,520,979
+offsets:264,42,1024,1024
+rotate:90
+eye_closed
+bounds:983,302,220,168
+rotate:90
+eye_pupil
+bounds:983,263,13,37
+offsets:17,10,45,56
