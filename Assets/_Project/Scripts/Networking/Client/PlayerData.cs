@@ -19,6 +19,7 @@ public class PlayerData : NetworkBehaviour
         return localPlayerDataCached;
     }
     
+    #region Public Properties
     public Guid ClientGuid => Guid.Parse(_clientGuid.Value.ToString());
     public string PlayerName
     {
@@ -39,11 +40,26 @@ public class PlayerData : NetworkBehaviour
     }
 
     public string Prompt => _prompt.Value.ToString();
+    public string AssignedPrompt => _assignedPrompt.Value.ToString();
     public bool SubmittedPrompt => _submittedPrompt.Value;
+    public List<uint> InstrumentIds
+    {
+        get
+        {
+            var list = new List<uint>();
+            foreach (uint id in _instrumentIds)
+            {
+                list.Add(id);
+            }
+
+            return list;
+        }
+    }
     public int PointsCreativity => _pointsCreativity.Value;
     public int PointsPlayability => _pointsPlayability.Value;
     public int PointsPerformance => _pointsPerformance.Value;
-
+    #endregion
+    
     //we need these pre-loaded values because even if the player name was loaded from player prefs, it's only set in the first sync from the server. With these values we can access the correct name and characterId right from the beginning
     private string _playerNameLocal = string.Empty;
     private uint _characterIdLocal = 0;
@@ -54,20 +70,25 @@ public class PlayerData : NetworkBehaviour
     private string _defaultPlayerName;
     
     //Events
-    public event Action<PromptResponse> OnPromptResponseClient = delegate {  };
     public static event Action<ulong, PromptResponse> OnPromptResponseServer = delegate {  };
-
+    public event Action<PromptResponse> OnPromptResponseClient = delegate {  };
+    
     //Network Variables
+    #region Network Variables
     private NetworkVariable<FixedString64Bytes> _clientGuid;
     private NetworkVariable<FixedString128Bytes> _playerName;
     private NetworkVariable<uint> _characterId;
     private NetworkVariable<FixedString512Bytes> _prompt;
+    private NetworkVariable<FixedString512Bytes> _assignedPrompt;
     private NetworkVariable<bool> _submittedPrompt;
+
+    private NetworkList<uint> _instrumentIds;
 
     private NetworkVariable<int> _pointsCreativity;
     private NetworkVariable<int> _pointsPlayability;
     private NetworkVariable<int> _pointsPerformance;
-
+    #endregion
+    
     //Initialization
     private void Awake()
     {
@@ -76,7 +97,9 @@ public class PlayerData : NetworkBehaviour
         _playerName = new NetworkVariable<FixedString128Bytes>(string.Empty);
         _characterId = new NetworkVariable<uint>(0);
         _prompt = new NetworkVariable<FixedString512Bytes>(string.Empty);
+        _assignedPrompt = new NetworkVariable<FixedString512Bytes>(string.Empty);
         _submittedPrompt = new NetworkVariable<bool>(false);
+        _instrumentIds = new NetworkList<uint>();
         _pointsCreativity = new NetworkVariable<int>(0);
         _pointsPlayability = new NetworkVariable<int>(0);
         _pointsPerformance = new NetworkVariable<int>(0);
@@ -146,6 +169,8 @@ public class PlayerData : NetworkBehaviour
         _characterId.OnValueChanged += OnCharacterIdChanged;
     }
 
+    
+
     public override void OnDestroy()
     {
         //reset local data
@@ -160,7 +185,9 @@ public class PlayerData : NetworkBehaviour
         _playerName.Dispose();
         _characterId.Dispose();
         _prompt.Dispose();
+        _assignedPrompt.Dispose();
         _submittedPrompt.Dispose();
+        _instrumentIds.Dispose();
         _pointsCreativity.Dispose();
         _pointsPlayability.Dispose();
         _pointsPerformance.Dispose();
@@ -193,6 +220,7 @@ public class PlayerData : NetworkBehaviour
     }
 
     //Setters
+    #region Setters
     [ServerRpc]
     private void SetClientGuidServerRpc(FixedString64Bytes newGuid)
     {
@@ -284,7 +312,6 @@ public class PlayerData : NetworkBehaviour
             PromptResponseClientRpc(PromptResponse.Accepted);
             OnPromptResponseServer?.Invoke(clientId, PromptResponse.Accepted);
         }
-        
     }
 
     [ClientRpc]
@@ -292,11 +319,44 @@ public class PlayerData : NetworkBehaviour
     {
         OnPromptResponseClient?.Invoke(response);
     }
+
+    public void SetAssignedPrompt(string prompt)
+    {
+        _assignedPrompt.Value = prompt;
+
+        //-----------DEBUG
+        Debug.Log($"Player {PlayerName} (id: {OwnerClientId.ToString()}) with own prompt \"{Prompt}\" got assigned prompt \"{AssignedPrompt}\".");
+    }
+
+    public void SetInstruments(List<uint> instrumentIds)
+    {
+        _instrumentIds.Clear();
+
+        foreach (uint id in instrumentIds)
+        {
+            _instrumentIds.Add(id);
+        }
+
+        //-----------DEBUG
+        string instruments = string.Empty;
+
+        foreach (uint id in InstrumentIds)
+        {
+            instruments += InstrumentsManager.Instance.GetInstrument(id).friendlyName;
+            instruments += ", ";
+        }
+
+        instruments = instruments.Substring(0,instruments.Length-2);
+
+        Debug.Log($"Player {PlayerName} (id: {OwnerClientId.ToString()}) got assigned the following instruments: {instruments}");
+    }
     
     //The points should not have a ServerRPC (the client should not have the authority to set its points). The server should calculate those based on the user input
     public void SetPointsCreativity(int newValue) => _pointsCreativity.Value = newValue;
     public void SetPointsPlayability(int newValue) => _pointsPlayability.Value = newValue;
     public void SetPointsPerformance(int newValue) => _pointsPerformance.Value = newValue;
+    
+    #endregion
     
     public enum PromptResponse
     {

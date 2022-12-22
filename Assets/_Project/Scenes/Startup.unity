@@ -848,7 +848,7 @@ GameObject:
   - component: {fileID: 1660931403}
   - component: {fileID: 1660931402}
   m_Layer: 0
-  m_Name: SoundsManager
+  m_Name: InstrumentsManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -866,9 +866,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5722b0e48a8943079fe731aab07a399b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds:
-  - {fileID: 11400000, guid: 5d00dc1f231b5cd41a098855421a4f69, type: 2}
-  - {fileID: 11400000, guid: f971f47b7cc2e3f4691959a1a5f864f2, type: 2}
+  instruments:
+  - {fileID: 11400000, guid: 39d07c56b3fa8624190f958f79c5ad89, type: 2}
+  - {fileID: 11400000, guid: a78bd38345043354e9cb02b671e33e8e, type: 2}
+  - {fileID: 11400000, guid: eef5442c2c683244a88072f786b53d3a, type: 2}
+  - {fileID: 11400000, guid: 9a80fbd3221a31f4f9314714772a379d, type: 2}
+  - {fileID: 11400000, guid: dc1c3c47d80e52f4180944bf83c26ad1, type: 2}
 --- !u!4 &1660931403
 Transform:
   m_ObjectHideFlags: 0

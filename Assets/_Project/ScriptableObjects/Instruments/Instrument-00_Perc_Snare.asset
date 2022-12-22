@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c589d62276e77404498aa48d4be86368, type: 3}
-  m_Name: Sound-00_Perc_Snare
+  m_Name: Instrument-00_Perc_Snare
   m_EditorClassIdentifier: 
-  soundId: 0
+  instrumentId: 0
+  friendlyName: Snare
   soundEvent:
     Guid:
       Data1: 1044958180
@@ -20,4 +21,4 @@ MonoBehaviour:
       Data3: -2039040128
       Data4: 1581391162
     Path: event:/Instrument Samples/Perc_Snare
-  soundIcon: {fileID: 21300000, guid: d410fd644c36dae41a14b7357494ec90, type: 3}
+  instrumentIcon: {fileID: 21300000, guid: d410fd644c36dae41a14b7357494ec90, type: 3}
