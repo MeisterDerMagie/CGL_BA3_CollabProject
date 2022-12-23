@@ -23,11 +23,6 @@ public class PianoRoll : MonoBehaviour
     bool playingBack;
     bool playWithAudio;
 
-    int previewBeat;
-    int previewBar;
-    int timelineBeat;
-    int timelineBar;
-
     [SerializeField] private List<Bar> bars;
 
     private NoteSpawner spawner;
@@ -53,6 +48,7 @@ public class PianoRoll : MonoBehaviour
             if (musicPlaying)
             {
                 spawner.ActivateIdleLines(false, bpm);
+                playWithAudio = false;
                 playingBack = false;
                 _backingTrack.StartMusic();
             }
@@ -68,21 +64,14 @@ public class PianoRoll : MonoBehaviour
 
     public void NextBeat()
     {
-        timelineBar = _timer.timeLineBar;
-        timelineBeat = _timer.timelineBeat;
-        previewBeat = _timer.previewBeat;
-        previewBar = _timer.previewBar;
-
         if (waitForPlayback)
         {
-            if (previewBeat == 1)
+            if (_timer.previewBeat == 1)
             {
                 playingBack = true;
                 waitForPlayback = false;
-                _timer.timeLineBar = -1;
+                _timer.timelineBar = -1;
                 _timer.previewBar = 1;
-                timelineBar = -1;
-                previewBar = 1;
                 playWithAudio = true;
             }
         }
@@ -99,41 +88,41 @@ public class PianoRoll : MonoBehaviour
     {
         // only spawn lines on 1s and 3s, so on first and fifth eighth
         //if (previewBeat == 1 || previewBeat == 5) spawner.SpawnLines(bpm);
-        if (previewBeat == 1) spawner.SpawnLines(bpm, 1);
-        if (previewBeat == 3) spawner.SpawnLines(bpm, 2);
-        if (previewBeat == 5) spawner.SpawnLines(bpm, 3);
-        if (previewBeat == 7) spawner.SpawnLines(bpm, 4);
+        if (_timer.previewBeat == 1) spawner.SpawnLines(bpm, 1);
+        if (_timer.previewBeat == 3) spawner.SpawnLines(bpm, 2);
+        if (_timer.previewBeat == 5) spawner.SpawnLines(bpm, 3);
+        if (_timer.previewBeat == 7) spawner.SpawnLines(bpm, 4);
     }
 
     void PlayBars()
     {
         // if the prevbar counter is beyond the limit of the list, stop playing back bars
         // since we start playing back bars on prevBarCounter 1 --> don't have to do >= bars.Count
-        if (previewBar > bars.Count)
+        if (_timer.previewBar > bars.Count)
         {
             playingBack = false;
             return;
         }
 
         // play preview notes if there is a note on the eighth:
-        if (bars[previewBar - 1].eighth[previewBeat - 1].contains)
-            spawner.SpawnNote(bars[previewBar - 1].eighth[previewBeat - 1].soundID, bpm);
+        if (bars[_timer.previewBar - 1].eighth[_timer.previewBeat - 1].contains)
+            spawner.SpawnNote(bars[_timer.previewBar - 1].eighth[_timer.previewBeat - 1].soundID, bpm);
     }
 
     void PlaybackBarAudio()
     {
         //if (locBarCounter < bars.Count) return;
-        if (timelineBar < 1) return;
+        if (_timer.timelineBar < 1) return;
 
-        if (timelineBar > bars.Count)
+        if (_timer.timelineBar > bars.Count)
         {
             playWithAudio = false;
             return;
         }
 
         // trigger Audio
-        if (bars[timelineBar - 1].eighth[timelineBeat - 1].contains)
-            _audioRoll.PlaySound(bars[timelineBar - 1].eighth[timelineBeat - 1].soundID);
+        if (bars[_timer.timelineBar - 1].eighth[_timer.timelineBeat - 1].contains)
+            _audioRoll.PlaySound(bars[_timer.timelineBar - 1].eighth[_timer.timelineBeat - 1].soundID);
     }
     
 

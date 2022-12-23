@@ -1,30 +1,72 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class RecordInput : MonoBehaviour
 {
     [SerializeField] private KeyCode[] keyInputs;
+    [SerializeField] private AudioRoll _audioRoll;
+    [SerializeField] private EventReference snare;
+    private FMOD.Studio.EventInstance instance;
+
+    private float timer;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        //instance = RuntimeManager.CreateInstance(snare);
+        SetInstance();
     }
 
     // Update is called once per frame
     void Update()
     {
+        timer = Time.deltaTime;
+
         if (Input.GetKeyDown(KeyCode.R))
         {
             // start recording
         }
 
+        /*
+        if (Input.GetKeyDown(keyInputs[0])) //_audioRoll.PlaySound(0);
+        {
+            instance.setPaused(false);
+            instance.release();
+            SetInstance();
+        }
+        */
+
         for (int i = 0; i < keyInputs.Length; i++)
         {
-            // if pressed --> save input + process input
+            if (Input.GetKeyDown(keyInputs[i]))
+            {
+                // play Sound
+                //_audioRoll.PlaySound(i);
+                instance.setPaused(false);
+                instance.release();
+                SetInstance();
+
+                // if recording:
+                // if pressed --> save input + process input
+            }
         }
     }
+
+    void SetInstance()
+    {
+        instance = RuntimeManager.CreateInstance(snare);
+        instance.start();
+        instance.setPaused(true);
+    }
+
+#if UNITY_EDITOR
+    private void OnGUI()
+    {
+        //GUILayout.Box($"time.deltaTime = {timer}");
+    }
+#endif
 
 
     // have keys input as variables for int soundID

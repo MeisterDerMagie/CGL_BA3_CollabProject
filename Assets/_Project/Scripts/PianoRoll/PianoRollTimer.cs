@@ -13,7 +13,7 @@ public class PianoRollTimer : MonoBehaviour
     public int previewBeat; // keeps track of which beat we are currently on to preview
     public int timelineBeat; // keeps track of which beat the location marker is currently on
     public int previewBar; // keeps track which bar the preview is currently in
-    public int timeLineBar; // keeps track which bar location marker is currently in
+    public int timelineBar; // keeps track which bar location marker is currently in
 
     private BackingTrack _backingTrack;
     [SerializeField] private int resetPrevCounter = 3;
@@ -26,7 +26,8 @@ public class PianoRollTimer : MonoBehaviour
         _backingTrack.beatUpdated += NextBeat;
         _backingTrack.barUpdated += NextBar;
 
-        ResetTimer();
+        timelineBeat = 0;
+        previewBeat = resetPrevCounter;
     }
 
     private void OnDestroy()
@@ -44,8 +45,8 @@ public class PianoRollTimer : MonoBehaviour
 
     public void ResetTimer()
     {
-        previewBeat = resetPrevCounter;
-        timelineBeat = 0;
+        previewBeat = resetPrevCounter - 1;
+        timelineBeat = -1 ;
     }
 
     // called from FMOD events via BackingTrack script
@@ -55,7 +56,7 @@ public class PianoRollTimer : MonoBehaviour
         if (timelineBeat == 9)
         {
             timelineBeat = 1;
-            timeLineBar++;
+            timelineBar++;
         }
         previewBeat++;
         if (previewBeat == 9)
