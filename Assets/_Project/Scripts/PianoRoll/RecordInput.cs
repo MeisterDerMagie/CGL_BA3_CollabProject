@@ -24,6 +24,9 @@ public class RecordInput : MonoBehaviour
     private BackingTrack _backingTrack;
     private BeatMapping _beatMapping;
 
+    [SerializeField] private GameObject recFrame;
+    [SerializeField] private TMPro.TextMeshProUGUI countInText;
+
     public RecordingState recordingState;
 
     private List<RecordingNote> recordedTimeStamps;
@@ -54,6 +57,9 @@ public class RecordInput : MonoBehaviour
         WriteEmptyBar(recordedBar);
 
         timer = 0;
+
+        recFrame.SetActive(false);
+        countInText.gameObject.SetActive(false);
     }
 
     private void OnDestroy()
@@ -70,10 +76,27 @@ public class RecordInput : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            // waitToStartRecording at next 1 with a count in of one bar
-            recordingState = RecordingState.WaitToStart;
+            if (recordingState == RecordingState.Idle)
+            {
+                // waitToStartRecording at next 1 with a count in of one bar
+                recordingState = RecordingState.WaitToStart;
 
-            // MISSING: Stop Playback
+                // MISSING: Stop Playback
+
+                // Update UI:
+                recFrame.SetActive(true);
+                countInText.gameObject.SetActive(true);
+                countInText.text = "...";
+            }
+            else
+            {
+                // stop recording
+                recordingState = RecordingState.Idle;
+                // MISSING: reset bar und so
+
+                recFrame.SetActive(false);
+                countInText.gameObject.SetActive(false);
+            }
         }
 
         for (int i = 0; i < keyInputs.Length; i++)
@@ -111,8 +134,9 @@ public class RecordInput : MonoBehaviour
                 case RecordingState.WaitToStart:
                     recordingState = RecordingState.CountIn;
 
-                    // set count in object active
                     // activate text field + set to one
+                    countInText.gameObject.SetActive(true);
+                    countInText.text = "1";
 
                     // reset timer for recording:
                     timer = 0;
@@ -128,13 +152,17 @@ public class RecordInput : MonoBehaviour
                     recordingState = RecordingState.Recording;
 
                     // deactivate text field
+                    countInText.text = "REC";
 
                     break;
                 case RecordingState.Recording:
                     StopRecording();
                     recordedTimeStamps.Clear();
                     // deal with inputs
-                    // set count in object inactive
+
+                    // set UI object inactive
+                    recFrame.SetActive(false);
+                    countInText.gameObject.SetActive(false);
                     break;
             }
         }
@@ -142,7 +170,22 @@ public class RecordInput : MonoBehaviour
         {
             if (recordingState == RecordingState.CountIn)
             {
-                // set text field
+                if (_backingTrack.lastBeat == 1)
+                {
+                    countInText.text = "1";
+                }
+                else if (_backingTrack.lastBeat == 3)
+                {
+                    countInText.text = "2";
+                }
+                else if (_backingTrack.lastBeat == 5)
+                {
+                    countInText.text = "3";
+                }
+                else if (_backingTrack.lastBeat == 7)
+                {
+                    countInText.text = "AND";
+                }
             }
         }
     }
