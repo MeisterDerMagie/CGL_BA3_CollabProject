@@ -7,16 +7,13 @@ public class RecordInput : MonoBehaviour
 {
     [SerializeField] private KeyCode[] keyInputs;
     [SerializeField] private AudioRoll _audioRoll;
-    [SerializeField] private EventReference snare;
-    private FMOD.Studio.EventInstance instance;
 
     private float timer;
 
     // Start is called before the first frame update
     void Start()
     {
-        //instance = RuntimeManager.CreateInstance(snare);
-        SetInstance();
+        _audioRoll.SetUpAllInstances();
     }
 
     // Update is called once per frame
@@ -29,36 +26,17 @@ public class RecordInput : MonoBehaviour
             // start recording
         }
 
-        /*
-        if (Input.GetKeyDown(keyInputs[0])) //_audioRoll.PlaySound(0);
-        {
-            instance.setPaused(false);
-            instance.release();
-            SetInstance();
-        }
-        */
-
         for (int i = 0; i < keyInputs.Length; i++)
         {
             if (Input.GetKeyDown(keyInputs[i]))
             {
                 // play Sound
-                //_audioRoll.PlaySound(i);
-                instance.setPaused(false);
-                instance.release();
-                SetInstance();
+                _audioRoll.PlayerInputSound(i);
 
                 // if recording:
                 // if pressed --> save input + process input
             }
         }
-    }
-
-    void SetInstance()
-    {
-        instance = RuntimeManager.CreateInstance(snare);
-        instance.start();
-        instance.setPaused(true);
     }
 
 #if UNITY_EDITOR

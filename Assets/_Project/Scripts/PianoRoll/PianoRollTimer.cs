@@ -24,7 +24,6 @@ public class PianoRollTimer : MonoBehaviour
         _backingTrack = GetComponentInChildren<BackingTrack>();
 
         _backingTrack.beatUpdated += NextBeat;
-        _backingTrack.barUpdated += NextBar;
 
         timelineBeat = 0;
         previewBeat = resetPrevCounter;
@@ -33,7 +32,6 @@ public class PianoRollTimer : MonoBehaviour
     private void OnDestroy()
     {
         _backingTrack.beatUpdated -= NextBeat;
-        _backingTrack.barUpdated -= NextBar;
     }
 
 #if UNITY_EDITOR
@@ -52,24 +50,31 @@ public class PianoRollTimer : MonoBehaviour
     // called from FMOD events via BackingTrack script
     void NextBeat()
     {
-        timelineBeat++;
-        if (timelineBeat == 9)
+        timelineBeat = _backingTrack.timelineInfo.currentBeat;
+
+        if (timelineBeat == 1)
         {
-            timelineBeat = 1;
+            previewBeat = 4;
             timelineBar++;
         }
-        previewBeat++;
-        if (previewBeat == 9)
+        else if (timelineBeat == 2)
+            previewBeat = 5;
+        else if (timelineBeat == 3)
+            previewBeat = 6;
+        else if (timelineBeat == 4)
+            previewBeat = 7;
+        else if (timelineBeat == 5)
+            previewBeat = 8;
+        else if (timelineBeat == 6)
         {
             previewBeat = 1;
             previewBar++;
         }
+        else if (timelineBeat == 7)
+            previewBeat = 2;
+        else if (timelineBeat == 8)
+            previewBeat = 3;
 
-        GetComponent<PianoRoll>().NextBeat();
-    }
-
-    // called from FMOD events via BackingTrack script
-    void NextBar()
-    {
+            GetComponent<PianoRoll>().NextBeat();
     }
 }

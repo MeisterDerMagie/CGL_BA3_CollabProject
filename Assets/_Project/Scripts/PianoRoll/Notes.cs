@@ -31,7 +31,7 @@ public class Notes : MonoBehaviour
         if (number != -1)
         {
             _renderer.sprite = numbers[number - 1];
-            _renderer.gameObject.SetActive(false);
+            //_renderer.gameObject.SetActive(false);
             if (number == 2 || number == 4)
                 MakeOpaque();
         }
