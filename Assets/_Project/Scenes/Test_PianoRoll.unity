@@ -749,7 +749,7 @@ MonoBehaviour:
   previewBeat: 0
   timelineBeat: 0
   previewBar: 0
-  timeLineBar: 0
+  timelineBar: 0
   resetPrevCounter: 3
 --- !u!1 &1926960529
 GameObject:
@@ -761,6 +761,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1926960530}
   - component: {fileID: 1926960531}
+  - component: {fileID: 1926960532}
   m_Layer: 0
   m_Name: Player Input
   m_TagString: Untagged
@@ -797,13 +798,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyInputs: 77000000610000007300000064000000
   _audioRoll: {fileID: 1270709877}
-  snare:
-    Guid:
-      Data1: 1514294003
-      Data2: 1075240787
-      Data3: 1804924573
-      Data4: 1205412109
-    Path: event:/Snare Try
+  recordingState: 0
+--- !u!114 &1926960532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1926960529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdae0190066ce9a47afe9540dfe222ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1961762786
 GameObject:
   m_ObjectHideFlags: 0

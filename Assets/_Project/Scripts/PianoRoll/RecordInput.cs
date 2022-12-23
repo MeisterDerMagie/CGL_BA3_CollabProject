@@ -11,13 +11,27 @@ public enum RecordingState
     Idle
 }
 
+public struct RecordingNote
+{
+    public float timeStamp;
+    public int soundID;
+}
+
 public class RecordInput : MonoBehaviour
 {
     [SerializeField] private KeyCode[] keyInputs;
     [SerializeField] private AudioRoll _audioRoll;
     private BackingTrack _backingTrack;
+    private BeatMapping _beatMapping;
 
     public RecordingState recordingState;
+
+    private List<RecordingNote> recordedTimeStamps;
+
+    public List<Eighth> recordedBar;
+    private List<Eighth> previousBar; // safety copy to go back to 
+
+    private float timer;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +41,19 @@ public class RecordInput : MonoBehaviour
         _backingTrack = _audioRoll.gameObject.GetComponent<BackingTrack>();
         _backingTrack.beatUpdated += NextBeat;
 
+        _beatMapping = GetComponent<BeatMapping>();
+
         recordingState = RecordingState.Idle;
+
+        recordedTimeStamps = new List<RecordingNote>();
+
+        recordedBar = new List<Eighth>();
+        previousBar = new List<Eighth>();
+
+        WriteEmptyBar(previousBar);
+        WriteEmptyBar(recordedBar);
+
+        timer = 0;
     }
 
     private void OnDestroy()
@@ -38,10 +64,16 @@ public class RecordInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // increase timer if we are counting in or recording
+        // we start the timer once we start counting in, in case the first input is a little before the beginning of the beat
+        if (recordingState == RecordingState.CountIn || recordingState == RecordingState.Recording) timer += Time.deltaTime;
+
         if (Input.GetKeyDown(KeyCode.R))
         {
             // waitToStartRecording at next 1 with a count in of one bar
             recordingState = RecordingState.WaitToStart;
+
+            // MISSING: Stop Playback
         }
 
         for (int i = 0; i < keyInputs.Length; i++)
@@ -51,8 +83,18 @@ public class RecordInput : MonoBehaviour
                 // play Sound
                 _audioRoll.PlayerInputSound(i);
 
-                // if recording:
-                // if pressed --> save input + process input
+                // if recording / count in
+                if (recordingState == RecordingState.Recording || recordingState == RecordingState.CountIn)
+                {
+                    // save input to list of time stamps
+                    RecordingNote n = new RecordingNote();
+                    n.soundID = i;
+                    n.timeStamp = timer;
+                    recordedTimeStamps.Add(n);
+
+                    // process input and save to grid
+                    _beatMapping.MapRecording(n);
+                }
             }
         }
     }
@@ -68,19 +110,58 @@ public class RecordInput : MonoBehaviour
                     break;
                 case RecordingState.WaitToStart:
                     recordingState = RecordingState.CountIn;
+
                     // set count in object active
-                    // start the timer;
+                    // activate text field + set to one
+
+                    // reset timer for recording:
+                    timer = 0;
+
+                    // safety copy of bar:
+                    previousBar = recordedBar;
+                    WriteEmptyBar(recordedBar);
+
+                    _beatMapping.PrepareRecording();
+
                     break;
                 case RecordingState.CountIn:
                     recordingState = RecordingState.Recording;
-                    // set recording stuff
+
+                    // deactivate text field
+
                     break;
                 case RecordingState.Recording:
-                    recordingState = RecordingState.Idle;
+                    StopRecording();
+                    recordedTimeStamps.Clear();
                     // deal with inputs
                     // set count in object inactive
                     break;
             }
+        }
+        else
+        {
+            if (recordingState == RecordingState.CountIn)
+            {
+                // set text field
+            }
+        }
+    }
+
+    public void StopRecording()
+    {
+        recordingState = RecordingState.Idle;
+    }
+
+    private void WriteEmptyBar(List<Eighth> _list)
+    {
+        _list.Clear();
+
+        for (int i = 0; i < 8; i++)
+        {
+            Eighth e = new Eighth();
+            e.contains = false;
+            e.soundID = -1;
+            _list.Add(e);
         }
     }
 
@@ -92,17 +173,6 @@ public class RecordInput : MonoBehaviour
 #endif
 
 
-    // have keys input as variables for int soundID
-    // --> fixed sound ID 1-4 (or 1-8)
-    // --> array of KeyCodes maybe?
-
-    // struct for player input of each keyInput pressed that corresponded to a soundID
-    // float timestamp
-    // int soundID
-
-    // save struct in a List<input> ?
-    // or process directly and map to nearest beat
-
     // press r to record
     // then count in at next timeline Beat 1 --> blink red + GUI 1 - 2 - 3 - AND
     // spawn note immediately on location marker line and move to the end
@@ -112,9 +182,6 @@ public class RecordInput : MonoBehaviour
     // for every input go through every eighth
     // have variable for variance (which is +- the timestamp of an eighth (+ 1 bar because of count in) and half the duration of an eighth)
     // if it is near that eighth --> save in bar 
-
-
-
 
     // for checking the correct playback --> scoring
     // same principle as grid mapping?

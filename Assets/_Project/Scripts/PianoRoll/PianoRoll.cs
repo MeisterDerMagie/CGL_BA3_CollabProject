@@ -15,6 +15,7 @@ public class PianoRoll : MonoBehaviour
     private BackingTrack _backingTrack;
     private AudioRoll _audioRoll;
     private PianoRollTimer _timer;
+    private RecordInput _recordInput;
     
     public float bpm = 110f;
 
@@ -32,6 +33,7 @@ public class PianoRoll : MonoBehaviour
         _audioRoll = GetComponentInChildren<AudioRoll>();
         _backingTrack = GetComponentInChildren<BackingTrack>();
         _timer = GetComponent<PianoRollTimer>();
+        _recordInput = GetComponentInChildren<RecordInput>();
 
         bars = new List<Bar>();
         
@@ -56,7 +58,7 @@ public class PianoRoll : MonoBehaviour
             {
                 spawner.ActivateIdleLines(true, bpm);
                 _backingTrack.StopMusic();
-
+                _recordInput.StopRecording();
                 _timer.ResetTimer();
             }
         }
