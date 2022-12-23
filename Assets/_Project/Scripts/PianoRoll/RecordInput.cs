@@ -3,27 +3,45 @@ using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
 
+public enum RecordingState
+{
+    WaitToStart,
+    CountIn,
+    Recording,
+    Idle
+}
+
 public class RecordInput : MonoBehaviour
 {
     [SerializeField] private KeyCode[] keyInputs;
     [SerializeField] private AudioRoll _audioRoll;
+    private BackingTrack _backingTrack;
 
-    private float timer;
+    public RecordingState recordingState;
 
     // Start is called before the first frame update
     void Start()
     {
         _audioRoll.SetUpAllInstances();
+
+        _backingTrack = _audioRoll.gameObject.GetComponent<BackingTrack>();
+        _backingTrack.beatUpdated += NextBeat;
+
+        recordingState = RecordingState.Idle;
+    }
+
+    private void OnDestroy()
+    {
+        _backingTrack.beatUpdated -= NextBeat;
     }
 
     // Update is called once per frame
     void Update()
     {
-        timer = Time.deltaTime;
-
         if (Input.GetKeyDown(KeyCode.R))
         {
-            // start recording
+            // waitToStartRecording at next 1 with a count in of one bar
+            recordingState = RecordingState.WaitToStart;
         }
 
         for (int i = 0; i < keyInputs.Length; i++)
@@ -39,10 +57,37 @@ public class RecordInput : MonoBehaviour
         }
     }
 
+    void NextBeat()
+    {
+        if (_backingTrack.lastBeat == 1)
+        {
+            switch (recordingState)
+            {
+                case RecordingState.Idle:
+                    // do nothing
+                    break;
+                case RecordingState.WaitToStart:
+                    recordingState = RecordingState.CountIn;
+                    // set count in object active
+                    // start the timer;
+                    break;
+                case RecordingState.CountIn:
+                    recordingState = RecordingState.Recording;
+                    // set recording stuff
+                    break;
+                case RecordingState.Recording:
+                    recordingState = RecordingState.Idle;
+                    // deal with inputs
+                    // set count in object inactive
+                    break;
+            }
+        }
+    }
+
 #if UNITY_EDITOR
     private void OnGUI()
     {
-        //GUILayout.Box($"time.deltaTime = {timer}");
+        GUILayout.Box($"recording State: {recordingState}");
     }
 #endif
 

@@ -37,7 +37,7 @@ public class PianoRollTimer : MonoBehaviour
 #if UNITY_EDITOR
     private void OnGUI()
     {
-        GUILayout.Box($"timeline beat = {timelineBeat}, preview beat = {previewBeat}");
+        //GUILayout.Box($"timeline beat = {timelineBeat}, preview beat = {previewBeat}");
     }
 #endif
 
@@ -50,7 +50,7 @@ public class PianoRollTimer : MonoBehaviour
     // called from FMOD events via BackingTrack script
     void NextBeat()
     {
-        timelineBeat = _backingTrack.timelineInfo.currentBeat;
+        timelineBeat = _backingTrack.lastBeat;
 
         if (timelineBeat == 1)
         {
