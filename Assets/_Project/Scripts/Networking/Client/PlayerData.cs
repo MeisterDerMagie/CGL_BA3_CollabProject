@@ -72,6 +72,7 @@ public class PlayerData : NetworkBehaviour
     //Events
     public static event Action<ulong, PromptResponse> OnPromptResponseServer = delegate {  };
     public event Action<PromptResponse> OnPromptResponseClient = delegate {  };
+    public event Action<uint> OnCharacterIdChanged = delegate(uint newValue) {  };
     
     //Network Variables
     #region Network Variables
@@ -166,7 +167,7 @@ public class PlayerData : NetworkBehaviour
         
         //subscribe to change events
         _playerName.OnValueChanged += OnPlayerNameChanged;
-        _characterId.OnValueChanged += OnCharacterIdChanged;
+        _characterId.OnValueChanged += OnCharacterIdNetworkVarChanged;
     }
 
     
@@ -178,7 +179,7 @@ public class PlayerData : NetworkBehaviour
         
         //unsubscribe form events
         _playerName.OnValueChanged -= OnPlayerNameChanged;
-        _characterId.OnValueChanged -= OnCharacterIdChanged;
+        _characterId.OnValueChanged -= OnCharacterIdNetworkVarChanged;
         
         //dispose NetworkVariables (if we don't do this, there will be memory leaks)
         _clientGuid.Dispose();
@@ -212,11 +213,13 @@ public class PlayerData : NetworkBehaviour
         _playerNameIsSynced = true;
     }
 
-    private void OnCharacterIdChanged(uint previousvalue, uint newvalue)
+    private void OnCharacterIdNetworkVarChanged(uint previousvalue, uint newvalue)
     {
         //if the local characterId matches the one that came from the server, it's synced
         //ja, dadurch geben wir dem Client die volle Kontrolle --> cheatinganfällig. Bei der Charakterauswahl ist das aber nicht tragisch.
         if(newvalue == _characterIdLocal) _characterIdIsSynced = true;
+
+        OnCharacterIdChanged?.Invoke(newvalue);
     }
 
     //Setters
@@ -269,6 +272,9 @@ public class PlayerData : NetworkBehaviour
         
         //call serverRPC to actually set the variable
         SetCharacterIdServerRpc(newCharacterId);
+        
+        //call event
+        OnCharacterIdChanged?.Invoke(newCharacterId);
     }
     
     [ServerRpc]
@@ -282,6 +288,9 @@ public class PlayerData : NetworkBehaviour
         }
         
         _characterId.Value = newCharacterId;
+        
+        OnCharacterIdChanged?.Invoke(newCharacterId);
+
     }
 
     public void SetPrompt(string newPrompt)
