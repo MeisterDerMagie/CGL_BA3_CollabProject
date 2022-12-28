@@ -11,6 +11,7 @@ public class ReadyUnreadyButtons : MonoBehaviour
     void Update()
     {
         if (NetworkManager.Singleton.IsServer) return;
+        if (PlayerLobbyData.LocalPlayerLobbyData == null) return;
         
         if (!PlayerLobbyData.LocalPlayerLobbyData.IsReadyInLobby && !readyButton.gameObject.activeSelf)
         {

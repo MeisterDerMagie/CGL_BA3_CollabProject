@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: LoadCompositionScene
   m_EditorClassIdentifier: 
   scene:
-    sceneAsset: {fileID: 102900000, guid: 50c24bdef4ed6cc4c8b21a7e497f3c55, type: 3}
-    scenePath: Assets/_Project/Scenes/Game_Composition.unity
+    sceneAsset: {fileID: 102900000, guid: 7e61499d8b035474d8cc15d7c79b81ac, type: 3}
+    scenePath: Assets/_Project/Scenes/Game_Stage.unity
   loadingScreenPrefab: {fileID: 41708880123253853, guid: 5047600c8dad99942809d91f20c3f5a9, type: 3}
