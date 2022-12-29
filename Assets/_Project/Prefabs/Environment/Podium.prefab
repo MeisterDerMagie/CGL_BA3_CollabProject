@@ -127,8 +127,8 @@ GameObject:
   - component: {fileID: 9213552980660792358}
   - component: {fileID: 9213552980660792352}
   - component: {fileID: 3416381829466210346}
-  - component: {fileID: 2364679827540325372}
-  - component: {fileID: 2064580315533724220}
+  - component: {fileID: 787605811322378297}
+  - component: {fileID: 7626872036245158396}
   m_Layer: 0
   m_Name: Podium
   m_TagString: Untagged
@@ -182,7 +182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPosition: {fileID: 9213552981383122838}
---- !u!114 &2364679827540325372
+--- !u!114 &787605811322378297
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -191,19 +191,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 9213552980660792357}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1ece081ce5a4fa5b731b04334cc0456, type: 3}
+  m_Script: {fileID: 11500000, guid: bafb28ea15704407b6565b58b59dfd4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onClick:
-    m_PersistentCalls:
-      m_Calls: []
   onMouseEnter:
     m_PersistentCalls:
       m_Calls: []
   onMouseExit:
     m_PersistentCalls:
       m_Calls: []
---- !u!70 &2064580315533724220
+  onMouseDown:
+    m_PersistentCalls:
+      m_Calls: []
+  onMouseUp:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!70 &7626872036245158396
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

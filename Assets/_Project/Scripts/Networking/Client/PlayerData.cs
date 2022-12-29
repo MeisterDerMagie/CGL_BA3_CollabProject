@@ -170,7 +170,6 @@ public class PlayerData : NetworkBehaviour
         _characterId.OnValueChanged += OnCharacterIdNetworkVarChanged;
     }
 
-    
 
     public override void OnDestroy()
     {
@@ -361,9 +360,9 @@ public class PlayerData : NetworkBehaviour
     }
     
     //The points should not have a ServerRPC (the client should not have the authority to set its points). The server should calculate those based on the user input
-    public void SetPointsCreativity(int newValue) => _pointsCreativity.Value = newValue;
-    public void SetPointsPlayability(int newValue) => _pointsPlayability.Value = newValue;
-    public void SetPointsPerformance(int newValue) => _pointsPerformance.Value = newValue;
+    public void AddPointsCreativity(int valueToAdd) => _pointsCreativity.Value += valueToAdd;
+    public void AddPointsPlayability(int valueToAdd) => _pointsPlayability.Value += valueToAdd;
+    public void AddPointsPerformance(int valueToAdd) => _pointsPerformance.Value += valueToAdd;
     
     #endregion
     

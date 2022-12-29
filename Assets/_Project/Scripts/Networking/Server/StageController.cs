@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using MEC;
@@ -8,12 +9,26 @@ public class StageController : NetworkBehaviour
 {
     [SerializeField] private List<Podium> podiums = new();
 
+    //Quasi Dictionary weil es NetworkDictionaries nicht gibt: die PodiumIndexes matchen die indexes von _clientIdsAssignToPodiums
+    private NetworkList<ulong> _clientIdsAssignToPodiums;
+    //---
+
+    private void Awake()
+    {
+        _clientIdsAssignToPodiums = new NetworkList<ulong>();
+    }
+
     public override void OnNetworkSpawn()
     {
         if (!NetworkManager.Singleton.IsServer) return;
         Timing.RunCoroutine(_InitializeDelayed());
     }
 
+    public ulong GetClientIdAssignedToPodium(int podiumIndex)
+    {
+        return _clientIdsAssignToPodiums[podiumIndex];
+    }
+    
     private IEnumerator<float> _InitializeDelayed()
     {
         yield return Timing.WaitForSeconds(0.5f);
@@ -41,11 +56,19 @@ public class StageController : NetworkBehaviour
             //activate podium
             podium.SetActive(true);
             
+            //set assigned player
+            _clientIdsAssignToPodiums.Add(NetworkManager.ConnectedClientsList[i].ClientId);
+            
             //position player on podium
             player.GetComponent<PlayerVisuals>().SetPosition(podium.PlayerPosition);
             
             //set player visible
             player.GetComponent<PlayerVisuals>().isVisible.Value = true;
         }
+    }
+
+    public override void OnDestroy()
+    {
+        _clientIdsAssignToPodiums.Dispose();
     }
 }

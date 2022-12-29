@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83067b677a694ab397b061ec0d8256da, type: 3}
-  m_Name: LoadCompositionScene
+  m_Name: LoadStageVoteForCreativity
   m_EditorClassIdentifier: 
   scene:
-    sceneAsset: {fileID: 102900000, guid: 50c24bdef4ed6cc4c8b21a7e497f3c55, type: 3}
-    scenePath: Assets/_Project/Scenes/Game_Composition.unity
+    sceneAsset: {fileID: 102900000, guid: 9d88bc7edd9edfb47bf947e9f7eb3299, type: 3}
+    scenePath: Assets/_Project/Scenes/Game_Stage_VoteForCreativity.unity
   loadingScreenPrefab: {fileID: 41708880123253853, guid: 5047600c8dad99942809d91f20c3f5a9, type: 3}

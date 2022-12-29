@@ -5,13 +5,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Selectable : MonoBehaviour
+public class MouseEvents : MonoBehaviour
 {
-    [SerializeField] private UnityEvent onClick, onMouseEnter, onMouseExit;
+    [SerializeField] private UnityEvent onMouseEnter, onMouseExit, onMouseDown, onMouseUp;
 
-    public event Action OnClickEvent = delegate {  };
     public event Action OnMouseEnterEvent = delegate {  };
     public event Action OnMouseExitEvent = delegate {  };
+    public event Action OnMouseDownEvent = delegate {  };
+    public event Action OnMouseUpEvent = delegate {  };
     
     private void OnMouseEnter()
     {
@@ -27,16 +28,22 @@ public class Selectable : MonoBehaviour
 
     private void OnMouseDown()
     {
-        OnClickEvent?.Invoke();
-        onClick.Invoke();
+        OnMouseDownEvent?.Invoke();
+        onMouseDown.Invoke();
     }
-    
+
+    private void OnMouseUp()
+    {
+        OnMouseUpEvent?.Invoke();
+        onMouseUp.Invoke();
+    }
+
     #if UNITY_EDITOR
     private void OnValidate()
     {
         if (GetComponent<Collider2D>() == null)
         {
-            Debug.LogError("A Selectable needs a collider on itself to work.", this);
+            Debug.LogError("MouseEvents need a collider on the same gameObject to work.", this);
         }
     }
     #endif
