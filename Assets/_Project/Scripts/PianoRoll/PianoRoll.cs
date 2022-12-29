@@ -170,19 +170,39 @@ public class PianoRoll : MonoBehaviour
         }
     }
 
-    public void PlayRecording(bool value)
+    public void PlayRecording(bool playback, bool withAudio, bool button = false)
     {
+        /*
+        playBackRecording = true;
+        playWithAudio = false;
+
         if (value == true)
         {
-            playBackRecording = true;
             waitForPlayback = true;
         }
         else
         {
-            playBackRecording = false;
-            playWithAudio = false;
             waitForPlayback = false;
-            spawner.DeleteActiveNotes();
+        }
+        */
+        if (button)
+        {
+            playWithAudio = withAudio;
+        }
+        else
+        {
+            playBackRecording = playback;
+            playingBack = playback;
+
+            if (withAudio)
+            {
+                waitForPlayback = true;
+            }
+            else
+            {
+                waitForPlayback = false;
+                playWithAudio = false;
+            }
         }
     }
 }

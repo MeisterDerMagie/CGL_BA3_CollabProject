@@ -9,7 +9,7 @@ public class RecordingUI : MonoBehaviour
     private RecordInput _recordInput;
     private PianoRoll _pianoRoll;
 
-    private bool _audio;
+    public bool _audio;
 
     private void Start()
     {
@@ -24,7 +24,7 @@ public class RecordingUI : MonoBehaviour
     public void PlayButton()
     {
         _audio = !_audio;
-        _pianoRoll.PlayRecording(true);
+        _pianoRoll.PlayRecording(true, _audio, true);
     }
 
     public void RecordButton()
@@ -35,6 +35,7 @@ public class RecordingUI : MonoBehaviour
     public void TrashButton()
     {
         _recordInput.DeleteButton();
+        _pianoRoll.GetComponent<NoteSpawner>().DeleteActiveNotes();
     }
 
     public void UpdateCountIn(bool active, string text)

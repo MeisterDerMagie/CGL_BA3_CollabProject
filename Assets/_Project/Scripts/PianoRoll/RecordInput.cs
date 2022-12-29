@@ -25,6 +25,7 @@ public class RecordInput : MonoBehaviour
     [SerializeField] private AudioRoll _audioRoll;
     private BackingTrack _backingTrack;
     private BeatMapping _beatMapping;
+    private PianoRoll _pianoRoll;
 
     [SerializeField] private GameObject recFrame;
     //[SerializeField] private TMPro.TextMeshProUGUI countInText;
@@ -47,6 +48,9 @@ public class RecordInput : MonoBehaviour
         _backingTrack.beatUpdated += NextBeat;
 
         _beatMapping = GetComponent<BeatMapping>();
+        _pianoRoll = _audioRoll.gameObject.GetComponentInParent<PianoRoll>();
+        _pianoRoll.PlayRecording(true, false);
+        _recordingUI._audio = false;
 
         recordingState = RecordingState.Idle;
 
@@ -106,7 +110,13 @@ public class RecordInput : MonoBehaviour
             // waitToStartRecording at next 1 with a count in of one bar
             recordingState = RecordingState.WaitToStart;
 
-            // MISSING: stop playback
+            _pianoRoll.gameObject.GetComponent<NoteSpawner>().DeleteActiveNotes();
+
+            // safety copy of bar:
+            previousBar = recordedBar;
+            WriteEmptyBar(recordedBar);
+            _pianoRoll.PlayRecording(true, false);
+            _recordingUI._audio = false;
 
             // Update UI:
             recFrame.SetActive(true);
@@ -120,19 +130,21 @@ public class RecordInput : MonoBehaviour
         {
             // stop recording
             StopRecording();
-
-            // MISSING: reset bar und so
+            recordedBar = previousBar;
+            _pianoRoll.PlayRecording(true, false);
+            _recordingUI._audio = false;
         }
     }
 
     public void DeleteButton()
     {
         recordedBar.Clear();
+        WriteEmptyBar(recordedBar);
     }
 
     public void PlayButton()
     {
-
+        // turn on audio
     }
 
     void NextBeat()
@@ -157,10 +169,6 @@ public class RecordInput : MonoBehaviour
                     // reset timer for recording:
                     timer = 0;
 
-                    // safety copy of bar:
-                    previousBar = recordedBar;
-                    WriteEmptyBar(recordedBar);
-
                     _beatMapping.PrepareRecording();
 
                     break;
@@ -169,13 +177,13 @@ public class RecordInput : MonoBehaviour
 
                     _recordingUI.UpdateCountIn(true, "REC");
                     //countInText.text = "REC";
-
+                    _pianoRoll.PlayRecording(true, true);
+                    _recordingUI._audio = true;
                     break;
                 case RecordingState.Recording:
                     StopRecording();
                     recordedTimeStamps.Clear();
-
-                    // deal with inputs
+                    
                     break;
             }
         }
