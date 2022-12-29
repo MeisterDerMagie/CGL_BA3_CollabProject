@@ -5,6 +5,11 @@ using FMODUnity;
 using System;
 using System.Runtime.InteropServices;
 
+/// <summary>
+/// communication with FMOD via this script about current beat + bar + other markers
+/// 
+/// </summary>
+
 public class BackingTrack : MonoBehaviour
 {
     [SerializeField] private EventReference track;

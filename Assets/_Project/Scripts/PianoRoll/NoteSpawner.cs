@@ -86,13 +86,19 @@ public class NoteSpawner : MonoBehaviour
 
         #region Calculate Height for all notes to be spawned
         float yTop = transform.localPosition.y + bg.transform.localScale.y / 2;
-        float distance = bg.transform.localScale.y / lineHeight;
+        // when between lines use lineHeight instead of lH - 1
+        float distance = bg.transform.localScale.y / (lineHeight - 1);
 
         yPos = new List<float>();
-        yPos.Add(yTop - distance / 2);
-        for (int i = 1; i < lineHeight; i++)
+
+        // add highest line:
+        // when used between lines not on them use: yPos.Add(yTop - distance / 2);
+        yPos.Add(yTop);
+        for (int  i = 1;  i < lineHeight;  i++)
         {
-            yPos.Add(yPos[i - 1] - distance);
+            float value = yPos[i - 1] - distance;
+            if (i == lineHeight - 1) value = -yTop;
+            yPos.Add(value);
         }
 
         #endregion

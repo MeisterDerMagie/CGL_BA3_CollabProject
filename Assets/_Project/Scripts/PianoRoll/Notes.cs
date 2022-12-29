@@ -16,9 +16,9 @@ public class Notes : MonoBehaviour
     private NoteSpawner spawner;
     private AudioRoll _audioRoll;
 
-    public Sprite[] numbers;
-    public SpriteRenderer _renderer;
-    public SpriteRenderer _lineRenderer;
+    public Sprite[] sprites;
+    public SpriteRenderer _secondRenderer;
+    SpriteRenderer _objRenderer;
 
     public void NoteSetUp(float bpm, int beatLength, float _targetX, NoteSpawner script, AudioRoll audio, int s, int number = -1)
     {
@@ -28,16 +28,29 @@ public class Notes : MonoBehaviour
         // --> total duration is quarter notes times beat length
         float duration = 60f / bpm * (beatLength);
 
+        _objRenderer = GetComponent<SpriteRenderer>();
+
+        // number is only not -1 when it is a line being spawned and then it is the current beat
         if (number != -1)
         {
-            _renderer.sprite = numbers[number - 1];
+            _secondRenderer.sprite = sprites[number - 1];
             //_renderer.gameObject.SetActive(false);
             if (number == 2 || number == 4)
                 MakeOpaque();
         }
         else
         {
-            if (_renderer != null) _renderer.gameObject.SetActive(false);
+            // set button bg to correct background
+            _objRenderer.sprite = sprites[s];
+
+            if (_secondRenderer != null)
+            {
+                // MISSING: set icon for note
+                /*
+                _secondRenderer.gameObject.SetActive(true);
+                _secondRenderer.sprite = 
+                */
+            }
         }
 
         spawner = script;
@@ -69,8 +82,8 @@ public class Notes : MonoBehaviour
 
     public void MakeOpaque()
     {
-        Color c = _lineRenderer.color;
+        Color c = _objRenderer.color;
         c.a = 0.3f;
-        _lineRenderer.color = c;
+        _objRenderer.color = c;
     }
 }
