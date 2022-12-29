@@ -36,7 +36,8 @@ public class NoteSpawner : MonoBehaviour
 
     List<float> posLines; // where all lines should be spawned idle, where the downbeats are on piano roll
     private List<Transform> idleLines; // keep track of all idle lines
-    private List<GameObject> currentNotes; // keep track of currently active lines and notes to deactivate when hitting pause
+    private List<GameObject> currentNotes; // keep track of currently active notes to deactivate when hitting pause
+    private List<GameObject> currentLines;
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +48,7 @@ public class NoteSpawner : MonoBehaviour
         xPos = transform.localPosition.x + bg.transform.localScale.x / 2f;
 
         currentNotes = new List<GameObject>();
+        currentLines = new List<GameObject>();
 
         #region Calculate Positions for all idle and start lines
         posLines = new List<float>();
@@ -114,10 +116,11 @@ public class NoteSpawner : MonoBehaviour
         if (var)
         {
             foreach (GameObject obj in currentNotes)
-            {
                 Destroy(obj);
-            }
             currentNotes.Clear();
+            foreach (GameObject obj in currentLines)
+                Destroy(obj);
+            currentLines.Clear();
         }
         else
         {
@@ -128,14 +131,21 @@ public class NoteSpawner : MonoBehaviour
                 GameObject clone = Instantiate(beatObj, spawns.transform);
                 clone.transform.localPosition = new Vector3(posLines[i], 0, 0);
 
-                int a= -1;
+                int a = -1;
                 // tell the clone the current bpm, length of piano roll in beats, and target value of poision x (how far it needs to travel to the left)
                 if (i == 1 || i == 3 || i == 5 || i == 7 || i == 9 || i == 11 || i == 13) a = 2;
                 clone.GetComponent<Notes>().NoteSetUp(bpm, (i + 1) * beats, transform.localPosition.x - bg.transform.localScale.x / 2f, this, _audioRoll, -1, a);
 
-                currentNotes.Add(clone);
+                currentLines.Add(clone);
             }
         }
+    }
+
+    public void DeleteActiveNotes()
+    {
+        foreach (GameObject obj in currentNotes)
+            Destroy(obj);
+        currentNotes.Clear();
     }
 
     public void SpawnLines(float bpm, int number)
@@ -147,7 +157,7 @@ public class NoteSpawner : MonoBehaviour
         // tell the clone the current bpm, the length of the piano roll in beats, and the target value of position.x (how far it needs to travel to the left)
         clone.GetComponent<Notes>().NoteSetUp(bpm, beatLength, transform.localPosition.x - bg.transform.localScale.x / 2f, this, _audioRoll, -1, number);
 
-        currentNotes.Add(clone);
+        currentLines.Add(clone);
     }
 
     public void SpawnNote(int sample, float bpm)

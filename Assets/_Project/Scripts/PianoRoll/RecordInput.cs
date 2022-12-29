@@ -19,13 +19,15 @@ public struct RecordingNote
 
 public class RecordInput : MonoBehaviour
 {
+    [HideInInspector] public RecordingUI _recordingUI;
+
     [SerializeField] private KeyCode[] keyInputs;
     [SerializeField] private AudioRoll _audioRoll;
     private BackingTrack _backingTrack;
     private BeatMapping _beatMapping;
 
     [SerializeField] private GameObject recFrame;
-    [SerializeField] private TMPro.TextMeshProUGUI countInText;
+    //[SerializeField] private TMPro.TextMeshProUGUI countInText;
 
     public RecordingState recordingState;
 
@@ -59,7 +61,7 @@ public class RecordInput : MonoBehaviour
         timer = 0;
 
         recFrame.SetActive(false);
-        countInText.gameObject.SetActive(false);
+        //countInText.gameObject.SetActive(false);
     }
 
     private void OnDestroy()
@@ -73,31 +75,6 @@ public class RecordInput : MonoBehaviour
         // increase timer if we are counting in or recording
         // we start the timer once we start counting in, in case the first input is a little before the beginning of the beat
         if (recordingState == RecordingState.CountIn || recordingState == RecordingState.Recording) timer += Time.deltaTime;
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            if (recordingState == RecordingState.Idle)
-            {
-                // waitToStartRecording at next 1 with a count in of one bar
-                recordingState = RecordingState.WaitToStart;
-
-                // MISSING: Stop Playback
-
-                // Update UI:
-                recFrame.SetActive(true);
-                countInText.gameObject.SetActive(true);
-                countInText.text = "...";
-            }
-            else
-            {
-                // stop recording
-                recordingState = RecordingState.Idle;
-                // MISSING: reset bar und so
-
-                recFrame.SetActive(false);
-                countInText.gameObject.SetActive(false);
-            }
-        }
 
         for (int i = 0; i < keyInputs.Length; i++)
         {
@@ -122,6 +99,42 @@ public class RecordInput : MonoBehaviour
         }
     }
 
+    public void RecordButton()
+    {
+        if (recordingState == RecordingState.Idle)
+        {
+            // waitToStartRecording at next 1 with a count in of one bar
+            recordingState = RecordingState.WaitToStart;
+
+            // MISSING: stop playback
+
+            // Update UI:
+            recFrame.SetActive(true);
+            _recordingUI.UpdateCountIn(true, "...");
+            /*
+            countInText.gameObject.SetActive(true);
+            countInText.text = "...";
+            */
+        }
+        else
+        {
+            // stop recording
+            StopRecording();
+
+            // MISSING: reset bar und so
+        }
+    }
+
+    public void DeleteButton()
+    {
+        recordedBar.Clear();
+    }
+
+    public void PlayButton()
+    {
+
+    }
+
     void NextBeat()
     {
         if (_backingTrack.lastBeat == 1)
@@ -135,8 +148,11 @@ public class RecordInput : MonoBehaviour
                     recordingState = RecordingState.CountIn;
 
                     // activate text field + set to one
+                    _recordingUI.UpdateCountIn(true, "1");
+                    /*
                     countInText.gameObject.SetActive(true);
                     countInText.text = "1";
+                    */
 
                     // reset timer for recording:
                     timer = 0;
@@ -151,18 +167,15 @@ public class RecordInput : MonoBehaviour
                 case RecordingState.CountIn:
                     recordingState = RecordingState.Recording;
 
-                    // deactivate text field
-                    countInText.text = "REC";
+                    _recordingUI.UpdateCountIn(true, "REC");
+                    //countInText.text = "REC";
 
                     break;
                 case RecordingState.Recording:
                     StopRecording();
                     recordedTimeStamps.Clear();
-                    // deal with inputs
 
-                    // set UI object inactive
-                    recFrame.SetActive(false);
-                    countInText.gameObject.SetActive(false);
+                    // deal with inputs
                     break;
             }
         }
@@ -172,19 +185,23 @@ public class RecordInput : MonoBehaviour
             {
                 if (_backingTrack.lastBeat == 1)
                 {
-                    countInText.text = "1";
+                    _recordingUI.UpdateCountIn(true, "1");
+                    //countInText.text = "1";
                 }
                 else if (_backingTrack.lastBeat == 3)
                 {
-                    countInText.text = "2";
+                    _recordingUI.UpdateCountIn(true, "2");
+                    //countInText.text = "2";
                 }
                 else if (_backingTrack.lastBeat == 5)
                 {
-                    countInText.text = "3";
+                    _recordingUI.UpdateCountIn(true, "3");
+                    //countInText.text = "3";
                 }
                 else if (_backingTrack.lastBeat == 7)
                 {
-                    countInText.text = "AND";
+                    _recordingUI.UpdateCountIn(true, "AND");
+                    //countInText.text = "AND";
                 }
             }
         }
@@ -193,6 +210,11 @@ public class RecordInput : MonoBehaviour
     public void StopRecording()
     {
         recordingState = RecordingState.Idle;
+
+        // set UI object inactive
+        recFrame.SetActive(false);
+        _recordingUI.UpdateCountIn(false, "");
+        //countInText.gameObject.SetActive(false);
     }
 
     private void WriteEmptyBar(List<Eighth> _list)
@@ -217,7 +239,7 @@ public class RecordInput : MonoBehaviour
 
 
     // press r to record
-    // then count in at next timeline Beat 1 --> blink red + GUI 1 - 2 - 3 - AND
+    // then count in at next timeline Beat 1 --> blink red + UI 1 - 2 - 3 - AND
     // spawn note immediately on location marker line and move to the end
     // button cooldown
     // start timer with countdown and the subtract one bar from timer for every note when grid mapping

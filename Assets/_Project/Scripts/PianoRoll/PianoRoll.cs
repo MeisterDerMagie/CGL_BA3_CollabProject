@@ -23,6 +23,7 @@ public class PianoRoll : MonoBehaviour
     bool waitForPlayback;
     bool playingBack;
     bool playWithAudio;
+    bool playBackRecording;
 
     [SerializeField] private List<Bar> bars;
 
@@ -98,6 +99,12 @@ public class PianoRoll : MonoBehaviour
 
     void PlayBars()
     {
+        if (playBackRecording)
+        {
+            if (_recordInput.recordedBar[_timer.previewBeat - 1].contains)
+                spawner.SpawnNote(_recordInput.recordedBar[_timer.previewBeat - 1].soundID, bpm);
+            return;
+        }
         // if the prevbar counter is beyond the limit of the list, stop playing back bars
         // since we start playing back bars on prevBarCounter 1 --> don't have to do >= bars.Count
         if (_timer.previewBar > bars.Count)
@@ -115,6 +122,13 @@ public class PianoRoll : MonoBehaviour
     {
         //if (locBarCounter < bars.Count) return;
         if (_timer.timelineBar < 1) return;
+
+        if (playBackRecording)
+        {
+            if (_recordInput.recordedBar[_timer.timelineBeat - 1].contains)
+                _audioRoll.PlaySound(_recordInput.recordedBar[_timer.timelineBeat - 1].soundID);
+            return;
+        }
 
         if (_timer.timelineBar > bars.Count)
         {
@@ -153,6 +167,22 @@ public class PianoRoll : MonoBehaviour
 
             // add new bar to the list of bars waiting to be played back
             bars.Add(nb);
+        }
+    }
+
+    public void PlayRecording(bool value)
+    {
+        if (value == true)
+        {
+            playBackRecording = true;
+            waitForPlayback = true;
+        }
+        else
+        {
+            playBackRecording = false;
+            playWithAudio = false;
+            waitForPlayback = false;
+            spawner.DeleteActiveNotes();
         }
     }
 }

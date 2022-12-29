@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 47158783}
   - component: {fileID: 47158784}
   m_Layer: 0
-  m_Name: bg
+  m_Name: image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -484,7 +484,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 291031218}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.88, y: 0, z: 0}
+  m_LocalPosition: {x: -2.61, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -599,8 +599,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audioRoll: {fileID: 1515797437}
   beatObj: {fileID: 8658846194159534326, guid: 8d321ddf6c8fedb419e3014fa75607f5, type: 3}
-  noteObj: {fileID: 1761876749553087292, guid: fce7bc25ea6d51e46997e42ec10263f3, type: 3}
-  bg: {fileID: 47158782}
+  noteObj: {fileID: 8173208789116828371, guid: 12efc2bacae1798428b1d20ad390ad9a, type: 3}
+  bg: {fileID: 1320847160}
   idleL: {fileID: 1970386525}
   spawns: {fileID: 1975311557}
   lineHeight: 4
@@ -954,6 +954,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   countInText: {fileID: 1274522457}
+  pianoRollObj: {fileID: 294009750}
 --- !u!1 &459808163
 GameObject:
   m_ObjectHideFlags: 0
@@ -1243,10 +1244,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fd54a99667e37e45b1b13d6823d0bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _recordingUI: {fileID: 0}
   keyInputs: 77000000610000007300000064000000
   _audioRoll: {fileID: 1515797437}
   recFrame: {fileID: 1386667388}
-  countInText: {fileID: 1274522457}
   recordingState: 0
   recordedBar: []
 --- !u!1 &812250131
@@ -3272,10 +3273,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fd54a99667e37e45b1b13d6823d0bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _recordingUI: {fileID: 0}
   keyInputs: 77000000610000007300000064000000
   _audioRoll: {fileID: 1270709877}
   recFrame: {fileID: 179329504}
-  countInText: {fileID: 1274522457}
   recordingState: 0
   recordedBar: []
 --- !u!114 &1926960532

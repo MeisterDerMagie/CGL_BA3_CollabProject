@@ -30,11 +30,10 @@ public class Notes : MonoBehaviour
 
         _objRenderer = GetComponent<SpriteRenderer>();
 
-        // number is only not -1 when it is a line being spawned and then it is the current beat
-        if (number != -1)
+        // s is only -1 when it is a line being spawned and then it is the current beat
+        if (s == -1)
         {
-            _secondRenderer.sprite = sprites[number - 1];
-            //_renderer.gameObject.SetActive(false);
+            //if (number != -1) _secondRenderer.sprite = sprites[number - 1];
             if (number == 2 || number == 4)
                 MakeOpaque();
         }
@@ -82,6 +81,7 @@ public class Notes : MonoBehaviour
 
     public void MakeOpaque()
     {
+        if (_objRenderer == null) _objRenderer = GetComponent<SpriteRenderer>();
         Color c = _objRenderer.color;
         c.a = 0.3f;
         _objRenderer.color = c;
