@@ -50,14 +50,22 @@ public class StageController : NetworkBehaviour
         //set up the stage
         for (int i = 0; i < NetworkManager.ConnectedClientsList.Count; i++)
         {
+            ulong clientId = NetworkManager.ConnectedClientsList[i].ClientId;
             NetworkObject player = NetworkManager.ConnectedClientsList[i].PlayerObject;
+            PlayerData playerData = player.GetComponent<PlayerData>();
             Podium podium = podiums[i];
             
             //activate podium
             podium.SetActive(true);
             
+            //assign playerName to podium
+            podium.AssignPlayerNameClientRpc(playerData.PlayerName);
+            
+            //set player name color (if it's the local player)
+            podium.SetTextColorPlayerNameClientRpc(Constants.ownPlayerNameColor, clientId);
+
             //set assigned player
-            _clientIdsAssignToPodiums.Add(NetworkManager.ConnectedClientsList[i].ClientId);
+            _clientIdsAssignToPodiums.Add(clientId);
             
             //position player on podium
             player.GetComponent<PlayerVisuals>().SetPosition(podium.PlayerPosition);

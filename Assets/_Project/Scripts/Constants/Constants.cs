@@ -18,6 +18,9 @@ public class Constants : ScriptableObject
     [Title("Game Constants")]
     [SerializeField] private float _INSTRUMENTS_AMOUNT;
 
+    public static Color ownPlayerNameColor => instance._ownPlayerNameColor;
+    [SerializeField] private Color _ownPlayerNameColor;
+    
     //Singleton
     #region Singleton
     private static Constants _instance;
@@ -53,5 +56,13 @@ public class Constants : ScriptableObject
         
         return _instance;
     }
+    #endregion
+    
+    //Edit button
+    #region Edit Button
+    #if UNITY_EDITOR
+    [Button, Title(" ")]
+    private void Edit() => AssetDatabase.OpenAsset(MonoScript.FromScriptableObject(this));
+    #endif
     #endregion
 }
