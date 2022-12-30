@@ -379,11 +379,24 @@ public class PlayerData : NetworkBehaviour
 
     public void SetRecording(List<Eighth> recording)
     {
+        SetRecordingServerRpc(recording);
+    }
+
+    [ServerRpc]
+    private void SetRecordingServerRpc(List<Eighth> recording)
+    {
         _recording.Clear();
 
         foreach (Eighth eighth in recording)
         {
             _recording.Add(eighth);
+        }
+
+        //-----------DEBUG
+        Debug.Log($"Recording of Player {PlayerName}: ");
+        foreach (Eighth eighth in Recording)
+        {
+            Debug.Log($"{eighth.contains.ToString()}, {eighth.instrumentID.ToString()}");
         }
     }
     
