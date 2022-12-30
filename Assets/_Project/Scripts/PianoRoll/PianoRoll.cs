@@ -102,7 +102,7 @@ public class PianoRoll : MonoBehaviour
         if (playBackRecording)
         {
             if (_recordInput.recordedBar[_timer.previewBeat - 1].contains)
-                spawner.SpawnNote(_recordInput.recordedBar[_timer.previewBeat - 1].soundID, bpm);
+                spawner.SpawnNote(_recordInput.recordedBar[_timer.previewBeat - 1].instrumentID, bpm);
             return;
         }
         // if the prevbar counter is beyond the limit of the list, stop playing back bars
@@ -115,7 +115,7 @@ public class PianoRoll : MonoBehaviour
 
         // play preview notes if there is a note on the eighth:
         if (bars[_timer.previewBar - 1].eighth[_timer.previewBeat - 1].contains)
-            spawner.SpawnNote(bars[_timer.previewBar - 1].eighth[_timer.previewBeat - 1].soundID, bpm);
+            spawner.SpawnNote(bars[_timer.previewBar - 1].eighth[_timer.previewBeat - 1].instrumentID, bpm);
     }
 
     void PlaybackBarAudio()
@@ -126,7 +126,7 @@ public class PianoRoll : MonoBehaviour
         if (playBackRecording)
         {
             if (_recordInput.recordedBar[_timer.timelineBeat - 1].contains)
-                _audioRoll.PlaySound(_recordInput.recordedBar[_timer.timelineBeat - 1].soundID);
+                _audioRoll.PlaySound(_recordInput.recordedBar[_timer.timelineBeat - 1].instrumentID);
             return;
         }
 
@@ -138,7 +138,7 @@ public class PianoRoll : MonoBehaviour
 
         // trigger Audio
         if (bars[_timer.timelineBar - 1].eighth[_timer.timelineBeat - 1].contains)
-            _audioRoll.PlaySound(bars[_timer.timelineBar - 1].eighth[_timer.timelineBeat - 1].soundID);
+            _audioRoll.PlaySound(bars[_timer.timelineBar - 1].eighth[_timer.timelineBeat - 1].instrumentID);
     }
     
 
@@ -161,7 +161,7 @@ public class PianoRoll : MonoBehaviour
             {
                 Eighth n = new Eighth();
                 n.contains = _bars[i].eighth[a].contains;
-                n.soundID = _bars[i].eighth[a].soundID;
+                n.instrumentID = _bars[i].eighth[a].instrumentID;
                 nb.eighth.Add(n);
             }
 

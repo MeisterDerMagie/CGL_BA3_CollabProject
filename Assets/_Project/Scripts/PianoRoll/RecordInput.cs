@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
+using Unity.Netcode;
 
 public enum RecordingState
 {
@@ -42,6 +43,8 @@ public class RecordInput : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (NetworkManager.Singleton.IsServer) return;
+
         _audioRoll.SetUpAllInstances();
 
         _backingTrack = _audioRoll.gameObject.GetComponent<BackingTrack>();
@@ -66,6 +69,26 @@ public class RecordInput : MonoBehaviour
 
         recFrame.SetActive(false);
         //countInText.gameObject.SetActive(false);
+
+        // set sound IDs correctly
+
+        /*
+        if (!NetworkManager.Singleton.IsServer)
+        {
+            List<uint> instrumentIds = PlayerData.LocalPlayerData.InstrumentIds;
+
+            List<Instrument> instruments = new List<Instrument>();
+            foreach (uint instrumentId in instrumentIds)
+            {
+                Instrument instrument = InstrumentsManager.Instance.GetInstrument(instrumentId);
+                instruments.Add(instrument);
+            }
+
+            //... do stuff with intsruments
+
+            instruments[0].soundEvent...
+        }
+        */
     }
 
     private void OnDestroy()
@@ -92,7 +115,7 @@ public class RecordInput : MonoBehaviour
                 {
                     // save input to list of time stamps
                     RecordingNote n = new RecordingNote();
-                    n.soundID = i;
+                    n.soundID = PlayerData.LocalPlayerData.InstrumentIds[i];
                     n.timeStamp = timer;
                     recordedTimeStamps.Add(n);
 
@@ -233,7 +256,7 @@ public class RecordInput : MonoBehaviour
         {
             Eighth e = new Eighth();
             e.contains = false;
-            e.soundID = -1;
+            e.instrumentID = -1;
             _list.Add(e);
         }
     }

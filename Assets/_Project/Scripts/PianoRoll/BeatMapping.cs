@@ -41,7 +41,7 @@ public class BeatMapping : MonoBehaviour
             {
                 Eighth e = new Eighth();
                 e.contains = true;
-                e.soundID = note.soundID;
+                e.instrumentID = note.soundID;
 
                 _recordInput.recordedBar[i] = e;
                 // overwrite values in eight[i]

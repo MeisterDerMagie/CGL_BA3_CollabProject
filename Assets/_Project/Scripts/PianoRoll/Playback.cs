@@ -6,7 +6,7 @@ using UnityEngine;
 public struct Eighth
 {
     public bool contains;
-    public int soundID;
+    public int instrumentID;
 }
 
 [System.Serializable]
