@@ -1436,6 +1436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f5bc266d8f33a940a76b5123d84efbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _renderers: []
 --- !u!1 &1195384996
 GameObject:
   m_ObjectHideFlags: 0
@@ -1753,7 +1754,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   countInText: {fileID: 1274522457}
-  promptTextField: {fileID: 0}
+  promptTextField: {fileID: 1874231153}
   pianoRollObj: {fileID: 294009750}
   _audio: 0
 --- !u!4 &1302302530
