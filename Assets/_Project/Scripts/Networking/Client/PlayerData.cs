@@ -348,7 +348,7 @@ public class PlayerData : NetworkBehaviour
         //-----------DEBUG
         string instruments = string.Empty;
 
-        foreach (uint id in InstrumentIds)
+        foreach (int id in InstrumentIds)
         {
             instruments += InstrumentsManager.Instance.GetInstrument(id).friendlyName;
             instruments += ", ";

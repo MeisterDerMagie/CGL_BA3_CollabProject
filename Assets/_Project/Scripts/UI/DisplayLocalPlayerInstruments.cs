@@ -20,7 +20,7 @@ public class DisplayLocalPlayerInstruments : MonoBehaviour
 
         if (PlayerData.LocalPlayerData.InstrumentIds.Count == 0) return;
 
-        foreach (uint instrumentId in PlayerData.LocalPlayerData.InstrumentIds)
+        foreach (int instrumentId in PlayerData.LocalPlayerData.InstrumentIds)
         {
             var icon = Instantiate(instrumentIconPrefab, parent.transform);
             icon.GetComponent<Image>().sprite = InstrumentsManager.Instance.GetInstrument(instrumentId).instrumentIcon;
