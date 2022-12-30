@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Project/Scenes/Game_Stage_VoteForCreativity.unity
     guid: 9d88bc7edd9edfb47bf947e9f7eb3299
+  - enabled: 1
+    path: Assets/_Project/Scenes/Game_Recording.unity
+    guid: 0338a2c1689715f4db8f333074ee3122
   m_configObjects: {}

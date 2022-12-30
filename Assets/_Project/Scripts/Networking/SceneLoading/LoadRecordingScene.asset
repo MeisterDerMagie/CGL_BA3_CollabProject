@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83067b677a694ab397b061ec0d8256da, type: 3}
-  m_Name: LoadPickSoundsScene
+  m_Name: LoadRecordingScene
   m_EditorClassIdentifier: 
   scene:
-    sceneAsset: {fileID: 102900000, guid: b71d04baa6bb92940b9bcf22b42234be, type: 3}
-    scenePath: Assets/_Project/Scenes/Game_PickSounds.unity
+    sceneAsset: {fileID: 102900000, guid: 0338a2c1689715f4db8f333074ee3122, type: 3}
+    scenePath: Assets/_Project/Scenes/Game_Recording.unity
   loadingScreenPrefab: {fileID: 41708880123253853, guid: 5047600c8dad99942809d91f20c3f5a9, type: 3}

@@ -19,7 +19,7 @@ public struct RecordingNote
 
 public class RecordInput : MonoBehaviour
 {
-    [HideInInspector] public RecordingUI _recordingUI;
+    [SerializeField] private RecordingUI _recordingUI;
 
     [SerializeField] private KeyCode[] keyInputs;
     [SerializeField] private AudioRoll _audioRoll;
