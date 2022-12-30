@@ -1,15 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-[System.Serializable]
-public struct Eighth
+[Serializable]
+public struct Eighth : INetworkSerializable, IEquatable<Eighth>
 {
     public bool contains;
     public int instrumentID;
+    public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+    {
+        serializer.SerializeValue(ref contains);
+        serializer.SerializeValue(ref instrumentID);
+    }
+
+    public bool Equals(Eighth other) => contains == other.contains && instrumentID == other.instrumentID;
+    public override bool Equals(object obj) => obj is Eighth other && Equals(other);
+    public override int GetHashCode() => HashCode.Combine(contains, instrumentID);
 }
 
-[System.Serializable]
+[Serializable]
 public struct Bar
 {
     public List<Eighth> eighth;

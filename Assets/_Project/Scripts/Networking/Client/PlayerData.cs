@@ -55,6 +55,21 @@ public class PlayerData : NetworkBehaviour
             return list;
         }
     }
+
+    public List<Eighth> Recording
+    {
+        get
+        {
+            var list = new List<Eighth>();
+            foreach (Eighth eighth in _recording)
+            {
+                list.Add(eighth);
+            }
+
+            return list;
+        }
+    }
+
     public int PointsCreativity => _pointsCreativity.Value;
     public int PointsPlayability => _pointsPlayability.Value;
     public int PointsPerformance => _pointsPerformance.Value;
@@ -84,6 +99,7 @@ public class PlayerData : NetworkBehaviour
     private NetworkVariable<bool> _submittedPrompt;
 
     private NetworkList<int> _instrumentIds;
+    private NetworkList<Eighth> _recording;
 
     private NetworkVariable<int> _pointsCreativity;
     private NetworkVariable<int> _pointsPlayability;
@@ -101,6 +117,7 @@ public class PlayerData : NetworkBehaviour
         _assignedPrompt = new NetworkVariable<FixedString512Bytes>(string.Empty);
         _submittedPrompt = new NetworkVariable<bool>(false);
         _instrumentIds = new NetworkList<int>();
+        _recording = new NetworkList<Eighth>();
         _pointsCreativity = new NetworkVariable<int>(0);
         _pointsPlayability = new NetworkVariable<int>(0);
         _pointsPerformance = new NetworkVariable<int>(0);
@@ -188,6 +205,7 @@ public class PlayerData : NetworkBehaviour
         _assignedPrompt.Dispose();
         _submittedPrompt.Dispose();
         _instrumentIds.Dispose();
+        _recording.Dispose();
         _pointsCreativity.Dispose();
         _pointsPlayability.Dispose();
         _pointsPerformance.Dispose();
@@ -357,6 +375,16 @@ public class PlayerData : NetworkBehaviour
         instruments = instruments.Substring(0,instruments.Length-2);
 
         Debug.Log($"Player {PlayerName} (id: {OwnerClientId.ToString()}) got assigned the following instruments: {instruments}");
+    }
+
+    public void SetRecording(List<Eighth> recording)
+    {
+        _recording.Clear();
+
+        foreach (Eighth eighth in recording)
+        {
+            _recording.Add(eighth);
+        }
     }
     
     //The points should not have a ServerRPC (the client should not have the authority to set its points). The server should calculate those based on the user input
