@@ -4,6 +4,7 @@ using UnityEngine;
 
 
 /// <summary>
+/// This is the Piano Roll Script for the recording stage
 /// The Piano Roll gets the current beat and bar from the PianoRollTimer
 /// it then checks for the preview of the notes if any should be spawned + the lines as well
 /// And tells the spawner to spawn them and which one
@@ -45,6 +46,8 @@ public class PianoRoll : MonoBehaviour
 
         // Start Backing Track:
         StartMusic();
+
+        // elfenbeinstein MISSING get bpm from FMOD
     }
 
     void StartMusic()
@@ -191,19 +194,6 @@ public class PianoRoll : MonoBehaviour
 
     public void PlayRecording(bool playback, bool withAudio, bool button = false)
     {
-        /*
-        playBackRecording = true;
-        playWithAudio = false;
-
-        if (value == true)
-        {
-            waitForPlayback = true;
-        }
-        else
-        {
-            waitForPlayback = false;
-        }
-        */
         if (button)
         {
             playWithAudio = withAudio;
