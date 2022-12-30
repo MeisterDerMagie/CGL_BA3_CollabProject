@@ -683,7 +683,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1302302529}
         m_TargetAssemblyTypeName: RecordingUI, Assembly-CSharp
         m_MethodName: RecordButton
         m_Mode: 1
@@ -2349,7 +2349,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1302302529}
         m_TargetAssemblyTypeName: RecordingUI, Assembly-CSharp
         m_MethodName: TrashButton
         m_Mode: 1
@@ -2824,7 +2824,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1302302529}
         m_TargetAssemblyTypeName: RecordingUI, Assembly-CSharp
         m_MethodName: PlayButton
         m_Mode: 1
