@@ -14,7 +14,7 @@ public class AssignInstruments : MonoBehaviour
         foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
         {
             List<Instrument> allInstruments = InstrumentsManager.Instance.instruments;
-            var assignedInstruments = new List<uint>();
+            var assignedInstruments = new List<int>();
             
             for (int i = 0; i < Constants.INSTRUMENTS_AMOUNT; i++)
             {

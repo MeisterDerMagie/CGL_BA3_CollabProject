@@ -8,7 +8,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Instrument", menuName = "One Bar Wonder/Instrument", order = 0)]
 public class Instrument : ScriptableObject
 {
-    public uint instrumentId;
+    public int instrumentId;
     public string friendlyName;
     public EventReference soundEvent;
     [PreviewField] public Sprite instrumentIcon;

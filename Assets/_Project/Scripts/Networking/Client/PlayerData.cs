@@ -336,7 +336,7 @@ public class PlayerData : NetworkBehaviour
         Debug.Log($"Player {PlayerName} (id: {OwnerClientId.ToString()}) with own prompt \"{Prompt}\" got assigned prompt \"{AssignedPrompt}\".");
     }
 
-    public void SetInstruments(List<uint> instrumentIds)
+    public void SetInstruments(List<int> instrumentIds)
     {
         _instrumentIds.Clear();
 

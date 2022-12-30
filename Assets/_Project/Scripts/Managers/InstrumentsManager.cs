@@ -54,7 +54,7 @@ public class InstrumentsManager : MonoBehaviour
         instruments = EditorUtilities.GetAssets<Instrument>();
         
         //check if there any duplicate ids
-        var ids = new List<uint>();
+        var ids = new List<int>();
         foreach (Instrument instrument in instruments)
         {
             if (!ids.Contains(instrument.instrumentId))
