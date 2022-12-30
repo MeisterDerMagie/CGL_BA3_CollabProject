@@ -39,6 +39,9 @@ public class PianoRoll : MonoBehaviour
         bars = new List<Bar>();
         
         spawner = GetComponent<NoteSpawner>();
+
+        // Set button icons
+        GetComponentInChildren<PianoRollButtons>().SetUpButtons();
     }
 
 
@@ -114,8 +117,15 @@ public class PianoRoll : MonoBehaviour
         }
 
         // play preview notes if there is a note on the eighth:
+        // translate soundID into which line to spawn on
+        int line = 0;
+        for (int i = 0; i < PlayerData.LocalPlayerData.InstrumentIds.Count; i++)
+        {
+            if (bars[_timer.previewBar - 1].eighth[_timer.previewBeat - 1].instrumentID == PlayerData.LocalPlayerData.InstrumentIds[i])
+                line = i;
+        }
         if (bars[_timer.previewBar - 1].eighth[_timer.previewBeat - 1].contains)
-            spawner.SpawnNote(bars[_timer.previewBar - 1].eighth[_timer.previewBeat - 1].instrumentID, bpm);
+            spawner.SpawnNote(line, bpm);
     }
 
     void PlaybackBarAudio()

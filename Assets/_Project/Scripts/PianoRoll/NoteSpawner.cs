@@ -134,7 +134,7 @@ public class NoteSpawner : MonoBehaviour
                 int a = -1;
                 // tell the clone the current bpm, length of piano roll in beats, and target value of poision x (how far it needs to travel to the left)
                 if (i == 1 || i == 3 || i == 5 || i == 7 || i == 9 || i == 11 || i == 13) a = 2;
-                clone.GetComponent<Notes>().NoteSetUp(bpm, (i + 1) * beats, transform.localPosition.x - bg.transform.localScale.x / 2f, this, _audioRoll, -1, a);
+                clone.GetComponent<Notes>().NoteSetUp(bpm, (i + 1) * beats, transform.localPosition.x - bg.transform.localScale.x / 2f, this,  -1, a);
 
                 currentLines.Add(clone);
             }
@@ -155,20 +155,20 @@ public class NoteSpawner : MonoBehaviour
         clone.transform.localPosition = new Vector3(xPos, 0, 0);
 
         // tell the clone the current bpm, the length of the piano roll in beats, and the target value of position.x (how far it needs to travel to the left)
-        clone.GetComponent<Notes>().NoteSetUp(bpm, beatLength, transform.localPosition.x - bg.transform.localScale.x / 2f, this, _audioRoll, -1, number);
+        clone.GetComponent<Notes>().NoteSetUp(bpm, beatLength, transform.localPosition.x - bg.transform.localScale.x / 2f, this, -1, number);
 
         currentLines.Add(clone);
     }
 
-    public void SpawnNote(int sample, float bpm)
+    public void SpawnNote(int line, float bpm)
     {
         // instantiate a new note and set position to the far right of the piano roll
         GameObject clone = Instantiate(noteObj, spawns.transform);
         // y Pos is dependent on which note it is; calculation of the List happens in the start function of this script
-        clone.transform.localPosition = new Vector3(xPos, yPos[sample], 0);
+        clone.transform.localPosition = new Vector3(xPos, yPos[line], 0);
 
         // tell the clone the current bpm, length of roll in beats, target position x
-        clone.GetComponent<Notes>().NoteSetUp(bpm, beatLength, transform.localPosition.x - bg.transform.localScale.x / 2f, this, _audioRoll, sample);
+        clone.GetComponent<Notes>().NoteSetUp(bpm, beatLength, transform.localPosition.x - bg.transform.localScale.x / 2f, this, line);
 
         currentNotes.Add(clone);
     }

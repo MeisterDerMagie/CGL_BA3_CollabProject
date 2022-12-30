@@ -537,38 +537,38 @@ MonoBehaviour:
   bars:
   - eighth:
     - contains: 1
-      soundID: 0
+      instrumentID: 0
     - contains: 0
-      soundID: 0
+      instrumentID: 0
     - contains: 1
-      soundID: 0
+      instrumentID: 0
     - contains: 0
-      soundID: 0
+      instrumentID: 0
     - contains: 1
-      soundID: 0
+      instrumentID: 0
     - contains: 0
-      soundID: 0
+      instrumentID: 0
     - contains: 1
-      soundID: 0
+      instrumentID: 0
     - contains: 0
-      soundID: 0
+      instrumentID: 0
   - eighth:
     - contains: 0
-      soundID: 0
+      instrumentID: 0
     - contains: 1
-      soundID: 0
+      instrumentID: 0
     - contains: 0
-      soundID: 0
+      instrumentID: 0
     - contains: 1
-      soundID: 0
+      instrumentID: 0
     - contains: 1
-      soundID: 0
+      instrumentID: 0
     - contains: 1
-      soundID: 0
+      instrumentID: 0
     - contains: 0
-      soundID: 0
+      instrumentID: 0
     - contains: 1
-      soundID: 0
+      instrumentID: 0
 --- !u!114 &294009754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1397,8 +1397,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1094615629}
+  - component: {fileID: 1094615630}
   m_Layer: 0
-  m_Name: Notes Left
+  m_Name: ButtonsLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1423,6 +1424,18 @@ Transform:
   m_Father: {fileID: 294009751}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1094615630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094615628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f5bc266d8f33a940a76b5123d84efbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1195384996
 GameObject:
   m_ObjectHideFlags: 0
@@ -1740,7 +1753,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   countInText: {fileID: 1274522457}
-  promptTextField: {fileID: 1874231153}
+  promptTextField: {fileID: 0}
   pianoRollObj: {fileID: 294009750}
   _audio: 0
 --- !u!4 &1302302530
@@ -2030,109 +2043,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4473800c27ae3de489587f7a10e77240, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sound:
-  - Guid:
-      Data1: 1044958180
-      Data2: 1299195099
-      Data3: -2039040128
-      Data4: 1581391162
-    Path: event:/Instrument Samples/Perc_Snare
-  - Guid:
-      Data1: -1082663445
-      Data2: 1255927833
-      Data3: -272862586
-      Data4: -264505466
-    Path: event:/Instrument Samples/Animal_Sheep
-  - Guid:
-      Data1: -1574102228
-      Data2: 1163098834
-      Data3: 2064327332
-      Data4: 250252675
-    Path: event:/Instrument Samples/Inst_Akkordeon
-  - Guid:
-      Data1: -1709136606
-      Data2: 1285905082
-      Data3: -804408647
-      Data4: 1307526430
-    Path: event:/Instrument Samples/Inst_Bagpipe
-  - Guid:
-      Data1: 478387551
-      Data2: 1225142638
-      Data3: -209920077
-      Data4: 347263421
-    Path: event:/Instrument Samples/Inst_Bell
-  - Guid:
-      Data1: 792117807
-      Data2: 1245053989
-      Data3: -1696791111
-      Data4: -1422183662
-    Path: event:/Instrument Samples/Inst_Didgeridoo
-  - Guid:
-      Data1: 1249792540
-      Data2: 1170023823
-      Data3: -1465357432
-      Data4: -777569441
-    Path: event:/Instrument Samples/Inst_Flexatone
-  - Guid:
-      Data1: 1702724892
-      Data2: 1162142468
-      Data3: -366997832
-      Data4: 657655858
-    Path: event:/Instrument Samples/Inst_Flute
-  - Guid:
-      Data1: 883921347
-      Data2: 1126755535
-      Data3: -1911501667
-      Data4: 402596381
-    Path: event:/Instrument Samples/Inst_Glockenspiel
-  - Guid:
-      Data1: -1284033492
-      Data2: 1248209832
-      Data3: 1394472351
-      Data4: 386284782
-    Path: event:/Instrument Samples/Inst_Kazoo
-  - Guid:
-      Data1: -1976166797
-      Data2: 1201772481
-      Data3: -138638716
-      Data4: -2079106010
-    Path: event:/Instrument Samples/Inst_SlideWhistle
-  - Guid:
-      Data1: -1444080916
-      Data2: 1246019333
-      Data3: -1904316279
-      Data4: 2134823348
-    Path: event:/Instrument Samples/MISC_Dogtoy
-  - Guid:
-      Data1: -783282544
-      Data2: 1249993218
-      Data3: 2012002220
-      Data4: 1809253377
-    Path: event:/Instrument Samples/MISC_Knockout
-  - Guid:
-      Data1: -710122455
-      Data2: 1321236921
-      Data3: -1004151132
-      Data4: -1305145122
-    Path: event:/Instrument Samples/Perc_BD
-  - Guid:
-      Data1: -285643216
-      Data2: 1305215359
-      Data3: -753767539
-      Data4: 468411598
-    Path: event:/Instrument Samples/Perc_HiHat
-  - Guid:
-      Data1: 1044958180
-      Data2: 1299195099
-      Data3: -2039040128
-      Data4: 1581391162
-    Path: event:/Instrument Samples/Perc_Snare
-  - Guid:
-      Data1: 1984687637
-      Data2: 1121674750
-      Data3: -1428043370
-      Data4: 155968175
-    Path: event:/Instrument Samples/Perc_Tambourine
 --- !u!114 &1515797438
 MonoBehaviour:
   m_ObjectHideFlags: 0

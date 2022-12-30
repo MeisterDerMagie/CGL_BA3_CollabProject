@@ -11,17 +11,17 @@ using UnityEngine;
 
 public class Notes : MonoBehaviour
 {
-    public int sample;
-
     private NoteSpawner spawner;
-    private AudioRoll _audioRoll;
 
     public Sprite[] sprites;
     public SpriteRenderer _secondRenderer;
     SpriteRenderer _objRenderer;
 
-    public void NoteSetUp(float bpm, int beatLength, float _targetX, NoteSpawner script, AudioRoll audio, int s, int number = -1)
+    public void NoteSetUp(float bpm, int beatLength, float _targetX, NoteSpawner script, int s, int number = -1)
     {
+        // s is set to -1 if it's a line being spawned
+        // s is the # of which sound is used in the local player's current instrumentIDs
+
         // calculate total duration of travelling length of the piano roll in seconds
         // duration of quarter note = 60 seconds / bpm
         // beat length = length of piano roll measured in quarter notes
@@ -30,10 +30,9 @@ public class Notes : MonoBehaviour
 
         _objRenderer = GetComponent<SpriteRenderer>();
 
-        // s is only -1 when it is a line being spawned and then it is the current beat
+        // s is only -1 when it is a line being spawned and then number is the current beat
         if (s == -1)
         {
-            //if (number != -1) _secondRenderer.sprite = sprites[number - 1];
             if (number == 2 || number == 4)
                 MakeOpaque();
         }
@@ -42,19 +41,18 @@ public class Notes : MonoBehaviour
             // set button bg to correct background
             _objRenderer.sprite = sprites[s];
 
+            // set icon image:
             if (_secondRenderer != null)
             {
-                // MISSING: set icon for note
-                /*
+                // get correct sprite from Instruments Manager
+                Sprite sprite = InstrumentsManager.Instance.GetInstrument(PlayerData.LocalPlayerData.InstrumentIds[s]).instrumentIcon;
+
                 _secondRenderer.gameObject.SetActive(true);
-                _secondRenderer.sprite = 
-                */
+                _secondRenderer.sprite = sprite;
             }
         }
 
         spawner = script;
-        _audioRoll = audio;
-        sample = s;
 
         // set target position on the right side of the Piano Roll
         Vector3 targetPos = new Vector3(_targetX, transform.localPosition.y, transform.localPosition.z);
