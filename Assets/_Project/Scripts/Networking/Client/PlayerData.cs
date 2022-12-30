@@ -42,12 +42,12 @@ public class PlayerData : NetworkBehaviour
     public string Prompt => _prompt.Value.ToString();
     public string AssignedPrompt => _assignedPrompt.Value.ToString();
     public bool SubmittedPrompt => _submittedPrompt.Value;
-    public List<uint> InstrumentIds
+    public List<int> InstrumentIds
     {
         get
         {
-            var list = new List<uint>();
-            foreach (uint id in _instrumentIds)
+            var list = new List<int>();
+            foreach (int id in _instrumentIds)
             {
                 list.Add(id);
             }
@@ -83,7 +83,7 @@ public class PlayerData : NetworkBehaviour
     private NetworkVariable<FixedString512Bytes> _assignedPrompt;
     private NetworkVariable<bool> _submittedPrompt;
 
-    private NetworkList<uint> _instrumentIds;
+    private NetworkList<int> _instrumentIds;
 
     private NetworkVariable<int> _pointsCreativity;
     private NetworkVariable<int> _pointsPlayability;
@@ -100,7 +100,7 @@ public class PlayerData : NetworkBehaviour
         _prompt = new NetworkVariable<FixedString512Bytes>(string.Empty);
         _assignedPrompt = new NetworkVariable<FixedString512Bytes>(string.Empty);
         _submittedPrompt = new NetworkVariable<bool>(false);
-        _instrumentIds = new NetworkList<uint>();
+        _instrumentIds = new NetworkList<int>();
         _pointsCreativity = new NetworkVariable<int>(0);
         _pointsPlayability = new NetworkVariable<int>(0);
         _pointsPerformance = new NetworkVariable<int>(0);
@@ -340,7 +340,7 @@ public class PlayerData : NetworkBehaviour
     {
         _instrumentIds.Clear();
 
-        foreach (uint id in instrumentIds)
+        foreach (int id in instrumentIds)
         {
             _instrumentIds.Add(id);
         }
