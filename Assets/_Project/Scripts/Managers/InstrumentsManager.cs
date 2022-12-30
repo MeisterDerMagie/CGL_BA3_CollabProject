@@ -26,7 +26,7 @@ public class InstrumentsManager : MonoBehaviour
 
     [SerializeField, ReadOnly] public List<Instrument> instruments = new List<Instrument>();
 
-    public Instrument GetInstrument(uint id)
+    public Instrument GetInstrument(int id)
     {
         foreach (Instrument instrument in instruments)
         {
@@ -37,7 +37,7 @@ public class InstrumentsManager : MonoBehaviour
         return null;
     }
 
-    public bool IsValidInstrumentId(uint id)
+    public bool IsValidInstrumentId(int id)
     {
         foreach (Instrument instrument in instruments)
         {
