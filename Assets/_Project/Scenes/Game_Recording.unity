@@ -1203,6 +1203,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6423adbf6bc71de4498b5d5dcb8c6c0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttons:
+  - {fileID: 1898368893}
+  - {fileID: 373349545}
+  - {fileID: 1689458473}
+  - {fileID: 2117559548}
 --- !u!1 &750067556
 GameObject:
   m_ObjectHideFlags: 0
@@ -1260,8 +1265,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 738560282}
-        m_TargetAssemblyTypeName: SyncRecording, Assembly-CSharp
-        m_MethodName: SendRecordingToServer
+        m_TargetAssemblyTypeName: EndRecording, Assembly-CSharp
+        m_MethodName: EndRecordingStage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3166,11 +3171,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3635035986634108061, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SendRecordingToServer
+      value: EndRecordingStage
       objectReference: {fileID: 0}
     - target: {fileID: 3635035986634108061, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: SyncRecording, Assembly-CSharp
+      value: EndRecording, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3635035986634108061, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -3183,6 +3188,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2946928742076671825, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
   m_PrefabInstance: {fileID: 2117559546}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2117559548 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3635035986634108061, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
+  m_PrefabInstance: {fileID: 2117559546}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2138707460
 GameObject:
   m_ObjectHideFlags: 0

@@ -44,6 +44,11 @@ public class PianoRoll : MonoBehaviour
         GetComponentInChildren<PianoRollButtons>().SetUpButtons();
 
         // Start Backing Track:
+        StartMusic();
+    }
+
+    void StartMusic()
+    {
         musicPlaying = true;
         spawner.ActivateIdleLines(false, bpm);
         playWithAudio = false;
@@ -51,30 +56,12 @@ public class PianoRoll : MonoBehaviour
         _backingTrack.StartMusic();
     }
 
-
-    void Update()
+    public void StopMusic()
     {
-        /*
-        // for testing if quarter lines spawn correctly on time; start and stop by pressing space bar; should be triggered from somewhere else obvs
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            musicPlaying = !musicPlaying;
-            if (musicPlaying)
-            {
-                spawner.ActivateIdleLines(false, bpm);
-                playWithAudio = false;
-                playingBack = false;
-                _backingTrack.StartMusic();
-            }
-            else
-            {
-                spawner.ActivateIdleLines(true, bpm);
-                _backingTrack.StopMusic();
-                _recordInput.StopRecording();
-                _timer.ResetTimer();
-            }
-        }
-        */
+        spawner.ActivateIdleLines(true, bpm);
+        _backingTrack.StopMusic();
+        _recordInput.StopRecording();
+        _timer.ResetTimer();
     }
 
     public void NextBeat()
