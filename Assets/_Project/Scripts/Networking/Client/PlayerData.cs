@@ -117,7 +117,7 @@ public class PlayerData : NetworkBehaviour
         _assignedPrompt = new NetworkVariable<FixedString512Bytes>(string.Empty);
         _submittedPrompt = new NetworkVariable<bool>(false);
         _instrumentIds = new NetworkList<int>();
-        _recording = new NetworkList<Eighth>();
+        _recording = new NetworkList<Eighth>(writePerm: NetworkVariableWritePermission.Owner);
         _pointsCreativity = new NetworkVariable<int>(0);
         _pointsPlayability = new NetworkVariable<int>(0);
         _pointsPerformance = new NetworkVariable<int>(0);
@@ -378,12 +378,6 @@ public class PlayerData : NetworkBehaviour
     }
 
     public void SetRecording(List<Eighth> recording)
-    {
-        SetRecordingServerRpc(recording);
-    }
-
-    [ServerRpc]
-    private void SetRecordingServerRpc(List<Eighth> recording)
     {
         _recording.Clear();
 
