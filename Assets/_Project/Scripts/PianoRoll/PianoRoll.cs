@@ -102,10 +102,20 @@ public class PianoRoll : MonoBehaviour
 
     void PlayBars()
     {
+        int line = 0;
+
         if (playBackRecording)
         {
             if (_recordInput.recordedBar[_timer.previewBeat - 1].contains)
-                spawner.SpawnNote(_recordInput.recordedBar[_timer.previewBeat - 1].instrumentID, bpm);
+            {
+                for (int i = 0; i < PlayerData.LocalPlayerData.InstrumentIds.Count; i++)
+                {
+                    if (_recordInput.recordedBar[_timer.previewBeat - 1].instrumentID == PlayerData.LocalPlayerData.InstrumentIds[i])
+                        line = i;
+                }
+                spawner.SpawnNote(line, bpm);
+
+            }
             return;
         }
         // if the prevbar counter is beyond the limit of the list, stop playing back bars
@@ -118,14 +128,17 @@ public class PianoRoll : MonoBehaviour
 
         // play preview notes if there is a note on the eighth:
         // translate soundID into which line to spawn on
-        int line = 0;
-        for (int i = 0; i < PlayerData.LocalPlayerData.InstrumentIds.Count; i++)
-        {
-            if (bars[_timer.previewBar - 1].eighth[_timer.previewBeat - 1].instrumentID == PlayerData.LocalPlayerData.InstrumentIds[i])
-                line = i;
-        }
+        
         if (bars[_timer.previewBar - 1].eighth[_timer.previewBeat - 1].contains)
+        {
+            line = 0;
+            for (int i = 0; i < PlayerData.LocalPlayerData.InstrumentIds.Count; i++)
+            {
+                if (bars[_timer.previewBar - 1].eighth[_timer.previewBeat - 1].instrumentID == PlayerData.LocalPlayerData.InstrumentIds[i])
+                    line = i;
+            }
             spawner.SpawnNote(line, bpm);
+        }
     }
 
     void PlaybackBarAudio()
