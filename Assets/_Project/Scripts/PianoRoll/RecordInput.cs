@@ -93,12 +93,15 @@ public class RecordInput : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (NetworkManager.Singleton.IsServer) return;
         _backingTrack.beatUpdated -= NextBeat;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (NetworkManager.Singleton.IsServer) return;
+
         // increase timer if we are counting in or recording
         // we start the timer once we start counting in, in case the first input is a little before the beginning of the beat
         if (recordingState == RecordingState.CountIn || recordingState == RecordingState.Recording) timer += Time.deltaTime;
@@ -128,6 +131,8 @@ public class RecordInput : MonoBehaviour
 
     public void RecordButton()
     {
+        if (NetworkManager.Singleton.IsServer) return;
+
         if (recordingState == RecordingState.Idle)
         {
             // waitToStartRecording at next 1 with a count in of one bar
@@ -161,17 +166,16 @@ public class RecordInput : MonoBehaviour
 
     public void DeleteButton()
     {
+        if (NetworkManager.Singleton.IsServer) return;
+
         recordedBar.Clear();
         WriteEmptyBar(recordedBar);
     }
 
-    public void PlayButton()
-    {
-        // turn on audio
-    }
-
     void NextBeat()
     {
+        if (NetworkManager.Singleton.IsServer) return;
+
         if (_backingTrack.lastBeat == 1)
         {
             switch (recordingState)
@@ -240,6 +244,8 @@ public class RecordInput : MonoBehaviour
 
     public void StopRecording()
     {
+        if (NetworkManager.Singleton.IsServer) return;
+
         recordingState = RecordingState.Idle;
 
         // set UI object inactive
@@ -250,6 +256,8 @@ public class RecordInput : MonoBehaviour
 
     private void WriteEmptyBar(List<Eighth> _list)
     {
+        if (NetworkManager.Singleton.IsServer) return;
+
         _list.Clear();
 
         for (int i = 0; i < 8; i++)
