@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class StageController : NetworkBehaviour
 {
-    [SerializeField] private List<Podium> podiums = new();
+    [SerializeField] public List<Podium> podiums = new();
 
     //Quasi Dictionary weil es NetworkDictionaries nicht gibt: die PodiumIndexes matchen die indexes von _clientIdsAssignToPodiums
     private NetworkList<ulong> _clientIdsAssignToPodiums;

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ScreenWaitingForOtherPlayers : NetworkBehaviour
 {
-    [SerializeField] private PlayerDoneIcon playerDoneIconPrefab;
+    [SerializeField] private GameObject playerDoneIconPrefab;
     [SerializeField] private NetworkObject iconsParent;
     
     private Dictionary<ulong, PlayerDoneIcon> _playerIcons;
@@ -30,7 +30,8 @@ public class ScreenWaitingForOtherPlayers : NetworkBehaviour
         var spawnedNetworkObjects = new List<NetworkObject>();
         foreach (var player in players)
         {
-            PlayerDoneIcon icon = Instantiate(playerDoneIconPrefab, iconsParent.transform, false);
+            GameObject iconGo = Instantiate(playerDoneIconPrefab, iconsParent.transform, false);
+            PlayerDoneIcon icon = iconGo.GetComponent<PlayerDoneIcon>();
             var iconNetworkObject = icon.GetComponent<NetworkObject>();
             iconNetworkObject.Spawn();
 

@@ -56,6 +56,11 @@ public class Podium : NetworkBehaviour
     [ClientRpc]
     public void SetPodiumTextClientRpc(string text)
     {
+        SetPodiumText(text);
+    }
+
+    public void SetPodiumText(string text)
+    {
         podiumTextField.gameObject.SetActive(true);
         podiumTextField.SetText(text);
     }

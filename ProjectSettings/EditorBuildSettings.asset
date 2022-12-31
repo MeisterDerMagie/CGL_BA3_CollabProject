@@ -35,4 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Project/Scenes/Game_Recording.unity
     guid: 0338a2c1689715f4db8f333074ee3122
+  - enabled: 1
+    path: Assets/_Project/Scenes/Game_Scores-1.unity
+    guid: 3b2991003c4c0a843b877afadde72c9d
   m_configObjects: {}

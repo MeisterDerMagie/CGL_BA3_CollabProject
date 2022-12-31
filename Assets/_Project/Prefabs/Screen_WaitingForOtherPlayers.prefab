@@ -89,7 +89,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6046905706122264678}
-  - component: {fileID: 217767772978836889}
+  - component: {fileID: 5041117303650427626}
   - component: {fileID: 5454067373991263851}
   m_Layer: 0
   m_Name: Screen_WaitingForOtherPlayers
@@ -114,7 +114,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &217767772978836889
+--- !u!114 &5041117303650427626
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 559e74a83df00e444aa4a01bed23e46e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerDoneIconPrefab: {fileID: 7620245332286363803, guid: 570dcc77f0929754995675c375a2b0e1, type: 3}
+  playerDoneIconPrefab: {fileID: 5411401474293719782, guid: 570dcc77f0929754995675c375a2b0e1, type: 3}
   iconsParent: {fileID: 804526090164927555}
 --- !u!1 &6046905706145770639
 GameObject:
