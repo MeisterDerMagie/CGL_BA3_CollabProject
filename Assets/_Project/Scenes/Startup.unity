@@ -223,6 +223,7 @@ GameObject:
   m_Component:
   - component: {fileID: 439776393}
   - component: {fileID: 439776394}
+  - component: {fileID: 439776395}
   - component: {fileID: 439776392}
   - component: {fileID: 439776391}
   m_Layer: 0
@@ -295,7 +296,7 @@ MonoBehaviour:
       OverridingTargetPrefab: {fileID: 0}
     TickRate: 30
     ClientConnectionBufferTimeout: 10
-    ConnectionApproval: 0
+    ConnectionApproval: 1
     ConnectionData: 
     EnableTimeResync: 0
     TimeResyncInterval: 30
@@ -337,6 +338,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offsetX: 0
   offsetY: 105
+--- !u!114 &439776395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439776390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de7b451c7a24efcab6fb958b2b001c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxPlayers: 8
+  gameIsInLobby: 1
 --- !u!1001 &756349176
 PrefabInstance:
   m_ObjectHideFlags: 0

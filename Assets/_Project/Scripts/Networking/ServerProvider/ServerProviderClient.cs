@@ -75,13 +75,13 @@ internal class ServerProviderClient
             }
         }
         
-        //-- Doodlenite --
+        //-- Collab Project --
         if (receivedString == "clientCanJoin")
         {
             string portString = (string)args.Metadata["port"];
             string lobbyCode = (string)args.Metadata["lobbyCode"];
 
-            //join doodlenite server
+            //join Unity server
             ushort port = ushort.Parse(portString);
             UnityThread.ExecuteInUpdate( () => ServerProviderCommunication.Instance.ClientCanJoin(port, lobbyCode));
         }

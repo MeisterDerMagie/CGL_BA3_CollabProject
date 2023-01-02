@@ -121,6 +121,9 @@ public class ReadyCountdown : NetworkBehaviour
         //hide countdown
         HideCountdownUI();
         
+        //disallow new players from connecting, after the game started
+        ConnectionApproval.Instance.gameIsInLobby = false;
+        
         //inform server provider about the started game
         ServerProviderCommunication.Instance.ServerInGame();
         

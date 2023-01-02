@@ -95,6 +95,20 @@ public class ServerProviderCommunication : MonoBehaviour
         ServerProviderClient.SendMessage("serverInGame", metadata);
     }
 
+    public void ServerIsFull()
+    {
+        var metadata = new Dictionary<object, object>();
+        metadata.Add("lobbyCode", LobbyCode.Instance.code);
+        ServerProviderClient.SendMessage("serverIsFull", metadata);
+    }
+
+    public void ServerIsNotFull()
+    {
+        var metadata = new Dictionary<object, object>();
+        metadata.Add("lobbyCode", LobbyCode.Instance.code);
+        ServerProviderClient.SendMessage("serverIsNotFull", metadata);
+    }
+
     public void ServerStopped()
     {
         var metadata = new Dictionary<object, object>();
@@ -118,7 +132,7 @@ public class ServerProviderCommunication : MonoBehaviour
     }
     
     //-- Provider -> Server --
-        
+
     #endregion
 
     private void LoadServerConfig()
