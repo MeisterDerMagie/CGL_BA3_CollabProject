@@ -503,6 +503,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Screen_WaitingForOtherPlayers
       objectReference: {fileID: 0}
+    - target: {fileID: 6046905706122264679, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
 --- !u!1 &760567818 stripped
