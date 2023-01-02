@@ -21,6 +21,9 @@ public class Constants : ScriptableObject
     public static Color ownPlayerNameColor => instance._ownPlayerNameColor;
     [SerializeField] private Color _ownPlayerNameColor;
     
+    public static int MIN_PLAYER_AMOUNT => instance._MIN_PLAYER_AMOUNT;
+    [SerializeField] private int _MIN_PLAYER_AMOUNT;
+    
     //Singleton
     #region Singleton
     private static Constants _instance;
