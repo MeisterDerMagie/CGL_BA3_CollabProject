@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 /// <summary>
 /// communication with FMOD via this script about current beat + bar + other markers
-/// 
+/// play background music from this script in all rhythm stages of game (recording, playback etc)
 /// </summary>
 
 public class BackingTrack : MonoBehaviour

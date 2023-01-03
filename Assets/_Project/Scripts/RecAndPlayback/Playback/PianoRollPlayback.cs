@@ -6,6 +6,8 @@ using System.Linq;
 
 public class PianoRollPlayback : MonoBehaviour
 {
+    [SerializeField] private CharDisplayPB _display;
+
     public List<PlayerData> playerDatas;
     int playerCount;
     int currentPlayer;
