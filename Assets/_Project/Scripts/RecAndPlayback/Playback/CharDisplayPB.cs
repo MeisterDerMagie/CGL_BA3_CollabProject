@@ -21,10 +21,20 @@ public class CharDisplayPB : MonoBehaviour
     public void SetCharacterDisplay(string _prompt, string name, Sprite img)
     {
         // set prompt
+        prompt.gameObject.SetActive(true);
         prompt.text = _prompt;
         // set player name
+        playerName.gameObject.SetActive(true);
         playerName.text = name;
         // set player icon
+        playerImage.gameObject.SetActive(true);
         playerImage.sprite = img;
+    }
+
+    public void TurnOffCharacter()
+    {
+        prompt.gameObject.SetActive(false);
+        playerName.gameObject.SetActive(false);
+        playerImage.gameObject.SetActive(false);
     }
 }

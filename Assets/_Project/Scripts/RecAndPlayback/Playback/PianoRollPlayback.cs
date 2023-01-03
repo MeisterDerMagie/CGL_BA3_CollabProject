@@ -35,6 +35,8 @@ public class PianoRollPlayback : MonoBehaviour
     private PlaybackStage previewStage;
 
     private bool playingBack;
+
+    public List<Bar> bars;
     
     private void Start()
     {
@@ -55,6 +57,9 @@ public class PianoRollPlayback : MonoBehaviour
         previewStage = PlaybackStage.IDLE;
         _spawner.ActivateIdleLines(true, bpm);
 
+        _display.SwitchLight(false);
+        _display.TurnOffCharacter();
+
         //playerDatas[0].Recording
 
         // MISSING: start playback
@@ -73,7 +78,7 @@ public class PianoRollPlayback : MonoBehaviour
     {
         // start backing track
         GetComponentInChildren<BackingTrack>().StartMusic();
-        _spawner.ActivateIdleLines(true, bpm);
+        _spawner.ActivateIdleLines(false, bpm);
 
         // set playing Back to true
         playingBack = true;
@@ -89,6 +94,9 @@ public class PianoRollPlayback : MonoBehaviour
         // set current stages
         timelineStage = PlaybackStage.COUNTIN;
         previewStage = PlaybackStage.COUNTIN;
+
+        // update display and switch off light
+        _display.SwitchLight(false);
     }
 
     public void StopPlayback()
@@ -97,6 +105,10 @@ public class PianoRollPlayback : MonoBehaviour
         GetComponentInChildren<BackingTrack>().StopMusic();
         timelineStage = PlaybackStage.IDLE;
         previewStage = PlaybackStage.IDLE;
+        _spawner.ActivateIdleLines(true, bpm);
+
+        _display.SwitchLight(false);
+        _display.TurnOffCharacter();
     }
 
     public void NextBeat()
@@ -114,10 +126,17 @@ public class PianoRollPlayback : MonoBehaviour
                     // do nothing, shouldn't even be here
                     break;
                 case PlaybackStage.COUNTIN:
+                    if (timelineBar == 1)
+                    {
+                        // Update visuals to new player
+                        UpdatePlayer();
+                    }
                     if (timelinePlayer == 0)
                     {
                         if (timelineBar == countIn)
                         {
+                            // turn on light and change state to playing
+                            _display.SwitchLight(true);
                             timelineStage = PlaybackStage.PLAYING;
                             timelineBar = 0;
                         }
@@ -126,6 +145,8 @@ public class PianoRollPlayback : MonoBehaviour
                     {
                         if (timelineBar == barsBetween)
                         {
+                            // turn on light and change state to playing
+                            _display.SwitchLight(true);
                             timelineStage = PlaybackStage.PLAYING;
                             timelineBar = 0;
                         }
@@ -134,7 +155,7 @@ public class PianoRollPlayback : MonoBehaviour
                 case PlaybackStage.PLAYING:
                     timelinePlayer++;
                     // check if this was last player
-                    if (timelinePlayer > playerCount)
+                    if (timelinePlayer > playerCount - 1)
                     {
                         LastPlayer();
                     }
@@ -143,6 +164,8 @@ public class PianoRollPlayback : MonoBehaviour
                         timelineStage = PlaybackStage.COUNTIN;
                         timelineBar = 0;
                     }
+                    _display.SwitchLight(false);
+                    _display.TurnOffCharacter();
                     break;
                 default:
                     break;
@@ -179,7 +202,7 @@ public class PianoRollPlayback : MonoBehaviour
                 case PlaybackStage.PLAYING:
                     previewPlayer++;
                     // check if last player
-                    if (previewPlayer == playerCount)
+                    if (previewPlayer == playerCount - 1)
                     {
                         previewStage = PlaybackStage.IDLE;
                     }
@@ -196,17 +219,26 @@ public class PianoRollPlayback : MonoBehaviour
 
         // update display
         if (previewStage == PlaybackStage.PLAYING)
-        {
-            
-        }
+            PreviewNote();
 
         // play audio
         if (timelineStage == PlaybackStage.PLAYING)
-        {
-
-        }
+            if (bars[timelinePlayer].eighth[_timer.timelineBeat - 1].contains)
+                _audioRoll.PlaySound(bars[timelinePlayer].eighth[_timer.timelineBeat - 1].instrumentID);
 
         PlayQuarterNote();
+    }
+
+    void PreviewNote()
+    {
+        //int line = 0;
+        if (bars[previewPlayer].eighth[_timer.previewBeat - 1].contains)
+            _spawner.SpawnNote(bars[previewPlayer].eighth[_timer.previewBeat - 1].instrumentID, bpm);
+    }
+
+    void UpdatePlayer()
+    {
+        Debug.Log("next player displayed");
     }
 
     void PlayQuarterNote()
@@ -226,6 +258,9 @@ public class PianoRollPlayback : MonoBehaviour
 
         // figure out what else to do
         Debug.Log("this was the last player");
+
+        _display.SwitchLight(false);
+        _display.TurnOffCharacter();
     }
 
 #if UNITY_EDITOR

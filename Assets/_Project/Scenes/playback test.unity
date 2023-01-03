@@ -465,6 +465,143 @@ MonoBehaviour:
   countIn: 2
   barsBetween: 3
   playerDatas: []
+  bars:
+  - eighth:
+    - contains: 1
+      instrumentID: 0
+    - contains: 0
+      instrumentID: 0
+    - contains: 1
+      instrumentID: 1
+    - contains: 0
+      instrumentID: 0
+    - contains: 1
+      instrumentID: 2
+    - contains: 0
+      instrumentID: 0
+    - contains: 1
+      instrumentID: 3
+    - contains: 0
+      instrumentID: 0
+  - eighth:
+    - contains: 1
+      instrumentID: 0
+    - contains: 0
+      instrumentID: 0
+    - contains: 1
+      instrumentID: 0
+    - contains: 0
+      instrumentID: 0
+    - contains: 0
+      instrumentID: 0
+    - contains: 0
+      instrumentID: 0
+    - contains: 1
+      instrumentID: 0
+    - contains: 1
+      instrumentID: 3
+  - eighth:
+    - contains: 1
+      instrumentID: 0
+    - contains: 0
+      instrumentID: 0
+    - contains: 1
+      instrumentID: 0
+    - contains: 0
+      instrumentID: 0
+    - contains: 1
+      instrumentID: 0
+    - contains: 1
+      instrumentID: 0
+    - contains: 0
+      instrumentID: 0
+    - contains: 1
+      instrumentID: 0
+  - eighth:
+    - contains: 1
+      instrumentID: 0
+    - contains: 0
+      instrumentID: 0
+    - contains: 0
+      instrumentID: 0
+    - contains: 0
+      instrumentID: 0
+    - contains: 1
+      instrumentID: 0
+    - contains: 0
+      instrumentID: 0
+    - contains: 0
+      instrumentID: 0
+    - contains: 0
+      instrumentID: 0
+  - eighth:
+    - contains: 0
+      instrumentID: 0
+    - contains: 1
+      instrumentID: 0
+    - contains: 0
+      instrumentID: 0
+    - contains: 1
+      instrumentID: 0
+    - contains: 0
+      instrumentID: 0
+    - contains: 1
+      instrumentID: 0
+    - contains: 0
+      instrumentID: 0
+    - contains: 1
+      instrumentID: 0
+  - eighth:
+    - contains: 1
+      instrumentID: 0
+    - contains: 1
+      instrumentID: 1
+    - contains: 1
+      instrumentID: 2
+    - contains: 1
+      instrumentID: 3
+    - contains: 1
+      instrumentID: 3
+    - contains: 1
+      instrumentID: 2
+    - contains: 1
+      instrumentID: 1
+    - contains: 1
+      instrumentID: 0
+  - eighth:
+    - contains: 1
+      instrumentID: 2
+    - contains: 0
+      instrumentID: 0
+    - contains: 0
+      instrumentID: 0
+    - contains: 0
+      instrumentID: 0
+    - contains: 1
+      instrumentID: 3
+    - contains: 0
+      instrumentID: 0
+    - contains: 1
+      instrumentID: 0
+    - contains: 0
+      instrumentID: 0
+  - eighth:
+    - contains: 0
+      instrumentID: 0
+    - contains: 0
+      instrumentID: 0
+    - contains: 0
+      instrumentID: 0
+    - contains: 1
+      instrumentID: 0
+    - contains: 0
+      instrumentID: 0
+    - contains: 0
+      instrumentID: 0
+    - contains: 1
+      instrumentID: 0
+    - contains: 0
+      instrumentID: 0
 --- !u!1 &213306202
 GameObject:
   m_ObjectHideFlags: 0
