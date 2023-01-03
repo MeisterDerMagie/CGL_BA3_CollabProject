@@ -6,23 +6,237 @@ using System.Linq;
 
 public class PianoRollPlayback : MonoBehaviour
 {
+    private enum PlaybackStage
+    {
+        IDLE,
+        COUNTIN,
+        PLAYING
+    }
+
     [SerializeField] private CharDisplayPB _display;
+    private PianoRollTimer _timer;
+    private AudioRoll _audioRoll;
+    private NoteSpawner _spawner;
+
+    public float bpm = 110f;
+    [Tooltip("amount of bars before first bar")]
+    [SerializeField] int countIn = 2;
+    [Tooltip("amount of bars between bars")]
+    [SerializeField] int barsBetween = 3;
 
     public List<PlayerData> playerDatas;
     int playerCount;
-    int currentPlayer;
+    int timelinePlayer;
+    int previewPlayer;
+    int timelineBar;
+    int previewBar;
+
+    private PlaybackStage timelineStage;
+    private PlaybackStage previewStage;
+
+    private bool playingBack;
     
     private void Start()
     {
+        // find all players and their data
         playerDatas = FindObjectsOfType<PlayerData>().ToList();
-        playerCount = playerDatas.Count;
-        currentPlayer = 0;
+        //playerCount = playerDatas.Count;
+        playerCount = 8;
+        timelinePlayer = 0;
+        previewPlayer = 0;
+
+        // set scripts
+        _timer = GetComponent<PianoRollTimer>();
+        _audioRoll = GetComponentInChildren<AudioRoll>();
+        _spawner = GetComponent<NoteSpawner>();
+
+        playingBack = false;
+        timelineStage = PlaybackStage.IDLE;
+        previewStage = PlaybackStage.IDLE;
+        _spawner.ActivateIdleLines(true, bpm);
 
         //playerDatas[0].Recording
 
-        // start playback
+        // MISSING: start playback
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (!playingBack) StartPlayback();
+            else StopPlayback();
+        }
+    }
+
+    public void StartPlayback()
+    {
+        // start backing track
+        GetComponentInChildren<BackingTrack>().StartMusic();
+        _spawner.ActivateIdleLines(true, bpm);
+
+        // set playing Back to true
+        playingBack = true;
+
+        // set bar counters to zero and one // have to start one below because on first beat it's already updated
+        timelineBar = -1;
+        previewBar = 0; // because preview is one bar and 2 beats ahead of timeline
+
+        // set currentPlayer to zero
+        timelinePlayer = 0;
+        previewPlayer = 0;
+
+        // set current stages
+        timelineStage = PlaybackStage.COUNTIN;
+        previewStage = PlaybackStage.COUNTIN;
+    }
+
+    public void StopPlayback()
+    {
+        playingBack = false;
+        GetComponentInChildren<BackingTrack>().StopMusic();
+        timelineStage = PlaybackStage.IDLE;
+        previewStage = PlaybackStage.IDLE;
+    }
+
+    public void NextBeat()
+    {
+        if (!playingBack) return;
+
+        // if timeline beat is 1 --> see for next stage
+        if (_timer.timelineBeat == 1)
+        {
+            timelineBar++;
+
+            switch (timelineStage)
+            {
+                case PlaybackStage.IDLE:
+                    // do nothing, shouldn't even be here
+                    break;
+                case PlaybackStage.COUNTIN:
+                    if (timelinePlayer == 0)
+                    {
+                        if (timelineBar == countIn)
+                        {
+                            timelineStage = PlaybackStage.PLAYING;
+                            timelineBar = 0;
+                        }
+                    }
+                    else
+                    {
+                        if (timelineBar == barsBetween)
+                        {
+                            timelineStage = PlaybackStage.PLAYING;
+                            timelineBar = 0;
+                        }
+                    }
+                    break;
+                case PlaybackStage.PLAYING:
+                    timelinePlayer++;
+                    // check if this was last player
+                    if (timelinePlayer > playerCount)
+                    {
+                        LastPlayer();
+                    }
+                    else
+                    {
+                        timelineStage = PlaybackStage.COUNTIN;
+                        timelineBar = 0;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        // if preview beat is 1 --> see for next stage
+        else if (_timer.previewBeat == 1)
+        {
+            previewBar++;
+
+            switch (previewStage)
+            {
+                case PlaybackStage.IDLE:
+                    // do nothing
+                    break;
+                case PlaybackStage.COUNTIN:
+                    if (previewPlayer == 0)
+                    {
+                        if (previewBar == countIn - 1)
+                        {
+                            previewStage = PlaybackStage.PLAYING;
+                            previewBar = 0;
+                        }
+                    }
+                    else
+                    {
+                        if (previewBar == barsBetween)
+                        {
+                            previewStage = PlaybackStage.PLAYING;
+                            previewBar = 0;
+                        }
+                    }
+                    break;
+                case PlaybackStage.PLAYING:
+                    previewPlayer++;
+                    // check if last player
+                    if (previewPlayer == playerCount)
+                    {
+                        previewStage = PlaybackStage.IDLE;
+                    }
+                    else
+                    {
+                        previewStage = PlaybackStage.COUNTIN;
+                        previewBar = 0;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        // update display
+        if (previewStage == PlaybackStage.PLAYING)
+        {
+            
+        }
+
+        // play audio
+        if (timelineStage == PlaybackStage.PLAYING)
+        {
+
+        }
+
+        PlayQuarterNote();
+    }
+
+    void PlayQuarterNote()
+    {
+        // only spawn lines on 1s and 3s, so on first and fifth eighth
+        if (_timer.previewBeat == 1) _spawner.SpawnLines(bpm, 1);
+        if (_timer.previewBeat == 3) _spawner.SpawnLines(bpm, 2);
+        if (_timer.previewBeat == 5) _spawner.SpawnLines(bpm, 3);
+        if (_timer.previewBeat == 7) _spawner.SpawnLines(bpm, 4);
+    }
+
+        void LastPlayer()
+    {
+        // if it was last player
+        timelineStage = PlaybackStage.IDLE;
+        playingBack = false;
+
+        // figure out what else to do
+        Debug.Log("this was the last player");
+    }
+
+#if UNITY_EDITOR
+    private void OnGUI()
+    {
+        GUILayout.Box($"Current timeline stage: {timelineStage} + current preview stage {previewStage}, current player: {timelinePlayer}");
+    }
+#endif
 }
+
+
 
 
 // start Playback
@@ -35,7 +249,7 @@ public class PianoRollPlayback : MonoBehaviour
 // turn on light, turn off light etc
 
 // play recording of player
-// count in 2 - 3 bars (display) maybe with enum of playback stages IDLE, COUNT-IN, PLAYING BACK, IDLE
+// count in 2 - 3 bars (display) maybe with enum of playback stages IDLE, COUNT-IN, PLAYING BACK --> idle and over
 // play bar audio + visuals
 // possibly play applause
 // go to next player or finish

@@ -9,7 +9,6 @@ using UnityEngine;
 
 public class NoteSpawner : MonoBehaviour
 {
-    PianoRollRecording pianoRoll;
     [SerializeField] private AudioRoll _audioRoll;
 
     [Header("Game Objects for spawning lines and notes")]
@@ -42,8 +41,6 @@ public class NoteSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        pianoRoll = GetComponent<PianoRollRecording>();
-
         // get the right corner of the piano roll (where objects will be spawned)
         xPos = transform.localPosition.x + bg.transform.localScale.x / 2f;
 

@@ -284,7 +284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fd54a99667e37e45b1b13d6823d0bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _recordingUI: {fileID: 1302302529}
+  _recordingUI: {fileID: 0}
   keyInputs: 77000000610000007300000064000000
   _audioRoll: {fileID: 911255744}
   recFrame: {fileID: 349542584}
@@ -381,13 +381,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6720679256484685227, guid: 3ae1a8fe31b4dcc41b598e0317ff59ac, type: 3}
+      propertyPath: stage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6720679258209323060, guid: 3ae1a8fe31b4dcc41b598e0317ff59ac, type: 3}
       propertyPath: m_Name
       value: Piano Roll
       objectReference: {fileID: 0}
     - target: {fileID: 6720679258209323061, guid: 3ae1a8fe31b4dcc41b598e0317ff59ac, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6720679258209323061, guid: 3ae1a8fe31b4dcc41b598e0317ff59ac, type: 3}
       propertyPath: m_LocalScale.x
@@ -457,6 +461,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _display: {fileID: 900555320}
+  bpm: 110
+  countIn: 2
+  barsBetween: 3
   playerDatas: []
 --- !u!1 &213306202
 GameObject:
@@ -750,6 +757,7 @@ MonoBehaviour:
   previewBar: 0
   timelineBar: 0
   resetPrevCounter: 3
+  stage: 0
 --- !u!1 &349542584
 GameObject:
   m_ObjectHideFlags: 0
@@ -1234,7 +1242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fd54a99667e37e45b1b13d6823d0bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _recordingUI: {fileID: 1302302529}
+  _recordingUI: {fileID: 0}
   keyInputs: 77000000610000007300000064000000
   _audioRoll: {fileID: 1515797437}
   recFrame: {fileID: 1386667388}
@@ -1523,6 +1531,7 @@ MonoBehaviour:
   previewBar: 0
   timelineBar: 0
   resetPrevCounter: 3
+  stage: 0
 --- !u!1 &900555318
 GameObject:
   m_ObjectHideFlags: 0
@@ -1556,7 +1565,7 @@ Transform:
   - {fileID: 981100194}
   - {fileID: 1567185295}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &900555320
 MonoBehaviour:
@@ -2249,71 +2258,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1302302527
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1302302530}
-  - component: {fileID: 1302302528}
-  - component: {fileID: 1302302529}
-  m_Layer: 0
-  m_Name: RecordingUIController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1302302528
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1302302527}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2347921889
-  AlwaysReplicateAsRoot: 0
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
---- !u!114 &1302302529
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1302302527}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64b7957fd96bb424f93dbdb84c55e148, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  countInText: {fileID: 0}
-  promptTextField: {fileID: 1874231153}
-  pianoRollObj: {fileID: 294009750}
-  _audio: 0
---- !u!4 &1302302530
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1302302527}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1319541447
 GameObject:
   m_ObjectHideFlags: 0
@@ -2593,7 +2537,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1371273134}
   m_LocalRotation: {x: 0, y: 0, z: 0.011518926, w: 0.99993366}
-  m_LocalPosition: {x: -0.28, y: 3.35, z: 0}
+  m_LocalPosition: {x: -0.28, y: 3.97, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2642,7 +2586,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 6
   m_Sprite: {fileID: 21300000, guid: 97a12dfa8dfbe9d4f97bbc2304782b67, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.92156863}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.8392157}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2806,7 +2750,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1515797436
 GameObject:
@@ -3055,7 +2999,7 @@ RectTransform:
   - {fileID: 1874231152}
   - {fileID: 1046074953}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3430,7 +3374,7 @@ Transform:
   m_Children:
   - {fileID: 894518013}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1803175852
 GameObject:
@@ -4110,5 +4054,5 @@ Transform:
   m_Children:
   - {fileID: 294009751}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

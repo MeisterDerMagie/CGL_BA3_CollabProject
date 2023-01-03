@@ -7,6 +7,12 @@ using UnityEngine;
 /// PianoRollTimer then just counts the beats and bars for use in the Piano Roll (and to be reset to the piano roll when different playback situations occur
 /// </summary>
 
+public enum CurrentStage
+{
+    Recording,
+    Playback,
+    Repeat
+}
 
 public class PianoRollTimer : MonoBehaviour
 {
@@ -17,6 +23,11 @@ public class PianoRollTimer : MonoBehaviour
 
     private BackingTrack _backingTrack;
     [SerializeField] private int resetPrevCounter = 3;
+
+    [SerializeField]
+    private CurrentStage stage;
+
+
 
 
     void Start()
@@ -75,6 +86,16 @@ public class PianoRollTimer : MonoBehaviour
         else if (timelineBeat == 8)
             previewBeat = 3;
 
-            GetComponent<PianoRollRecording>().NextBeat();
+        switch(stage)
+        {
+            case CurrentStage.Recording:
+                GetComponent<PianoRollRecording>().NextBeat();
+                break;
+            case CurrentStage.Playback:
+                GetComponent<PianoRollPlayback>().NextBeat();
+                break;
+            case CurrentStage.Repeat:
+                break;
+        }
     }
 }
