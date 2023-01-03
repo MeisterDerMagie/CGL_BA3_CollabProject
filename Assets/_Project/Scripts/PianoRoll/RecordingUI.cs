@@ -10,7 +10,7 @@ public class RecordingUI : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI promptTextField;
     [SerializeField] private GameObject pianoRollObj;
     private RecordInput _recordInput;
-    private PianoRoll _pianoRoll;
+    private PianoRollRecording _pianoRoll;
 
     public bool _audio;
 
@@ -26,7 +26,7 @@ public class RecordingUI : NetworkBehaviour
         // get and set relevant scripts:
         _recordInput = pianoRollObj.GetComponentInChildren<RecordInput>();
         //_recordInput._recordingUI = this;
-        _pianoRoll = pianoRollObj.GetComponent<PianoRoll>();
+        _pianoRoll = pianoRollObj.GetComponent<PianoRollRecording>();
 
         // deactivate count in text:
         countInText.gameObject.SetActive(false);

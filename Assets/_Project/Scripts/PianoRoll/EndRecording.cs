@@ -22,7 +22,7 @@ public class EndRecording : MonoBehaviour
         SendRecordingToServer();
 
         // deactivate music
-        GetComponentInParent<PianoRoll>().StopMusic();
+        GetComponentInParent<PianoRollRecording>().StopMusic();
 
         // deactivate all buttons
         foreach (Button b in buttons)

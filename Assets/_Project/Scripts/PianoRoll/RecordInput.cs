@@ -26,7 +26,7 @@ public class RecordInput : MonoBehaviour
     [SerializeField] private AudioRoll _audioRoll;
     private BackingTrack _backingTrack;
     private BeatMapping _beatMapping;
-    private PianoRoll _pianoRoll;
+    private PianoRollRecording _pianoRoll;
 
     [SerializeField] private GameObject recFrame;
     //[SerializeField] private TMPro.TextMeshProUGUI countInText;
@@ -51,7 +51,7 @@ public class RecordInput : MonoBehaviour
         _backingTrack.beatUpdated += NextBeat;
 
         _beatMapping = GetComponent<BeatMapping>();
-        _pianoRoll = _audioRoll.gameObject.GetComponentInParent<PianoRoll>();
+        _pianoRoll = _audioRoll.gameObject.GetComponentInParent<PianoRollRecording>();
         _pianoRoll.PlayRecording(true, false);
         _recordingUI._audio = false;
 

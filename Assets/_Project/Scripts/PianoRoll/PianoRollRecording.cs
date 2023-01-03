@@ -11,7 +11,7 @@ using UnityEngine;
 /// It also tells the AudioRoll script to play the audio at the correct position in the bar
 /// </summary>
 
-public class PianoRoll : MonoBehaviour
+public class PianoRollRecording : MonoBehaviour
 {
     private BackingTrack _backingTrack;
     private AudioRoll _audioRoll;

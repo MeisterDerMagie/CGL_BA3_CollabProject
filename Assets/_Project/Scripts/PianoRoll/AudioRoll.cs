@@ -12,21 +12,6 @@ public class AudioRoll : MonoBehaviour
 
     public void SetUpAllInstances()
     {
-        /* --- obsolete, version pre networking stuff
-        instance = new List<FMOD.Studio.EventInstance>();
-
-        for (int i = 0; i < sound.Length; i++)
-        {
-            FMOD.Studio.EventInstance inst;
-
-            inst = RuntimeManager.CreateInstance(sound[i]);
-            inst.start();
-            inst.setPaused(true);
-
-            instance.Add(inst);
-        }
-        */
-
         instance = new List<FMOD.Studio.EventInstance>();
         eventsFMOD = new List<EventReference>();
 
@@ -53,16 +38,6 @@ public class AudioRoll : MonoBehaviour
         instance[keyID] = RuntimeManager.CreateInstance(InstrumentsManager.Instance.GetInstrument(ID).soundEvent);
         instance[keyID].start();
         instance[keyID].setPaused(true);
-
-
-        /*
-        instance[soundID].setPaused(false);
-        instance[soundID].release();
-
-        instance[soundID] = RuntimeManager.CreateInstance(sound[soundID]);
-        instance[soundID].start();
-        instance[soundID].setPaused(true);
-        */
     }
 
     public void PlaySound(int instrumentID)

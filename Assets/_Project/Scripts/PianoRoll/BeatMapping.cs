@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BeatMapping : MonoBehaviour
 {
-    private PianoRoll _pianoRoll;
+    private PianoRollRecording _pianoRoll;
     private RecordInput _recordInput;
 
     public float dispersion;
@@ -12,7 +12,7 @@ public class BeatMapping : MonoBehaviour
 
     private void Start()
     {
-        _pianoRoll = GetComponentInParent<PianoRoll>();
+        _pianoRoll = GetComponentInParent<PianoRollRecording>();
         _recordInput = GetComponent<RecordInput>();
 
         dispersion = (60f / _pianoRoll.bpm / 4f);

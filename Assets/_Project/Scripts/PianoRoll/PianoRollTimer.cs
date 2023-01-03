@@ -75,6 +75,6 @@ public class PianoRollTimer : MonoBehaviour
         else if (timelineBeat == 8)
             previewBeat = 3;
 
-            GetComponent<PianoRoll>().NextBeat();
+            GetComponent<PianoRollRecording>().NextBeat();
     }
 }
