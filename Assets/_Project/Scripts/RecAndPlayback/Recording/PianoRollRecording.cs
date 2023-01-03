@@ -42,7 +42,7 @@ public class PianoRollRecording : MonoBehaviour
         spawner = GetComponent<NoteSpawner>();
 
         // Set button icons
-        GetComponentInChildren<PianoRollButtons>().SetUpButtons();
+        GetComponentInChildren<PianoRollIcons>().SetUpIcons();
 
         // Start Backing Track:
         StartMusic();

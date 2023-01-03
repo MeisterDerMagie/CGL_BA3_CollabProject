@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
-public class PianoRollButtons : MonoBehaviour
+public class PianoRollIcons : MonoBehaviour
 {
     [SerializeField] private List<SpriteRenderer> _renderers;
 
-    public void SetUpButtons()
+    public void SetUpIcons()
     {
         if (NetworkManager.Singleton.IsServer) return;
 
