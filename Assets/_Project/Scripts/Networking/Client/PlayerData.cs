@@ -73,6 +73,7 @@ public class PlayerData : NetworkBehaviour
     public int PointsCreativity => _pointsCreativity.Value;
     public int PointsPlayability => _pointsPlayability.Value;
     public int PointsPerformance => _pointsPerformance.Value;
+    public int TotalPoints => _pointsCreativity.Value + _pointsPlayability.Value + _pointsPerformance.Value;
     #endregion
     
     //we need these pre-loaded values because even if the player name was loaded from player prefs, it's only set in the first sync from the server. With these values we can access the correct name and characterId right from the beginning

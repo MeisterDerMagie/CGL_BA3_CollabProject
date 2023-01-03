@@ -9,6 +9,8 @@ public class StageController : NetworkBehaviour
 {
     [SerializeField] public List<Podium> podiums = new();
 
+    public event Action OnInitialized = delegate {  };
+    
     //Quasi Dictionary weil es NetworkDictionaries nicht gibt: die PodiumIndexes matchen die indexes von _clientIdsAssignToPodiums
     private NetworkList<ulong> _clientIdsAssignToPodiums;
     //---
@@ -47,6 +49,12 @@ public class StageController : NetworkBehaviour
             podium.SetActive(false);
         }
         
+        //init assignedClientsList with maxValue (maxValue == no player assigned)
+        foreach (Podium podium in podiums)
+        {
+            _clientIdsAssignToPodiums.Add(ulong.MaxValue);
+        }
+        
         //set up the stage
         for (int i = 0; i < NetworkManager.ConnectedClientsList.Count; i++)
         {
@@ -65,7 +73,7 @@ public class StageController : NetworkBehaviour
             podium.SetTextColorPlayerNameClientRpc(Constants.ownPlayerNameColor, clientId);
 
             //set assigned player
-            _clientIdsAssignToPodiums.Add(clientId);
+            _clientIdsAssignToPodiums[i] = clientId;
             
             //position player on podium
             player.GetComponent<PlayerVisuals>().SetPosition(podium.PlayerPosition);
@@ -73,6 +81,9 @@ public class StageController : NetworkBehaviour
             //set player visible
             player.GetComponent<PlayerVisuals>().isVisible.Value = true;
         }
+        
+        //call initialized event
+        OnInitialized?.Invoke();
     }
 
     public override void OnDestroy()
