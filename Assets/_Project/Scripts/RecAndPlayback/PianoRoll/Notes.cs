@@ -91,6 +91,7 @@ public class Notes : MonoBehaviour
     public void Activate(bool value)
     {
         visuals.SetActive(value);
+        if (startLine != null) startLine.SetActive(value);
     }
 
     public void StartLine(bool value)
