@@ -7243,7 +7243,7 @@ MonoBehaviour:
   countdownUI: {fileID: 828288146}
   countdownNumberText: {fileID: 646306778}
   notEnoughPlayersUI: {fileID: 1561286476}
-  sceneToLoadAfterCountdownFinished: {fileID: 11400000, guid: 2ee995e988076f94db4a10fe5f2093ce, type: 2}
+  sceneToLoadAfterCountdownFinished: {fileID: 11400000, guid: 314f75b4f083d9c49948d0ecce4a5e45, type: 2}
   readyCountdownHasStarted: 0
 --- !u!4 &1401380175
 Transform:
