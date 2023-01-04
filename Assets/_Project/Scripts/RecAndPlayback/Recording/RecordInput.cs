@@ -161,7 +161,7 @@ public class RecordInput : MonoBehaviour
             }
             WriteEmptyBar(recordedBar);
 
-            _pianoRoll.StartPlayback(PianoRollRecording.RecPBStage.ONLYLINES);
+            _pianoRoll.ControlPlayback(PianoRollRecording.RecPBStage.ONLYLINES);
 
             _recordingUI.playingBack = false;
 
@@ -183,8 +183,6 @@ public class RecordInput : MonoBehaviour
                     recordedBar.Add(e);
                 }
             }
-
-            _recordingUI.playingBack = false;
         }
     }
 
@@ -192,8 +190,12 @@ public class RecordInput : MonoBehaviour
     {
         if (NetworkManager.Singleton.IsServer) return;
 
+        if (recordingState != RecordingState.Idle) return;
+
         recordedBar.Clear();
         WriteEmptyBar(recordedBar);
+
+        _pianoRoll.ControlPlayback(PianoRollRecording.RecPBStage.INACTIVE);
     }
 
     void NextBeat()
@@ -209,7 +211,8 @@ public class RecordInput : MonoBehaviour
                     break;
                 case RecordingState.WaitToStart:
                     recordingState = RecordingState.CountIn;
-                    _spawner.ActivateStartLine(true);
+                    _spawner.ActivateStartLine();
+                    _spawner.isRecording = true;
 
                     // activate text field + set to one
                     _recordingUI.UpdateCountIn(true, "1");
@@ -222,6 +225,7 @@ public class RecordInput : MonoBehaviour
                     break;
                 case RecordingState.CountIn:
                     recordingState = RecordingState.Recording;
+                    _spawner.isRecording = false;
 
                     _recordingUI.UpdateCountIn(true, "REC");
                     _recordingUI.playingBack = true;
@@ -262,9 +266,12 @@ public class RecordInput : MonoBehaviour
         recFrame.SetActive(false);
         _recordingUI.UpdateCountIn(false, "");
         //countInText.gameObject.SetActive(false);
-        _spawner.ActivateStartLine(false);
 
-        _pianoRoll.StartPlayback(PianoRollRecording.RecPBStage.INACTIVE);
+        _spawner.DeactivateStartAndEndLine();
+
+        _pianoRoll.ControlPlayback(PianoRollRecording.RecPBStage.INACTIVE);
+        _recordingUI.playingBack = false;
+        _spawner.isRecording = false;
 
         spawnNote = false;
     }

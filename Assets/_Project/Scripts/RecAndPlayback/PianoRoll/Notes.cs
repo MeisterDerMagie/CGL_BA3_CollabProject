@@ -19,6 +19,8 @@ public class Notes : MonoBehaviour
     public SpriteRenderer _objRenderer;
     public GameObject startLine;
 
+    public bool isStartingLine;
+
     public void NoteSetUp(float bpm, int beatLength, float _targetX, NoteSpawner script, int s, int number = -1)
     {
         // s is set to -1 if it's a line being spawned
@@ -91,7 +93,11 @@ public class Notes : MonoBehaviour
     public void Activate(bool value)
     {
         visuals.SetActive(value);
-        if (startLine != null) startLine.SetActive(value);
+        if (startLine != null && isStartingLine)
+        {
+            startLine.SetActive(value);
+            if (value == true) visuals.SetActive(false);
+        }
     }
 
     public void StartLine(bool value)

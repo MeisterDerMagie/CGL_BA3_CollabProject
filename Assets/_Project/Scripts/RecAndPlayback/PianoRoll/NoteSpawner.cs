@@ -38,7 +38,10 @@ public class NoteSpawner : MonoBehaviour
     private List<Transform> idleLines; // keep track of all idle lines
     private List<GameObject> currentNotes; // keep track of currently active notes to deactivate when hitting pause
     private List<GameObject> currentLines;
+    
     private GameObject startRecLine;
+    private GameObject endRecLine;
+    public bool isRecording;
 
     public bool spawnActive;
 
@@ -109,40 +112,48 @@ public class NoteSpawner : MonoBehaviour
         #endregion
     }
 
-    public void ActivateIdleLines(bool var, float bpm)
+    public void ActivateIdleLines(bool var)
     {
         // de/activate idleLines
         idleL.SetActive(var);
+    }
 
-        // if idle lines are activated, remove all other active notes
-        // better alternative if time --> let them move until they hit the next beat
-        if (var)
+    public void ActivateLines(bool value)
+    {
+        if (currentLines.Count == 0) return;
+        for (int i = currentLines.Count - 1; i >= 0; i--)
         {
-            foreach (GameObject obj in currentNotes)
-                Destroy(obj);
-            currentNotes.Clear();
-            foreach (GameObject obj in currentLines)
-                Destroy(obj);
-            currentLines.Clear();
+            currentLines[i].GetComponent<Notes>().Activate(value);
         }
-        else
+    }
+
+    public void ActivateNotes(bool value)
+    {
+        for (int i = currentNotes.Count - 1; i >= 0; i--)
         {
-            // if idle lines are deactivated, spawn new lines that move:
-            for (int i = 0; i < posLines.Count; i++)
-            {
-                // instantiate a new line and set position to what is saved in posLines
-                GameObject clone = Instantiate(beatObj, spawns.transform);
-                clone.transform.localPosition = new Vector3(posLines[i], 0, 0);
+            currentNotes[i].GetComponent<Notes>().Activate(value);
+        }
+    }
 
-                int a = -1;
-                // tell the clone the current bpm, length of piano roll in beats, and target value of poision x (how far it needs to travel to the left)
-                if (i == 1 || i == 3 || i == 5 || i == 7 || i == 9 || i == 11 || i == 13) a = 2;
-                clone.GetComponent<Notes>().NoteSetUp(bpm, (i + 1) * beats, transform.localPosition.x - bg.transform.localScale.x / 2f, this,  -1, a);
+    public void SpawnLinesOverBar(float bpm)
+    {
+        if (currentLines.Count > 7) return;
 
-                clone.GetComponent<Notes>().Activate(spawnActive);
+        // spawn lines that move:
+        for (int i = 0; i < posLines.Count; i++)
+        {
+            // instantiate a new line and set position to what is saved in posLines
+            GameObject clone = Instantiate(beatObj, spawns.transform);
+            clone.transform.localPosition = new Vector3(posLines[i], 0, 0);
 
-                currentLines.Add(clone);
-            }
+            int a = -1;
+            // tell the clone the current bpm, length of piano roll in beats, and target value of poision x (how far it needs to travel to the left)
+            if (i == 1 || i == 3 || i == 5 || i == 7 || i == 9 || i == 11 || i == 13) a = 2;
+            clone.GetComponent<Notes>().NoteSetUp(bpm, (i + 1) * beats, transform.localPosition.x - bg.transform.localScale.x / 2f, this, -1, a);
+
+            clone.GetComponent<Notes>().Activate(spawnActive);
+
+            currentLines.Add(clone);
         }
     }
 
@@ -168,7 +179,15 @@ public class NoteSpawner : MonoBehaviour
 
         if (number == 1)
         {
-            startRecLine = clone;
+            if (isRecording)
+            {
+                endRecLine = clone;
+                clone.GetComponent<Notes>().isStartingLine = true;
+                clone.GetComponent<Notes>().StartLine(true);
+                isRecording = false;
+            }
+            else
+                startRecLine = clone;
         }
     }
 
@@ -187,24 +206,12 @@ public class NoteSpawner : MonoBehaviour
 
     public void RemoveNote(GameObject obj)
     {
-        currentNotes.Remove(obj);
+        if (currentNotes.Contains(obj))
+            currentNotes.Remove(obj);
+        else if (currentLines.Contains(obj))
+            currentLines.Remove(obj);
     }
 
-    public void ActivateLines(bool value)
-    {
-        for (int i = currentLines.Count - 1; i >= 0; i--)
-        {
-            currentLines[i].GetComponent<Notes>().Activate(value);
-        }
-    }
-
-    public void ActivateNotes(bool value)
-    {
-        for (int i = currentNotes.Count - 1; i >= 0; i--)
-        {
-            currentNotes[i].GetComponent<Notes>().Activate(value);
-        }
-    }
 
     public void SpawnNoteAtLocationMarker(int line, float bpm)
     {
@@ -222,8 +229,17 @@ public class NoteSpawner : MonoBehaviour
         currentNotes.Add(clone);
     }
 
-    public void ActivateStartLine(bool value)
+    public void ActivateStartLine()
     {
-        startRecLine.GetComponent<Notes>().StartLine(value);
+        startRecLine.GetComponent<Notes>().StartLine(true);
+        startRecLine.GetComponent<Notes>().isStartingLine = true;
+    }
+
+    public void DeactivateStartAndEndLine()
+    {
+        if (startRecLine != null)
+            startRecLine.GetComponent<Notes>().StartLine(false);
+        if (endRecLine != null)
+            endRecLine.GetComponent<Notes>().StartLine(false);
     }
 }

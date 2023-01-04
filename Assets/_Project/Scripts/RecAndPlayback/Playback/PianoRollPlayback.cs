@@ -55,7 +55,7 @@ public class PianoRollPlayback : MonoBehaviour
         playingBack = false;
         timelineStage = PlaybackStage.IDLE;
         previewStage = PlaybackStage.IDLE;
-        _spawner.ActivateIdleLines(true, bpm);
+        _spawner.ActivateIdleLines(true);
 
         _display.SwitchLight(false);
         _display.TurnOffCharacter();
@@ -78,7 +78,8 @@ public class PianoRollPlayback : MonoBehaviour
     {
         // start backing track
         GetComponentInChildren<BackingTrack>().StartMusic();
-        _spawner.ActivateIdleLines(false, bpm);
+        _spawner.ActivateIdleLines(false);
+        _spawner.SpawnLinesOverBar(bpm);
 
         // set playing Back to true + only spawn active lines
         playingBack = true;
@@ -106,7 +107,8 @@ public class PianoRollPlayback : MonoBehaviour
         GetComponentInChildren<BackingTrack>().StopMusic();
         timelineStage = PlaybackStage.IDLE;
         previewStage = PlaybackStage.IDLE;
-        _spawner.ActivateIdleLines(true, bpm);
+        _spawner.ActivateIdleLines(true);
+        _spawner.ActivateLines(false);
 
         _display.SwitchLight(false);
         _display.TurnOffCharacter();

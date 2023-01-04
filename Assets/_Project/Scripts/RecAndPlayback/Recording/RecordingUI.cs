@@ -35,8 +35,8 @@ public class RecordingUI : NetworkBehaviour
     {
         playingBack = !playingBack;
 
-        if (playingBack) _pianoRoll.StartPlayback(PianoRollRecording.RecPBStage.WAITFORPB);
-        else _pianoRoll.StartPlayback(PianoRollRecording.RecPBStage.INACTIVE);
+        if (playingBack) _pianoRoll.ControlPlayback(PianoRollRecording.RecPBStage.WAITFORPB);
+        else _pianoRoll.ControlPlayback(PianoRollRecording.RecPBStage.INACTIVE);
 
         // MISSING set sprite of button
     }

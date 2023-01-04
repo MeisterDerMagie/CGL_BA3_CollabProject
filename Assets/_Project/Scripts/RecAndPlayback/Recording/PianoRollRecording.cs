@@ -64,7 +64,9 @@ public class PianoRollRecording : MonoBehaviour
     void StartMusic()
     {
         musicPlaying = true;
-        _spawner.ActivateIdleLines(false, bpm);
+        _spawner.ActivateIdleLines(true);
+        _spawner.ActivateLines(false);
+        _spawner.ActivateNotes(false);
         _backingTrack.StartMusic();
 
         stage = RecPBStage.INACTIVE;
@@ -74,7 +76,10 @@ public class PianoRollRecording : MonoBehaviour
 
     public void StopMusic()
     {
-        _spawner.ActivateIdleLines(true, bpm);
+        _spawner.ActivateIdleLines(true);
+        _spawner.ActivateLines(false);
+        _spawner.ActivateNotes(false);
+
         _backingTrack.StopMusic();
         _recordInput.StopRecording();
         _timer.ResetTimer();
@@ -142,7 +147,7 @@ public class PianoRollRecording : MonoBehaviour
             _audioRoll.PlaySound(_recordInput.recordedBar[_timer.timelineBeat - 1].instrumentID);
     }
 
-    public void StartPlayback(RecPBStage _recStage)
+    public void ControlPlayback(RecPBStage _recStage)
     {
         switch (_recStage)
         {
@@ -152,6 +157,7 @@ public class PianoRollRecording : MonoBehaviour
                 _spawner.ActivateLines(false);
                 _spawner.ActivateNotes(false);
                 _spawner.spawnActive = false;
+                _spawner.ActivateIdleLines(true);
                 break;
             case RecPBStage.ONLYLINES:
                 playback = false;
@@ -159,28 +165,33 @@ public class PianoRollRecording : MonoBehaviour
                 _spawner.ActivateLines(true);
                 _spawner.ActivateNotes(false);
                 _spawner.spawnActive = true;
+                _spawner.ActivateIdleLines(false);
                 break;
             case RecPBStage.PBNOAUDIO:
                 playback = true;
                 withAudio = false;
                 _spawner.ActivateLines(true);
                 _spawner.spawnActive = true;
+                _spawner.ActivateIdleLines(false);
                 break;
             case RecPBStage.PBWAITAUDIO:
                 playback = true;
                 withAudio = false;
                 _spawner.ActivateLines(true);
                 _spawner.spawnActive = true;
+                _spawner.ActivateIdleLines(false);
                 break;
             case RecPBStage.PBWITHAUDIO:
                 playback = true;
                 withAudio = true;
                 _spawner.ActivateLines(true);
                 _spawner.spawnActive = true;
+                _spawner.ActivateIdleLines(false);
                 break;
             case RecPBStage.WAITFORPB:
                 _spawner.ActivateLines(true);
                 _spawner.spawnActive = true;
+                _spawner.ActivateIdleLines(false);
                 break;
         }
 
