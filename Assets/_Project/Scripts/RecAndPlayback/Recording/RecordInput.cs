@@ -53,7 +53,7 @@ public class RecordInput : MonoBehaviour
 
         _beatMapping = GetComponent<BeatMapping>();
         _pianoRoll = _audioRoll.gameObject.GetComponentInParent<PianoRollRecording>();
-        _pianoRoll.PlayRecording(true, false);
+        //_pianoRoll.PlayRecording(true, false);
         _recordingUI._audio = false;
 
         _spawner = _pianoRoll.GetComponent<NoteSpawner>();
@@ -254,7 +254,7 @@ public class RecordInput : MonoBehaviour
         recFrame.SetActive(false);
         _recordingUI.UpdateCountIn(false, "");
         //countInText.gameObject.SetActive(false);
-        _spawner.ActivateStartLine(true);
+        _spawner.ActivateStartLine(false);
     }
 
     private void WriteEmptyBar(List<Eighth> _list)

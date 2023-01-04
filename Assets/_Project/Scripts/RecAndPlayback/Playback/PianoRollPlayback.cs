@@ -116,6 +116,7 @@ public class PianoRollPlayback : MonoBehaviour
     {
         if (!playingBack) return;
         if (_timer.timelineBeat == 0) return;
+        
         PlayQuarterNote();
 
         // if timeline beat is 1 --> see for next stage

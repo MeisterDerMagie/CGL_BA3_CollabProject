@@ -2020,6 +2020,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3123976969569249092, guid: 0cc4d9026e3c4764d8750453da259b12, type: 3}
+      propertyPath: _recordingUI
+      value: 
+      objectReference: {fileID: 1302302529}
+    - target: {fileID: 3123976969569249092, guid: 0cc4d9026e3c4764d8750453da259b12, type: 3}
       propertyPath: keyInputs.Array.size
       value: 4
       objectReference: {fileID: 0}

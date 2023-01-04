@@ -45,6 +45,8 @@ public class NoteSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        spawnActive = false;
+
         // get the right corner of the piano roll (where objects will be spawned)
         xPos = transform.localPosition.x + bg.transform.localScale.x / 2f;
 
@@ -137,7 +139,7 @@ public class NoteSpawner : MonoBehaviour
                 if (i == 1 || i == 3 || i == 5 || i == 7 || i == 9 || i == 11 || i == 13) a = 2;
                 clone.GetComponent<Notes>().NoteSetUp(bpm, (i + 1) * beats, transform.localPosition.x - bg.transform.localScale.x / 2f, this,  -1, a);
 
-                if (!spawnActive) clone.GetComponent<Notes>().Activate(false);
+                clone.GetComponent<Notes>().Activate(spawnActive);
 
                 currentLines.Add(clone);
             }
@@ -159,7 +161,8 @@ public class NoteSpawner : MonoBehaviour
 
         // tell the clone the current bpm, the length of the piano roll in beats, and the target value of position.x (how far it needs to travel to the left)
         clone.GetComponent<Notes>().NoteSetUp(bpm, beatLength, transform.localPosition.x - bg.transform.localScale.x / 2f, this, -1, number);
-        if (!spawnActive) clone.GetComponent<Notes>().Activate(false);
+        
+        clone.GetComponent<Notes>().Activate(spawnActive);
 
         currentLines.Add(clone);
 
@@ -178,7 +181,8 @@ public class NoteSpawner : MonoBehaviour
 
         // tell the clone the current bpm, length of roll in beats, target position x
         clone.GetComponent<Notes>().NoteSetUp(bpm, beatLength, transform.localPosition.x - bg.transform.localScale.x / 2f, this, line);
-        if (!spawnActive) clone.GetComponent<Notes>().Activate(false);
+        
+        clone.GetComponent<Notes>().Activate(spawnActive);
 
         currentNotes.Add(clone);
     }

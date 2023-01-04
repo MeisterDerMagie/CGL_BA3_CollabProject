@@ -290,6 +290,7 @@ MonoBehaviour:
   recFrame: {fileID: 349542584}
   recordingState: 0
   recordedBar: []
+  stageEnded: 0
 --- !u!1 &156527603
 GameObject:
   m_ObjectHideFlags: 0
@@ -387,7 +388,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6720679256495871619, guid: 3ae1a8fe31b4dcc41b598e0317ff59ac, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2
+      value: -2.88
       objectReference: {fileID: 0}
     - target: {fileID: 6720679258209323060, guid: 3ae1a8fe31b4dcc41b598e0317ff59ac, type: 3}
       propertyPath: m_Name
@@ -864,10 +865,12 @@ MonoBehaviour:
   bg: {fileID: 1320847160}
   idleL: {fileID: 1970386525}
   spawns: {fileID: 1975311557}
+  locMarker: {fileID: 0}
   lineHeight: 4
   beatLength: 8
   yPos: []
   posLines: []
+  spawnActive: 0
 --- !u!114 &294009754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1390,6 +1393,7 @@ MonoBehaviour:
   recFrame: {fileID: 1386667388}
   recordingState: 0
   recordedBar: []
+  stageEnded: 0
 --- !u!114 &738560282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1639,10 +1643,12 @@ MonoBehaviour:
   bg: {fileID: 1534209634}
   idleL: {fileID: 2107378859}
   spawns: {fileID: 213306202}
+  locMarker: {fileID: 0}
   lineHeight: 4
   beatLength: 8
   yPos: []
   posLines: []
+  spawnActive: 0
 --- !u!114 &894518015
 MonoBehaviour:
   m_ObjectHideFlags: 0

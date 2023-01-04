@@ -61,36 +61,37 @@ public class PianoRollTimer : MonoBehaviour
     // called from FMOD events via BackingTrack script
     void NextBeat()
     {
-        timelineBeat = _backingTrack.lastBeat;
-
-        if (timelineBeat == 1)
-        {
-            previewBeat = 4;
-            timelineBar++;
-        }
-        else if (timelineBeat == 2)
-            previewBeat = 5;
-        else if (timelineBeat == 3)
-            previewBeat = 6;
-        else if (timelineBeat == 4)
-            previewBeat = 7;
-        else if (timelineBeat == 5)
-            previewBeat = 8;
-        else if (timelineBeat == 6)
-        {
-            previewBeat = 1;
-            previewBar++;
-        }
-        else if (timelineBeat == 7)
-            previewBeat = 2;
-        else if (timelineBeat == 8)
-            previewBeat = 3;
-
         /*
         timelineBeat = _backingTrack.lastBeat;
 
         if (timelineBeat == 1)
         {
+            previewBeat = 4;
+            timelineBar++;
+        }
+        else if (timelineBeat == 2)
+            previewBeat = 5;
+        else if (timelineBeat == 3)
+            previewBeat = 6;
+        else if (timelineBeat == 4)
+            previewBeat = 7;
+        else if (timelineBeat == 5)
+            previewBeat = 8;
+        else if (timelineBeat == 6)
+        {
+            previewBeat = 1;
+            previewBar++;
+        }
+        else if (timelineBeat == 7)
+            previewBeat = 2;
+        else if (timelineBeat == 8)
+            previewBeat = 3;
+        */
+
+        timelineBeat = _backingTrack.lastBeat;
+
+        if (timelineBeat == 1)
+        {
             previewBeat = 5;
             timelineBar++;
         }
@@ -111,7 +112,7 @@ public class PianoRollTimer : MonoBehaviour
             previewBeat = 3;
         else if (timelineBeat == 8)
             previewBeat = 4;
-        */
+
         switch (stage)
         {
             case CurrentStage.Recording:

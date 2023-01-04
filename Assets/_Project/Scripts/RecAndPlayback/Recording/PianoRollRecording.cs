@@ -65,6 +65,7 @@ public class PianoRollRecording : MonoBehaviour
         _backingTrack.StopMusic();
         _recordInput.StopRecording();
         _timer.ResetTimer();
+        musicPlaying = false;
     }
 
     public void NextBeat()
@@ -117,6 +118,8 @@ public class PianoRollRecording : MonoBehaviour
             }
             return;
         }
+
+        /*
         // if the prevbar counter is beyond the limit of the list, stop playing back bars
         // since we start playing back bars on prevBarCounter 1 --> don't have to do >= bars.Count
         if (_timer.previewBar > bars.Count)
@@ -138,6 +141,7 @@ public class PianoRollRecording : MonoBehaviour
             }
             spawner.SpawnNote(line, bpm);
         }
+        */
     }
 
     void PlaybackBarAudio()
@@ -152,6 +156,7 @@ public class PianoRollRecording : MonoBehaviour
             return;
         }
 
+        /*
         if (_timer.timelineBar > bars.Count)
         {
             playWithAudio = false;
@@ -161,6 +166,7 @@ public class PianoRollRecording : MonoBehaviour
         // trigger Audio
         if (bars[_timer.timelineBar - 1].eighth[_timer.timelineBeat - 1].contains)
             _audioRoll.PlaySound(bars[_timer.timelineBar - 1].eighth[_timer.timelineBeat - 1].instrumentID);
+        */
     }
     
 
