@@ -73,6 +73,35 @@ public class PlayerLobbyData : NetworkBehaviour
     [ServerRpc]
     private void SetReadyStateServerRpc(bool newState)
     {
+        /*
+        //do this weird stuff to always call the onChangedEvent
+        _isReadyInLobby.Value = true;
+        _isReadyInLobby.Value = false;
+        //--
+        
+        //check if the player picked a unique character
+        if (newState == true)
+        {
+            uint ownCharacterId = GetComponent<PlayerData>().CharacterId;
+            foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
+            {
+                if (client.PlayerObject.GetComponent<PlayerData>().CharacterId == ownCharacterId)
+                {
+                    _isReadyInLobby.Value = false;
+                    ForceUnreadyClientRpc();
+                    return;
+                }
+            }
+        }*/
+
+        //now we actually set the value we want
         _isReadyInLobby.Value = newState;
+    }
+
+    [ClientRpc]
+    private void ForceUnreadyClientRpc()
+    {
+        //force the client to be unready, in case they managed to ready up with a character that was picked by someone else (can happen with slow connections)
+        SetReadyState(false);
     }
 }

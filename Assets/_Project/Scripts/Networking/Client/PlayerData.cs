@@ -19,6 +19,7 @@ public class PlayerData : NetworkBehaviour
         return localPlayerDataCached;
     }
     
+    #region Public Properties
     public Guid ClientGuid => Guid.Parse(_clientGuid.Value.ToString());
     public string PlayerName
     {
@@ -39,10 +40,42 @@ public class PlayerData : NetworkBehaviour
     }
 
     public string Prompt => _prompt.Value.ToString();
+    public string AssignedPrompt => _assignedPrompt.Value.ToString();
+    public bool SubmittedPrompt => _submittedPrompt.Value;
+    public List<int> InstrumentIds
+    {
+        get
+        {
+            var list = new List<int>();
+            foreach (int id in _instrumentIds)
+            {
+                list.Add(id);
+            }
+
+            return list;
+        }
+    }
+
+    public List<Eighth> Recording
+    {
+        get
+        {
+            var list = new List<Eighth>();
+            foreach (Eighth eighth in _recording)
+            {
+                list.Add(eighth);
+            }
+
+            return list;
+        }
+    }
+
     public int PointsCreativity => _pointsCreativity.Value;
     public int PointsPlayability => _pointsPlayability.Value;
     public int PointsPerformance => _pointsPerformance.Value;
-
+    public int TotalPoints => _pointsCreativity.Value + _pointsPlayability.Value + _pointsPerformance.Value;
+    #endregion
+    
     //we need these pre-loaded values because even if the player name was loaded from player prefs, it's only set in the first sync from the server. With these values we can access the correct name and characterId right from the beginning
     private string _playerNameLocal = string.Empty;
     private uint _characterIdLocal = 0;
@@ -53,18 +86,27 @@ public class PlayerData : NetworkBehaviour
     private string _defaultPlayerName;
     
     //Events
-    public event Action<PromptResponse> OnPromptResponse = delegate {  };
-
+    public static event Action<ulong, PromptResponse> OnPromptResponseServer = delegate {  };
+    public event Action<PromptResponse> OnPromptResponseClient = delegate {  };
+    public event Action<uint> OnCharacterIdChanged = delegate(uint newValue) {  };
+    
     //Network Variables
+    #region Network Variables
     private NetworkVariable<FixedString64Bytes> _clientGuid;
     private NetworkVariable<FixedString128Bytes> _playerName;
     private NetworkVariable<uint> _characterId;
     private NetworkVariable<FixedString512Bytes> _prompt;
+    private NetworkVariable<FixedString512Bytes> _assignedPrompt;
+    private NetworkVariable<bool> _submittedPrompt;
+
+    private NetworkList<int> _instrumentIds;
+    private NetworkList<Eighth> _recording;
 
     private NetworkVariable<int> _pointsCreativity;
     private NetworkVariable<int> _pointsPlayability;
     private NetworkVariable<int> _pointsPerformance;
-
+    #endregion
+    
     //Initialization
     private void Awake()
     {
@@ -73,6 +115,10 @@ public class PlayerData : NetworkBehaviour
         _playerName = new NetworkVariable<FixedString128Bytes>(string.Empty);
         _characterId = new NetworkVariable<uint>(0);
         _prompt = new NetworkVariable<FixedString512Bytes>(string.Empty);
+        _assignedPrompt = new NetworkVariable<FixedString512Bytes>(string.Empty);
+        _submittedPrompt = new NetworkVariable<bool>(false);
+        _instrumentIds = new NetworkList<int>();
+        _recording = new NetworkList<Eighth>(writePerm: NetworkVariableWritePermission.Owner);
         _pointsCreativity = new NetworkVariable<int>(0);
         _pointsPlayability = new NetworkVariable<int>(0);
         _pointsPerformance = new NetworkVariable<int>(0);
@@ -139,8 +185,9 @@ public class PlayerData : NetworkBehaviour
         
         //subscribe to change events
         _playerName.OnValueChanged += OnPlayerNameChanged;
-        _characterId.OnValueChanged += OnCharacterIdChanged;
+        _characterId.OnValueChanged += OnCharacterIdNetworkVarChanged;
     }
+
 
     public override void OnDestroy()
     {
@@ -149,13 +196,17 @@ public class PlayerData : NetworkBehaviour
         
         //unsubscribe form events
         _playerName.OnValueChanged -= OnPlayerNameChanged;
-        _characterId.OnValueChanged -= OnCharacterIdChanged;
+        _characterId.OnValueChanged -= OnCharacterIdNetworkVarChanged;
         
         //dispose NetworkVariables (if we don't do this, there will be memory leaks)
         _clientGuid.Dispose();
         _playerName.Dispose();
         _characterId.Dispose();
         _prompt.Dispose();
+        _assignedPrompt.Dispose();
+        _submittedPrompt.Dispose();
+        _instrumentIds.Dispose();
+        _recording.Dispose();
         _pointsCreativity.Dispose();
         _pointsPlayability.Dispose();
         _pointsPerformance.Dispose();
@@ -180,14 +231,17 @@ public class PlayerData : NetworkBehaviour
         _playerNameIsSynced = true;
     }
 
-    private void OnCharacterIdChanged(uint previousvalue, uint newvalue)
+    private void OnCharacterIdNetworkVarChanged(uint previousvalue, uint newvalue)
     {
         //if the local characterId matches the one that came from the server, it's synced
         //ja, dadurch geben wir dem Client die volle Kontrolle --> cheatinganfällig. Bei der Charakterauswahl ist das aber nicht tragisch.
         if(newvalue == _characterIdLocal) _characterIdIsSynced = true;
+
+        OnCharacterIdChanged?.Invoke(newvalue);
     }
 
     //Setters
+    #region Setters
     [ServerRpc]
     private void SetClientGuidServerRpc(FixedString64Bytes newGuid)
     {
@@ -236,6 +290,9 @@ public class PlayerData : NetworkBehaviour
         
         //call serverRPC to actually set the variable
         SetCharacterIdServerRpc(newCharacterId);
+        
+        //call event
+        OnCharacterIdChanged?.Invoke(newCharacterId);
     }
     
     [ServerRpc]
@@ -249,44 +306,107 @@ public class PlayerData : NetworkBehaviour
         }
         
         _characterId.Value = newCharacterId;
+        
+        OnCharacterIdChanged?.Invoke(newCharacterId);
+
     }
 
     public void SetPrompt(string newPrompt)
     {
-        Debug.Log("Set prompt");
-        SetPromptServerRpc(newPrompt);
+        SetPromptServerRpc(NetworkManager.LocalClientId, newPrompt);
     }
 
     [ServerRpc]
-    private void SetPromptServerRpc(string newPrompt)
+    private void SetPromptServerRpc(ulong clientId, string newPrompt)
     {
-        if (ProfanityFilter.Instance.ContainsProfanity(newPrompt))
+        if (string.IsNullOrWhiteSpace(newPrompt))
+        {
+            PromptResponseClientRpc(PromptResponse.Declined_EmptyString);
+            OnPromptResponseServer?.Invoke(clientId, PromptResponse.Declined_EmptyString);
+            return;
+        }
+        else if (ProfanityFilter.Instance.ContainsProfanity(newPrompt))
         {
             PromptResponseClientRpc(PromptResponse.Declined_Profanity);
+            OnPromptResponseServer?.Invoke(clientId, PromptResponse.Declined_Profanity);
+            return;
         }
         else
         {
             _prompt.Value = new FixedString512Bytes(newPrompt);
+            _submittedPrompt.Value = true;
+
             PromptResponseClientRpc(PromptResponse.Accepted);
+            OnPromptResponseServer?.Invoke(clientId, PromptResponse.Accepted);
         }
-        
     }
 
     [ClientRpc]
     private void PromptResponseClientRpc(PromptResponse response)
     {
-        OnPromptResponse?.Invoke(response);
+        OnPromptResponseClient?.Invoke(response);
+    }
+
+    public void SetAssignedPrompt(string prompt)
+    {
+        _assignedPrompt.Value = prompt;
+
+        //-----------DEBUG
+        Debug.Log($"Player {PlayerName} (id: {OwnerClientId.ToString()}) with own prompt \"{Prompt}\" got assigned prompt \"{AssignedPrompt}\".");
+    }
+
+    public void SetInstruments(List<int> instrumentIds)
+    {
+        _instrumentIds.Clear();
+
+        foreach (int id in instrumentIds)
+        {
+            _instrumentIds.Add(id);
+        }
+
+        //-----------DEBUG
+        string instruments = string.Empty;
+
+        foreach (int id in InstrumentIds)
+        {
+            instruments += InstrumentsManager.Instance.GetInstrument(id).friendlyName;
+            instruments += ", ";
+        }
+
+        instruments = instruments.Substring(0,instruments.Length-2);
+
+        Debug.Log($"Player {PlayerName} (id: {OwnerClientId.ToString()}) got assigned the following instruments: {instruments}");
+    }
+
+    public void SetRecording(List<Eighth> recording)
+    {
+        _recording.Clear();
+
+        foreach (Eighth eighth in recording)
+        {
+            _recording.Add(eighth);
+        }
+
+        //-----------DEBUG
+        Debug.Log($"Recording of Player {PlayerName}: ");
+        foreach (Eighth eighth in Recording)
+        {
+            Debug.Log($"{eighth.contains.ToString()}, {eighth.instrumentID.ToString()}");
+        }
     }
     
     //The points should not have a ServerRPC (the client should not have the authority to set its points). The server should calculate those based on the user input
-    public void SetPointsCreativity(int newValue) => _pointsCreativity.Value = newValue;
-    public void SetPointsPlayability(int newValue) => _pointsPlayability.Value = newValue;
-    public void SetPointsPerformance(int newValue) => _pointsPerformance.Value = newValue;
+    public void AddPointsCreativity(int valueToAdd) => _pointsCreativity.Value += valueToAdd;
+    public void AddPointsPlayability(int valueToAdd) => _pointsPlayability.Value += valueToAdd;
+    public void AddPointsPerformance(int valueToAdd) => _pointsPerformance.Value += valueToAdd;
+    
+    #endregion
     
     public enum PromptResponse
     {
         NONE,
         Accepted,
-        Declined_Profanity
+        Declined_Profanity,
+        Declined_EmptyString
     }
 }

@@ -11,17 +11,19 @@ using Wichtel.Extensions;
 [RequireComponent(typeof(TMP_InputField))]
 public class InputHelper : MonoBehaviour
 {
+    [SerializeField] private bool clearInputFieldOnSubmit = true;
+    
     [SerializeField, HideInInspector]
     private TMP_InputField inputField;
 
     //return true if the input field is focused and the user pressed enter, otherwise return false
     private bool UserSubmittedInputField => inputField.isFocused && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter));
     
-    public Action<string> OnUserEnteredMessage = delegate(string _message) {  };
+    public Action<string> OnUserEnteredMessage = delegate(string message) {  };
 
     private void Start()
     {
-        if(inputField.lineType != TMP_InputField.LineType.MultiLineNewline) Debug.LogWarning("For the input helper to work, LineType must be MultiLineNewLine.");
+        CheckInputFieldSettings();
         
         ClearInputFieldAndFocusIt();
     }
@@ -42,11 +44,11 @@ public class InputHelper : MonoBehaviour
         
         //...remove line breaks from input text...
         string input = inputField.text;
-        input = Regex.Replace(input, @"\r\n?|\n", string.Empty);
+        input = input.RemoveLineBreaks();
         //...send input...
         OnUserEnteredMessage?.Invoke(input);
         //...reset input field after submission
-        ClearInputField();
+        if(clearInputFieldOnSubmit) ClearInputField();
     }
 
     private void ClearInputFieldAndFocusIt()
@@ -62,8 +64,17 @@ public class InputHelper : MonoBehaviour
         inputField.Select();
         inputField.ActivateInputField();
     }
+
+    private void CheckInputFieldSettings()
+    {
+        if(inputField.lineType != TMP_InputField.LineType.MultiLineNewline) Debug.LogWarning("For the input helper to work, LineType must be MultiLineNewLine.");
+    }
     
     #if UNITY_EDITOR
-    private void OnValidate() => inputField = GetComponent<TMP_InputField>();
+    private void OnValidate()
+    {
+        inputField = GetComponent<TMP_InputField>();
+        CheckInputFieldSettings();
+    }
     #endif
 }

@@ -153,11 +153,7 @@ public class Chat : NetworkBehaviour
         UpdateNamesInMessageLog();
         
         //censor message
-        DateTime start = DateTime.Now;
         message.Message = ProfanityFilter.Instance.CensorAndReplaceWholeInput(message.Message.Value);
-        TimeSpan deltaTime = DateTime.Now - start;
-
-        Debug.Log($"DeltaTime: {deltaTime.TotalMilliseconds.ToString(CultureInfo.InvariantCulture)}");
 
         //then send it to all clients
         _chatMessages.Add(message);

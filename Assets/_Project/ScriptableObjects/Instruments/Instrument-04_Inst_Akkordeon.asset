@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c589d62276e77404498aa48d4be86368, type: 3}
+  m_Name: Instrument-04_Inst_Akkordeon
+  m_EditorClassIdentifier: 
+  instrumentId: 4
+  friendlyName: Akkordeon
+  soundEvent:
+    Guid:
+      Data1: -1574102228
+      Data2: 1163098834
+      Data3: 2064327332
+      Data4: 250252675
+    Path: event:/Instrument Samples/Inst_Akkordeon
+  instrumentIcon: {fileID: 21300000, guid: 3cb8d6446c9b670409fd7d59aaa31264, type: 3}

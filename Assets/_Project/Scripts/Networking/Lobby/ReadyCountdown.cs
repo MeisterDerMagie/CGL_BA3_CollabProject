@@ -14,11 +14,12 @@ public class ReadyCountdown : NetworkBehaviour
     [SerializeField] private float countdownDuration = 4.99f;
     [SerializeField] private Transform countdownUI;
     [SerializeField] private TextMeshProUGUI countdownNumberText;
-    //[SerializeField] private SceneReference sceneToLoadAfterCountdownFinished;
+    [SerializeField] private Transform notEnoughPlayersUI;
     [SerializeField] private NetworkSceneLoader sceneToLoadAfterCountdownFinished;
 
     [HideInInspector] public bool readyCountdownHasStarted = false;
     private NetworkVariable<float> countdown;
+    private NetworkVariable<bool> enoughPlayersToStartTheGame;
     private CoroutineHandle coroutine;
 
     [ClientRpc]
@@ -30,11 +31,20 @@ public class ReadyCountdown : NetworkBehaviour
     private void Awake()
     {
         countdown = new NetworkVariable<float>();
+        enoughPlayersToStartTheGame = new NetworkVariable<bool>();
     }
+
+    public override void OnNetworkSpawn()
+    {
+        enoughPlayersToStartTheGame.OnValueChanged += OnEnoughPlayersChanged;
+    }
+
+    private void OnEnoughPlayersChanged(bool previousvalue, bool newvalue) => UpdateNotEnoughPlayersUI();
 
     private void Start()
     {
         HideCountdownUI();
+        UpdateNotEnoughPlayersUI();
     }
     
     private void Update()
@@ -42,9 +52,12 @@ public class ReadyCountdown : NetworkBehaviour
         //if server
         if (NetworkManager.Singleton.IsServer)
         {
-            //check if all players are ready
+            //check if enough players are connected and if all players are ready
             if (NetworkManager.ConnectedClientsList.Count > 0)
             {
+                bool enoughPlayersConnected = NetworkManager.ConnectedClientsList.Count >= Constants.MIN_PLAYER_AMOUNT;
+                enoughPlayersToStartTheGame.Value = enoughPlayersConnected;
+                
                 bool allPlayersAreReady = true;
                 foreach (var client in NetworkManager.ConnectedClientsList)
                 {
@@ -55,8 +68,8 @@ public class ReadyCountdown : NetworkBehaviour
                     }
                 }
             
-                if(allPlayersAreReady && !readyCountdownHasStarted) StartCountdown();
-                else if(!allPlayersAreReady && readyCountdownHasStarted) StopCountdown();
+                if(enoughPlayersConnected && allPlayersAreReady && !readyCountdownHasStarted) StartCountdown();
+                else if((!enoughPlayersConnected || !allPlayersAreReady) && readyCountdownHasStarted) StopCountdown();
             }
         }
 
@@ -121,11 +134,19 @@ public class ReadyCountdown : NetworkBehaviour
         //hide countdown
         HideCountdownUI();
         
+        //disallow new players from connecting, after the game started
+        ConnectionApproval.Instance.gameIsInLobby = false;
+        
         //inform server provider about the started game
         ServerProviderCommunication.Instance.ServerInGame();
         
         //load the next scene to start the game
         StartGame();
+    }
+
+    private void UpdateNotEnoughPlayersUI()
+    {
+        notEnoughPlayersUI.gameObject.SetActive(!enoughPlayersToStartTheGame.Value);
     }
 
     private void HideCountdownUI()

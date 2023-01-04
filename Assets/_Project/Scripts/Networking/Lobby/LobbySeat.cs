@@ -136,8 +136,8 @@ public class LobbySeat : MonoBehaviour
     {
         if (_associatedPlayer == null) return;
 
-        var charactersOfOtherPlayers = new List<uint>(); 
-        
+        var charactersOfOtherPlayers = new List<uint>();
+
         //check if the character is available
         if (!NetworkManager.Singleton.IsServer && _associatedPlayer.IsLocalPlayer)
         {
@@ -164,7 +164,12 @@ public class LobbySeat : MonoBehaviour
             {
                 PlayerLobbyData.LocalPlayerLobbyData.pickedUniqueCharacter = true;
                 characterImage.color = characterImage.color.With(a: 1f);
-            }   
+            }
+        }
+        //if we're not the local player, never gray out
+        else if(!NetworkManager.Singleton.IsServer && !_associatedPlayer.IsLocalPlayer)
+        {
+            characterImage.color = characterImage.color.With(a: 1f);
         }
 
         //only update the character image if the player changed it
