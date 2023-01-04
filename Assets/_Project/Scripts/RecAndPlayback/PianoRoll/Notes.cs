@@ -27,10 +27,10 @@ public class Notes : MonoBehaviour
         // s is the # of which sound is used in the local player's current instrumentIDs
 
         // calculate total duration of travelling length of the piano roll in seconds
-        // duration of quarter note = 60 seconds / bpm
+        // duration of eighth note = 60 seconds / bpm / 2
         // beat length = length of piano roll measured in quarter notes
-        // --> total duration is quarter notes times beat length
-        float duration = 60f / bpm * (beatLength);
+        // --> total duration is eighth notes times beat length
+        float duration = (60f / bpm / 2f) * (beatLength);
 
         // s is only -1 when it is a line being spawned and then number is the current beat
         if (s == -1)
@@ -63,6 +63,8 @@ public class Notes : MonoBehaviour
         Vector3 targetPos = new Vector3(_targetX, transform.localPosition.y, transform.localPosition.z);
 
         StartCoroutine(MoveToLeft(duration, targetPos));
+
+        Debug.Log("spawned");
     }
 
     IEnumerator MoveToLeft(float duration, Vector3 targetPosition)

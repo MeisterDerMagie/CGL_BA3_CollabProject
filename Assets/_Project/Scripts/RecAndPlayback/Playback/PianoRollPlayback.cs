@@ -28,8 +28,14 @@ public class PianoRollPlayback : MonoBehaviour
     int playerCount;
     int timelinePlayer;
     int previewPlayer;
+
+    /*
     int timelineBar;
     int previewBar;
+    */
+
+    int tlBar;
+    int prevBar;
 
     private PlaybackStage timelineStage;
     private PlaybackStage previewStage;
@@ -55,7 +61,6 @@ public class PianoRollPlayback : MonoBehaviour
         playingBack = false;
         timelineStage = PlaybackStage.IDLE;
         previewStage = PlaybackStage.IDLE;
-        _spawner.ActivateIdleLines(true);
 
         _display.SwitchLight(false);
         _display.TurnOffCharacter();
@@ -85,9 +90,14 @@ public class PianoRollPlayback : MonoBehaviour
         playingBack = true;
         _spawner.spawnActive = true;
 
+        /*
         // set bar counters to zero and one // have to start one below because on first beat it's already updated
         timelineBar = -1;
         previewBar = 0; // because preview is one bar and 2 beats ahead of timeline
+        */
+
+        tlBar = _timer.timelineBar;
+        prevBar = _timer.previewBar;
 
         // set currentPlayer to zero
         timelinePlayer = 0;
@@ -107,8 +117,11 @@ public class PianoRollPlayback : MonoBehaviour
         GetComponentInChildren<BackingTrack>().StopMusic();
         timelineStage = PlaybackStage.IDLE;
         previewStage = PlaybackStage.IDLE;
+
         _spawner.ActivateIdleLines(true);
         _spawner.ActivateLines(false);
+        _spawner.DeleteLines();
+        _spawner.DeleteActiveNotes();
 
         _display.SwitchLight(false);
         _display.TurnOffCharacter();
@@ -124,13 +137,13 @@ public class PianoRollPlayback : MonoBehaviour
         // if timeline beat is 1 --> see for next stage
         if (_timer.timelineBeat == 1)
         {
-            timelineBar++;
+            //timelineBar++;
             UpdateTimelineStage();
         }
         // if preview beat is 1 --> see for next stage
         else if (_timer.previewBeat == 1)
         {
-            previewBar++;
+            //previewBar++;
             UpdatePreviewStage();
         }
 
@@ -153,29 +166,40 @@ public class PianoRollPlayback : MonoBehaviour
                 // do nothing, shouldn't even be here
                 break;
             case PlaybackStage.COUNTIN:
-                if (timelineBar == 1)
-                {
-                    // Update visuals to new player
-                    UpdatePlayer();
-                }
+                
                 if (timelinePlayer == 0)
                 {
-                    if (timelineBar == countIn)
+                    if (_timer.timelineBar - tlBar == countIn)
+                    {
+                        UpdatePlayer();
+                    }
+                    //if (timelineBar == countIn)
+                    if (_timer.timelineBar - tlBar == countIn + 1)
                     {
                         // turn on light and change state to playing
                         _display.SwitchLight(true);
                         timelineStage = PlaybackStage.PLAYING;
-                        timelineBar = 0;
+                        //timelineBar = 0;
+                        tlBar = _timer.timelineBar;
                     }
                 }
                 else
                 {
-                    if (timelineBar == barsBetween)
+                    //if (timelineBar == 1)
+                    if (_timer.timelineBar - tlBar == 1)
+                    {
+                        // Update visuals to new player
+                        UpdatePlayer();
+                    }
+
+                    //if (timelineBar == barsBetween)
+                    if (_timer.timelineBar - tlBar == barsBetween)
                     {
                         // turn on light and change state to playing
                         _display.SwitchLight(true);
                         timelineStage = PlaybackStage.PLAYING;
-                        timelineBar = 0;
+                        //timelineBar = 0;
+                        tlBar = _timer.timelineBar;
                     }
                 }
                 break;
@@ -189,7 +213,8 @@ public class PianoRollPlayback : MonoBehaviour
                 else
                 {
                     timelineStage = PlaybackStage.COUNTIN;
-                    timelineBar = 0;
+                    //timelineBar = 0;
+                    tlBar = _timer.timelineBar;
                 }
                 _display.SwitchLight(false);
                 _display.TurnOffCharacter();
@@ -209,18 +234,22 @@ public class PianoRollPlayback : MonoBehaviour
             case PlaybackStage.COUNTIN:
                 if (previewPlayer == 0)
                 {
-                    if (previewBar == countIn - 1)
+                    //if (previewBar == countIn - 1)
+                    if (_timer.previewBar - prevBar == countIn - 1)
                     {
                         previewStage = PlaybackStage.PLAYING;
-                        previewBar = 0;
+                        //previewBar = 0;
+                        prevBar = _timer.previewBar;
                     }
                 }
                 else
                 {
-                    if (previewBar == barsBetween)
+                    //if (previewBar == barsBetween)
+                    if (_timer.previewBar - prevBar == barsBetween)
                     {
                         previewStage = PlaybackStage.PLAYING;
-                        previewBar = 0;
+                        //previewBar = 0;
+                        prevBar = _timer.previewBar;
                     }
                 }
                 break;
@@ -234,7 +263,8 @@ public class PianoRollPlayback : MonoBehaviour
                 else
                 {
                     previewStage = PlaybackStage.COUNTIN;
-                    previewBar = 0;
+                    //previewBar = 0;
+                    prevBar = _timer.previewBar;
                 }
                 break;
             default:
@@ -252,6 +282,10 @@ public class PianoRollPlayback : MonoBehaviour
     void UpdatePlayer()
     {
         Debug.Log("next player displayed");
+
+        // reset prompt
+        // reset icon
+        // reset name
     }
 
     void PlayQuarterNote()

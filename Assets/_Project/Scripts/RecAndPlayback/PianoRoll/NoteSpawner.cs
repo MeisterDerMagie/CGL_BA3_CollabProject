@@ -137,24 +137,34 @@ public class NoteSpawner : MonoBehaviour
 
     public void SpawnLinesOverBar(float bpm)
     {
-        if (currentLines.Count > 7) return;
+        List<float> newX = new List<float>();
+        for (int i = 0; i < posLines.Count; i++)
+        {
+            float x = -xPos + (bg.transform.localScale.x / 16f) + (bg.transform.localScale.x / 16f) * i * 2;
+            newX.Add(x);
+        }
+
+
 
         // spawn lines that move:
         for (int i = 0; i < posLines.Count; i++)
         {
             // instantiate a new line and set position to what is saved in posLines
             GameObject clone = Instantiate(beatObj, spawns.transform);
-            clone.transform.localPosition = new Vector3(posLines[i], 0, 0);
+            //clone.transform.localPosition = new Vector3(posLines[i] - bg.transform.localScale.x / 16f, 0, 0);
+            clone.transform.localPosition = new Vector3(newX[i], 0, 0);
 
             int a = -1;
             // tell the clone the current bpm, length of piano roll in beats, and target value of poision x (how far it needs to travel to the left)
             if (i == 1 || i == 3 || i == 5 || i == 7 || i == 9 || i == 11 || i == 13) a = 2;
-            clone.GetComponent<Notes>().NoteSetUp(bpm, (i + 1) * beats, transform.localPosition.x - bg.transform.localScale.x / 2f, this, -1, a);
-
-            clone.GetComponent<Notes>().Activate(spawnActive);
+            //clone.GetComponent<Notes>().NoteSetUp(bpm, (i + 1) * beats * 2, transform.localPosition.x - bg.transform.localScale.x / 2f, this, -1, a);
+            clone.GetComponent<Notes>().NoteSetUp(bpm, (i + 1) * beats * 2 - 1, transform.localPosition.x - bg.transform.localScale.x / 2f, this, -1, a);
 
             currentLines.Add(clone);
         }
+
+        Debug.Log("spawn lines over bar");
+
     }
 
     public void DeleteActiveNotes()
@@ -164,6 +174,13 @@ public class NoteSpawner : MonoBehaviour
         currentNotes.Clear();
     }
 
+    public void DeleteLines()
+    {
+        foreach (GameObject obj in currentLines)
+            Destroy(obj);
+        currentLines.Clear();
+    }
+
     public void SpawnLines(float bpm, int number)
     {
         //intantiate a new quarternote line and set position to the far right of the piano roll:
@@ -171,7 +188,7 @@ public class NoteSpawner : MonoBehaviour
         clone.transform.localPosition = new Vector3(xPos, 0, 0);
 
         // tell the clone the current bpm, the length of the piano roll in beats, and the target value of position.x (how far it needs to travel to the left)
-        clone.GetComponent<Notes>().NoteSetUp(bpm, beatLength, transform.localPosition.x - bg.transform.localScale.x / 2f, this, -1, number);
+        clone.GetComponent<Notes>().NoteSetUp(bpm, beatLength * 2, transform.localPosition.x - bg.transform.localScale.x / 2f, this, -1, number);
         
         clone.GetComponent<Notes>().Activate(spawnActive);
 
@@ -199,7 +216,7 @@ public class NoteSpawner : MonoBehaviour
         clone.transform.localPosition = new Vector3(xPos, yPos[line], 0);
 
         // tell the clone the current bpm, length of roll in beats, target position x
-        clone.GetComponent<Notes>().NoteSetUp(bpm, beatLength, transform.localPosition.x - bg.transform.localScale.x / 2f, this, line);
+        clone.GetComponent<Notes>().NoteSetUp(bpm, beatLength * 2, transform.localPosition.x - bg.transform.localScale.x / 2f, this, line);
 
         currentNotes.Add(clone);
     }
@@ -224,7 +241,7 @@ public class NoteSpawner : MonoBehaviour
         clone.transform.localPosition = new Vector3(x, yPos[line], 0);
 
         // tell note bpm, length to travel, target position x
-        clone.GetComponent<Notes>().NoteSetUp(bpm, 2, transform.localPosition.x - bg.transform.localScale.x / 2f, this, line);
+        clone.GetComponent<Notes>().NoteSetUp(bpm, 2 * 2, transform.localPosition.x - bg.transform.localScale.x / 2f, this, line);
 
         currentNotes.Add(clone);
     }

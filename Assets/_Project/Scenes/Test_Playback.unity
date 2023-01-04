@@ -388,7 +388,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6720679256495871619, guid: 3ae1a8fe31b4dcc41b598e0317ff59ac, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.88
+      value: -2.7
       objectReference: {fileID: 0}
     - target: {fileID: 6720679258209323060, guid: 3ae1a8fe31b4dcc41b598e0317ff59ac, type: 3}
       propertyPath: m_Name
@@ -870,6 +870,7 @@ MonoBehaviour:
   beatLength: 8
   yPos: []
   posLines: []
+  isRecording: 0
   spawnActive: 0
 --- !u!114 &294009754
 MonoBehaviour:
@@ -1648,6 +1649,7 @@ MonoBehaviour:
   beatLength: 8
   yPos: []
   posLines: []
+  isRecording: 0
   spawnActive: 0
 --- !u!114 &894518015
 MonoBehaviour:
