@@ -181,8 +181,6 @@ public class NoteSpawner : MonoBehaviour
 
         // tell the clone the current bpm, length of roll in beats, target position x
         clone.GetComponent<Notes>().NoteSetUp(bpm, beatLength, transform.localPosition.x - bg.transform.localScale.x / 2f, this, line);
-        
-        clone.GetComponent<Notes>().Activate(spawnActive);
 
         currentNotes.Add(clone);
     }
@@ -192,15 +190,19 @@ public class NoteSpawner : MonoBehaviour
         currentNotes.Remove(obj);
     }
 
-    public void ActivateAllSpawns(bool value)
+    public void ActivateLines(bool value)
+    {
+        for (int i = currentLines.Count - 1; i >= 0; i--)
+        {
+            currentLines[i].GetComponent<Notes>().Activate(value);
+        }
+    }
+
+    public void ActivateNotes(bool value)
     {
         for (int i = currentNotes.Count - 1; i >= 0; i--)
         {
             currentNotes[i].GetComponent<Notes>().Activate(value);
-        }
-        for (int i = currentLines.Count - 1; i >= 0; i--)
-        {
-            currentLines[i].GetComponent<Notes>().Activate(value);
         }
     }
 
@@ -210,7 +212,9 @@ public class NoteSpawner : MonoBehaviour
         GameObject clone = Instantiate(noteObj, spawns.transform);
 
         // set correct height of note and location marker position x
-        clone.transform.localPosition = new Vector3(locMarker.localPosition.x, yPos[line], 0);
+        //clone.transform.localPosition = new Vector3(locMarker.localPosition.x, yPos[line], 0);
+        float x = transform.localPosition.x - bg.transform.localScale.x / 2f + (bg.transform.localScale.x / 8f) * 2f;
+        clone.transform.localPosition = new Vector3(x, yPos[line], 0);
 
         // tell note bpm, length to travel, target position x
         clone.GetComponent<Notes>().NoteSetUp(bpm, 2, transform.localPosition.x - bg.transform.localScale.x / 2f, this, line);

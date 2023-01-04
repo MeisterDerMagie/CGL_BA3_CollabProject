@@ -36,14 +36,18 @@ public class RecordInput : MonoBehaviour
     private List<RecordingNote> recordedTimeStamps;
 
     public List<Eighth> recordedBar;
-    private List<Eighth> previousBar; // safety copy to go back to 
+    private List<Eighth> safetyCopyBar; // safety copy to go back to 
 
     private float timer;
     [HideInInspector] public bool stageEnded;
 
+    bool spawnNote;
+
     // Start is called before the first frame update
     void Start()
     {
+        spawnNote = false;
+
         if (NetworkManager.Singleton.IsServer) return;
 
         _audioRoll.SetUpAllInstances();
@@ -54,7 +58,7 @@ public class RecordInput : MonoBehaviour
         _beatMapping = GetComponent<BeatMapping>();
         _pianoRoll = _audioRoll.gameObject.GetComponentInParent<PianoRollRecording>();
         //_pianoRoll.PlayRecording(true, false);
-        _recordingUI._audio = false;
+        _recordingUI.playingBack = false;
 
         _spawner = _pianoRoll.GetComponent<NoteSpawner>();
 
@@ -63,9 +67,9 @@ public class RecordInput : MonoBehaviour
         recordedTimeStamps = new List<RecordingNote>();
 
         recordedBar = new List<Eighth>();
-        previousBar = new List<Eighth>();
+        safetyCopyBar = new List<Eighth>();
 
-        WriteEmptyBar(previousBar);
+        WriteEmptyBar(safetyCopyBar);
         WriteEmptyBar(recordedBar);
 
         stageEnded = false;
@@ -132,7 +136,7 @@ public class RecordInput : MonoBehaviour
                     _beatMapping.MapRecording(n);
 
                     // spawn note on piano roll
-                    _spawner.SpawnNoteAtLocationMarker(i, _pianoRoll.bpm);
+                    if (spawnNote) _spawner.SpawnNoteAtLocationMarker(i, _pianoRoll.bpm);
                 }
             }
         }
@@ -150,11 +154,16 @@ public class RecordInput : MonoBehaviour
             _pianoRoll.gameObject.GetComponent<NoteSpawner>().DeleteActiveNotes();
 
             // safety copy of bar:
-            previousBar = recordedBar;
+            safetyCopyBar.Clear();
+            foreach (Eighth e in recordedBar)
+            {
+                safetyCopyBar.Add(e);
+            }
             WriteEmptyBar(recordedBar);
 
-            _pianoRoll.PlayRecording(true, false);
-            _recordingUI._audio = false;
+            _pianoRoll.StartPlayback(PianoRollRecording.RecPBStage.ONLYLINES);
+
+            _recordingUI.playingBack = false;
 
             // Update UI:
             recFrame.SetActive(true);
@@ -164,9 +173,18 @@ public class RecordInput : MonoBehaviour
         {
             // stop recording
             StopRecording();
-            recordedBar = previousBar;
-            _pianoRoll.PlayRecording(true, false);
-            _recordingUI._audio = false;
+
+            // if we're stopping the recording before we started to record anything --> return to safety copy
+            if (recordingState != RecordingState.Recording)
+            {
+                recordedBar.Clear();
+                foreach (Eighth e in safetyCopyBar)
+                {
+                    recordedBar.Add(e);
+                }
+            }
+
+            _recordingUI.playingBack = false;
         }
     }
 
@@ -206,8 +224,7 @@ public class RecordInput : MonoBehaviour
                     recordingState = RecordingState.Recording;
 
                     _recordingUI.UpdateCountIn(true, "REC");
-                    _pianoRoll.PlayRecording(true, true);
-                    _recordingUI._audio = true;
+                    _recordingUI.playingBack = true;
                     break;
                 case RecordingState.Recording:
                     StopRecording();
@@ -221,24 +238,15 @@ public class RecordInput : MonoBehaviour
             if (recordingState == RecordingState.CountIn)
             {
                 if (_backingTrack.lastBeat == 1)
-                {
                     _recordingUI.UpdateCountIn(true, "1");
-                    //countInText.text = "1";
-                }
                 else if (_backingTrack.lastBeat == 3)
-                {
                     _recordingUI.UpdateCountIn(true, "2");
-                    //countInText.text = "2";
-                }
                 else if (_backingTrack.lastBeat == 5)
-                {
                     _recordingUI.UpdateCountIn(true, "3");
-                    //countInText.text = "3";
-                }
                 else if (_backingTrack.lastBeat == 7)
                 {
                     _recordingUI.UpdateCountIn(true, "AND");
-                    //countInText.text = "AND";
+                    spawnNote = true;
                 }
             }
         }
@@ -255,6 +263,10 @@ public class RecordInput : MonoBehaviour
         _recordingUI.UpdateCountIn(false, "");
         //countInText.gameObject.SetActive(false);
         _spawner.ActivateStartLine(false);
+
+        _pianoRoll.StartPlayback(PianoRollRecording.RecPBStage.INACTIVE);
+
+        spawnNote = false;
     }
 
     private void WriteEmptyBar(List<Eighth> _list)
@@ -272,10 +284,12 @@ public class RecordInput : MonoBehaviour
         }
     }
 
+
+
 #if UNITY_EDITOR
     private void OnGUI()
     {
-        GUILayout.Box($"recording State: {recordingState}");
+        //GUILayout.Box($"recording State: {recordingState}");
     }
 #endif
 

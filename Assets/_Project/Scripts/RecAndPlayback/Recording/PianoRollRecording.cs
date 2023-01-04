@@ -21,14 +21,25 @@ public class PianoRollRecording : MonoBehaviour
     public float bpm = 110f;
 
     bool musicPlaying;
-    bool waitForPlayback;
-    bool playingBack;
-    bool playWithAudio;
-    bool playBackRecording;
+    private RecPBStage stage;
+    private bool playback;
+    private bool withAudio;
+    private int bar;
 
     [SerializeField] private List<Bar> bars;
 
-    private NoteSpawner spawner;
+    private NoteSpawner _spawner;
+
+    public enum RecPBStage
+    {
+        INACTIVE,
+        ONLYLINES,
+        WAITFORPB,
+        PBNOAUDIO,
+        PBWAITAUDIO,
+        PBWITHAUDIO
+    }
+    
 
     void Start()
     {
@@ -39,7 +50,7 @@ public class PianoRollRecording : MonoBehaviour
 
         bars = new List<Bar>();
         
-        spawner = GetComponent<NoteSpawner>();
+        _spawner = GetComponent<NoteSpawner>();
 
         // Set button icons
         GetComponentInChildren<PianoRollIcons>().SetUpIcons();
@@ -53,174 +64,126 @@ public class PianoRollRecording : MonoBehaviour
     void StartMusic()
     {
         musicPlaying = true;
-        spawner.ActivateIdleLines(false, bpm);
-        playWithAudio = false;
-        playingBack = false;
+        _spawner.ActivateIdleLines(false, bpm);
         _backingTrack.StartMusic();
+
+        stage = RecPBStage.INACTIVE;
+        playback = false;
+        withAudio = false;
     }
 
     public void StopMusic()
     {
-        spawner.ActivateIdleLines(true, bpm);
+        _spawner.ActivateIdleLines(true, bpm);
         _backingTrack.StopMusic();
         _recordInput.StopRecording();
         _timer.ResetTimer();
         musicPlaying = false;
+
+        stage = RecPBStage.INACTIVE;
+        playback = false;
+        withAudio = false;
     }
 
     public void NextBeat()
     {
-        if (waitForPlayback)
+        if (!musicPlaying) return;
+
+        PlaybackLines();
+
+        // if we're waiting to start next preview notes on the one --> start playback and wait for audio
+        if (stage == RecPBStage.WAITFORPB && _timer.previewBeat == 1)
         {
-            if (_timer.previewBeat == 1)
-            {
-                playingBack = true;
-                waitForPlayback = false;
-                _timer.timelineBar = -1;
-                _timer.previewBar = 1;
-                playWithAudio = true;
-            }
+            playback = true;
+            stage = RecPBStage.PBWAITAUDIO;
+            bar = _timer.timelineBar;
+        }
+        // if we're waiting for audio (so preview note to get to loc marker) --> if we're two bars further and the current beat is one play audio
+        else if (stage == RecPBStage.PBWAITAUDIO && _timer.timelineBeat == 1 && _timer.timelineBar - bar == 2)
+        {
+            withAudio = true;
+            stage = RecPBStage.PBWITHAUDIO;
         }
 
-        if (!musicPlaying) return;
-        PlayQuarterNote();
+        if (playback) PlaybackNotes();
 
-        if (playingBack) PlayBars();
-        if (playWithAudio) PlaybackBarAudio();
+        if (withAudio) PlaybackAudio();
     }
 
 
-    void PlayQuarterNote()
+    void PlaybackLines()
     {
         // only spawn lines on 1s and 3s, so on first and fifth eighth
-        //if (previewBeat == 1 || previewBeat == 5) spawner.SpawnLines(bpm);
-        if (_timer.previewBeat == 1) spawner.SpawnLines(bpm, 1);
-        if (_timer.previewBeat == 3) spawner.SpawnLines(bpm, 2);
-        if (_timer.previewBeat == 5) spawner.SpawnLines(bpm, 3);
-        if (_timer.previewBeat == 7) spawner.SpawnLines(bpm, 4);
+        if (_timer.previewBeat == 1) _spawner.SpawnLines(bpm, 1);
+        if (_timer.previewBeat == 3) _spawner.SpawnLines(bpm, 2);
+        if (_timer.previewBeat == 5) _spawner.SpawnLines(bpm, 3);
+        if (_timer.previewBeat == 7) _spawner.SpawnLines(bpm, 4);
     }
 
-    void PlayBars()
+    void PlaybackNotes()
     {
         int line = 0;
 
-        if (playBackRecording)
+        if (_recordInput.recordedBar[_timer.previewBeat - 1].contains)
         {
-            if (_recordInput.recordedBar[_timer.previewBeat - 1].contains)
-            {
-                for (int i = 0; i < PlayerData.LocalPlayerData.InstrumentIds.Count; i++)
-                {
-                    if (_recordInput.recordedBar[_timer.previewBeat - 1].instrumentID == PlayerData.LocalPlayerData.InstrumentIds[i])
-                        line = i;
-                }
-                spawner.SpawnNote(line, bpm);
-
-            }
-            return;
-        }
-
-        /*
-        // if the prevbar counter is beyond the limit of the list, stop playing back bars
-        // since we start playing back bars on prevBarCounter 1 --> don't have to do >= bars.Count
-        if (_timer.previewBar > bars.Count)
-        {
-            playingBack = false;
-            return;
-        }
-
-        // play preview notes if there is a note on the eighth:
-        // translate soundID into which line to spawn on
-        
-        if (bars[_timer.previewBar - 1].eighth[_timer.previewBeat - 1].contains)
-        {
-            line = 0;
             for (int i = 0; i < PlayerData.LocalPlayerData.InstrumentIds.Count; i++)
             {
-                if (bars[_timer.previewBar - 1].eighth[_timer.previewBeat - 1].instrumentID == PlayerData.LocalPlayerData.InstrumentIds[i])
+                if (_recordInput.recordedBar[_timer.previewBeat - 1].instrumentID == PlayerData.LocalPlayerData.InstrumentIds[i])
                     line = i;
             }
-            spawner.SpawnNote(line, bpm);
-        }
-        */
-    }
+            _spawner.SpawnNote(line, bpm);
 
-    void PlaybackBarAudio()
-    {
-        //if (locBarCounter < bars.Count) return;
-        if (_timer.timelineBar < 1) return;
-
-        if (playBackRecording)
-        {
-            if (_recordInput.recordedBar[_timer.timelineBeat - 1].contains)
-                _audioRoll.PlaySound(_recordInput.recordedBar[_timer.timelineBeat - 1].instrumentID);
-            return;
-        }
-
-        /*
-        if (_timer.timelineBar > bars.Count)
-        {
-            playWithAudio = false;
-            return;
-        }
-
-        // trigger Audio
-        if (bars[_timer.timelineBar - 1].eighth[_timer.timelineBeat - 1].contains)
-            _audioRoll.PlaySound(bars[_timer.timelineBar - 1].eighth[_timer.timelineBeat - 1].instrumentID);
-        */
-    }
-    
-
-    public void StartPlayback(List<Bar> _bars)
-    {
-        waitForPlayback = true;
-        playWithAudio = false;
-        playingBack = false;
-        bars.Clear();
-        
-        // for every bar that is sent over
-        for (int i = 0; i < _bars.Count; i++)
-        {
-            // create a new bar and initialise the list of notes
-            Bar nb = new Bar();
-            nb.eighth = new List<Eighth>();
-
-            // create a note and add values from the note sent over for every note in that bar
-            for (int a = 0; a < _bars[i].eighth.Count; a++)
-            {
-                Eighth n = new Eighth();
-                n.contains = _bars[i].eighth[a].contains;
-                n.instrumentID = _bars[i].eighth[a].instrumentID;
-                nb.eighth.Add(n);
-            }
-
-            // add new bar to the list of bars waiting to be played back
-            bars.Add(nb);
         }
     }
 
-    public void PlayRecording(bool playback, bool withAudio, bool button = false)
+    void PlaybackAudio()
     {
-        if (button)
-        {
-            playWithAudio = withAudio;
-        }
-        else
-        {
-            playBackRecording = playback;
-            playingBack = playback;
+        if (_recordInput.recordedBar[_timer.timelineBeat - 1].contains)
+            _audioRoll.PlaySound(_recordInput.recordedBar[_timer.timelineBeat - 1].instrumentID);
+    }
 
-            if (withAudio)
-            {
-                waitForPlayback = true;
-            }
-            else
-            {
-                waitForPlayback = false;
-                playWithAudio = false;
-            }
+    public void StartPlayback(RecPBStage _recStage)
+    {
+        switch (_recStage)
+        {
+            case RecPBStage.INACTIVE:
+                playback = false;
+                withAudio = false;
+                _spawner.ActivateLines(false);
+                _spawner.ActivateNotes(false);
+                _spawner.spawnActive = false;
+                break;
+            case RecPBStage.ONLYLINES:
+                playback = false;
+                withAudio = false;
+                _spawner.ActivateLines(true);
+                _spawner.ActivateNotes(false);
+                _spawner.spawnActive = true;
+                break;
+            case RecPBStage.PBNOAUDIO:
+                playback = true;
+                withAudio = false;
+                _spawner.ActivateLines(true);
+                _spawner.spawnActive = true;
+                break;
+            case RecPBStage.PBWAITAUDIO:
+                playback = true;
+                withAudio = false;
+                _spawner.ActivateLines(true);
+                _spawner.spawnActive = true;
+                break;
+            case RecPBStage.PBWITHAUDIO:
+                playback = true;
+                withAudio = true;
+                _spawner.ActivateLines(true);
+                _spawner.spawnActive = true;
+                break;
+            case RecPBStage.WAITFORPB:
+                _spawner.ActivateLines(true);
+                _spawner.spawnActive = true;
+                break;
         }
 
-        spawner.spawnActive = playback;
-        spawner.ActivateAllSpawns(playback);
+        stage = _recStage;
     }
 }

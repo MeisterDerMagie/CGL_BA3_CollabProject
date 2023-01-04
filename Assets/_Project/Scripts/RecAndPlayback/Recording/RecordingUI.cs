@@ -12,7 +12,7 @@ public class RecordingUI : NetworkBehaviour
     private RecordInput _recordInput;
     private PianoRollRecording _pianoRoll;
 
-    public bool _audio;
+    public bool playingBack;
 
     public override void OnNetworkSpawn()
     {
@@ -33,8 +33,12 @@ public class RecordingUI : NetworkBehaviour
     }
     public void PlayButton()
     {
-        _audio = !_audio;
-        _pianoRoll.PlayRecording(true, _audio, true);
+        playingBack = !playingBack;
+
+        if (playingBack) _pianoRoll.StartPlayback(PianoRollRecording.RecPBStage.WAITFORPB);
+        else _pianoRoll.StartPlayback(PianoRollRecording.RecPBStage.INACTIVE);
+
+        // MISSING set sprite of button
     }
 
     public void RecordButton()
