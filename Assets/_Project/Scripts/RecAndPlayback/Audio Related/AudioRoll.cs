@@ -42,6 +42,7 @@ public class AudioRoll : MonoBehaviour
 
     public void PlaySound(int instrumentID)
     {
+        if (InstrumentsManager.Instance == null) return;
         RuntimeManager.PlayOneShot(InstrumentsManager.Instance.GetInstrument(instrumentID).soundEvent);
     }
 }

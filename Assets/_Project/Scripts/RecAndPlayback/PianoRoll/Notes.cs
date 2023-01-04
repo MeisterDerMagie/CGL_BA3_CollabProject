@@ -44,12 +44,14 @@ public class Notes : MonoBehaviour
             // set icon image:
             if (_secondRenderer != null)
             {
-                // get correct sprite from Instruments Manager
-                /*
-                Sprite sprite = InstrumentsManager.Instance.GetInstrument(PlayerData.LocalPlayerData.InstrumentIds[s]).instrumentIcon;
+                if (InstrumentsManager.Instance != null)
+                {
+                    // get correct sprite from Instruments Manager
+                    Sprite sprite = InstrumentsManager.Instance.GetInstrument(PlayerData.LocalPlayerData.InstrumentIds[s]).instrumentIcon;
 
-                _secondRenderer.gameObject.SetActive(true);
-                _secondRenderer.sprite = sprite; */
+                    _secondRenderer.gameObject.SetActive(true);
+                    _secondRenderer.sprite = sprite;
+                }
             }
         }
 

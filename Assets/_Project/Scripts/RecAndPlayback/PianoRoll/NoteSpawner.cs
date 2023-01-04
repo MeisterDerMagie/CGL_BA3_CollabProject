@@ -33,7 +33,7 @@ public class NoteSpawner : MonoBehaviour
     [SerializeField]List<float> yPos; // height of spawned notes which depends on the lineHeight of piano roll
     int beats; // how often are lines spawned, every beat or if 2 every other beat
 
-    List<float> posLines; // where all lines should be spawned idle, where the downbeats are on piano roll
+    public List<float> posLines; // where all lines should be spawned idle, where the downbeats are on piano roll
     private List<Transform> idleLines; // keep track of all idle lines
     private List<GameObject> currentNotes; // keep track of currently active notes to deactivate when hitting pause
     private List<GameObject> currentLines;

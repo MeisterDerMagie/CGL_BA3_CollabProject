@@ -48,7 +48,7 @@ public class PianoRollTimer : MonoBehaviour
 #if UNITY_EDITOR
     private void OnGUI()
     {
-        //GUILayout.Box($"timeline beat = {timelineBeat}, preview beat = {previewBeat}");
+        GUILayout.Box($"timeline beat = {timelineBeat}, preview beat = {previewBeat}");
     }
 #endif
 
@@ -86,7 +86,33 @@ public class PianoRollTimer : MonoBehaviour
         else if (timelineBeat == 8)
             previewBeat = 3;
 
-        switch(stage)
+        /*
+        timelineBeat = _backingTrack.lastBeat;
+
+        if (timelineBeat == 1)
+        {
+            previewBeat = 5;
+            timelineBar++;
+        }
+        else if (timelineBeat == 2)
+            previewBeat = 6;
+        else if (timelineBeat == 3)
+            previewBeat = 7;
+        else if (timelineBeat == 4)
+            previewBeat = 8;
+        else if (timelineBeat == 5)
+        {
+            previewBar++;
+            previewBeat = 1;
+        }
+        else if (timelineBeat == 6)
+            previewBeat = 2;
+        else if (timelineBeat == 7)
+            previewBeat = 3;
+        else if (timelineBeat == 8)
+            previewBeat = 4;
+        */
+        switch (stage)
         {
             case CurrentStage.Recording:
                 GetComponent<PianoRollRecording>().NextBeat();
