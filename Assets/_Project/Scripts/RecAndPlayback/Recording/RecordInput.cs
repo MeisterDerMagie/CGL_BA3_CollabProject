@@ -27,9 +27,9 @@ public class RecordInput : MonoBehaviour
     private BackingTrack _backingTrack;
     private BeatMapping _beatMapping;
     private PianoRollRecording _pianoRoll;
+    private NoteSpawner _spawner;
 
     [SerializeField] private GameObject recFrame;
-    //[SerializeField] private TMPro.TextMeshProUGUI countInText;
 
     public RecordingState recordingState;
 
@@ -39,6 +39,7 @@ public class RecordInput : MonoBehaviour
     private List<Eighth> previousBar; // safety copy to go back to 
 
     private float timer;
+    [HideInInspector] public bool stageEnded;
 
     // Start is called before the first frame update
     void Start()
@@ -55,6 +56,8 @@ public class RecordInput : MonoBehaviour
         _pianoRoll.PlayRecording(true, false);
         _recordingUI._audio = false;
 
+        _spawner = _pianoRoll.GetComponent<NoteSpawner>();
+
         recordingState = RecordingState.Idle;
 
         recordedTimeStamps = new List<RecordingNote>();
@@ -64,6 +67,8 @@ public class RecordInput : MonoBehaviour
 
         WriteEmptyBar(previousBar);
         WriteEmptyBar(recordedBar);
+
+        stageEnded = false;
 
         timer = 0;
 
@@ -101,6 +106,7 @@ public class RecordInput : MonoBehaviour
     void Update()
     {
         if (NetworkManager.Singleton.IsServer) return;
+        if (stageEnded) return;
 
         // increase timer if we are counting in or recording
         // we start the timer once we start counting in, in case the first input is a little before the beginning of the beat
@@ -124,6 +130,9 @@ public class RecordInput : MonoBehaviour
 
                     // process input and save to grid
                     _beatMapping.MapRecording(n);
+
+                    // spawn note on piano roll
+                    _spawner.SpawnNoteAtLocationMarker(i, _pianoRoll.bpm);
                 }
             }
         }
@@ -143,16 +152,13 @@ public class RecordInput : MonoBehaviour
             // safety copy of bar:
             previousBar = recordedBar;
             WriteEmptyBar(recordedBar);
+
             _pianoRoll.PlayRecording(true, false);
             _recordingUI._audio = false;
 
             // Update UI:
             recFrame.SetActive(true);
             _recordingUI.UpdateCountIn(true, "...");
-            /*
-            countInText.gameObject.SetActive(true);
-            countInText.text = "...";
-            */
         }
         else
         {
@@ -185,13 +191,10 @@ public class RecordInput : MonoBehaviour
                     break;
                 case RecordingState.WaitToStart:
                     recordingState = RecordingState.CountIn;
+                    _spawner.ActivateStartLine(true);
 
                     // activate text field + set to one
                     _recordingUI.UpdateCountIn(true, "1");
-                    /*
-                    countInText.gameObject.SetActive(true);
-                    countInText.text = "1";
-                    */
 
                     // reset timer for recording:
                     timer = 0;
@@ -203,7 +206,6 @@ public class RecordInput : MonoBehaviour
                     recordingState = RecordingState.Recording;
 
                     _recordingUI.UpdateCountIn(true, "REC");
-                    //countInText.text = "REC";
                     _pianoRoll.PlayRecording(true, true);
                     _recordingUI._audio = true;
                     break;
@@ -252,6 +254,7 @@ public class RecordInput : MonoBehaviour
         recFrame.SetActive(false);
         _recordingUI.UpdateCountIn(false, "");
         //countInText.gameObject.SetActive(false);
+        _spawner.ActivateStartLine(true);
     }
 
     private void WriteEmptyBar(List<Eighth> _list)

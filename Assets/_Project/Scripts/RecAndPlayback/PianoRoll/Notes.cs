@@ -13,9 +13,11 @@ public class Notes : MonoBehaviour
 {
     private NoteSpawner spawner;
 
+    public GameObject visuals;
     public Sprite[] sprites;
     public SpriteRenderer _secondRenderer;
-    SpriteRenderer _objRenderer;
+    public SpriteRenderer _objRenderer;
+    public GameObject startLine;
 
     public void NoteSetUp(float bpm, int beatLength, float _targetX, NoteSpawner script, int s, int number = -1)
     {
@@ -27,8 +29,6 @@ public class Notes : MonoBehaviour
         // beat length = length of piano roll measured in quarter notes
         // --> total duration is quarter notes times beat length
         float duration = 60f / bpm * (beatLength);
-
-        _objRenderer = GetComponent<SpriteRenderer>();
 
         // s is only -1 when it is a line being spawned and then number is the current beat
         if (s == -1)
@@ -86,5 +86,17 @@ public class Notes : MonoBehaviour
         Color c = _objRenderer.color;
         c.a = 0.3f;
         _objRenderer.color = c;
+    }
+
+    public void Activate(bool value)
+    {
+        visuals.SetActive(value);
+    }
+
+    public void StartLine(bool value)
+    {
+        if (startLine == null) return;
+        startLine.SetActive(value);
+        visuals.SetActive(!value);
     }
 }

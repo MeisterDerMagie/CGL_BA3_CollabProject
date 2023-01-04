@@ -18,6 +18,9 @@ public class EndRecording : MonoBehaviour
 
     public void EndRecordingStage()
     {
+        // stop player instruments:
+        GetComponent<RecordInput>().stageEnded = true;
+
         // send over the recorded bar or a random bar
         SendRecordingToServer();
 

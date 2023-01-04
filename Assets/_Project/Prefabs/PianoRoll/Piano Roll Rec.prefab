@@ -268,11 +268,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _recordingUI: {fileID: 0}
-  keyInputs: 77000000610000007300000064000000
+  keyInputs: 61000000730000006400000066000000
   _audioRoll: {fileID: 3123976970882356704}
   recFrame: {fileID: 3123976971001688865}
   recordingState: 0
   recordedBar: []
+  stageEnded: 0
 --- !u!114 &3123976969569249093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -444,6 +445,7 @@ MonoBehaviour:
   previewBar: 0
   timelineBar: 0
   resetPrevCounter: 3
+  stage: 0
 --- !u!114 &3123976969879721413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -462,9 +464,12 @@ MonoBehaviour:
   bg: {fileID: 3123976971203258725}
   idleL: {fileID: 3123976970494875648}
   spawns: {fileID: 3123976970481988248}
+  locMarker: {fileID: 3123976969892423406}
   lineHeight: 4
   beatLength: 8
   yPos: []
+  posLines: []
+  spawnActive: 0
 --- !u!114 &3123976969879721409
 MonoBehaviour:
   m_ObjectHideFlags: 0

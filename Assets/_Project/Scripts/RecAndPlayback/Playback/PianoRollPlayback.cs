@@ -80,8 +80,9 @@ public class PianoRollPlayback : MonoBehaviour
         GetComponentInChildren<BackingTrack>().StartMusic();
         _spawner.ActivateIdleLines(false, bpm);
 
-        // set playing Back to true
+        // set playing Back to true + only spawn active lines
         playingBack = true;
+        _spawner.spawnActive = true;
 
         // set bar counters to zero and one // have to start one below because on first beat it's already updated
         timelineBar = -1;

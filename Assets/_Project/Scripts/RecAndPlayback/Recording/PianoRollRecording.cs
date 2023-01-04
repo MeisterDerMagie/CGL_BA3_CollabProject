@@ -213,5 +213,8 @@ public class PianoRollRecording : MonoBehaviour
                 playWithAudio = false;
             }
         }
+
+        spawner.spawnActive = playback;
+        spawner.ActivateAllSpawns(playback);
     }
 }
