@@ -41,4 +41,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Project/Scenes/Game_KofferPacken.unity
     guid: 5d07341d21781a748ac88f02c9c5e995
+  - enabled: 1
+    path: Assets/_Project/Scenes/Game_Playback.unity
+    guid: 56b8800ad603a004db8ffa02248daf14
   m_configObjects: {}

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// This script sits on the Piano Roll. The Piano roll keeps track of bars / time and tells the Spawner when to spawn which objects.
+/// This script sits on the Piano Roll. The Piano roll tells the Spawner when to spawn which objects.
 /// The Spawner spawns notes, lines, and activates/deactivates idle lines
 /// </summary>
 
@@ -25,10 +25,6 @@ public class NoteSpawner : MonoBehaviour
     [SerializeField] private int lineHeight = 4;
     [Tooltip("Length of Piano Roll in beats, how many beats fit into piano roll")]
     [SerializeField] private int beatLength = 8;
-    /*
-    [Tooltip("how many beats are to the right side of the location marker; how many beats can you preview before they need to be played")]
-    [SerializeField] private int previewLength = 6;
-    */
 
     float xPos; // where new notes should be spawned
     [SerializeField]List<float> yPos; // height of spawned notes which depends on the lineHeight of piano roll
@@ -38,11 +34,13 @@ public class NoteSpawner : MonoBehaviour
     private List<Transform> idleLines; // keep track of all idle lines
     private List<GameObject> currentNotes; // keep track of currently active notes to deactivate when hitting pause
     private List<GameObject> currentLines;
+    
     private GameObject startRecLine;
+    private GameObject endRecLine;
+    public bool isRecording;
 
     public bool spawnActive;
 
-    // Start is called before the first frame update
     void Start()
     {
         spawnActive = false;
@@ -109,40 +107,58 @@ public class NoteSpawner : MonoBehaviour
         #endregion
     }
 
-    public void ActivateIdleLines(bool var, float bpm)
+    public void ActivateIdleLines(bool var)
     {
         // de/activate idleLines
         idleL.SetActive(var);
+    }
 
-        // if idle lines are activated, remove all other active notes
-        // better alternative if time --> let them move until they hit the next beat
-        if (var)
+    // used in recording stage to de/activate lines which are already on the way
+    public void ActivateLines(bool value)
+    {
+        if (currentLines.Count == 0) return;
+        for (int i = currentLines.Count - 1; i >= 0; i--)
         {
-            foreach (GameObject obj in currentNotes)
-                Destroy(obj);
-            currentNotes.Clear();
-            foreach (GameObject obj in currentLines)
-                Destroy(obj);
-            currentLines.Clear();
+            currentLines[i].GetComponent<Notes>().Activate(value);
         }
-        else
+    }
+
+    // used to de/activate notes already on the way
+    public void ActivateNotes(bool value)
+    {
+        if (currentNotes.Count == 0) return;
+        for (int i = currentNotes.Count - 1; i >= 0; i--)
         {
-            // if idle lines are deactivated, spawn new lines that move:
-            for (int i = 0; i < posLines.Count; i++)
-            {
-                // instantiate a new line and set position to what is saved in posLines
-                GameObject clone = Instantiate(beatObj, spawns.transform);
-                clone.transform.localPosition = new Vector3(posLines[i], 0, 0);
+            currentNotes[i].GetComponent<Notes>().Activate(value);
+        }
+    }
 
-                int a = -1;
-                // tell the clone the current bpm, length of piano roll in beats, and target value of poision x (how far it needs to travel to the left)
-                if (i == 1 || i == 3 || i == 5 || i == 7 || i == 9 || i == 11 || i == 13) a = 2;
-                clone.GetComponent<Notes>().NoteSetUp(bpm, (i + 1) * beats, transform.localPosition.x - bg.transform.localScale.x / 2f, this,  -1, a);
+    // spawns lines when first playing music over the entire piano roll
+    public void SpawnLinesOnRoll(float bpm)
+    {
+        // I'm using newX here, because using xPos would offset everything by an eighth and it wouldn't look good when spawning the other notes
+        #region re-calculate x positions to spawn on
+        List<float> newX = new List<float>();
+        for (int i = 0; i < posLines.Count; i++)
+        {
+            float x = -xPos + (bg.transform.localScale.x / 16f) + (bg.transform.localScale.x / 16f) * i * 2;
+            newX.Add(x);
+        }
+        #endregion
 
-                clone.GetComponent<Notes>().Activate(spawnActive);
+        // spawn lines that move:
+        for (int i = 0; i < posLines.Count; i++)
+        {
+            // instantiate a new line and set position to what is saved in posLines
+            GameObject clone = Instantiate(beatObj, spawns.transform);
+            clone.transform.localPosition = new Vector3(newX[i], 0, 0);
 
-                currentLines.Add(clone);
-            }
+            int opaque = -1; // if opaque is 2 or 4 it will be made opaque
+            // tell the clone the current bpm, length of piano roll in beats, and target value of poision x (how far it needs to travel to the left)
+            if (i == 1 || i == 3 || i == 5 || i == 7 || i == 9 || i == 11 || i == 13) opaque = 2;
+            clone.GetComponent<Notes>().NoteSetUp(bpm, (i + 1) * beats * 2 - 1, transform.localPosition.x - bg.transform.localScale.x / 2f, this, -1, opaque);
+
+            currentLines.Add(clone);
         }
     }
 
@@ -153,56 +169,71 @@ public class NoteSpawner : MonoBehaviour
         currentNotes.Clear();
     }
 
-    public void SpawnLines(float bpm, int number)
+    public void DeleteActiveLines()
+    {
+        foreach (GameObject obj in currentLines)
+            Destroy(obj);
+        currentLines.Clear();
+    }
+
+    public void SpawnLine(float bpm, int number)
     {
         //intantiate a new quarternote line and set position to the far right of the piano roll:
         GameObject clone = Instantiate(beatObj, spawns.transform);
         clone.transform.localPosition = new Vector3(xPos, 0, 0);
 
         // tell the clone the current bpm, the length of the piano roll in beats, and the target value of position.x (how far it needs to travel to the left)
-        clone.GetComponent<Notes>().NoteSetUp(bpm, beatLength, transform.localPosition.x - bg.transform.localScale.x / 2f, this, -1, number);
+        clone.GetComponent<Notes>().NoteSetUp(bpm, beatLength * 2, transform.localPosition.x - bg.transform.localScale.x / 2f, this, -1, number);
         
         clone.GetComponent<Notes>().Activate(spawnActive);
 
         currentLines.Add(clone);
 
+
+        // keep track of last spawned 1 and set to startRecLine (or if already recording to endRecLine) to mark beginning and end of recording
         if (number == 1)
         {
-            startRecLine = clone;
+            if (isRecording)
+            {
+                endRecLine = clone;
+                clone.GetComponent<Notes>().isStartingLine = true;
+                clone.GetComponent<Notes>().StartLine(true);
+                isRecording = false;
+            }
+            else
+                startRecLine = clone;
         }
     }
 
-    public void SpawnNote(int line, float bpm)
+    public void SpawnNote(int instrumentID, float bpm)
     {
+        // convert instrumentID to line
+        int line = 0;
+        for (int i = 0; i < PlayerData.LocalPlayerData.InstrumentIds.Count; i++)
+        {
+            if (instrumentID == PlayerData.LocalPlayerData.InstrumentIds[i])
+                line = i;
+        }
+
         // instantiate a new note and set position to the far right of the piano roll
         GameObject clone = Instantiate(noteObj, spawns.transform);
         // y Pos is dependent on which note it is; calculation of the List happens in the start function of this script
         clone.transform.localPosition = new Vector3(xPos, yPos[line], 0);
 
         // tell the clone the current bpm, length of roll in beats, target position x
-        clone.GetComponent<Notes>().NoteSetUp(bpm, beatLength, transform.localPosition.x - bg.transform.localScale.x / 2f, this, line);
-        
-        clone.GetComponent<Notes>().Activate(spawnActive);
+        clone.GetComponent<Notes>().NoteSetUp(bpm, beatLength * 2, transform.localPosition.x - bg.transform.localScale.x / 2f, this, line);
 
         currentNotes.Add(clone);
     }
 
-    public void RemoveNote(GameObject obj)
+    public void RemoveFromList(GameObject obj)
     {
-        currentNotes.Remove(obj);
+        if (currentNotes.Contains(obj))
+            currentNotes.Remove(obj);
+        else if (currentLines.Contains(obj))
+            currentLines.Remove(obj);
     }
 
-    public void ActivateAllSpawns(bool value)
-    {
-        for (int i = currentNotes.Count - 1; i >= 0; i--)
-        {
-            currentNotes[i].GetComponent<Notes>().Activate(value);
-        }
-        for (int i = currentLines.Count - 1; i >= 0; i--)
-        {
-            currentLines[i].GetComponent<Notes>().Activate(value);
-        }
-    }
 
     public void SpawnNoteAtLocationMarker(int line, float bpm)
     {
@@ -210,16 +241,27 @@ public class NoteSpawner : MonoBehaviour
         GameObject clone = Instantiate(noteObj, spawns.transform);
 
         // set correct height of note and location marker position x
-        clone.transform.localPosition = new Vector3(locMarker.localPosition.x, yPos[line], 0);
+        //clone.transform.localPosition = new Vector3(locMarker.localPosition.x, yPos[line], 0);
+        float x = transform.localPosition.x - bg.transform.localScale.x / 2f + (bg.transform.localScale.x / 8f) * 2f;
+        clone.transform.localPosition = new Vector3(x, yPos[line], 0);
 
         // tell note bpm, length to travel, target position x
-        clone.GetComponent<Notes>().NoteSetUp(bpm, 2, transform.localPosition.x - bg.transform.localScale.x / 2f, this, line);
+        clone.GetComponent<Notes>().NoteSetUp(bpm, 2 * 2, transform.localPosition.x - bg.transform.localScale.x / 2f, this, line);
 
         currentNotes.Add(clone);
     }
 
-    public void ActivateStartLine(bool value)
+    public void ActivateStartLine()
     {
-        startRecLine.GetComponent<Notes>().StartLine(value);
+        startRecLine.GetComponent<Notes>().StartLine(true);
+        startRecLine.GetComponent<Notes>().isStartingLine = true;
+    }
+
+    public void DeactivateStartAndEndLine()
+    {
+        if (startRecLine != null)
+            startRecLine.GetComponent<Notes>().StartLine(false);
+        if (endRecLine != null)
+            endRecLine.GetComponent<Notes>().StartLine(false);
     }
 }

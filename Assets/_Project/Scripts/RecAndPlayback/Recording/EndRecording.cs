@@ -3,9 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// functionality for what happens at end of recording stage (when timer hit zero or player set ready):
+/// stop key inputs from player
+/// stop button interactability
+/// send over the recording to server (or if the recording is empty create and send over a random bar)
+/// stop the music
+/// load the next scene
+/// </summary>
+
 public class EndRecording : MonoBehaviour
 {
     RecordInput _recordInput;
+    [SerializeField] private LoadNextSceneWhenAllClientsAreDone _loadNext;
+    [SerializeField] private WaitingScreenController_Generic _waitScreen;
 
     [SerializeField] List<Button> buttons;
 
@@ -33,7 +44,11 @@ public class EndRecording : MonoBehaviour
             b.interactable = false;
         }
 
-        // activate waiting screen elfenbeinstein MISSING
+        // activate waiting screen and set as done
+        _waitScreen.Ready();
+        _waitScreen.Show();
+        _loadNext.Done();
+
     }
     void SendRecordingToServer()
     {
@@ -58,7 +73,7 @@ public class EndRecording : MonoBehaviour
     {
         randomBar = new List<Eighth>();
 
-        // create random bar
+        // create random bar; for every eighth randomly create bool true/false and if true, random range which instrumentID
         foreach (Eighth eighth in _recordInput.recordedBar)
         {
             Eighth newEighth = new Eighth();
@@ -70,8 +85,7 @@ public class EndRecording : MonoBehaviour
                 newEighth.contains = true;
 
                 int sound = Random.Range(0, 4);
-                //newEighth.instrumentID = PlayerData.LocalPlayerData.InstrumentIds[sound];
-                newEighth.instrumentID = sound;
+                newEighth.instrumentID = PlayerData.LocalPlayerData.InstrumentIds[sound];
             }
             else
             {
