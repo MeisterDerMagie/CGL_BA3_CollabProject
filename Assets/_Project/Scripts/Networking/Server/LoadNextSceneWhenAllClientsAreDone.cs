@@ -29,6 +29,7 @@ public class LoadNextSceneWhenAllClientsAreDone : NetworkBehaviour
     //call this on the client when they are done with the current scene
     public void Done()
     {
+        if (NetworkManager == null) return;
         if (NetworkManager.IsServer)
         {
             Debug.LogWarning("Don't call this method on the server.", this);
