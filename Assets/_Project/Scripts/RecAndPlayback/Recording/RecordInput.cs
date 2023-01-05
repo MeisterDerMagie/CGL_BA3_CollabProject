@@ -6,10 +6,10 @@ using Unity.Netcode;
 
 public enum RecordingState
 {
-    WaitToStart,
-    CountIn,
-    Recording,
-    Idle
+    WAITTOSTART,
+    COUNTIN,
+    REC,
+    IDLE
 }
 
 public struct RecordingNote
@@ -33,7 +33,7 @@ public class RecordInput : MonoBehaviour
 
     public RecordingState recordingState;
 
-    private List<RecordingNote> recordedTimeStamps;
+    private List<RecordingNote> recordedTimeStamps; // technically obsolete since we map to grid right away, but we're still keeping track of the exact time stamps
 
     public List<Eighth> recordedBar;
     private List<Eighth> safetyCopyBar; // safety copy to go back to 
@@ -59,10 +59,11 @@ public class RecordInput : MonoBehaviour
         _pianoRoll = _audioRoll.gameObject.GetComponentInParent<PianoRollRecording>();
         //_pianoRoll.PlayRecording(true, false);
         _recordingUI.playingBack = false;
+        _recordingUI.SetPlayButton();
 
         _spawner = _pianoRoll.GetComponent<NoteSpawner>();
 
-        recordingState = RecordingState.Idle;
+        recordingState = RecordingState.IDLE;
 
         recordedTimeStamps = new List<RecordingNote>();
 
@@ -114,7 +115,7 @@ public class RecordInput : MonoBehaviour
 
         // increase timer if we are counting in or recording
         // we start the timer once we start counting in, in case the first input is a little before the beginning of the beat
-        if (recordingState == RecordingState.CountIn || recordingState == RecordingState.Recording) timer += Time.deltaTime;
+        if (recordingState == RecordingState.COUNTIN || recordingState == RecordingState.REC) timer += Time.deltaTime;
 
         for (int i = 0; i < keyInputs.Length; i++)
         {
@@ -124,7 +125,7 @@ public class RecordInput : MonoBehaviour
                 _audioRoll.PlayerInputSound(i);
 
                 // if recording / count in
-                if (recordingState == RecordingState.Recording || recordingState == RecordingState.CountIn)
+                if (recordingState == RecordingState.REC || recordingState == RecordingState.COUNTIN)
                 {
                     // save input to list of time stamps
                     RecordingNote n = new RecordingNote();
@@ -146,10 +147,11 @@ public class RecordInput : MonoBehaviour
     {
         if (NetworkManager.Singleton.IsServer) return;
 
-        if (recordingState == RecordingState.Idle)
+        // if we're in idle state, wait to start counting in at next available 1 and start recording
+        if (recordingState == RecordingState.IDLE)
         {
             // waitToStartRecording at next 1 with a count in of one bar
-            recordingState = RecordingState.WaitToStart;
+            recordingState = RecordingState.WAITTOSTART;
 
             _pianoRoll.gameObject.GetComponent<NoteSpawner>().DeleteActiveNotes();
 
@@ -164,6 +166,7 @@ public class RecordInput : MonoBehaviour
             _pianoRoll.ControlPlayback(PianoRollRecording.RecPBStage.ONLYLINES);
 
             _recordingUI.playingBack = false;
+            //_recordingUI.SetPlayButton();
 
             // Update UI:
             recFrame.SetActive(true);
@@ -175,7 +178,7 @@ public class RecordInput : MonoBehaviour
             StopRecording();
 
             // if we're stopping the recording before we started to record anything --> return to safety copy
-            if (recordingState != RecordingState.Recording)
+            if (recordingState != RecordingState.REC)
             {
                 recordedBar.Clear();
                 foreach (Eighth e in safetyCopyBar)
@@ -190,7 +193,7 @@ public class RecordInput : MonoBehaviour
     {
         if (NetworkManager.Singleton.IsServer) return;
 
-        if (recordingState != RecordingState.Idle) return;
+        if (recordingState != RecordingState.IDLE) return;
 
         recordedBar.Clear();
         WriteEmptyBar(recordedBar);
@@ -206,11 +209,11 @@ public class RecordInput : MonoBehaviour
         {
             switch (recordingState)
             {
-                case RecordingState.Idle:
+                case RecordingState.IDLE:
                     // do nothing
                     break;
-                case RecordingState.WaitToStart:
-                    recordingState = RecordingState.CountIn;
+                case RecordingState.WAITTOSTART:
+                    recordingState = RecordingState.COUNTIN;
                     _spawner.ActivateStartLine();
                     _spawner.isRecording = true;
 
@@ -223,14 +226,15 @@ public class RecordInput : MonoBehaviour
                     _beatMapping.PrepareRecording();
 
                     break;
-                case RecordingState.CountIn:
-                    recordingState = RecordingState.Recording;
+                case RecordingState.COUNTIN:
+                    recordingState = RecordingState.REC;
                     _spawner.isRecording = false;
 
                     _recordingUI.UpdateCountIn(true, "REC");
                     _recordingUI.playingBack = true;
+                    _recordingUI.SetPlayButton();
                     break;
-                case RecordingState.Recording:
+                case RecordingState.REC:
                     StopRecording();
                     recordedTimeStamps.Clear();
                     
@@ -239,7 +243,7 @@ public class RecordInput : MonoBehaviour
         }
         else
         {
-            if (recordingState == RecordingState.CountIn)
+            if (recordingState == RecordingState.COUNTIN)
             {
                 if (_backingTrack.lastBeat == 1)
                     _recordingUI.UpdateCountIn(true, "1");
@@ -260,7 +264,7 @@ public class RecordInput : MonoBehaviour
     {
         if (NetworkManager.Singleton.IsServer) return;
 
-        recordingState = RecordingState.Idle;
+        recordingState = RecordingState.IDLE;
 
         // set UI object inactive
         recFrame.SetActive(false);
@@ -271,6 +275,7 @@ public class RecordInput : MonoBehaviour
 
         _pianoRoll.ControlPlayback(PianoRollRecording.RecPBStage.INACTIVE);
         _recordingUI.playingBack = false;
+        _recordingUI.SetPlayButton();
         _spawner.isRecording = false;
 
         spawnNote = false;

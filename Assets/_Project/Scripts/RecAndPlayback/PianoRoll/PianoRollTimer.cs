@@ -4,10 +4,10 @@ using UnityEngine;
 
 /// <summary>
 /// The Piano Roll Timer subscribes to get the updated Beat and Bar Timeline Info via the BackingTrack script from FMOD
-/// PianoRollTimer then just counts the beats and bars for use in the Piano Roll (and to be reset to the piano roll when different playback situations occur
+/// PianoRollTimer then just counts the beats and bars for use in the Piano Roll
 /// </summary>
 
-public enum CurrentStage
+public enum CurrentGameStage
 {
     Recording,
     Playback,
@@ -25,19 +25,18 @@ public class PianoRollTimer : MonoBehaviour
     [SerializeField] private int resetPrevCounter = 3;
 
     [SerializeField]
-    private CurrentStage stage;
-
-
+    private CurrentGameStage stage;
 
 
     void Start()
     {
         _backingTrack = GetComponentInChildren<BackingTrack>();
 
+        // add self to event delegate for beat updates
         _backingTrack.beatUpdated += NextBeat;
 
-        timelineBeat = 0;
-        previewBeat = resetPrevCounter;
+        //timelineBeat = 0;
+        //previewBeat = resetPrevCounter;
     }
 
     private void OnDestroy()
@@ -48,14 +47,14 @@ public class PianoRollTimer : MonoBehaviour
 #if UNITY_EDITOR
     private void OnGUI()
     {
-        GUILayout.Box($"timeline beat = {timelineBeat}, preview beat = {previewBeat}");
+        //GUILayout.Box($"timeline beat = {timelineBeat}, preview beat = {previewBeat}");
     }
 #endif
 
     public void ResetTimer()
     {
-        previewBeat = resetPrevCounter - 1;
-        timelineBeat = -1 ;
+        //previewBeat = resetPrevCounter - 1;
+        //timelineBeat = -1 ;
     }
 
     // called from FMOD events via BackingTrack script
@@ -86,15 +85,17 @@ public class PianoRollTimer : MonoBehaviour
         else if (timelineBeat == 8)
             previewBeat = 4;
 
+
+        // depending on current scene --> set stage in inspector --> tell corresponding piano roll script to update to next beat
         switch (stage)
         {
-            case CurrentStage.Recording:
+            case CurrentGameStage.Recording:
                 GetComponent<PianoRollRecording>().NextBeat();
                 break;
-            case CurrentStage.Playback:
+            case CurrentGameStage.Playback:
                 GetComponent<PianoRollPlayback>().NextBeat();
                 break;
-            case CurrentStage.Repeat:
+            case CurrentGameStage.Repeat:
                 break;
         }
     }

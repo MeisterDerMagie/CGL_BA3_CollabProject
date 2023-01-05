@@ -82,7 +82,7 @@ public class PianoRollRecording : MonoBehaviour
 
         _backingTrack.StopMusic();
         _recordInput.StopRecording();
-        _timer.ResetTimer();
+        //_timer.ResetTimer();
         musicPlaying = false;
 
         stage = RecPBStage.INACTIVE;
@@ -110,41 +110,25 @@ public class PianoRollRecording : MonoBehaviour
             stage = RecPBStage.PBWITHAUDIO;
         }
 
-        if (playback) PlaybackNotes();
+        // preview notes
+        if (playback)
+            if (_recordInput.recordedBar[_timer.previewBeat - 1].contains) 
+                _spawner.SpawnNote(_recordInput.recordedBar[_timer.previewBeat - 1].instrumentID, bpm);
 
-        if (withAudio) PlaybackAudio();
+        // playback audio
+        if (withAudio) 
+            if (_recordInput.recordedBar[_timer.timelineBeat - 1].contains)
+                _audioRoll.PlaySound(_recordInput.recordedBar[_timer.timelineBeat - 1].instrumentID);
     }
 
 
     void PlaybackLines()
     {
         // only spawn lines on 1s and 3s, so on first and fifth eighth
-        if (_timer.previewBeat == 1) _spawner.SpawnLines(bpm, 1);
-        if (_timer.previewBeat == 3) _spawner.SpawnLines(bpm, 2);
-        if (_timer.previewBeat == 5) _spawner.SpawnLines(bpm, 3);
-        if (_timer.previewBeat == 7) _spawner.SpawnLines(bpm, 4);
-    }
-
-    void PlaybackNotes()
-    {
-        int line = 0;
-
-        if (_recordInput.recordedBar[_timer.previewBeat - 1].contains)
-        {
-            for (int i = 0; i < PlayerData.LocalPlayerData.InstrumentIds.Count; i++)
-            {
-                if (_recordInput.recordedBar[_timer.previewBeat - 1].instrumentID == PlayerData.LocalPlayerData.InstrumentIds[i])
-                    line = i;
-            }
-            _spawner.SpawnNote(line, bpm);
-
-        }
-    }
-
-    void PlaybackAudio()
-    {
-        if (_recordInput.recordedBar[_timer.timelineBeat - 1].contains)
-            _audioRoll.PlaySound(_recordInput.recordedBar[_timer.timelineBeat - 1].instrumentID);
+        if (_timer.previewBeat == 1) _spawner.SpawnLine(bpm, 1);
+        if (_timer.previewBeat == 3) _spawner.SpawnLine(bpm, 2);
+        if (_timer.previewBeat == 5) _spawner.SpawnLine(bpm, 3);
+        if (_timer.previewBeat == 7) _spawner.SpawnLine(bpm, 4);
     }
 
     public void ControlPlayback(RecPBStage _recStage)

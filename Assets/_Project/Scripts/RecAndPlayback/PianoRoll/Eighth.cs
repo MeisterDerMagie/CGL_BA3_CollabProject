@@ -5,6 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Unity.Netcode;
 
+/// <summary>
+/// Data structures that hold our recordings
+/// A bar always consists of 8 eighths and every eighth holds information whether it contains a note or not, and which instrumentID
+/// </summary>
+
 [Serializable]
 public struct Eighth : INetworkSerializable, IEquatable<Eighth>
 {
@@ -31,5 +36,4 @@ public struct Bar
         eighth = new List<Eighth>();
         eighth = _n;
     }
-
 }

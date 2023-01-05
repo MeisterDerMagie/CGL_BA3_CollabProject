@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
+/// <summary>
+/// sets up the icons at the very left of the piano roll to mark which instrument is displayed on which line
+/// </summary>
+
 public class PianoRollIcons : MonoBehaviour
 {
     [SerializeField] private List<SpriteRenderer> _renderers;

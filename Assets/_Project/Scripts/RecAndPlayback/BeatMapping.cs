@@ -29,6 +29,7 @@ public class BeatMapping : MonoBehaviour
             compareTo.Add(time);
         }
 
+        // dispersion is the duration of half an eighth
         dispersion = (60f / _pianoRoll.bpm / 4f);
     }
 
@@ -44,9 +45,6 @@ public class BeatMapping : MonoBehaviour
                 e.instrumentID = note.soundID;
 
                 _recordInput.recordedBar[i] = e;
-                // overwrite values in eight[i]
-                //_recordInput.recordedBar[i].contains = true;
-                //_recordInput.recordedBar[i].soundID = note.soundID;
             }
         }
     }

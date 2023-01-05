@@ -21,35 +21,45 @@ public class Notes : MonoBehaviour
 
     public bool isStartingLine;
 
-    public void NoteSetUp(float bpm, int beatLength, float _targetX, NoteSpawner script, int s, int number = -1)
+    public void NoteSetUp(float bpm, int beatLength, float _targetX, NoteSpawner script, int instrumentID, int beat = -1)
     {
-        // s is set to -1 if it's a line being spawned
-        // s is the # of which sound is used in the local player's current instrumentIDs
+        // instrumentID is set to -1 if it's a line being spawned
+        // otherwise it is a note being spawned and used for setting the sprite
 
         // calculate total duration of travelling length of the piano roll in seconds
         // duration of eighth note = 60 seconds / bpm / 2
-        // beat length = length of piano roll measured in quarter notes
-        // --> total duration is eighth notes times beat length
+        // beat length = length of piano roll measured in eighth notes
+        // --> total duration is eighth note duration times beat length
         float duration = (60f / bpm / 2f) * (beatLength);
 
-        // s is only -1 when it is a line being spawned and then number is the current beat
-        if (s == -1)
+        // instrumentID is only -1 when it is a line being spawned and then number is the current beat
+        // so if a line is being spawned
+        if (instrumentID == -1)
         {
-            if (number == 2 || number == 4)
+            // if the current beat is 2 or 4, make the line opaque
+            if (beat == 2 || beat == 4)
                 MakeOpaque();
         }
         else
         {
-            // set button bg to correct background
-            _objRenderer.sprite = sprites[s];
+            // convert instrumentID to line to chose correct button background:
+            int line = 0;
+            for (int i = 0; i < PlayerData.LocalPlayerData.InstrumentIds.Count; i++)
+            {
+                if (instrumentID == PlayerData.LocalPlayerData.InstrumentIds[i])
+                    line = i;
+            }
+            if (line >= sprites.Length) line = 0;
+            _objRenderer.sprite = sprites[line];
 
-            // set icon image:
+
+            // set icon image on top of background:
             if (_secondRenderer != null)
             {
                 if (InstrumentsManager.Instance != null)
                 {
                     // get correct sprite from Instruments Manager
-                    Sprite sprite = InstrumentsManager.Instance.GetInstrument(PlayerData.LocalPlayerData.InstrumentIds[s]).instrumentIcon;
+                    Sprite sprite = InstrumentsManager.Instance.GetInstrument(PlayerData.LocalPlayerData.InstrumentIds[instrumentID]).instrumentIcon;
 
                     _secondRenderer.gameObject.SetActive(true);
                     _secondRenderer.sprite = sprite;
@@ -62,9 +72,8 @@ public class Notes : MonoBehaviour
         // set target position on the right side of the Piano Roll
         Vector3 targetPos = new Vector3(_targetX, transform.localPosition.y, transform.localPosition.z);
 
+        // start moving object in coroutine
         StartCoroutine(MoveToLeft(duration, targetPos));
-
-        Debug.Log("spawned");
     }
 
     IEnumerator MoveToLeft(float duration, Vector3 targetPosition)
@@ -80,7 +89,7 @@ public class Notes : MonoBehaviour
             yield return null;
         }
 
-        spawner.RemoveNote(this.gameObject);
+        spawner.RemoveFromList(this.gameObject);
         Destroy(this.gameObject);
     }
 
@@ -92,6 +101,7 @@ public class Notes : MonoBehaviour
         _objRenderer.color = c;
     }
 
+    // used to set the lines active and inactive during the recording stage
     public void Activate(bool value)
     {
         visuals.SetActive(value);
@@ -102,6 +112,7 @@ public class Notes : MonoBehaviour
         }
     }
 
+    // used during recording stage to make the beginning and end of the bar clearly visible 
     public void StartLine(bool value)
     {
         if (startLine == null) return;
