@@ -26,6 +26,8 @@ public class PianoRollPlayback : NetworkBehaviour
     private PianoRollTimer _timer;
     private AudioRoll _audioRoll;
     private NoteSpawner _spawner;
+    [SerializeField] private Light _light;
+    [SerializeField] private LoadNextSceneWhenAllClientsAreDone _loadNext;
 
     [Space]
     public float bpm = 110f;
@@ -65,7 +67,7 @@ public class PianoRollPlayback : NetworkBehaviour
         previewStage = PlaybackStage.IDLE;
 
         //
-        _display.SwitchLight(false);
+        _light.TurnOff();
         _display.TurnOffCharacter();
 
         // wait short time for playback to start
@@ -101,7 +103,7 @@ public class PianoRollPlayback : NetworkBehaviour
         previewStage = PlaybackStage.COUNTIN;
 
         // update display and switch off light
-        _display.SwitchLight(false);
+        _light.TurnOff();
     }
 
     // only needed for testing
@@ -117,7 +119,7 @@ public class PianoRollPlayback : NetworkBehaviour
         _spawner.DeleteActiveLines();
         _spawner.DeleteActiveNotes();
 
-        _display.SwitchLight(false);
+        _light.TurnOff();
         _display.TurnOffCharacter();
     }
 
@@ -169,7 +171,7 @@ public class PianoRollPlayback : NetworkBehaviour
                     if (_timer.timelineBar - timelineBar == countIn + 1)
                     {
                         // turn on light and change state to playing
-                        _display.SwitchLight(true);
+                        _light.TurnOn();
                         timelineStage = PlaybackStage.PLAYING;
                         timelineBar = _timer.timelineBar;
                     }
@@ -185,7 +187,7 @@ public class PianoRollPlayback : NetworkBehaviour
                     if (_timer.timelineBar - timelineBar == barsBetween)
                     {
                         // turn on light and change state to playing
-                        _display.SwitchLight(true);
+                        _light.TurnOn();
                         timelineStage = PlaybackStage.PLAYING;
                         timelineBar = _timer.timelineBar;
                     }
@@ -203,7 +205,7 @@ public class PianoRollPlayback : NetworkBehaviour
                     timelineStage = PlaybackStage.COUNTIN;
                     timelineBar = _timer.timelineBar;
                 }
-                _display.SwitchLight(false);
+                _light.TurnOff();
                 //_display.TurnOffCharacter();
                 break;
             default:
@@ -277,11 +279,11 @@ public class PianoRollPlayback : NetworkBehaviour
         timelineStage = PlaybackStage.IDLE;
         playingBack = false;
 
-        // figure out what else to do
-        Debug.Log("this was the last player");
-
-        _display.SwitchLight(false);
+        _light.TurnOff();
         _display.TurnOffCharacter();
+
+        if (!NetworkManager.IsServer)
+            _loadNext.Done();
     }
 
 #if UNITY_EDITOR
