@@ -5,6 +5,7 @@ using UnityEngine;
 public class AudioBusMixer : MonoBehaviour
 {
     FMOD.Studio.Bus bus;
+    [Tooltip("Music for Backing Track and Instruments for Player Instruments")]
     [SerializeField] private string busName;
 
     void Start()
