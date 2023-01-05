@@ -15,6 +15,8 @@ public class AudioRoll : MonoBehaviour
 {
     private List<FMOD.Studio.EventInstance> instance;
 
+    //[SerializeField] private EventReference[] events; // for testing locally
+
     public void SetUpAllInstances()
     {
         instance = new List<FMOD.Studio.EventInstance>();
@@ -50,4 +52,34 @@ public class AudioRoll : MonoBehaviour
         if (InstrumentsManager.Instance == null) return;
         RuntimeManager.PlayOneShot(InstrumentsManager.Instance.GetInstrument(instrumentID).soundEvent);
     }
+
+    /* for testing locally
+    public void TestSound(int instrumentID)
+    {
+        if (instrumentID > events.Length - 1) instrumentID = 0;
+
+        instance[instrumentID].setPaused(false);
+        instance[instrumentID].release();
+
+        instance[instrumentID] = RuntimeManager.CreateInstance(events[instrumentID]);
+        instance[instrumentID].start();
+        instance[instrumentID].setPaused(true);
+    }
+
+    public void TestSetup()
+    {
+        instance = new List<FMOD.Studio.EventInstance>();
+
+        for (int i = 0; i < 4; i++)
+        {
+            FMOD.Studio.EventInstance inst;
+            
+            inst = RuntimeManager.CreateInstance(events[i]);
+            inst.start();
+            inst.setPaused(true);
+
+            instance.Add(inst);
+        }
+    }
+    */
 }

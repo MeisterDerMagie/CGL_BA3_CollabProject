@@ -11,6 +11,7 @@ public enum CurrentGameStage
 {
     Recording,
     Playback,
+    Voting,
     Repeat
 }
 
@@ -94,6 +95,9 @@ public class PianoRollTimer : MonoBehaviour
                 break;
             case CurrentGameStage.Playback:
                 GetComponent<PianoRollPlayback>().NextBeat();
+                break;
+            case CurrentGameStage.Voting:
+                GetComponent<PlaybackVoting>().NextBeat();
                 break;
             case CurrentGameStage.Repeat:
                 break;
