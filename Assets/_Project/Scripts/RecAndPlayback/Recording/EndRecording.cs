@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.Netcode;
 
 /// <summary>
 /// functionality for what happens at end of recording stage (when timer hit zero or player set ready):
@@ -29,6 +30,8 @@ public class EndRecording : MonoBehaviour
 
     public void EndRecordingStage()
     {
+        if (NetworkManager.Singleton.IsServer) return;
+
         // stop player instruments:
         GetComponent<RecordInput>().stageEnded = true;
 

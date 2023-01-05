@@ -125,6 +125,8 @@ public class PianoRollPlayback : NetworkBehaviour
 
     public void NextBeat()
     {
+        if (NetworkManager.IsServer) return;
+
         if (!playingBack) return;
         if (_timer.timelineBeat == 0) return;
         
@@ -206,7 +208,6 @@ public class PianoRollPlayback : NetworkBehaviour
                     timelineBar = _timer.timelineBar;
                 }
                 _light.TurnOff();
-                //_display.TurnOffCharacter();
                 break;
             default:
                 break;
@@ -241,7 +242,7 @@ public class PianoRollPlayback : NetworkBehaviour
             case PlaybackStage.PLAYING:
                 previewPlayer++;
                 // check if last player
-                if (previewPlayer == playerDatas.Count - 1)
+                if (previewPlayer > playerDatas.Count - 1)
                 {
                     previewStage = PlaybackStage.IDLE;
                 }
