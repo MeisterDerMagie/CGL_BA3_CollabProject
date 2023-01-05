@@ -15,6 +15,8 @@ using UnityEngine.UI;
 public class EndRecording : MonoBehaviour
 {
     RecordInput _recordInput;
+    [SerializeField] private LoadNextSceneWhenAllClientsAreDone _loadNext;
+    [SerializeField] private WaitingScreenController_Generic _waitScreen;
 
     [SerializeField] List<Button> buttons;
 
@@ -42,7 +44,11 @@ public class EndRecording : MonoBehaviour
             b.interactable = false;
         }
 
-        // activate waiting screen elfenbeinstein MISSING
+        // activate waiting screen and set as done
+        _waitScreen.Ready();
+        _waitScreen.Show();
+        _loadNext.Done();
+
     }
     void SendRecordingToServer()
     {
