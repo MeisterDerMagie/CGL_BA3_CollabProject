@@ -10,6 +10,7 @@ public class WaitingScreenController_Generic : WaitingScreenController
     //call this on the client if they are ready
     public void Ready()
     {
+        if (NetworkManager == null) return;
         ReadyServerRpc(NetworkManager.LocalClientId);
     }
     
