@@ -218,7 +218,7 @@ public class RecordInput : MonoBehaviour
                     _spawner.isRecording = true;
 
                     // activate text field + set to one
-                    _recordingUI.UpdateCountIn(true, "1");
+                    _recordingUI.UpdateCountIn(true, "4");
 
                     // reset timer for recording:
                     timer = 0;
@@ -246,14 +246,14 @@ public class RecordInput : MonoBehaviour
             if (recordingState == RecordingState.COUNTIN)
             {
                 if (_backingTrack.lastBeat == 1)
-                    _recordingUI.UpdateCountIn(true, "1");
+                    _recordingUI.UpdateCountIn(true, "4");
                 else if (_backingTrack.lastBeat == 3)
-                    _recordingUI.UpdateCountIn(true, "2");
-                else if (_backingTrack.lastBeat == 5)
                     _recordingUI.UpdateCountIn(true, "3");
+                else if (_backingTrack.lastBeat == 5)
+                    _recordingUI.UpdateCountIn(true, "2");
                 else if (_backingTrack.lastBeat == 7)
                 {
-                    _recordingUI.UpdateCountIn(true, "AND");
+                    _recordingUI.UpdateCountIn(true, "1");
                     spawnNote = true;
                 }
             }
