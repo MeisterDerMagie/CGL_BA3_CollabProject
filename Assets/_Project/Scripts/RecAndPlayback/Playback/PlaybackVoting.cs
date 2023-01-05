@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+/// <summary>
+/// controls the audio playback during the voting stage (when players vote for other's creativity)
+/// called via button --> set waitToStart to true and set playerID
+/// on the next 1 (via timer script) set playback to true and then play on every beat that the player's bar has a note
+/// </summary>
+
 public class PlaybackVoting : MonoBehaviour
 {
     private BackingTrack _backingTrack;
@@ -59,7 +65,6 @@ public class PlaybackVoting : MonoBehaviour
             if (bar[playerID].eighth[_timer.timelineBeat - 1].contains)
                 _audioRoll.TestSound(bar[playerID].eighth[_timer.timelineBeat - 1].instrumentID);
             */
-
             if (playerDatas[playerID].Recording[_timer.timelineBeat - 1].contains)
                 _audioRoll.PlayerInputSound(playerDatas[playerID].Recording[_timer.timelineBeat - 1].instrumentID);
         }
@@ -76,7 +81,7 @@ public class PlaybackVoting : MonoBehaviour
             playback = false;
             waitToStart = false;
         }
-        // otherwise start with different player
+        // otherwise stop and start with different player
         else
         {
             playerID = _playerID;
