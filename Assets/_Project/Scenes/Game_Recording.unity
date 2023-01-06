@@ -448,8 +448,29 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 35
       objectReference: {fileID: 0}
+    - target: {fileID: 8162279145037978903, guid: de71af4a9a6b3b942a8a841a2764a432, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8162279145037978903, guid: de71af4a9a6b3b942a8a841a2764a432, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 738560282}
+    - target: {fileID: 8162279145037978903, guid: de71af4a9a6b3b942a8a841a2764a432, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EndRecordingStage
+      objectReference: {fileID: 0}
+    - target: {fileID: 8162279145037978903, guid: de71af4a9a6b3b942a8a841a2764a432, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EndRecording, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8162279145037978903, guid: de71af4a9a6b3b942a8a841a2764a432, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2013410141, guid: de71af4a9a6b3b942a8a841a2764a432, type: 3}
+    - {fileID: 2013410137, guid: de71af4a9a6b3b942a8a841a2764a432, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: de71af4a9a6b3b942a8a841a2764a432, type: 3}
 --- !u!224 &397833467 stripped
 RectTransform:
