@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// controls the bus level via the slider
+/// saves the level in player prefs and stores that value in between scenes and playthroughs
+/// name of the bus can be set in the inspector
+/// </summary>
+
 public class AudioBusMixer : MonoBehaviour
 {
     FMOD.Studio.Bus bus;

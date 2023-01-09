@@ -33,7 +33,8 @@ public class EndRecording : MonoBehaviour
         if (NetworkManager.Singleton.IsServer) return;
 
         // stop player instruments:
-        GetComponent<RecordInput>().stageEnded = true;
+        if (_recordInput == null) _recordInput = GetComponent<RecordInput>();
+        _recordInput.stageEnded = true;
 
         // send over the recorded bar or a random bar
         SendRecordingToServer();

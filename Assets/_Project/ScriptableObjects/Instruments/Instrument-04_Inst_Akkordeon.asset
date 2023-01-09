@@ -20,5 +20,5 @@ MonoBehaviour:
       Data2: 1163098834
       Data3: 2064327332
       Data4: 250252675
-    Path: event:/Instrument Samples/Inst_Akkordeon
+    Path: event:/Instrument Samples/Old/Inst_Akkordeon
   instrumentIcon: {fileID: 21300000, guid: 3cb8d6446c9b670409fd7d59aaa31264, type: 3}

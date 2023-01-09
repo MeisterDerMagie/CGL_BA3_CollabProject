@@ -16,9 +16,9 @@ MonoBehaviour:
   friendlyName: HiHat
   soundEvent:
     Guid:
-      Data1: -285643216
-      Data2: 1305215359
-      Data3: -753767539
-      Data4: 468411598
-    Path: event:/Instrument Samples/Perc_HiHat
+      Data1: -2067192680
+      Data2: 1214406227
+      Data3: -344358501
+      Data4: 190407115
+    Path: event:/Instrument Samples/New/Perc_HiHat
   instrumentIcon: {fileID: 21300000, guid: e2f9ff1ec9f628f43bda959571c2e7a7, type: 3}

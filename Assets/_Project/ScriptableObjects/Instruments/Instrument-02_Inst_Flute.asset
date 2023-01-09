@@ -16,9 +16,9 @@ MonoBehaviour:
   friendlyName: Flute
   soundEvent:
     Guid:
-      Data1: 1702724892
-      Data2: 1162142468
-      Data3: -366997832
-      Data4: 657655858
-    Path: event:/Instrument Samples/Inst_Flute
+      Data1: 809219665
+      Data2: 1268292036
+      Data3: 1698687396
+      Data4: 1009762892
+    Path: event:/Instrument Samples/New/Instr_Flute
   instrumentIcon: {fileID: 21300000, guid: 5cb5b8f4a97a0304982142286095eca9, type: 3}
