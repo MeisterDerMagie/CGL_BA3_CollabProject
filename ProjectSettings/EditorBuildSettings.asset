@@ -44,4 +44,28 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Project/Scenes/Game_Playback.unity
     guid: 56b8800ad603a004db8ffa02248daf14
+  - enabled: 1
+    path: Assets/_Project/Scenes/Schubidu_1.unity
+    guid: 01794b5f7346b3448b830a16bb1bb84e
+  - enabled: 1
+    path: Assets/_Project/Scenes/Schubidu_2.unity
+    guid: bf2e1c0c802286149911eef3b61d8dcc
+  - enabled: 1
+    path: Assets/_Project/Scenes/Schubidu_3.unity
+    guid: a1594c6ef8494504f9c06cc29dac25ab
+  - enabled: 1
+    path: Assets/_Project/Scenes/Schubidu_4.unity
+    guid: db6566c49eff92f49ab6a965e9c4a942
+  - enabled: 1
+    path: Assets/_Project/Scenes/Schubidu_5.unity
+    guid: 0165ce1483e35a948b4d4d6989df6208
+  - enabled: 1
+    path: Assets/_Project/Scenes/Schubidu_6.unity
+    guid: 0d81f7ea7f293d640bba1df2fa1672d0
+  - enabled: 1
+    path: Assets/_Project/Scenes/Game_Jury.unity
+    guid: c5968bd71ead95c439cbd748fec8ef53
+  - enabled: 1
+    path: Assets/_Project/Scenes/Game_Winners.unity
+    guid: 8b316690ed06f8a459567fcbbd50ad9f
   m_configObjects: {}

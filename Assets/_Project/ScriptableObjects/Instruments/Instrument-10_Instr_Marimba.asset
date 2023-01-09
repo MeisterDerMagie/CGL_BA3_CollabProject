@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c589d62276e77404498aa48d4be86368, type: 3}
-  m_Name: Instrument-04_Inst_Akkordeon
+  m_Name: Instrument-10_Instr_Marimba
   m_EditorClassIdentifier: 
-  instrumentId: 4
-  friendlyName: Akkordeon
+  instrumentId: 10
+  friendlyName: Marimba
   soundEvent:
     Guid:
-      Data1: -1574102228
-      Data2: 1163098834
-      Data3: 2064327332
-      Data4: 250252675
-    Path: event:/Instrument Samples/Old/Inst_Akkordeon
-  instrumentIcon: {fileID: 21300000, guid: 3cb8d6446c9b670409fd7d59aaa31264, type: 3}
+      Data1: -816477724
+      Data2: 1080506616
+      Data3: 593922187
+      Data4: -1557757425
+    Path: event:/Instrument Samples/New/Instr_Marimba
+  instrumentIcon: {fileID: 21300000, guid: 44159a258ef7b354bba0034c5ad8a424, type: 3}

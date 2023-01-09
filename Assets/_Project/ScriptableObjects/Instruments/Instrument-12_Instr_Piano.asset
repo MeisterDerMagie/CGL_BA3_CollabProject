@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c589d62276e77404498aa48d4be86368, type: 3}
+  m_Name: Instrument-12_Instr_Piano
+  m_EditorClassIdentifier: 
+  instrumentId: 12
+  friendlyName: Piano
+  soundEvent:
+    Guid:
+      Data1: 304804582
+      Data2: 1313192174
+      Data3: -798255466
+      Data4: 256955459
+    Path: event:/Instrument Samples/New/Instr_Pno
+  instrumentIcon: {fileID: 21300000, guid: fed3a951b76f4804a8d5800a1f65ac13, type: 3}

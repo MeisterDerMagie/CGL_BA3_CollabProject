@@ -431,7 +431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba4acca13884058aad79d37058d1d5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextScene: {fileID: 0}
+  nextScene: {fileID: 11400000, guid: 314f75b4f083d9c49948d0ecce4a5e45, type: 2}
 --- !u!4 &1971938793
 Transform:
   m_ObjectHideFlags: 0
@@ -456,7 +456,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: lines.Array.size
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: lines.Array.data[0]
@@ -464,6 +464,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: lines.Array.data[1]
+      value: I could have my own show, but instead I'm trapped here, literally.
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: lines.Array.data[2]
+      value: ' Or have you seen any legs or different placement on the screen? '
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: lines.Array.data[3]
+      value: ' Which screen ? Nahhh forget it that joke seems to be too meta for
+        you.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: lines.Array.data[4]
       value: Go plu...onder some wonders...
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
@@ -541,6 +554,14 @@ PrefabInstance:
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: onSchubiduFinished.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3204870652210103703, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 55.350098
+      objectReference: {fileID: 0}
+    - target: {fileID: 3204870652210103703, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -67.00003
       objectReference: {fileID: 0}
     - target: {fileID: 3204870652210103720, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: m_isRightToLeft
@@ -644,7 +665,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3204870652698733587, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 24
+      value: 23.993225
       objectReference: {fileID: 0}
     - target: {fileID: 3204870652702997388, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: m_SizeDelta.x
@@ -724,11 +745,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7815363011352707956, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 24.230225
+      value: 24.230469
       objectReference: {fileID: 0}
     - target: {fileID: 7815363011352707956, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 4
+      value: 4.000183
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
