@@ -16,9 +16,9 @@ MonoBehaviour:
   friendlyName: Snare
   soundEvent:
     Guid:
-      Data1: 1044958180
-      Data2: 1299195099
-      Data3: -2039040128
-      Data4: 1581391162
-    Path: event:/Instrument Samples/Perc_Snare
+      Data1: -1201295364
+      Data2: 1228473292
+      Data3: -51760737
+      Data4: 1688991779
+    Path: event:/Instrument Samples/New/Perc_Snare
   instrumentIcon: {fileID: 21300000, guid: d410fd644c36dae41a14b7357494ec90, type: 3}
