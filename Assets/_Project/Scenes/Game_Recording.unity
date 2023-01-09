@@ -1443,8 +1443,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playButtonImgs:
-  - {fileID: 21300000, guid: 8fc2cd4e87af27c41ade3541a2c44029, type: 3}
-  - {fileID: 21300000, guid: 205558d3fe2d9b74abf439288da9b573, type: 3}
+  - {fileID: 21300000, guid: 1b31841be12279c4b867c945c061177f, type: 3}
+  - {fileID: 21300000, guid: f156aba0e444ac743a95193e8108fc18, type: 3}
   playButtonRend: {fileID: 1898368894}
   countInText: {fileID: 1274522457}
   promptTextField: {fileID: 1874231153}
@@ -2531,7 +2531,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8fc2cd4e87af27c41ade3541a2c44029, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1b31841be12279c4b867c945c061177f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
