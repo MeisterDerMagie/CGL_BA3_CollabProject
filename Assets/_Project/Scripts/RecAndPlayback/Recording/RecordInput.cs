@@ -33,10 +33,11 @@ public class RecordInput : MonoBehaviour
 
     public RecordingState recordingState;
 
-    private List<RecordingNote> recordedTimeStamps; // technically obsolete since we map to grid right away, but we're still keeping track of the exact time stamps
+    private List<RecordingNote> recordedTimeStamps; // technically obsolete since we map to grid right away, but we're still saving track of the exact time stamps
 
-    public List<Eighth> recordedBar;
-    private List<Eighth> safetyCopyBar; // safety copy to go back to 
+    public List<List<Eighth>> recording;
+    public List<List<Eighth>> copy; // safety copy to get back to
+    private int barTimer;
 
     private float timer;
     [HideInInspector] public bool stageEnded;
@@ -50,13 +51,10 @@ public class RecordInput : MonoBehaviour
         if (NetworkManager.Singleton.IsServer) return;
 
         _audioRoll.SetUpAllInstances();
-
         _backingTrack = _audioRoll.gameObject.GetComponent<BackingTrack>();
         _backingTrack.beatUpdated += NextBeat;
-
         _beatMapping = GetComponent<BeatMapping>();
         _pianoRoll = _audioRoll.gameObject.GetComponentInParent<PianoRollRecording>();
-
         _recordingUI.playingBack = false;
         _recordingUI.SetPlayButton();
 
@@ -66,37 +64,17 @@ public class RecordInput : MonoBehaviour
 
         recordedTimeStamps = new List<RecordingNote>();
 
-        recordedBar = new List<Eighth>();
-        safetyCopyBar = new List<Eighth>();
-
-        WriteEmptyBar(safetyCopyBar);
-        WriteEmptyBar(recordedBar);
-
         stageEnded = false;
-
         timer = 0;
+        barTimer = 0;
 
         recFrame.SetActive(false);
-
         _beatMapping.PrepareRecording();
 
-        /*
-        if (!NetworkManager.Singleton.IsServer)
-        {
-            List<uint> instrumentIds = PlayerData.LocalPlayerData.InstrumentIds;
-
-            List<Instrument> instruments = new List<Instrument>();
-            foreach (uint instrumentId in instrumentIds)
-            {
-                Instrument instrument = InstrumentsManager.Instance.GetInstrument(instrumentId);
-                instruments.Add(instrument);
-            }
-
-            //... do stuff with intsruments
-
-            instruments[0].soundEvent...
-        }
-        */
+        recording = new List<List<Eighth>>();
+        WriteEmptyBar(recording);
+        copy = new List<List<Eighth>>();
+        WriteEmptyBar(copy);
     }
 
     private void OnDestroy()
@@ -153,17 +131,22 @@ public class RecordInput : MonoBehaviour
             _pianoRoll.gameObject.GetComponent<NoteSpawner>().DeleteActiveNotes();
 
             // safety copy of bar:
-            safetyCopyBar.Clear();
-            foreach (Eighth e in recordedBar)
+            copy.Clear();
+            for (int b = 0; b < Constants.RECORDING_LENGTH; b++)
             {
-                safetyCopyBar.Add(e);
+                List<Eighth> _bar = new List<Eighth>();
+                foreach (Eighth e in recording[b])
+                {
+                    _bar.Add(e);
+                }
+                copy.Add(_bar);
             }
-            WriteEmptyBar(recordedBar);
+            
+            WriteEmptyBar(recording);
 
             _pianoRoll.ControlPlayback(PianoRollRecording.RecPBStage.ONLYLINES);
 
             _recordingUI.playingBack = false;
-            //_recordingUI.SetPlayButton();
 
             // Update UI:
             recFrame.SetActive(true);
@@ -177,10 +160,17 @@ public class RecordInput : MonoBehaviour
             // if we're stopping the recording before we started to record anything --> return to safety copy
             if (recordingState != RecordingState.REC)
             {
-                recordedBar.Clear();
-                foreach (Eighth e in safetyCopyBar)
+                recording.Clear();
+                for (int b = 0; b < Constants.RECORDING_LENGTH; b++)
                 {
-                    recordedBar.Add(e);
+                    List<Eighth> bar = new List<Eighth>();
+
+                    foreach (Eighth e in copy[b])
+                    {
+                        bar.Add(e);
+                    }
+
+                    recording.Add(bar);
                 }
             }
         }
@@ -192,8 +182,8 @@ public class RecordInput : MonoBehaviour
 
         if (recordingState != RecordingState.IDLE) return;
 
-        recordedBar.Clear();
-        WriteEmptyBar(recordedBar);
+        recording.Clear();
+        WriteEmptyBar(recording);
 
         _pianoRoll.ControlPlayback(PianoRollRecording.RecPBStage.INACTIVE);
     }
@@ -230,11 +220,17 @@ public class RecordInput : MonoBehaviour
                     _recordingUI.UpdateCountIn(true, "REC");
                     _recordingUI.playingBack = true;
                     _recordingUI.SetPlayButton();
+
+                    barTimer = 0;
                     break;
                 case RecordingState.REC:
-                    StopRecording();
-                    recordedTimeStamps.Clear();
-                    
+                    barTimer++;
+
+                    if (barTimer >= Constants.RECORDING_LENGTH)
+                    {
+                        StopRecording();
+                        recordedTimeStamps.Clear();
+                    }
                     break;
             }
         }
@@ -278,18 +274,21 @@ public class RecordInput : MonoBehaviour
         spawnNote = false;
     }
 
-    private void WriteEmptyBar(List<Eighth> _list)
+    private void WriteEmptyBar(List<List<Eighth>> _list)
     {
         if (NetworkManager.Singleton.IsServer) return;
 
         _list.Clear();
 
-        for (int i = 0; i < 8; i++)
+        for (int b = 0; b < Constants.RECORDING_LENGTH; b++)
         {
-            Eighth e = new Eighth();
-            e.contains = false;
-            e.instrumentID = -1;
-            _list.Add(e);
+            for (int i = 0; i < 8; i++)
+            {
+                Eighth e = new Eighth();
+                e.contains = false;
+                e.instrumentID = -1;
+                _list[b].Add(e);
+            }
         }
     }
 

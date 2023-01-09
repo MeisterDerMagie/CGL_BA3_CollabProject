@@ -26,6 +26,9 @@ public class PianoRollRecording : MonoBehaviour
     private bool withAudio;
     private int bar;
 
+    int previewBar;
+    int timelineBar;
+
     private NoteSpawner _spawner;
 
     public enum RecPBStage
@@ -89,29 +92,55 @@ public class PianoRollRecording : MonoBehaviour
 
         PlaybackLines();
 
-        // if we're waiting to start next preview notes on the one --> start playback and wait for audio
-        if (stage == RecPBStage.WAITFORPB && _timer.previewBeat == 1)
+        if (_timer.previewBeat == 1)
         {
-            playback = true;
-            stage = RecPBStage.PBWAITAUDIO;
-            bar = _timer.timelineBar;
+            // if we're waiting to start next preview notes on the one --> start playback and wait for audio
+            if (stage == RecPBStage.WAITFORPB)
+            {
+                playback = true;
+                stage = RecPBStage.PBWAITAUDIO;
+                bar = _timer.timelineBar;
+                previewBar = 0;
+            }
+            else
+            {
+                previewBar++;
+                if (previewBar >= Constants.RECORDING_LENGTH) previewBar = 0;
+            }
         }
-        // if we're waiting for audio (so preview note to get to loc marker) --> if we're two bars further and the current beat is one play audio
-        else if (stage == RecPBStage.PBWAITAUDIO && _timer.timelineBeat == 1 && _timer.timelineBar - bar == 2)
+        if (_timer.timelineBeat == 1)
         {
-            withAudio = true;
-            stage = RecPBStage.PBWITHAUDIO;
+            // if we're waiting for audio (so preview note to get to loc marker) --> if we're two bars further and the current beat is one play audio
+            if (stage == RecPBStage.PBWAITAUDIO && _timer.timelineBar - bar == 2)
+            {
+                withAudio = true;
+                stage = RecPBStage.PBWITHAUDIO;
+                timelineBar = 0;
+            }
+            else
+            {
+                timelineBar++;
+                if (timelineBar >= Constants.RECORDING_LENGTH) timelineBar = 0;
+            }
         }
 
         // preview notes
         if (playback)
+            if (_recordInput.recording[previewBar][_timer.previewBeat - 1].contains)
+                _spawner.SpawnNote(_recordInput.recording[previewBar][_timer.previewBeat - 1].instrumentID, bpm);
+        /*
+        if (playback)
             if (_recordInput.recordedBar[_timer.previewBeat - 1].contains) 
-                _spawner.SpawnNote(_recordInput.recordedBar[_timer.previewBeat - 1].instrumentID, bpm);
+                _spawner.SpawnNote(_recordInput.recordedBar[_timer.previewBeat - 1].instrumentID, bpm);*/
 
         // playback audio
+        if (withAudio)
+            if (_recordInput.recording[timelineBar][_timer.timelineBeat - 1].contains)
+                _audioRoll.PlaySound(_recordInput.recording[timelineBar][_timer.timelineBeat - 1].instrumentID);
+        /*
         if (withAudio) 
             if (_recordInput.recordedBar[_timer.timelineBeat - 1].contains)
-                _audioRoll.PlaySound(_recordInput.recordedBar[_timer.timelineBeat - 1].instrumentID);
+                _audioRoll.PlaySound(_recordInput.recordedBar[_timer.timelineBeat - 1].instrumentID);*/
     }
 
 
@@ -145,25 +174,28 @@ public class PianoRollRecording : MonoBehaviour
                 _spawner.ActivateIdleLines(false);
                 break;
             case RecPBStage.PBNOAUDIO:
-                playback = true;
+                // shouldn't be here
+                /*playback = true;
                 withAudio = false;
                 _spawner.ActivateLines(true);
                 _spawner.spawnActive = true;
-                _spawner.ActivateIdleLines(false);
+                _spawner.ActivateIdleLines(false);*/
                 break;
             case RecPBStage.PBWAITAUDIO:
-                playback = true;
+                // shouldn't be here
+                /*playback = true;
                 withAudio = false;
                 _spawner.ActivateLines(true);
                 _spawner.spawnActive = true;
-                _spawner.ActivateIdleLines(false);
+                _spawner.ActivateIdleLines(false);*/
                 break;
             case RecPBStage.PBWITHAUDIO:
-                playback = true;
+                // shouldn't be here
+                /*playback = true;
                 withAudio = true;
                 _spawner.ActivateLines(true);
                 _spawner.spawnActive = true;
-                _spawner.ActivateIdleLines(false);
+                _spawner.ActivateIdleLines(false);*/
                 break;
             case RecPBStage.WAITFORPB:
                 _spawner.ActivateLines(true);

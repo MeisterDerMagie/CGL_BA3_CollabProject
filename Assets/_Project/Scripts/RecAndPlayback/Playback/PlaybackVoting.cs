@@ -15,11 +15,11 @@ public class PlaybackVoting : MonoBehaviour
     private PianoRollTimer _timer;
     private AudioRoll _audioRoll;
 
-    public List<PlayerData> playerDatas;
-    //public Bar[] bar;
-
     private bool playback;
     private bool waitToStart;
+
+    private List<List<Eighth>> recording;
+    private int timer;
 
     int playerID;
 
@@ -29,8 +29,7 @@ public class PlaybackVoting : MonoBehaviour
         _timer = GetComponent<PianoRollTimer>();
         _audioRoll = GetComponent<AudioRoll>();
 
-        // find all players and their data
-        playerDatas = FindObjectsOfType<PlayerData>().ToList();
+        recording = new List<List<Eighth>>();
 
         waitToStart = false;
         playback = false;
@@ -53,10 +52,18 @@ public class PlaybackVoting : MonoBehaviour
     {
         if (Unity.Netcode.NetworkManager.Singleton.IsServer) return;
 
-        if (_timer.timelineBeat == 1 && waitToStart)
+        if (_timer.timelineBeat == 1)
         {
-            waitToStart = false;
-            playback = true;
+            if (waitToStart)
+            {
+                waitToStart = false;
+                playback = true;
+            }
+            else
+            {
+                timer++;
+                if (timer > Constants.RECORDING_LENGTH - 1) timer = 0;
+            }
         }
 
         if (playback)
@@ -64,30 +71,34 @@ public class PlaybackVoting : MonoBehaviour
             /* -- for testing
             if (bar[playerID].eighth[_timer.timelineBeat - 1].contains)
                 _audioRoll.TestSound(bar[playerID].eighth[_timer.timelineBeat - 1].instrumentID);
-            */
             if (playerDatas[playerID].Recording[_timer.timelineBeat - 1].contains)
                 _audioRoll.PlayerInputSound(playerDatas[playerID].Recording[_timer.timelineBeat - 1].instrumentID);
+            */
+
+            if (recording[timer][_timer.timelineBeat - 1].contains)
+                _audioRoll.PlayerInputSound(recording[timer][_timer.timelineBeat - 1].instrumentID);
         }
     }
 
-    // umarbeiten auf--> List<Eighth> recording wird geschickt
-    public void StartPlayback(int _playerID)
+    public void StartPlayback(List<Eighth> _recording)
     {
         if (Unity.Netcode.NetworkManager.Singleton.IsServer) return;
 
-        // if the same button is pressed and we're playing back --> stop
-        if (_playerID == playerID && (playback || waitToStart))
+        waitToStart = true;
+        timer = 0;
+
+        // transform list of eighths into different bars
+        recording.Clear();
+
+        // for as many times as the amount of bars we recorded
+        for (int b = 0; b < Constants.RECORDING_LENGTH; b++)
         {
-            playerID = _playerID;
-            playback = false;
-            waitToStart = false;
-        }
-        // otherwise stop and start with different player
-        else
-        {
-            playerID = _playerID;
-            waitToStart = true;
-            playback = false;
+            // go through every eighth
+            for (int i = 0; i < 8; i++)
+            {
+                // and add the eighth to the List of Eights at b index
+                recording[b].Add(_recording[i + b * 8]);
+            }
         }
     }
 

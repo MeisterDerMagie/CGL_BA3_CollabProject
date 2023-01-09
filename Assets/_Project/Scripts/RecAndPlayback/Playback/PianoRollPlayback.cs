@@ -42,8 +42,14 @@ public class PianoRollPlayback : NetworkBehaviour
     int timelinePlayer;
     int previewPlayer;
 
+    int timelineTimer;
+    int previewTimer;
+
     int timelineBar;
     int previewBar;
+
+    // this is more of a joke, but it's the list of players that have a list of bars that contain a list of eighths
+    List<List<List<Eighth>>> recordings; 
 
     private PlaybackStage timelineStage;
     private PlaybackStage previewStage;
@@ -55,6 +61,37 @@ public class PianoRollPlayback : NetworkBehaviour
         playerDatas = FindObjectsOfType<PlayerData>().ToList();
         timelinePlayer = 0;
         previewPlayer = 0;
+
+        // again the jokey way of doing it
+        recordings = new List<List<List<Eighth>>>();
+        // for every player in the list
+        for (int player = 0; player < playerDatas.Count; player++)
+        {
+            List<List<Eighth>> playerRec = new List<List<Eighth>>();
+            
+            // and every bar in the recordings
+            for (int bar = 0; bar < Constants.RECORDING_LENGTH; bar++)
+            {
+                List<Eighth> _bar = new List<Eighth>();
+
+                // and every eighth in a bar
+                for (int eighth = 0; eighth < 8; eighth++)
+                {
+                    // create an eighth and take values from the player Data list
+                    Eighth e = new Eighth();
+
+                    e.contains = playerDatas[player].Recording[eighth + (8 * bar)].contains;
+                    e.instrumentID = playerDatas[player].Recording[eighth + (8 * bar)].instrumentID;
+
+                    // add to the bar
+                    _bar.Add(e);
+                }
+                // add the full bar to the player's Recording
+                playerRec.Add(_bar);
+            }
+            // and add the player's recording to the list of all recordings
+            recordings.Add(playerRec);
+        }
 
         // set scripts
         _timer = GetComponent<PianoRollTimer>();
@@ -72,6 +109,8 @@ public class PianoRollPlayback : NetworkBehaviour
 
         // wait short time for playback to start
         StartCoroutine(WaitToStart());
+
+        if (Constants.RECORDING_LENGTH == 2 && barsBetween == 3) barsBetween = 2;
     }
 
     IEnumerator WaitToStart()
@@ -91,12 +130,16 @@ public class PianoRollPlayback : NetworkBehaviour
         playingBack = true;
         _spawner.spawnActive = true;
 
-        timelineBar = _timer.timelineBar;
-        previewBar = _timer.previewBar;
+        timelineTimer = _timer.timelineBar;
+        previewTimer = _timer.previewBar;
 
         // set currentPlayer to zero
         timelinePlayer = 0;
         previewPlayer = 0;
+
+        // set current bars to zero (if there's more than one bar recorded)
+        timelineBar = 0;
+        previewBar = 0;
 
         // set current stages
         timelineStage = PlaybackStage.COUNTIN;
@@ -145,6 +188,17 @@ public class PianoRollPlayback : NetworkBehaviour
 
         // update display
         if (previewStage == PlaybackStage.PLAYING)
+            if (recordings[previewPlayer][previewBar][_timer.previewBeat - 1].contains)
+                _spawner.SpawnNote(recordings[previewPlayer][previewBar][_timer.previewBeat - 1].instrumentID, bpm);
+
+        // play audio
+        if (timelineStage == PlaybackStage.PLAYING)
+            if (recordings[timelinePlayer][timelineBar][_timer.timelineBeat - 1].contains)
+                _audioRoll.PlaySound(recordings[timelinePlayer][timelineBar][_timer.timelineBeat - 1].instrumentID);
+
+        /*
+        // update display
+        if (previewStage == PlaybackStage.PLAYING)
             if (playerDatas[previewPlayer].Recording[_timer.previewBeat - 1].contains)
                 _spawner.SpawnNote(playerDatas[previewPlayer].Recording[_timer.previewBeat - 1].instrumentID, bpm);
 
@@ -152,7 +206,7 @@ public class PianoRollPlayback : NetworkBehaviour
         if (timelineStage == PlaybackStage.PLAYING)
             if (playerDatas[timelinePlayer].Recording[_timer.timelineBeat - 1].contains)
                 _audioRoll.PlaySound(playerDatas[timelinePlayer].Recording[_timer.timelineBeat - 1].instrumentID);
-
+        */
     }
 
     void UpdateTimelineStage()
@@ -166,48 +220,54 @@ public class PianoRollPlayback : NetworkBehaviour
                 
                 if (timelinePlayer == 0)
                 {
-                    if (_timer.timelineBar - timelineBar == countIn)
+                    if (_timer.timelineBar - timelineTimer == countIn)
                     {
                         UpdatePlayer();
                     }
-                    if (_timer.timelineBar - timelineBar == countIn + 1)
+                    if (_timer.timelineBar - timelineTimer == countIn + 1)
                     {
                         // turn on light and change state to playing
                         _light.TurnOn();
                         timelineStage = PlaybackStage.PLAYING;
-                        timelineBar = _timer.timelineBar;
+                        timelineTimer = _timer.timelineBar;
+                        timelineBar = 0;
                     }
                 }
                 else
                 {
-                    if (_timer.timelineBar - timelineBar == 1)
+                    if (_timer.timelineBar - timelineTimer == 1)
                     {
                         // Update visuals to new player
                         UpdatePlayer();
                     }
 
-                    if (_timer.timelineBar - timelineBar == barsBetween)
+                    if (_timer.timelineBar - timelineTimer == barsBetween)
                     {
                         // turn on light and change state to playing
                         _light.TurnOn();
                         timelineStage = PlaybackStage.PLAYING;
-                        timelineBar = _timer.timelineBar;
+                        timelineTimer = _timer.timelineBar;
+                        timelineBar = 0;
                     }
                 }
                 break;
             case PlaybackStage.PLAYING:
-                timelinePlayer++;
-                // check if this was last player
-                if (timelinePlayer > playerDatas.Count - 1)
+                if (_timer.timelineBar - timelineTimer == Constants.RECORDING_LENGTH)
                 {
-                    LastPlayer();
+                    timelinePlayer++;
+                    // check if this was last player
+                    if (timelinePlayer > playerDatas.Count - 1)
+                    {
+                        LastPlayer();
+                    }
+                    else
+                    {
+                        timelineStage = PlaybackStage.COUNTIN;
+                        timelineTimer = _timer.timelineBar;
+                    }
+                    _light.TurnOff();
                 }
-                else
-                {
-                    timelineStage = PlaybackStage.COUNTIN;
-                    timelineBar = _timer.timelineBar;
-                }
-                _light.TurnOff();
+                else timelineBar++;
                 break;
             default:
                 break;
@@ -224,33 +284,39 @@ public class PianoRollPlayback : NetworkBehaviour
             case PlaybackStage.COUNTIN:
                 if (previewPlayer == 0)
                 {
-                    if (_timer.previewBar - previewBar == countIn - 1)
+                    if (_timer.previewBar - previewTimer == countIn - 1)
                     {
                         previewStage = PlaybackStage.PLAYING;
-                        previewBar = _timer.previewBar;
+                        previewTimer = _timer.previewBar;
+                        previewBar = 0;
                     }
                 }
                 else
                 {
-                    if (_timer.previewBar - previewBar == barsBetween)
+                    if (_timer.previewBar - previewTimer == barsBetween)
                     {
                         previewStage = PlaybackStage.PLAYING;
-                        previewBar = _timer.previewBar;
+                        previewTimer = _timer.previewBar;
+                        previewBar = 0;
                     }
                 }
                 break;
             case PlaybackStage.PLAYING:
-                previewPlayer++;
-                // check if last player
-                if (previewPlayer > playerDatas.Count - 1)
+                if (_timer.previewBar - previewTimer == Constants.RECORDING_LENGTH)
                 {
-                    previewStage = PlaybackStage.IDLE;
+                    previewPlayer++;
+                    // check if last player
+                    if (previewPlayer > playerDatas.Count - 1)
+                    {
+                        previewStage = PlaybackStage.IDLE;
+                    }
+                    else
+                    {
+                        previewStage = PlaybackStage.COUNTIN;
+                        previewTimer = _timer.previewBar;
+                    }
                 }
-                else
-                {
-                    previewStage = PlaybackStage.COUNTIN;
-                    previewBar = _timer.previewBar;
-                }
+                else previewBar++;
                 break;
             default:
                 break;

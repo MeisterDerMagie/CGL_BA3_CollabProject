@@ -57,10 +57,11 @@ public class EndRecording : MonoBehaviour
     void SendRecordingToServer()
     {
         bool empty = true;
-        foreach (Eighth eighth in _recordInput.recordedBar)
-        {
-            if (eighth.contains) empty = false;
-        }
+
+        // check if the recording is completely empty
+        for (int b = 0; b < Constants.RECORDING_LENGTH; b++)
+            foreach (Eighth eighth in _recordInput.recording[b])
+                if (eighth.contains) empty = false;
 
         if (empty)
         {
@@ -69,7 +70,13 @@ public class EndRecording : MonoBehaviour
         }
         else
         {
-            PlayerData.LocalPlayerData.SetRecording(_recordInput.recordedBar);
+            List<Eighth> _recording = new List<Eighth>();
+
+            for (int b = 0; b < Constants.RECORDING_LENGTH; b++)
+                foreach (Eighth eighth in _recordInput.recording[b])
+                    _recording.Add(eighth);
+
+            PlayerData.LocalPlayerData.SetRecording(_recording);
         }
     }
 
@@ -78,26 +85,29 @@ public class EndRecording : MonoBehaviour
         randomBar = new List<Eighth>();
 
         // create random bar; for every eighth randomly create bool true/false and if true, random range which instrumentID
-        foreach (Eighth eighth in _recordInput.recordedBar)
+        for (int b = 0; b < Constants.RECORDING_LENGTH; b++)
         {
-            Eighth newEighth = new Eighth();
-
-            int x = Random.Range(0, 2);
-
-            if (x == 0)
+            for (int i = 0; i < 8; i++)
             {
-                newEighth.contains = true;
+                Eighth newEighth = new Eighth();
 
-                int sound = Random.Range(0, 4);
-                newEighth.instrumentID = PlayerData.LocalPlayerData.InstrumentIds[sound];
-            }
-            else
-            {
-                newEighth.contains = false;
-                newEighth.instrumentID = -1;
-            }
+                int x = Random.Range(0, 2);
 
-            randomBar.Add(newEighth);
+                if (x == 0)
+                {
+                    newEighth.contains = true;
+
+                    int sound = Random.Range(0, 4);
+                    newEighth.instrumentID = PlayerData.LocalPlayerData.InstrumentIds[sound];
+                }
+                else
+                {
+                    newEighth.contains = false;
+                    newEighth.instrumentID = -1;
+                }
+
+                randomBar.Add(newEighth);
+            }
         }
     }
 }

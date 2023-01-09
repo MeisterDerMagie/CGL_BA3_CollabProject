@@ -7,7 +7,7 @@ using Unity.Netcode;
 
 /// <summary>
 /// Data structures that hold our recordings
-/// A bar always consists of 8 eighths and every eighth holds information whether it contains a note or not, and which instrumentID
+/// A bar is a list of 8 eighths and every eighth holds information whether it contains a note or not, and which instrumentID
 /// </summary>
 
 [Serializable]

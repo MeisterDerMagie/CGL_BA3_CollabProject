@@ -38,6 +38,7 @@ public class NoteSpawner : MonoBehaviour
     private GameObject startRecLine;
     private GameObject endRecLine;
     public bool isRecording;
+    private int barCounter;
 
     public bool spawnActive;
 
@@ -193,6 +194,23 @@ public class NoteSpawner : MonoBehaviour
         // keep track of last spawned 1 and set to startRecLine (or if already recording to endRecLine) to mark beginning and end of recording
         if (number == 1)
         {
+            if (!isRecording)
+            {
+                startRecLine = clone;
+                barCounter = 0;
+            }
+            else
+            {
+                barCounter++;
+                if (barCounter == Constants.RECORDING_LENGTH)
+                {
+                    endRecLine = clone;
+                    clone.GetComponent<Notes>().isStartingLine = true;
+                    clone.GetComponent<Notes>().StartLine(true);
+                    isRecording = false;
+                }
+            }
+            /*
             if (isRecording)
             {
                 endRecLine = clone;
@@ -202,6 +220,7 @@ public class NoteSpawner : MonoBehaviour
             }
             else
                 startRecLine = clone;
+            */
         }
     }
 
