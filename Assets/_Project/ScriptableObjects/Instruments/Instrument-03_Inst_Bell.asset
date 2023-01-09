@@ -20,5 +20,5 @@ MonoBehaviour:
       Data2: 1225142638
       Data3: -209920077
       Data4: 347263421
-    Path: event:/Instrument Samples/Inst_Bell
+    Path: event:/Instrument Samples/Old/Inst_Bell
   instrumentIcon: {fileID: 21300000, guid: 387225ac172055b4fa8c177ee81c0b16, type: 3}
