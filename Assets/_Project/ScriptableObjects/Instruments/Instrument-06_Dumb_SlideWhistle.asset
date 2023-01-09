@@ -21,4 +21,4 @@ MonoBehaviour:
       Data3: -1830804588
       Data4: 92438091
     Path: event:/Instrument Samples/New/Dumb_SqueakyToy
-  instrumentIcon: {fileID: 21300000, guid: 286562f55d252cb429aad1de9aeefb00, type: 3}
+  instrumentIcon: {fileID: 21300000, guid: 1faf370b31cf39a438bb763d6e9ba4f4, type: 3}
