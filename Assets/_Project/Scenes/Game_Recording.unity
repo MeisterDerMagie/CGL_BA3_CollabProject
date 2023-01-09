@@ -900,8 +900,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 777875429}
-  - component: {fileID: 777875428}
   - component: {fileID: 777875427}
+  - component: {fileID: 777875428}
   m_Layer: 0
   m_Name: LoadNextScene
   m_TagString: Untagged
@@ -937,7 +937,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba4acca13884058aad79d37058d1d5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextScene: {fileID: 11400000, guid: 67606285241d4874cb4db7fc6fc545e8, type: 2}
+  nextScene: {fileID: 11400000, guid: 58ecf2def7714b8469215c9da8881bad, type: 2}
 --- !u!4 &777875429
 Transform:
   m_ObjectHideFlags: 0

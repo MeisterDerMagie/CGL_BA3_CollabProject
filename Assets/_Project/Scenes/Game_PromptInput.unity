@@ -1969,7 +1969,7 @@ MonoBehaviour:
   okButton: {fileID: 2006439935}
   waitingScreen: {fileID: 1166188131}
   timer: {fileID: 1895691973}
-  sceneToLoadAfterAllPlayersEnteredPrompt: {fileID: 11400000, guid: 941144328907ffc4ca0a08d0b68e87f4, type: 2}
+  sceneToLoadAfterAllPlayersEnteredPrompt: {fileID: 11400000, guid: 66c15ae26a5e222488116e586a499c31, type: 2}
   onPromptAccepted:
     m_PersistentCalls:
       m_Calls: []
