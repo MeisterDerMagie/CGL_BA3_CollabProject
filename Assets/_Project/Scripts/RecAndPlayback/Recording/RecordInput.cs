@@ -43,7 +43,6 @@ public class RecordInput : MonoBehaviour
 
     bool spawnNote;
 
-    // Start is called before the first frame update
     void Start()
     {
         spawnNote = false;
@@ -57,7 +56,7 @@ public class RecordInput : MonoBehaviour
 
         _beatMapping = GetComponent<BeatMapping>();
         _pianoRoll = _audioRoll.gameObject.GetComponentInParent<PianoRollRecording>();
-        //_pianoRoll.PlayRecording(true, false);
+
         _recordingUI.playingBack = false;
         _recordingUI.SetPlayButton();
 
@@ -78,9 +77,7 @@ public class RecordInput : MonoBehaviour
         timer = 0;
 
         recFrame.SetActive(false);
-        //countInText.gameObject.SetActive(false);
 
-        // set sound IDs correctly
 
         /*
         if (!NetworkManager.Singleton.IsServer)
@@ -107,7 +104,6 @@ public class RecordInput : MonoBehaviour
         _backingTrack.beatUpdated -= NextBeat;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (NetworkManager.Singleton.IsServer) return;
@@ -287,7 +283,7 @@ public class RecordInput : MonoBehaviour
 
         _list.Clear();
 
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < GetComponentInParent<PianoRollTimer>().barLength; i++)
         {
             Eighth e = new Eighth();
             e.contains = false;
