@@ -456,22 +456,38 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: lines.Array.size
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: lines.Array.data[0]
-      value: Now to our grandstand, which is hopefully grand enough to pay my rent
-        with the views.
+      value: ' it''s time to prove you''re even better at the things your competitors
+        composed than themselves!'
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: lines.Array.data[1]
-      value: Now to our grandstand, which is hopefully grand enough to pay my rent
-        with the views.
+      value: ' follow my advice and you might not burn yourself on this, allthough
+        our stage sometimes catches fire.'
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: lines.Array.data[2]
-      value: So let's take a look at our final results and the great winner of todays
-        ONE BAR WONDER!
+      value: It's like pack your suitcase, but with rhythm game combined! Don't like
+        it? Well, that's also what my mom said :D
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: lines.Array.data[3]
+      value: Have you ever packed a suitcase or can't you afford that luxus? Well,
+        since you here I guess it's the later. now you will learn how it works( or
+        not)!
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: lines.Array.data[4]
+      value: One by one you will pack your melody into our imagenary suitcase and
+        in order to be sure everybody knows what's inside, you will always repeat
+        what was put inside.
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: lines.Array.data[5]
+      value: Simple as that, but too complicated for small brains!
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: onSchubiduFinished.m_PersistentCalls.m_Calls.Array.size
@@ -548,6 +564,14 @@ PrefabInstance:
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: onSchubiduFinished.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3204870652210103703, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 55.35034
+      objectReference: {fileID: 0}
+    - target: {fileID: 3204870652210103703, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -67
       objectReference: {fileID: 0}
     - target: {fileID: 3204870652210103720, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: m_text
