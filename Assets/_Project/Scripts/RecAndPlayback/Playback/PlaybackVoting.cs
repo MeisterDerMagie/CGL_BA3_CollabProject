@@ -93,12 +93,16 @@ public class PlaybackVoting : MonoBehaviour
         // for as many times as the amount of bars we recorded
         for (int b = 0; b < Constants.RECORDING_LENGTH; b++)
         {
+            List<Eighth> bar = new List<Eighth>();
+
             // go through every eighth
             for (int i = 0; i < 8; i++)
             {
-                // and add the eighth to the List of Eights at b index
-                recording[b].Add(_recording[i + b * 8]);
+                // and add the eighth at eight + which bar we're in to the List of Eights
+                bar.Add(_recording[i + b * 8]);
             }
+
+            recording.Add(bar);
         }
     }
 
