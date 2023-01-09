@@ -550,7 +550,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3204870652210103720, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: m_text
-      value: 
+      value: '[text]'
       objectReference: {fileID: 0}
     - target: {fileID: 3204870652685877299, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: lines.Array.size
