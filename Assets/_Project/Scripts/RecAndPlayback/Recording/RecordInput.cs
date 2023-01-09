@@ -78,6 +78,7 @@ public class RecordInput : MonoBehaviour
 
         recFrame.SetActive(false);
 
+        _beatMapping.PrepareRecording();
 
         /*
         if (!NetworkManager.Singleton.IsServer)
@@ -219,7 +220,7 @@ public class RecordInput : MonoBehaviour
                     // reset timer for recording:
                     timer = 0;
 
-                    _beatMapping.PrepareRecording();
+                    //_beatMapping.PrepareRecording();
 
                     break;
                 case RecordingState.COUNTIN:
@@ -283,7 +284,7 @@ public class RecordInput : MonoBehaviour
 
         _list.Clear();
 
-        for (int i = 0; i < GetComponentInParent<PianoRollTimer>().barLength; i++)
+        for (int i = 0; i < 8; i++)
         {
             Eighth e = new Eighth();
             e.contains = false;

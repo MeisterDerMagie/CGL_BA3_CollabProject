@@ -26,8 +26,6 @@ public class PianoRollRecording : MonoBehaviour
     private bool withAudio;
     private int bar;
 
-    [SerializeField] private List<Bar> bars;
-
     private NoteSpawner _spawner;
 
     public enum RecPBStage
@@ -48,8 +46,6 @@ public class PianoRollRecording : MonoBehaviour
         _timer = GetComponent<PianoRollTimer>();
         _recordInput = GetComponentInChildren<RecordInput>();
 
-        bars = new List<Bar>();
-        
         _spawner = GetComponent<NoteSpawner>();
 
         // Set button icons
@@ -57,8 +53,6 @@ public class PianoRollRecording : MonoBehaviour
 
         // Start Backing Track:
         StartMusic();
-
-        // elfenbeinstein MISSING get bpm from FMOD
     }
 
     void StartMusic()
@@ -82,7 +76,6 @@ public class PianoRollRecording : MonoBehaviour
 
         _backingTrack.StopMusic();
         _recordInput.StopRecording();
-        //_timer.ResetTimer();
         musicPlaying = false;
 
         stage = RecPBStage.INACTIVE;

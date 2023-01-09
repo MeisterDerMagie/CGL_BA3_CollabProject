@@ -70,6 +70,7 @@ public class PlaybackVoting : MonoBehaviour
         }
     }
 
+    // umarbeiten auf--> List<Eighth> recording wird geschickt
     public void StartPlayback(int _playerID)
     {
         if (Unity.Netcode.NetworkManager.Singleton.IsServer) return;
@@ -88,5 +89,11 @@ public class PlaybackVoting : MonoBehaviour
             waitToStart = true;
             playback = false;
         }
+    }
+
+    public void StopPlayback()
+    {
+        waitToStart = false;
+        playback = false;
     }
 }

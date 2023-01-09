@@ -25,15 +25,3 @@ public struct Eighth : INetworkSerializable, IEquatable<Eighth>
     public override bool Equals(object obj) => obj is Eighth other && Equals(other);
     public override int GetHashCode() => HashCode.Combine(contains, instrumentID);
 }
-
-[Serializable]
-public struct Bar
-{
-    public List<Eighth> eighth;
-
-    public Bar(List<Eighth> _n)
-    {
-        eighth = new List<Eighth>();
-        eighth = _n;
-    }
-}

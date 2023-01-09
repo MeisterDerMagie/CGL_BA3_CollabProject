@@ -21,7 +21,8 @@ public class BeatMapping : MonoBehaviour
     public void PrepareRecording()
     {
         compareTo = new List<float>();
-        for (int i = 0; i < 8; i++)
+        // * Constants.RECORDING_LENGTH
+        for (int i = 0; i < 8 ; i++)
         {
             // time signature of every eighth in the bar counted from one bar before
             // so duration of an eighth * which eighth in the bar + duration of a bar
