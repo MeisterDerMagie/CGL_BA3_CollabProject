@@ -415,7 +415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2944965116
+  GlobalObjectIdHash: 1710782193
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
@@ -456,12 +456,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: lines.Array.size
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: lines.Array.data[0]
-      value: Now to our grandstand, which is hopefully grand enough to pay my rent
-        with the views.
+      value: This was indeed splendid! Just purrrrrrfect!
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: lines.Array.data[1]

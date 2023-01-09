@@ -132,19 +132,20 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: lines.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: lines.Array.data[0]
-      value: Ohhh, what a wonderful collection of creations.
+      value: All those prompts are ehhh.... mesmerizing!and yours is just WOW! You
+        should go to prison for that.
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: lines.Array.data[1]
-      value: And then there is that one.....
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: lines.Array.data[2]
-      value: 'Nevermind....Let''s listen to it! '
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: onSchubiduFinished.m_PersistentCalls.m_Calls.Array.size
@@ -527,7 +528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 639851659
+  GlobalObjectIdHash: 1643604383
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
