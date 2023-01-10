@@ -57,7 +57,6 @@ public class NoteSpawner : MonoBehaviour
         #region Calculate Positions for all idle and start lines
         posLines = new List<float>();
         beats = 1;
-
         float x = transform.localPosition.x - bg.transform.localScale.x / 2f;
 
         for (int i = 0; i <= beatLength / beats - 1; i++)
