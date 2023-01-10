@@ -24,6 +24,8 @@ public class PianoRollTimer : MonoBehaviour
 
     private BackingTrack _backingTrack;
     [SerializeField] private int resetPrevCounter = 3;
+    [Tooltip("length of recording in bars")]
+    [SerializeField] public int recordingLength = 1;
 
     [SerializeField]
     private CurrentGameStage stage;
@@ -63,29 +65,28 @@ public class PianoRollTimer : MonoBehaviour
     {
         timelineBeat = _backingTrack.lastBeat;
 
-        if (timelineBeat == 1)
-        {
-            previewBeat = 5;
-            timelineBar++;
-        }
-        else if (timelineBeat == 2)
-            previewBeat = 6;
-        else if (timelineBeat == 3)
-            previewBeat = 7;
-        else if (timelineBeat == 4)
-            previewBeat = 8;
-        else if (timelineBeat == 5)
-        {
-            previewBar++;
-            previewBeat = 1;
-        }
-        else if (timelineBeat == 6)
-            previewBeat = 2;
-        else if (timelineBeat == 7)
-            previewBeat = 3;
-        else if (timelineBeat == 8)
-            previewBeat = 4;
-
+            if (timelineBeat == 1)
+            {
+                previewBeat = 5;
+                timelineBar++;
+            }
+            else if (timelineBeat == 2)
+                previewBeat = 6;
+            else if (timelineBeat == 3)
+                previewBeat = 7;
+            else if (timelineBeat == 4)
+                previewBeat = 8;
+            else if (timelineBeat == 5)
+            {
+                previewBar++;
+                previewBeat = 1;
+            }
+            else if (timelineBeat == 6)
+                previewBeat = 2;
+            else if (timelineBeat == 7)
+                previewBeat = 3;
+            else if (timelineBeat == 8)
+                previewBeat = 4;
 
         // depending on current scene --> set stage in inspector --> tell corresponding piano roll script to update to next beat
         switch (stage)

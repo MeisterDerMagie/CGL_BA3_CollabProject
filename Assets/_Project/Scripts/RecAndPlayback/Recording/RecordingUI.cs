@@ -22,6 +22,7 @@ public class RecordingUI : NetworkBehaviour
     private PianoRollRecording _pianoRoll;
 
     public bool playingBack;
+    public bool playButtonActive;
 
     public override void OnNetworkSpawn()
     {
@@ -29,6 +30,7 @@ public class RecordingUI : NetworkBehaviour
         
         // set the prompt to the player's assigned prompt
         promptTextField.SetText(PlayerData.LocalPlayerData.AssignedPrompt);
+        playButtonActive = true;
     }
 
     private void Start()
@@ -42,6 +44,8 @@ public class RecordingUI : NetworkBehaviour
     }
     public void PlayButton()
     {
+        if (!playButtonActive) return;
+
         playingBack = !playingBack;
 
         if (playingBack) _pianoRoll.ControlPlayback(PianoRollRecording.RecPBStage.WAITFORPB);
@@ -52,8 +56,8 @@ public class RecordingUI : NetworkBehaviour
 
     public void SetPlayButton()
     {
-        if (playingBack) playButtonRend.sprite = playButtonImgs[0];
-        else playButtonRend.sprite = playButtonImgs[1];
+        if (playingBack) playButtonRend.sprite = playButtonImgs[1];
+        else playButtonRend.sprite = playButtonImgs[0];
     }
 
     public void RecordButton()
@@ -65,6 +69,8 @@ public class RecordingUI : NetworkBehaviour
     {
         _recordInput.DeleteButton();
         _pianoRoll.GetComponent<NoteSpawner>().DeleteActiveNotes();
+        playingBack = false;
+        SetPlayButton();
     }
 
     public void UpdateCountIn(bool active, string text)

@@ -37,7 +37,9 @@ public class NoteSpawner : MonoBehaviour
     
     private GameObject startRecLine;
     private GameObject endRecLine;
+    private List<GameObject> fatLines;
     public bool isRecording;
+    private int barCounter;
 
     public bool spawnActive;
 
@@ -50,11 +52,11 @@ public class NoteSpawner : MonoBehaviour
 
         currentNotes = new List<GameObject>();
         currentLines = new List<GameObject>();
+        fatLines = new List<GameObject>();
 
         #region Calculate Positions for all idle and start lines
         posLines = new List<float>();
         beats = 1;
-
         float x = transform.localPosition.x - bg.transform.localScale.x / 2f;
 
         for (int i = 0; i <= beatLength / beats - 1; i++)
@@ -174,9 +176,10 @@ public class NoteSpawner : MonoBehaviour
         foreach (GameObject obj in currentLines)
             Destroy(obj);
         currentLines.Clear();
+        fatLines.Clear();
     }
 
-    public void SpawnLine(float bpm, int number)
+    public void SpawnLine(float bpm, int number, bool isFat = false)
     {
         //intantiate a new quarternote line and set position to the far right of the piano roll:
         GameObject clone = Instantiate(beatObj, spawns.transform);
@@ -189,19 +192,30 @@ public class NoteSpawner : MonoBehaviour
 
         currentLines.Add(clone);
 
-
+        if (isFat)
+        {
+            fatLines.Add(clone);
+            clone.GetComponent<Notes>().FatLine(true);
+        }
         // keep track of last spawned 1 and set to startRecLine (or if already recording to endRecLine) to mark beginning and end of recording
         if (number == 1)
         {
-            if (isRecording)
+            if (!isRecording)
             {
-                endRecLine = clone;
-                clone.GetComponent<Notes>().isStartingLine = true;
-                clone.GetComponent<Notes>().StartLine(true);
-                isRecording = false;
+                startRecLine = clone;
+                barCounter = 0;
             }
             else
-                startRecLine = clone;
+            {
+                barCounter++;
+                if (barCounter == Constants.RECORDING_LENGTH)
+                {
+                    endRecLine = clone;
+                    clone.GetComponent<Notes>().isStartingLine = true;
+                    clone.GetComponent<Notes>().StartLine(true);
+                    isRecording = false;
+                }
+            }
         }
     }
 
@@ -232,6 +246,8 @@ public class NoteSpawner : MonoBehaviour
             currentNotes.Remove(obj);
         else if (currentLines.Contains(obj))
             currentLines.Remove(obj);
+        else if (fatLines.Contains(obj))
+            fatLines.Remove(obj);
     }
 
 

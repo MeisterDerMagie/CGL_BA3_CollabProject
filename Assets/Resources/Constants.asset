@@ -15,3 +15,4 @@ MonoBehaviour:
   _INSTRUMENTS_AMOUNT: 4
   _ownPlayerNameColor: {r: 1, g: 0.9098039, b: 0, a: 1}
   _MIN_PLAYER_AMOUNT: 2
+  _RECORDING_LENGTH: 2

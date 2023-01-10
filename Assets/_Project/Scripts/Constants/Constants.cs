@@ -24,6 +24,9 @@ public class Constants : ScriptableObject
     public static int MIN_PLAYER_AMOUNT => instance._MIN_PLAYER_AMOUNT;
     [SerializeField] private int _MIN_PLAYER_AMOUNT;
     
+    public static int RECORDING_LENGTH => instance._RECORDING_LENGTH;
+    [SerializeField] private int _RECORDING_LENGTH;
+    
     //Singleton
     #region Singleton
     private static Constants _instance;
