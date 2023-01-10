@@ -11,6 +11,12 @@ public class PianoRollIcons : MonoBehaviour
 {
     [SerializeField] private List<SpriteRenderer> _renderers;
 
+
+    private void Start()
+    {
+        SetUpIcons();
+
+    }
     public void SetUpIcons()
     {
         if (NetworkManager.Singleton.IsServer) return;
