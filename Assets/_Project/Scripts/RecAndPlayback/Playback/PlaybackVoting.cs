@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Unity.Netcode;
 
 /// <summary>
 /// controls the audio playback during the voting stage (when players vote for other's creativity)
@@ -21,8 +22,6 @@ public class PlaybackVoting : MonoBehaviour
     private List<List<Eighth>> recording;
     private int timer;
 
-    int playerID;
-
     void Start()
     {
         _backingTrack = GetComponent<BackingTrack>();
@@ -33,8 +32,6 @@ public class PlaybackVoting : MonoBehaviour
 
         waitToStart = false;
         playback = false;
-
-        playerID = -1;
 
         StartCoroutine(WaitToStart());
         //_audioRoll.TestSetup();
