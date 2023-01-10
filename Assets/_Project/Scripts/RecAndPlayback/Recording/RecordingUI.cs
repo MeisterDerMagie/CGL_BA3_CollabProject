@@ -69,6 +69,8 @@ public class RecordingUI : NetworkBehaviour
     {
         _recordInput.DeleteButton();
         _pianoRoll.GetComponent<NoteSpawner>().DeleteActiveNotes();
+        playingBack = false;
+        SetPlayButton();
     }
 
     public void UpdateCountIn(bool active, string text)
