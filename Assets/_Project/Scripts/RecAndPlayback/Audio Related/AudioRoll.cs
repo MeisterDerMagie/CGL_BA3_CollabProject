@@ -20,6 +20,8 @@ public class AudioRoll : MonoBehaviour
 
     public void SetUpAllInstances()
     {
+        if (Unity.Netcode.NetworkManager.Singleton.IsServer) return;
+
         instance = new List<FMOD.Studio.EventInstance>();
 
         // for every instrumentID in local Player Data, create instance, start and pause immediately then add to list of instances.
