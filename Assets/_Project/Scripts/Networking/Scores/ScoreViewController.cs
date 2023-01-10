@@ -13,7 +13,7 @@ public class ScoreViewController : NetworkBehaviour
     public void Start()
     {
         //only run on server
-        if (!NetworkManager.IsServer) return;
+        if (!NetworkManager.Singleton.IsServer) return;
 
         stageController.OnInitialized += Initialize;
     }
@@ -34,9 +34,9 @@ public class ScoreViewController : NetworkBehaviour
 
             ulong clientId = stageController.GetClientIdAssignedToPodium(i);
 
-            if (!NetworkManager.ConnectedClients.ContainsKey(clientId)) continue;
+            if (!NetworkManager.Singleton.ConnectedClients.ContainsKey(clientId)) continue;
             
-            PlayerData playerData = NetworkManager.ConnectedClients[clientId].PlayerObject.GetComponent<PlayerData>();
+            PlayerData playerData = NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject.GetComponent<PlayerData>();
             int totalPoints = playerData.TotalPoints;
             
             podium.SetPodiumTextClientRpc(totalPoints.ToString());

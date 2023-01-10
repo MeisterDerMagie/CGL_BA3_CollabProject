@@ -75,6 +75,19 @@ public class StageController : NetworkBehaviour
             //set assigned player
             _clientIdsAssignToPodiums[i] = clientId;
             
+            //if we're in the voting stage, set the prompt and the composition
+            var podiumPlayComposition = podium.GetComponent<Podium_PlayComposition>();
+            if (podiumPlayComposition != null)
+            {
+                podiumPlayComposition.SetComposition(playerData.Recording);
+            }
+
+            var podiumPromptDisplay = podium.GetComponent<Podium_PromptDisplay>();
+            if (podiumPromptDisplay != null)
+            {
+                podiumPromptDisplay.AssignedPrompt.Value = playerData.AssignedPrompt;
+            }
+
             //position player on podium
             player.GetComponent<PlayerVisuals>().SetPosition(podium.PlayerPosition);
             
