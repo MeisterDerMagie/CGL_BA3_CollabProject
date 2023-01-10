@@ -282,13 +282,15 @@ public class RecordInput : MonoBehaviour
 
         for (int b = 0; b < Constants.RECORDING_LENGTH; b++)
         {
+            List<Eighth> bar = new List<Eighth>();
             for (int i = 0; i < 8; i++)
             {
                 Eighth e = new Eighth();
                 e.contains = false;
                 e.instrumentID = -1;
-                _list[b].Add(e);
+                bar.Add(e);
             }
+            _list.Add(bar);
         }
     }
 
