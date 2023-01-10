@@ -64,7 +64,7 @@ public class BeatMapping : MonoBehaviour
                 int bar = 0;
                 for (int b = Constants.RECORDING_LENGTH; b >= 1; b--)
                 {
-                    if (i <= 8 * (b - 1)) bar = b - 1;
+                    if (i <= 8 * b) bar = b - 1;
                 }
                 int eighth = i - bar * 8;
                 _recordInput.recording[bar][eighth] = e;
