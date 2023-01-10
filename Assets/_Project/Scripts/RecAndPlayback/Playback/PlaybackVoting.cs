@@ -64,17 +64,8 @@ public class PlaybackVoting : MonoBehaviour
         }
 
         if (playback)
-        {
-            /* -- for testing
-            if (bar[playerID].eighth[_timer.timelineBeat - 1].contains)
-                _audioRoll.TestSound(bar[playerID].eighth[_timer.timelineBeat - 1].instrumentID);
-            if (playerDatas[playerID].Recording[_timer.timelineBeat - 1].contains)
-                _audioRoll.PlayerInputSound(playerDatas[playerID].Recording[_timer.timelineBeat - 1].instrumentID);
-            */
-
             if (recording[timer][_timer.timelineBeat - 1].contains)
-                _audioRoll.PlayerInputSound(recording[timer][_timer.timelineBeat - 1].instrumentID);
-        }
+                _audioRoll.PlayerInputSound(PlayerData.LocalPlayerData.InstrumentIds.IndexOf(recording[timer][_timer.timelineBeat - 1].instrumentID));
     }
 
     public void StartPlayback(List<Eighth> _recording)
