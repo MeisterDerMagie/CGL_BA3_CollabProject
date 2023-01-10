@@ -21,6 +21,7 @@ public class Notes : MonoBehaviour
     public GameObject fatLine;
 
     public bool isStartingLine;
+    public bool isFatLine;
 
     public void NoteSetUp(float bpm, int beatLength, float _targetX, NoteSpawner script, int instrumentID, int beat = -1)
     {
@@ -105,12 +106,17 @@ public class Notes : MonoBehaviour
     // used to set the lines active and inactive during the recording stage
     public void Activate(bool value)
     {
-        visuals.SetActive(value);
-        if (startLine != null && isStartingLine)
+        if (value)
         {
-            startLine.SetActive(value);
-            visuals.SetActive(!value);
-            if (fatLine != null) fatLine.SetActive(!value);
+            if (isStartingLine && startLine != null) startLine.SetActive(true);
+            else if (isFatLine && fatLine != null) fatLine.SetActive(true);
+            else visuals.SetActive(true);
+        }
+        else
+        {
+            if (isStartingLine && startLine != null) startLine.SetActive(false);
+            else if (isFatLine && fatLine != null) fatLine.SetActive(false);
+            else visuals.SetActive(false);
         }
     }
 
@@ -119,6 +125,7 @@ public class Notes : MonoBehaviour
     {
         if (startLine == null) return;
         startLine.SetActive(value);
+        if (fatLine != null) fatLine.SetActive(!value);
         visuals.SetActive(!value);
     }
 
@@ -128,5 +135,6 @@ public class Notes : MonoBehaviour
         fatLine.SetActive(value);
         if (startLine != null) startLine.SetActive(!value);
         visuals.SetActive(!value);
+        isFatLine = value;
     }
 }

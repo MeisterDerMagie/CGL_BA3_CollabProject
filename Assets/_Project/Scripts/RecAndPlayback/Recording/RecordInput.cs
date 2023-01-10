@@ -148,6 +148,7 @@ public class RecordInput : MonoBehaviour
 
             _recordingUI.playingBack = false;
             _recordingUI.SetPlayButton();
+            _recordingUI.playButtonActive = false;
 
             // Update UI:
             recFrame.SetActive(true);
@@ -272,6 +273,7 @@ public class RecordInput : MonoBehaviour
         _pianoRoll.ControlPlayback(PianoRollRecording.RecPBStage.INACTIVE);
         _recordingUI.playingBack = false;
         _recordingUI.SetPlayButton();
+        _recordingUI.playButtonActive = true;
 
         spawnNote = false;
     }
