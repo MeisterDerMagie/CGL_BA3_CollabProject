@@ -18,6 +18,7 @@ public class Notes : MonoBehaviour
     public SpriteRenderer _secondRenderer;
     public SpriteRenderer _objRenderer;
     public GameObject startLine;
+    public GameObject fatLine;
 
     public bool isStartingLine;
 
@@ -108,7 +109,8 @@ public class Notes : MonoBehaviour
         if (startLine != null && isStartingLine)
         {
             startLine.SetActive(value);
-            if (value == true) visuals.SetActive(false);
+            visuals.SetActive(!value);
+            if (fatLine != null) fatLine.SetActive(!value);
         }
     }
 
@@ -117,6 +119,14 @@ public class Notes : MonoBehaviour
     {
         if (startLine == null) return;
         startLine.SetActive(value);
+        visuals.SetActive(!value);
+    }
+
+    public void FatLine(bool value)
+    {
+        if (fatLine == null) return;
+        fatLine.SetActive(value);
+        if (startLine != null) startLine.SetActive(!value);
         visuals.SetActive(!value);
     }
 }

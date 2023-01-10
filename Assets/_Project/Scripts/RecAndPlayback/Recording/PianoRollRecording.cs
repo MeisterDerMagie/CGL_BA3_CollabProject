@@ -87,8 +87,6 @@ public class PianoRollRecording : MonoBehaviour
     {
         if (!musicPlaying) return;
 
-        PlaybackLines();
-
         if (_timer.previewBeat == 1)
         {
             // if we're waiting to start next preview notes on the one --> start playback and wait for audio
@@ -121,6 +119,8 @@ public class PianoRollRecording : MonoBehaviour
             }
         }
 
+        PlaybackLines();
+
         // preview notes
         if (playback)
             if (_recordInput.recording[previewBar][_timer.previewBeat - 1].contains)
@@ -144,7 +144,14 @@ public class PianoRollRecording : MonoBehaviour
     void PlaybackLines()
     {
         // only spawn lines on 1s and 3s, so on first and fifth eighth
-        if (_timer.previewBeat == 1) _spawner.SpawnLine(bpm, 1);
+        if (_timer.previewBeat == 1)
+        {
+            if (stage == RecPBStage.PBNOAUDIO || stage == RecPBStage.PBWAITAUDIO || stage == RecPBStage.PBWITHAUDIO)
+            {
+
+            }
+            else _spawner.SpawnLine(bpm, 1);
+        }
         if (_timer.previewBeat == 3) _spawner.SpawnLine(bpm, 2);
         if (_timer.previewBeat == 5) _spawner.SpawnLine(bpm, 3);
         if (_timer.previewBeat == 7) _spawner.SpawnLine(bpm, 4);
