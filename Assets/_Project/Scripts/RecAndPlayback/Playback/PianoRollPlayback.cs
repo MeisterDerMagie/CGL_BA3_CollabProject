@@ -19,7 +19,8 @@ public class PianoRollPlayback : NetworkBehaviour
     {
         IDLE,
         COUNTIN,
-        PLAYING
+        PLAYING,
+        END
     }
 
     [SerializeField] private CharDisplayPB _display;
@@ -37,6 +38,8 @@ public class PianoRollPlayback : NetworkBehaviour
     [SerializeField] int barsBetween = 3;
     [Tooltip("seconds before playing back at start of scene")]
     [SerializeField] float time = 2.5f;
+    [Tooltip ("bars after playback finished before going to next screen")]
+    [SerializeField] int fadeOut = 2;
 
     public List<PlayerData> playerDatas;
     int timelinePlayer;
@@ -169,6 +172,17 @@ public class PianoRollPlayback : NetworkBehaviour
     public void NextBeat()
     {
         if (NetworkManager.IsServer) return;
+
+        if (timelineStage == PlaybackStage.END)
+        {
+            if (_timer.timelineBeat == 1)
+            {
+                timelineBar++;
+            }
+
+            if (timelineBar >= fadeOut) End();
+            return;
+        }
 
         if (!playingBack) return;
         if (_timer.timelineBeat == 0) return;
@@ -343,12 +357,16 @@ public class PianoRollPlayback : NetworkBehaviour
         void LastPlayer()
     {
         // if it was last player
-        timelineStage = PlaybackStage.IDLE;
+        timelineStage = PlaybackStage.END;
+        timelineBar = 0;
         playingBack = false;
 
         _light.TurnOff();
         _display.TurnOffCharacter();
+    }
 
+    void End()
+    {
         if (!NetworkManager.IsServer)
             _loadNext.Done();
     }
