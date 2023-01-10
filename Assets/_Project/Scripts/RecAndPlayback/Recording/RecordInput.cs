@@ -147,6 +147,7 @@ public class RecordInput : MonoBehaviour
             _pianoRoll.ControlPlayback(PianoRollRecording.RecPBStage.ONLYLINES);
 
             _recordingUI.playingBack = false;
+            _recordingUI.SetPlayButton();
 
             // Update UI:
             recFrame.SetActive(true);
@@ -173,6 +174,12 @@ public class RecordInput : MonoBehaviour
                     recording.Add(bar);
                 }
             }
+
+            _recordingUI.playingBack = false;
+            _recordingUI.SetPlayButton();
+
+            _spawner.DeactivateStartAndEndLine();
+            _spawner.isRecording = false;
         }
     }
 
@@ -215,8 +222,6 @@ public class RecordInput : MonoBehaviour
                     break;
                 case RecordingState.COUNTIN:
                     recordingState = RecordingState.REC;
-                    _spawner.isRecording = false;
-
                     _recordingUI.UpdateCountIn(true, "REC");
                     _recordingUI.playingBack = true;
                     _recordingUI.SetPlayButton();
@@ -264,12 +269,9 @@ public class RecordInput : MonoBehaviour
         _recordingUI.UpdateCountIn(false, "");
         //countInText.gameObject.SetActive(false);
 
-        _spawner.DeactivateStartAndEndLine();
-
         _pianoRoll.ControlPlayback(PianoRollRecording.RecPBStage.INACTIVE);
         _recordingUI.playingBack = false;
         _recordingUI.SetPlayButton();
-        _spawner.isRecording = false;
 
         spawnNote = false;
     }

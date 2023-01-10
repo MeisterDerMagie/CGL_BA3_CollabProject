@@ -70,9 +70,11 @@ public class PianoRollRecording : MonoBehaviour
 
     public void StopMusic()
     {
+        _spawner.DeactivateStartAndEndLine();
         _spawner.ActivateIdleLines(true);
         _spawner.ActivateLines(false);
         _spawner.ActivateNotes(false);
+        _spawner.isRecording = false;
 
         _backingTrack.StopMusic();
         _recordInput.StopRecording();
@@ -148,7 +150,7 @@ public class PianoRollRecording : MonoBehaviour
         {
             if (stage == RecPBStage.PBNOAUDIO || stage == RecPBStage.PBWAITAUDIO || stage == RecPBStage.PBWITHAUDIO)
             {
-
+                _spawner.SpawnLine(bpm, 1, true);
             }
             else _spawner.SpawnLine(bpm, 1);
         }

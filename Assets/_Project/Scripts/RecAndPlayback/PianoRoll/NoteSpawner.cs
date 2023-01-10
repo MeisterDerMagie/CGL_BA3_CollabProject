@@ -209,7 +209,7 @@ public class NoteSpawner : MonoBehaviour
             else
             {
                 barCounter++;
-                if (barCounter == Constants.RECORDING_LENGTH - 1)
+                if (barCounter == Constants.RECORDING_LENGTH)
                 {
                     endRecLine = clone;
                     clone.GetComponent<Notes>().isStartingLine = true;
