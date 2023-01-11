@@ -73,6 +73,7 @@ public class PlaybackVoting : MonoBehaviour
         if (Unity.Netcode.NetworkManager.Singleton.IsServer) return;
 
         waitToStart = true;
+        playback = false;
         timer = 0;
 
         // transform list of eighths into different bars
