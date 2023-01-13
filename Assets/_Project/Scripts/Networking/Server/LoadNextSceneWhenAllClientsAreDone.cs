@@ -10,6 +10,7 @@ public class LoadNextSceneWhenAllClientsAreDone : NetworkBehaviour
     [SerializeField] private NetworkSceneLoader nextScene;
     
     private Dictionary<ulong, bool> _clientStates = new Dictionary<ulong, bool>();
+    private bool _sceneIsLoading;
 
     public override void OnNetworkSpawn()
     {
@@ -68,9 +69,12 @@ public class LoadNextSceneWhenAllClientsAreDone : NetworkBehaviour
                 break;
             }
         }
-        
-        if(allClientsDone)
+
+        if (allClientsDone && !_sceneIsLoading)
+        {
+            _sceneIsLoading = true;
             LoadNextScene();
+        }
 
         Debug.LogWarning("WATCH OUT! HERE COULD BE A PROBLEM WITH ONCLIENTDISCONNECT. DOES IT GET CALLED EVEN AFTER THE NEW SCENE WAS LOADED?");
     }

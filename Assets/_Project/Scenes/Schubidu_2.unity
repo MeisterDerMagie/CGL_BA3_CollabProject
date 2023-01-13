@@ -224,12 +224,20 @@ PrefabInstance:
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3204870652210103703, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -875.5198
+      objectReference: {fileID: 0}
+    - target: {fileID: 3204870652210103703, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -447.8919
+      objectReference: {fileID: 0}
+    - target: {fileID: 3204870652210103703, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 55.35034
+      value: 147.98059
       objectReference: {fileID: 0}
     - target: {fileID: 3204870652210103703, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -67
+      value: -40.94789
       objectReference: {fileID: 0}
     - target: {fileID: 3204870652685877299, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: lines.Array.size
@@ -351,9 +359,29 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 8a63d814671dd8e4bbe113c02befbd57, type: 3}
+    - target: {fileID: 3204870652742266759, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3204870652742266759, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: m_ScreenMatchMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3204870652742266759, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1080
+      objectReference: {fileID: 0}
+    - target: {fileID: 3204870652742266759, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1920
+      objectReference: {fileID: 0}
     - target: {fileID: 3980516426527739290, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: m_Name
       value: MrSchubidu
+      objectReference: {fileID: 0}
+    - target: {fileID: 5435356021113865434, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.0029296875
       objectReference: {fileID: 0}
     - target: {fileID: 5491492101585675037, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: m_RootOrder
@@ -667,7 +695,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2030951028}
   - component: {fileID: 2030951027}
-  - component: {fileID: 2030951026}
+  - component: {fileID: 2030951029}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -675,14 +703,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &2030951026
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2030951025}
-  m_Enabled: 1
 --- !u!20 &2030951027
 Camera:
   m_ObjectHideFlags: 0
@@ -741,3 +761,16 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2030951029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2030951025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 2030951025}

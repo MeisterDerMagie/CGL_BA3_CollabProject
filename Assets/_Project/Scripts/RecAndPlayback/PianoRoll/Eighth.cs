@@ -7,7 +7,7 @@ using Unity.Netcode;
 
 /// <summary>
 /// Data structures that hold our recordings
-/// A bar always consists of 8 eighths and every eighth holds information whether it contains a note or not, and which instrumentID
+/// A bar is a list of 8 eighths and every eighth holds information whether it contains a note or not, and which instrumentID
 /// </summary>
 
 [Serializable]
@@ -24,16 +24,4 @@ public struct Eighth : INetworkSerializable, IEquatable<Eighth>
     public bool Equals(Eighth other) => contains == other.contains && instrumentID == other.instrumentID;
     public override bool Equals(object obj) => obj is Eighth other && Equals(other);
     public override int GetHashCode() => HashCode.Combine(contains, instrumentID);
-}
-
-[Serializable]
-public struct Bar
-{
-    public List<Eighth> eighth;
-
-    public Bar(List<Eighth> _n)
-    {
-        eighth = new List<Eighth>();
-        eighth = _n;
-    }
 }

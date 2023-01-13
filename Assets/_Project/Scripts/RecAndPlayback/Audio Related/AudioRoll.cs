@@ -14,11 +14,14 @@ using FMODUnity;
 public class AudioRoll : MonoBehaviour
 {
     private List<FMOD.Studio.EventInstance> instance;
+    private bool releaseOnDestroy;
 
     //[SerializeField] private EventReference[] events; // for testing locally
 
     public void SetUpAllInstances()
     {
+        if (Unity.Netcode.NetworkManager.Singleton.IsServer) return;
+
         instance = new List<FMOD.Studio.EventInstance>();
 
         // for every instrumentID in local Player Data, create instance, start and pause immediately then add to list of instances.
@@ -33,6 +36,8 @@ public class AudioRoll : MonoBehaviour
 
             instance.Add(inst);
         }
+
+        releaseOnDestroy = true;
     }
 
     // When hitting a key: unpause sound and release instance; then create a new instance in its place, start and pause immediately
@@ -82,4 +87,16 @@ public class AudioRoll : MonoBehaviour
         }
     }
     */
+
+    private void OnDestroy()
+    {
+        if (releaseOnDestroy)
+        {
+            foreach (FMOD.Studio.EventInstance inst in instance)
+            {
+                inst.release();
+            }
+            instance.Clear();
+        }
+    }
 }
