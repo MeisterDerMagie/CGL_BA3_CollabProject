@@ -1450,6 +1450,7 @@ MonoBehaviour:
   promptTextField: {fileID: 1874231153}
   pianoRollObj: {fileID: 294009750}
   playingBack: 0
+  playButtonActive: 0
 --- !u!4 &1302302530
 Transform:
   m_ObjectHideFlags: 0
@@ -2155,8 +2156,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: This is your prompt
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f8144fa378396d04d9ed4f50eba133b0, type: 2}
-  m_sharedMaterial: {fileID: 7273621228614831439, guid: f8144fa378396d04d9ed4f50eba133b0, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d038cb14ac94dd5408f16fb7b934f9e2, type: 2}
+  m_sharedMaterial: {fileID: 2097287856733595076, guid: d038cb14ac94dd5408f16fb7b934f9e2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
