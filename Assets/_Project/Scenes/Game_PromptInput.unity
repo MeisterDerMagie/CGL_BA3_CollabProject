@@ -1138,11 +1138,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2946928742076671825, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 168.8166
+      value: 172.17
       objectReference: {fileID: 0}
     - target: {fileID: 2946928742076671825, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 62.4617
+      value: 81.5
       objectReference: {fileID: 0}
     - target: {fileID: 2946928742076671825, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1174,11 +1174,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2946928742076671825, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1681
+      value: 1666
       objectReference: {fileID: 0}
     - target: {fileID: 2946928742076671825, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 639
+      value: 649
       objectReference: {fileID: 0}
     - target: {fileID: 2946928742076671825, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1194,8 +1194,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3195085252320951223, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
       propertyPath: m_text
-      value: OK
+      value: Submit
       objectReference: {fileID: 0}
+    - target: {fileID: 3195085252320951223, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
+      propertyPath: m_fontSize
+      value: 28.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3195085252320951223, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 19c10f307293dd94293512ed13455419, type: 2}
+    - target: {fileID: 3195085252320951223, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 28.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3195085252320951223, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 6264203337036926310, guid: 19c10f307293dd94293512ed13455419, type: 2}
     - target: {fileID: 3635035986634108061, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -1980,6 +1996,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1895691970}
     m_Modifications:
+    - target: {fileID: 1863333282825496254, guid: 5b3cc7f9abe5bed4bbd782992059908b, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1863333282986773650, guid: 5b3cc7f9abe5bed4bbd782992059908b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1863333282986773650, guid: 5b3cc7f9abe5bed4bbd782992059908b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 1863333282986773650, guid: 5b3cc7f9abe5bed4bbd782992059908b, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1863333282986773652, guid: 5b3cc7f9abe5bed4bbd782992059908b, type: 3}
+      propertyPath: m_fontSize
+      value: 22.43
+      objectReference: {fileID: 0}
+    - target: {fileID: 1863333282986773652, guid: 5b3cc7f9abe5bed4bbd782992059908b, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1863333282986773652, guid: 5b3cc7f9abe5bed4bbd782992059908b, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 22.43
+      objectReference: {fileID: 0}
     - target: {fileID: 1863333283437882074, guid: 5b3cc7f9abe5bed4bbd782992059908b, type: 3}
       propertyPath: m_Name
       value: inp_Prompt
