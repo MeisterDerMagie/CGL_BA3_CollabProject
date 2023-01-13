@@ -813,7 +813,7 @@ MonoBehaviour:
   stageController: {fileID: 484646668}
   lightsController: {fileID: 1480184386}
   waitingScreen: {fileID: 760567820}
-  nextScene: {fileID: 11400000, guid: 79b48e53a946b8d448c30f57a782a55b, type: 2}
+  nextScene: {fileID: 11400000, guid: e5e893ccc04bf9645bb298bdb9bfbcdb, type: 2}
   onUserTriedToVoteForThemselves:
     m_PersistentCalls:
       m_Calls: []
