@@ -483,13 +483,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7626872036245158396, guid: 9d33d419ce82b8146810f14553b83d4f, type: 3}
+      propertyPath: m_Size.y
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7626872036245158396, guid: 9d33d419ce82b8146810f14553b83d4f, type: 3}
+      propertyPath: m_Offset.y
+      value: 2.36
+      objectReference: {fileID: 0}
     - target: {fileID: 9213552980660792352, guid: 9d33d419ce82b8146810f14553b83d4f, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334
       objectReference: {fileID: 0}
     - target: {fileID: 9213552980660792357, guid: 9d33d419ce82b8146810f14553b83d4f, type: 3}
       propertyPath: m_Name
-      value: Podium_Voting
+      value: Podium_VoteForCreativity
       objectReference: {fileID: 0}
     - target: {fileID: 9213552980660792358, guid: 9d33d419ce82b8146810f14553b83d4f, type: 3}
       propertyPath: m_RootOrder
@@ -547,22 +555,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 9213552980660792357, guid: 9d33d419ce82b8146810f14553b83d4f, type: 3}
   m_PrefabInstance: {fileID: 4107777724285383299}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8939841613491623356
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5106201875754901158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6116bfb4ce571f847a0f4d5a028aa5c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playbackVoting: {fileID: 0}
-  promptDisplay: {fileID: 5282211301444695010}
-  playButton: {fileID: 4698329932860485946}
-  stopButton: {fileID: 729800009834155011}
 --- !u!114 &5282211301444695010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1122,3 +1114,19 @@ MonoBehaviour:
         byte0507: 0
         byte0508: 0
         byte0509: 0
+--- !u!114 &8939841613491623356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5106201875754901158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6116bfb4ce571f847a0f4d5a028aa5c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playbackVoting: {fileID: 0}
+  promptDisplay: {fileID: 5282211301444695010}
+  playButton: {fileID: 4698329932860485946}
+  stopButton: {fileID: 729800009834155011}
