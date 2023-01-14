@@ -1,6 +1,7 @@
 ﻿//(c) copyright by Martin M. Klöckener
 using System.Collections;
 using System.Collections.Generic;
+using MEC;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,6 +9,7 @@ using UnityEngine.SceneManagement;
 public class LoadNextSceneWhenAllClientsAreDone : NetworkBehaviour
 {
     [SerializeField] private NetworkSceneLoader nextScene;
+    [SerializeField] private float loadDelay = 1f;
     
     private Dictionary<ulong, bool> _clientStates = new Dictionary<ulong, bool>();
     private bool _sceneIsLoading;
@@ -73,14 +75,16 @@ public class LoadNextSceneWhenAllClientsAreDone : NetworkBehaviour
         if (allClientsDone && !_sceneIsLoading)
         {
             _sceneIsLoading = true;
-            LoadNextScene();
+            Timing.RunCoroutine(LoadNextScene());
         }
 
         Debug.LogWarning("WATCH OUT! HERE COULD BE A PROBLEM WITH ONCLIENTDISCONNECT. DOES IT GET CALLED EVEN AFTER THE NEW SCENE WAS LOADED?");
     }
 
-    private void LoadNextScene()
+    private IEnumerator<float> LoadNextScene()
     {
+        yield return Timing.WaitForSeconds(loadDelay);
+        
         NetworkSceneLoading.LoadNetworkScene(nextScene, LoadSceneMode.Single);
     }
 }
