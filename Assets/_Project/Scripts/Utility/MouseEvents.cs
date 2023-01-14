@@ -4,6 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
+using Wichtel;
 
 public class MouseEvents : MonoBehaviour
 {
@@ -16,24 +18,32 @@ public class MouseEvents : MonoBehaviour
     
     private void OnMouseEnter()
     {
+        if (UIUtilities.PointerIsOverUI()) return;
+        
         OnMouseEnterEvent?.Invoke();
         onMouseEnter.Invoke();
     }
 
     private void OnMouseExit()
     {
+        if (UIUtilities.PointerIsOverUI()) return;
+
         OnMouseExitEvent?.Invoke();
         onMouseExit.Invoke();
     }
 
     private void OnMouseDown()
     {
+        if (UIUtilities.PointerIsOverUI()) return;
+
         OnMouseDownEvent?.Invoke();
         onMouseDown.Invoke();
     }
 
     private void OnMouseUp()
     {
+        if (UIUtilities.PointerIsOverUI()) return;
+
         OnMouseUpEvent?.Invoke();
         onMouseUp.Invoke();
     }
