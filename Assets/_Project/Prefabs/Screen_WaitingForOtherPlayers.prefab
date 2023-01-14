@@ -106,6 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 559e74a83df00e444aa4a01bed23e46e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  content: {fileID: 6046905706145770638}
   playerDoneIcons:
   - {fileID: 3164809941254627182}
   - {fileID: 525350315285319790}
@@ -213,7 +214,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 50
   m_TargetDisplay: 0
 --- !u!114 &6046905706990376241
 MonoBehaviour:
@@ -447,8 +448,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2185705429619374430, guid: 16a8f5bf13407f2468c0db6734cd8bb5, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -0.0029296875
+      propertyPath: m_LocalPosition.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2396284732673296647, guid: 16a8f5bf13407f2468c0db6734cd8bb5, type: 3}
       propertyPath: m_Pivot.x
