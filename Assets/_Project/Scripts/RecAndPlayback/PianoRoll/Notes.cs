@@ -23,6 +23,25 @@ public class Notes : MonoBehaviour
     public bool isStartingLine;
     public bool isFatLine;
 
+    public void TestNoteSetUp(float bpm, int beatLength, float _targetX, NoteSpawner script, int instrumentID, int beat = -1)
+    {
+        float duration = (60f / bpm / 2f) * (beatLength);
+
+        // choose button bg
+        if (instrumentID >= sprites.Length) instrumentID = 0;
+        _objRenderer.sprite = sprites[instrumentID];
+        // deactivate instrument icon for testing
+        _secondRenderer.gameObject.SetActive(false);
+
+        spawner = script;
+
+        // set target position on the right side of the Piano Roll
+        Vector3 targetPos = new Vector3(_targetX, transform.localPosition.y, transform.localPosition.z);
+
+        // start moving object in coroutine
+        StartCoroutine(MoveToLeft(duration, targetPos));
+    }
+
     public void NoteSetUp(float bpm, int beatLength, float _targetX, NoteSpawner script, int instrumentID, int beat = -1)
     {
         // instrumentID is set to -1 if it's a line being spawned

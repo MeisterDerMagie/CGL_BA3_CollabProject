@@ -24,11 +24,15 @@ public class PianoRollTimer : MonoBehaviour
 
     private BackingTrack _backingTrack;
     [SerializeField] private int resetPrevCounter = 3;
-    [Tooltip("length of recording in bars")]
-    [SerializeField] public int recordingLength = 1;
 
     [SerializeField]
     private CurrentGameStage stage;
+
+    private PianoRollPlayback _playback;
+    private PianoRollRecording _recording;
+    private PlaybackVoting _voting;
+    private PianoRollTLKoffer _tlKoffer;
+    private PianoRollPrevKoffer _prevKoffer;
 
 
     void Start()
@@ -40,6 +44,23 @@ public class PianoRollTimer : MonoBehaviour
 
         //timelineBeat = 0;
         //previewBeat = resetPrevCounter;
+
+        switch(stage)
+        {
+            case CurrentGameStage.Recording:
+                _recording = GetComponent<PianoRollRecording>();
+                break;
+            case CurrentGameStage.Playback:
+                _playback = GetComponent<PianoRollPlayback>();
+                break;
+            case CurrentGameStage.Voting:
+                _voting = GetComponent<PlaybackVoting>();
+                break;
+            case CurrentGameStage.Repeat:
+                _tlKoffer = GetComponent<PianoRollTLKoffer>();
+                _prevKoffer = GetComponent<PianoRollPrevKoffer>();
+                break;
+        }
     }
 
     private void OnDestroy()
@@ -92,15 +113,17 @@ public class PianoRollTimer : MonoBehaviour
         switch (stage)
         {
             case CurrentGameStage.Recording:
-                GetComponent<PianoRollRecording>().NextBeat();
+                _recording.NextBeat();
                 break;
             case CurrentGameStage.Playback:
-                GetComponent<PianoRollPlayback>().NextBeat();
+                _playback.NextBeat();
                 break;
             case CurrentGameStage.Voting:
-                GetComponent<PlaybackVoting>().NextBeat();
+                _voting.NextBeat();
                 break;
             case CurrentGameStage.Repeat:
+                _tlKoffer.NextBeat();
+                _prevKoffer.NextBeat();
                 break;
         }
     }

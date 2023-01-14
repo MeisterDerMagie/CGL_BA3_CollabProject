@@ -240,6 +240,19 @@ public class NoteSpawner : MonoBehaviour
         currentNotes.Add(clone);
     }
 
+    public void SpawnTestNote(int instrumentID, float bpm)
+    {
+        // instantiate a new note and set position to the far right of the piano roll
+        GameObject clone = Instantiate(noteObj, spawns.transform);
+        // y Pos is dependent on which note it is; calculation of the List happens in the start function of this script
+        clone.transform.localPosition = new Vector3(xPos, yPos[instrumentID], 0);
+
+        // tell the clone the current bpm, length of roll in beats, target position x
+        clone.GetComponent<Notes>().TestNoteSetUp(bpm, beatLength * 2, transform.localPosition.x - bg.transform.localScale.x / 2f, this, instrumentID);
+
+        currentNotes.Add(clone);
+    }
+
     public void RemoveFromList(GameObject obj)
     {
         if (currentNotes.Contains(obj))

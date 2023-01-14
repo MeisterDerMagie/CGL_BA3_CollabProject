@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class BeatMapping : MonoBehaviour
 {
-    private PianoRollRecording _pianoRoll;
     private RecordInput _recordInput;
 
     public float dispersion;
     public List<float> compareTo;
 
+    float bpm;
+
     private void Start()
     {
-        _pianoRoll = GetComponentInParent<PianoRollRecording>();
         _recordInput = GetComponent<RecordInput>();
+    }
 
-        dispersion = (60f / _pianoRoll.bpm / 4f);
+    public void SetUp(float _bpm)
+    {
+        bpm = _bpm;
+        dispersion = (60f / bpm / 4f);
     }
 
     public void PrepareRecording()
@@ -25,12 +29,12 @@ public class BeatMapping : MonoBehaviour
         {
             // time signature of every eighth in the bar times the amount of bars counted from one bar before
             // so duration of an eighth * which eighth in the bar + duration of a bar
-            float time = (60f / _pianoRoll.bpm / 2f) * i + (60f / _pianoRoll.bpm * 4f);
+            float time = (60f / bpm / 2f) * i + (60f / bpm * 4f);
             compareTo.Add(time);
         }
 
         // dispersion is the duration of half an eighth
-        dispersion = (60f / _pianoRoll.bpm / 4f);
+        dispersion = (60f / bpm / 4f);
     }
 
     public void MapRecording(RecordingNote note)
