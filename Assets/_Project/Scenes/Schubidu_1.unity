@@ -210,6 +210,22 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 2219979102
       objectReference: {fileID: 0}
+    - target: {fileID: 1232380703942225253, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2289487806494553143, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2289487806494553143, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2289487806494553143, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2879325727017348162, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 1193632022
@@ -281,6 +297,10 @@ PrefabInstance:
     - target: {fileID: 6046905706122264679, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6046905706990376252, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7032948872996644835, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
       propertyPath: GlobalObjectIdHash
@@ -671,6 +691,18 @@ PrefabInstance:
     - target: {fileID: 3980516426527739290, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: m_Name
       value: MrSchubidu
+      objectReference: {fileID: 0}
+    - target: {fileID: 5435356021113865434, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5435356021113865434, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5435356021113865434, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5491492101585675037, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: m_RootOrder

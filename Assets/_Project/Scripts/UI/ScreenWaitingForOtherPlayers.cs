@@ -4,21 +4,26 @@ using System.Collections.Generic;
 using MEC;
 using Unity.Netcode;
 using UnityEngine;
-using Wichtel.Extensions;
-using Wichtel.UI;
+#if UNITY_EDITOR
+using UnityEditor.SceneManagement;
+#endif
 
+[ExecuteInEditMode]
 public class ScreenWaitingForOtherPlayers : NetworkBehaviour
 {
-    [SerializeField] private RectTransform content;
+    [SerializeField] private Canvas canvas;
     [SerializeField] private PlayerDoneIcon[] playerDoneIcons;
     private Dictionary<ulong, PlayerDoneIcon> _playerIcons;
+
+    private void Awake()
+    {
+        //activate canvas
+        canvas.gameObject.SetActive(true);
+    }
 
     //only call this on the server
     public void Initialize(Dictionary<ulong, uint> players)
     {
-        content.SetLeft(0f);
-        content.SetRight(0f);
-        
         if (!NetworkManager.Singleton.IsServer)
         {
             Debug.LogError("This method should never be called on the client.");
@@ -84,4 +89,20 @@ public class ScreenWaitingForOtherPlayers : NetworkBehaviour
                 playerIcon.Value.SetDoneState(isDone);
         }
     }
+    
+    #if UNITY_EDITOR
+    private void Update()
+    {
+        PrefabStage currentPrefabStage = PrefabStageUtility.GetPrefabStage(gameObject);
+        
+        //if we are not in prefab stage: hide the canvas because otherwise it will get into the way
+        if(currentPrefabStage == null) canvas.gameObject.SetActive(false);
+
+        //otherwise, if we are in prefab mode and editing this prefab: show the canvas (we want to edit it...)
+        else
+        {
+            canvas.gameObject.SetActive(true);
+        }
+    }
+    #endif
 }
