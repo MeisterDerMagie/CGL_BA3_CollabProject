@@ -1,17 +1,24 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using MEC;
 using Unity.Netcode;
 using UnityEngine;
+using Wichtel.Extensions;
+using Wichtel.UI;
 
 public class ScreenWaitingForOtherPlayers : NetworkBehaviour
 {
+    [SerializeField] private RectTransform content;
     [SerializeField] private PlayerDoneIcon[] playerDoneIcons;
     private Dictionary<ulong, PlayerDoneIcon> _playerIcons;
 
     //only call this on the server
     public void Initialize(Dictionary<ulong, uint> players)
     {
+        content.SetLeft(0f);
+        content.SetRight(0f);
+        
         if (!NetworkManager.Singleton.IsServer)
         {
             Debug.LogError("This method should never be called on the client.");
