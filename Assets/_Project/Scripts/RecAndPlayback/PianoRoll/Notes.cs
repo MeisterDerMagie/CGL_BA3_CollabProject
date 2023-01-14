@@ -23,6 +23,17 @@ public class Notes : MonoBehaviour
     public bool isStartingLine;
     public bool isFatLine;
 
+    public void TestNoteSetUp(float bpm, int beatLength, float _targetX, NoteSpawner script, int instrumentID, int beat = -1)
+    {
+        float duration = (60f / bpm / 2f) * (beatLength);
+
+        // choose button bg
+        if (instrumentID >= sprites.Length) instrumentID = 0;
+        _objRenderer.sprite = sprites[instrumentID];
+        // deactivate instrument icon for testing
+        _secondRenderer.gameObject.SetActive(false);
+    }
+
     public void NoteSetUp(float bpm, int beatLength, float _targetX, NoteSpawner script, int instrumentID, int beat = -1)
     {
         // instrumentID is set to -1 if it's a line being spawned

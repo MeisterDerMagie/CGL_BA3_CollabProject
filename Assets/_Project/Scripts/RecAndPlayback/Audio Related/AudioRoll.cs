@@ -16,7 +16,7 @@ public class AudioRoll : MonoBehaviour
     private List<FMOD.Studio.EventInstance> instance;
     private bool releaseOnDestroy;
 
-    //[SerializeField] private EventReference[] events; // for testing locally
+    [SerializeField] private EventReference[] events; // for testing locally
 
     public void SetUpAllInstances()
     {
@@ -58,7 +58,7 @@ public class AudioRoll : MonoBehaviour
         RuntimeManager.PlayOneShot(InstrumentsManager.Instance.GetInstrument(instrumentID).soundEvent);
     }
 
-    /* for testing locally
+    //for testing locally
     public void TestSound(int instrumentID)
     {
         if (instrumentID > events.Length - 1) instrumentID = 0;
@@ -86,7 +86,7 @@ public class AudioRoll : MonoBehaviour
             instance.Add(inst);
         }
     }
-    */
+    
 
     private void OnDestroy()
     {

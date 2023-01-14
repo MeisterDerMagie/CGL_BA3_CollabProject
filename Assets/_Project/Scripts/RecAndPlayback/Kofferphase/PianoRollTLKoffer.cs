@@ -47,6 +47,9 @@ public class PianoRollTLKoffer : MonoBehaviour
     {
         // get references to all relevant scripts:
         _timer = GetComponent<PianoRollTimer>();
+        _audioRoll = GetComponent<AudioRoll>();
+        //_audioRoll.SetUpAllInstances();
+        _audioRoll.TestSetup();
 
         // get all players in scene and sort according to creativity points
         //_allPlayers = FindObjectsOfType<PlayerData>().ToList();
@@ -57,9 +60,10 @@ public class PianoRollTLKoffer : MonoBehaviour
 
         currentStage = KofferStages.IDLE;
 
-        // FOR TESTING:
+        // FOR TESTING LOCALLY:
         WriteTestBars();
     }
+
 
     private void WriteTestBars()
     {
@@ -127,9 +131,14 @@ public class PianoRollTLKoffer : MonoBehaviour
     {
         if (currentStage == KofferStages.IDLE) return;
 
-        if (_timer.timelineBeat == 1)
+        if (_timer.timelineBeat == 1) UpdateStage();
+
+        // if we're playing back (then we're playing back with audio --> play audio)
+        if (currentStage == KofferStages.PLAYBACK)
         {
-            UpdateStage();
+            // test version:
+            if (testPlayers[currentPlayer][((currentBar * 8) + _timer.previewBeat) - 1].contains)
+                _audioRoll.PlayerInputSound(testPlayers[currentPlayer][((currentBar * 8) + _timer.previewBeat) - 1].instrumentID);
         }
     }
 

@@ -50,13 +50,16 @@ public class PianoRollPrevKoffer : MonoBehaviour
     {
         if (currentStage == PianoRollTLKoffer.KofferStages.IDLE) return;
 
+        if (_timer.previewBeat == 1) UpdateStage();
+
         PlayQuarterNote();
 
         // if we're playing back or repeating rhythm --> spawn notes
         if (currentStage == PianoRollTLKoffer.KofferStages.RHYTHMREPEAT || currentStage == PianoRollTLKoffer.KofferStages.PLAYBACK)
         {
             // with test players:
-
+            if (_timeline.testPlayers[currentPlayer][((currentBar * 8) + _timer.previewBeat) - 1].contains)
+                _spawner.SpawnTestNote(_timeline.testPlayers[currentPlayer][((currentBar * 8) + _timer.previewBeat) - 1].instrumentID, _timeline.bpm);
         }
     }
 

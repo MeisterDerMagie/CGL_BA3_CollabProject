@@ -1809,6 +1809,10 @@ PrefabInstance:
       propertyPath: _display
       value: 
       objectReference: {fileID: 1071365773}
+    - target: {fileID: 2623974932172434105, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: _allPlayers.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3516646982959832856, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
       propertyPath: m_RootOrder
       value: 2
