@@ -32,6 +32,14 @@ public class Notes : MonoBehaviour
         _objRenderer.sprite = sprites[instrumentID];
         // deactivate instrument icon for testing
         _secondRenderer.gameObject.SetActive(false);
+
+        spawner = script;
+
+        // set target position on the right side of the Piano Roll
+        Vector3 targetPos = new Vector3(_targetX, transform.localPosition.y, transform.localPosition.z);
+
+        // start moving object in coroutine
+        StartCoroutine(MoveToLeft(duration, targetPos));
     }
 
     public void NoteSetUp(float bpm, int beatLength, float _targetX, NoteSpawner script, int instrumentID, int beat = -1)

@@ -1174,7 +1174,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1185001574}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f5bc266d8f33a940a76b5123d84efbf, type: 3}
   m_Name: 
@@ -1861,9 +1861,117 @@ PrefabInstance:
       propertyPath: m_Name
       value: Piano Roll
       objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203104, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: events.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203104, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: events.Array.data[0].Path
+      value: event:/Instrument Samples/New/Dumb_PartyHorn
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203104, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: events.Array.data[1].Path
+      value: event:/Instrument Samples/New/Dumb_SqueakyToy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203104, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: events.Array.data[2].Path
+      value: event:/Instrument Samples/New/Instr_Flute
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203104, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: events.Array.data[3].Path
+      value: event:/Instrument Samples/New/Instr_FrenchHorn
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203104, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: events.Array.data[4].Path
+      value: event:/Instrument Samples/New/Perc_Snare
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203104, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: events.Array.data[0].Guid.Data1
+      value: 1689108943
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203104, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: events.Array.data[0].Guid.Data2
+      value: 1260271593
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203104, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: events.Array.data[0].Guid.Data3
+      value: -615837296
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203104, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: events.Array.data[0].Guid.Data4
+      value: -351456942
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203104, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: events.Array.data[1].Guid.Data1
+      value: 71305647
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203104, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: events.Array.data[1].Guid.Data2
+      value: 1122086663
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203104, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: events.Array.data[1].Guid.Data3
+      value: -1830804588
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203104, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: events.Array.data[1].Guid.Data4
+      value: 92438091
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203104, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: events.Array.data[2].Guid.Data1
+      value: 809219665
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203104, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: events.Array.data[2].Guid.Data2
+      value: 1268292036
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203104, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: events.Array.data[2].Guid.Data3
+      value: 1698687396
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203104, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: events.Array.data[2].Guid.Data4
+      value: 1009762892
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203104, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: events.Array.data[3].Guid.Data1
+      value: -1716845582
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203104, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: events.Array.data[3].Guid.Data2
+      value: 1170320978
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203104, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: events.Array.data[3].Guid.Data3
+      value: 1256669884
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203104, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: events.Array.data[3].Guid.Data4
+      value: -768272648
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203104, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: events.Array.data[4].Guid.Data1
+      value: -1201295364
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203104, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: events.Array.data[4].Guid.Data2
+      value: 1228473292
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203104, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: events.Array.data[4].Guid.Data3
+      value: -51760737
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203104, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: events.Array.data[4].Guid.Data4
+      value: 1688991779
+      objectReference: {fileID: 0}
     - target: {fileID: 3516646984250982404, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
       propertyPath: _recordingUI
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4866164918744373566, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}

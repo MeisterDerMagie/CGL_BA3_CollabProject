@@ -55,6 +55,7 @@ public class RecordInput : MonoBehaviour
         _backingTrack.beatUpdated += NextBeat;
         _beatMapping = GetComponent<BeatMapping>();
         _pianoRoll = _audioRoll.gameObject.GetComponentInParent<PianoRollRecording>();
+        _beatMapping.SetUp(_pianoRoll.bpm);
         _recordingUI.playingBack = false;
         _recordingUI.SetPlayButton();
 

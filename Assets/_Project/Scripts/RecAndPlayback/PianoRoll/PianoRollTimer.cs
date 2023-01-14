@@ -24,8 +24,6 @@ public class PianoRollTimer : MonoBehaviour
 
     private BackingTrack _backingTrack;
     [SerializeField] private int resetPrevCounter = 3;
-    [Tooltip("length of recording in bars")]
-    [SerializeField] public int recordingLength = 1;
 
     [SerializeField]
     private CurrentGameStage stage;

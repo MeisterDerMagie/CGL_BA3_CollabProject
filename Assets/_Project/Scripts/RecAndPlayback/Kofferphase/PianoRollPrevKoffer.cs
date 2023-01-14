@@ -37,7 +37,7 @@ public class PianoRollPrevKoffer : MonoBehaviour
         _spawner.spawnActive = true;
 
         // reset variables
-        barTimer = _timer.previewBar;
+        barTimer = _timer.previewBar + 1; // might have to adjust +- 1
         currentPlayer = 0;
         currentBar = 0;
         amountPlaybackPlayers = 1;
@@ -71,12 +71,66 @@ public class PianoRollPrevKoffer : MonoBehaviour
                 // shouldn't even be in here
                 break;
             case PianoRollTLKoffer.KofferStages.COUNTINPB:
+                // if timer reaches count in --> go to next stage, reset all variables (reset current bar + bar timer)
+                if (_timer.previewBar - barTimer >= _timeline.countInToPlayback)
+                {
+                    currentStage = PianoRollTLKoffer.KofferStages.PLAYBACK;
+                    barTimer = _timer.previewBar;
+                    currentBar = 0;
+                }
                 break;
             case PianoRollTLKoffer.KofferStages.PLAYBACK:
+                currentBar++;
+                if (currentBar >= Constants.RECORDING_LENGTH)
+                {
+                    // we're always playing back one player, so if current bar hits length of recording --> go to next stage
+                    currentStage = PianoRollTLKoffer.KofferStages.COUNTINRR;
+                    barTimer = _timer.previewBar;
+                }
                 break;
             case PianoRollTLKoffer.KofferStages.COUNTINRR:
+                // if the amount of bars passed is the amount of count in bars go to next stage and reset variables
+                if (_timer.previewBar - barTimer >= _timeline.countInToRhythmRepeat)
+                {
+                    currentStage = PianoRollTLKoffer.KofferStages.RHYTHMREPEAT;
+                    barTimer = _timer.previewBar;
+                    currentPlayer = 0;
+                    currentBar = 0;
+                }
                 break;
             case PianoRollTLKoffer.KofferStages.RHYTHMREPEAT:
+                // go to next bar
+                currentBar++;
+                // if next bar is greater than length of recording
+                if (currentBar >= Constants.RECORDING_LENGTH)
+                {
+                    // go to next player and reset bar
+                    currentPlayer++;
+                    currentBar = 0;
+
+                    // if the next player is greater than the total amount of players we're currently playing back
+                    if (currentPlayer >= amountPlaybackPlayers)
+                    {
+                        // check if amount of Playback players is greater than total amount of players in scene
+                        if (amountPlaybackPlayers >= _timeline.testPlayers.Count) // elfenbeinstein CHANGE to player data
+                        {
+                            // if so, leave the rhythm section
+                            currentStage = PianoRollTLKoffer.KofferStages.END;
+                            barTimer = _timer.previewBar;
+
+                        }
+                        // else go back to count in the playback session and reset variables
+                        else
+                        {
+                            amountPlaybackPlayers++;
+                            currentPlayer = amountPlaybackPlayers - 1;
+                            currentBar = 0;
+                            barTimer = _timer.previewBar;
+
+                            currentStage = PianoRollTLKoffer.KofferStages.COUNTINPB;
+                        }
+                    }
+                }
                 break;
             case PianoRollTLKoffer.KofferStages.END:
                 break;
