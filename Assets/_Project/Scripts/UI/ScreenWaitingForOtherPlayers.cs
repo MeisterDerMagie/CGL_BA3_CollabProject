@@ -6,11 +6,9 @@ using UnityEngine;
 
 public class ScreenWaitingForOtherPlayers : NetworkBehaviour
 {
-    [SerializeField] private GameObject playerDoneIconPrefab;
-    [SerializeField] private NetworkObject iconsParent;
-    
+    [SerializeField] private PlayerDoneIcon[] playerDoneIcons;
     private Dictionary<ulong, PlayerDoneIcon> _playerIcons;
-    
+
     //only call this on the server
     public void Initialize(Dictionary<ulong, uint> players)
     {
@@ -25,43 +23,43 @@ public class ScreenWaitingForOtherPlayers : NetworkBehaviour
 
     private IEnumerator<float> _Initialize(Dictionary<ulong, uint> players)
     {
-        _playerIcons = new Dictionary<ulong, PlayerDoneIcon>();
-
-        var spawnedNetworkObjects = new List<NetworkObject>();
-        foreach (var player in players)
+        yield return Timing.WaitForSeconds(0.5f);
+        
+        //initially deactivate all icons (we activate all active ones in the next few lines)
+        for (int i = 0; i < playerDoneIcons.Length; i++)
         {
-            GameObject iconGo = Instantiate(playerDoneIconPrefab, iconsParent.transform, false);
-            PlayerDoneIcon icon = iconGo.GetComponent<PlayerDoneIcon>();
-            var iconNetworkObject = icon.GetComponent<NetworkObject>();
-            iconNetworkObject.Spawn();
-
-            //add to spawned collection in order to set the parent afterwards
-            spawnedNetworkObjects.Add(iconNetworkObject);
-            
-            //set scale
-            icon.transform.localScale = Vector3.one;
-
-            //set character
-            var playerDoneIcon = icon.GetComponent<PlayerDoneIcon>();
-            playerDoneIcon.SetCharacter(player.Value);
-
-            //add to collection
-            _playerIcons.Add(player.Key, icon);
+            SetIconActiveClientRpc(i, false);
         }
         
-        //set parent
-        yield return Timing.WaitForSeconds(0.5f);
-
-        for (int i = 0; i < spawnedNetworkObjects.Count; i++)
+        foreach (PlayerDoneIcon icon in playerDoneIcons)
         {
-            bool parentingSuccess = spawnedNetworkObjects[i].TrySetParent(iconsParent, false);
-
-            if (!parentingSuccess)
-            {
-                Debug.LogError("Could not parent.", this);
-                yield break;//return;
-            }
+            icon.gameObject.SetActive(false);
         }
+        
+        //activate icons for connected players
+        _playerIcons = new Dictionary<ulong, PlayerDoneIcon>();
+        int index = 0;
+        
+        foreach (var player in players)
+        {
+            PlayerDoneIcon icon = playerDoneIcons[index];
+            _playerIcons.Add(player.Key, icon);
+
+            //set character
+            icon.SetCharacter(player.Value);
+            
+            //activate icon game object
+            SetIconActiveClientRpc(index, true);
+
+            //increase index
+            index += 1;
+        }
+    }
+
+    [ClientRpc]
+    private void SetIconActiveClientRpc(int iconIndex, bool value)
+    {
+        playerDoneIcons[iconIndex].gameObject.SetActive(value);
     }
 
     //only call this on the server
