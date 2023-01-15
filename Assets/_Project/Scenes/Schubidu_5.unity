@@ -385,31 +385,34 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: lines.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: lines.Array.data[0]
-      value: "How did you perform? Bad? \nWell, Wannabe's, honeybee's, \none bar
-        wonder- bee's,"
+      value: "How did you perform? Bad? \n"
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: lines.Array.data[1]
+      value: "Well, Wannabe's, honeybee's, \none bar wonder- bee's,"
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: lines.Array.data[2]
       value: 'At the end of the day it''s all the same isn''t it?
 
         Zombies...'
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
-      propertyPath: lines.Array.data[2]
-      value: Let's take a look at your points my one-abee's.
-      objectReference: {fileID: 0}
-    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: lines.Array.data[3]
-      value: But do not fret, there is no reason to be dissa-point-ed.
+      value: Let's take a look at your points.
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: lines.Array.data[4]
-      value: "Since chances are high that as you climb high,you fall low, \nlow on
-        points that is! "
+      value: "But do not fret, there is no reason to be \ndissa-point-ed."
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: lines.Array.data[5]
+      value: "Since chances are high that as you climb high,\nyou fall low, \nlow
+        on points that is! "
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: onSchubiduFinished.m_PersistentCalls.m_Calls.Array.size
@@ -486,6 +489,22 @@ PrefabInstance:
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: onSchubiduFinished.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3204870652210103703, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -484.49988
+      objectReference: {fileID: 0}
+    - target: {fileID: 3204870652210103703, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -287.80005
+      objectReference: {fileID: 0}
+    - target: {fileID: 3204870652210103703, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 54.550034
+      objectReference: {fileID: 0}
+    - target: {fileID: 3204870652210103703, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -33.400032
       objectReference: {fileID: 0}
     - target: {fileID: 3204870652685877299, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: lines.Array.size
