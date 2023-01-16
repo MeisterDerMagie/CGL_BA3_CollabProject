@@ -331,6 +331,7 @@ MonoBehaviour:
   greyedAlpha: 0.566
   countInText: {fileID: 603052016}
   moderation: {fileID: 11400000, guid: c7953439e56258d4ebf3593c8ec87f01, type: 2}
+  schubiduPrefab: {fileID: 0}
 --- !u!4 &232119336
 Transform:
   m_ObjectHideFlags: 0
@@ -1873,6 +1874,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2623974932172434105, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: testPlayerAmount
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2623974932172434105, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
       propertyPath: _allPlayers.Array.size
       value: 0
       objectReference: {fileID: 0}
@@ -2031,10 +2036,6 @@ PrefabInstance:
     - target: {fileID: 4866164918744373566, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
       propertyPath: m_Enabled
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: _recordingUI
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}

@@ -514,6 +514,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dispersion: 0
   compareTo: []
+  hit: 0.034
+  almost: 0.103
+  latency: 0
 --- !u!114 &8630594058755696320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -526,6 +529,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a102df664d38f814a9df55d6fc1e6a06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  active: 0
+  _audioRoll: {fileID: 3516646983549203104}
+  keyInputs: 61000000730000006400000066000000
+  cooldown: 0.1
 --- !u!1 &3516646984460612235
 GameObject:
   m_ObjectHideFlags: 0
@@ -625,14 +632,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _display: {fileID: 0}
   _light: {fileID: 0}
+  _ui: {fileID: 0}
   bpm: 110
   startTime: 2.5
+  schubiduTime: 2.5
   countInToPlayback: 4
   countInToRhythmRepeat: 4
   fadeOut: 2
   currentPlayer: 0
-  _allPlayers: []
+  sortedPlayers: []
   testLocally: 0
+  testPlayerAmount: 0
 --- !u!114 &9107531219695345354
 MonoBehaviour:
   m_ObjectHideFlags: 0

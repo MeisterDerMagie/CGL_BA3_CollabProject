@@ -48,6 +48,7 @@ public class PianoRollTLKoffer : MonoBehaviour
     public List<PlayerData> sortedPlayers;
 
     public bool testLocally;
+    public int testPlayerAmount;
 
     void Start()
     {
@@ -57,6 +58,7 @@ public class PianoRollTLKoffer : MonoBehaviour
         if (testLocally) _audioRoll.TestSetup();
         else _audioRoll.SetUpAllInstances();
         _playerInput = GetComponentInChildren<PlayerInputRR>();
+        _playerInput.scorePlayability = false;
 
         // deactivate player input + set ui:
         SetPlayerInput(false);
@@ -87,7 +89,7 @@ public class PianoRollTLKoffer : MonoBehaviour
         // FOR TESTING:
         testPlayers = new List<List<Eighth>>();
 
-        for (int player = 0; player < 8; player++)
+        for (int player = 0; player < testPlayerAmount; player++)
         {
             List<Eighth> recording = new List<Eighth>();
 
@@ -154,7 +156,7 @@ public class PianoRollTLKoffer : MonoBehaviour
 
         // stop player input (should already be inactive, just in case)
         SetPlayerInput(false);
-        _playerInput.SetUpRecording(countInToRhythmRepeat);
+        _playerInput.SetUpRecording(bpm, this);
 
         // tell preview to start as well
         GetComponent<PianoRollPrevKoffer>().StartPlayback();
@@ -187,6 +189,9 @@ public class PianoRollTLKoffer : MonoBehaviour
                 // MISSING: feedback anmachen (oder ist evtl über start rec schon gelöst)
             }
         }
+
+        if (currentStage == KofferStages.RHYTHMREPEAT && _timer.timelineBeat == 8 && currentPlayer == amountPlaybackPlayers - 2)
+            _playerInput.AccuracyStart(bpm);
 
         // if we're playing back (then we're playing back with audio --> play audio)
         if (currentStage == KofferStages.PLAYBACK)
@@ -242,6 +247,7 @@ public class PianoRollTLKoffer : MonoBehaviour
                     // set player input active when going into the count in to rhythm repeat
                     SetPlayerInput(true);
                     _ui.TurnOnLight(false);
+                    if (amountPlaybackPlayers == 1) _playerInput.scorePlayability = true;
 
                     // start schubidu:
                     _ui.Schubidu(amountPlaybackPlayers, false);
@@ -325,11 +331,12 @@ public class PianoRollTLKoffer : MonoBehaviour
                         SetPlayerInput(false);
                         _playerInput.StopRecording();
                         _ui.TurnOnLight(false);
+                        _playerInput.scorePlayability = false;
                     }
                     else
                     {
                         // set prompt to next player:
-                        _ui.PromptText(sortedPlayers[currentPlayer].AssignedPrompt);
+                        if (!testLocally) _ui.PromptText(sortedPlayers[currentPlayer].AssignedPrompt);
                     }
                 }
                 break;
