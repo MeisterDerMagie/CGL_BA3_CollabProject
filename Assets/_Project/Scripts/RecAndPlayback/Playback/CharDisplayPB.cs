@@ -33,4 +33,19 @@ public class CharDisplayPB : MonoBehaviour
         playerName.gameObject.SetActive(false);
         playerImage.gameObject.SetActive(false);
     }
+
+    public void SetDuringRR(string _prompt, string name, Sprite img)
+    {
+        // set prompt
+        prompt.text = _prompt;
+        // set player name
+        playerName.text = name;
+        // set player icon
+        playerImage.sprite = img;
+    }
+
+    public void SetPrompt(string _prompt)
+    {
+        prompt.text = _prompt;
+    }
 }

@@ -20,6 +20,8 @@ public class PianoRollTLKoffer : MonoBehaviour
     private PianoRollTimer _timer;
     private AudioRoll _audioRoll;
     [SerializeField] private Light _light;
+    private PlayerInputRR _playerInput;
+    [SerializeField] private KofferUI _ui;
 
     [Space]
     public float bpm = 110f;
@@ -33,7 +35,7 @@ public class PianoRollTLKoffer : MonoBehaviour
     public int fadeOut = 2;
 
     int amountPlaybackPlayers;
-    int currentPlayer;
+    public int currentPlayer;
     int currentBar;
     int barTimer;
 
@@ -41,19 +43,22 @@ public class PianoRollTLKoffer : MonoBehaviour
 
     public List<List<Eighth>> testPlayers;
 
-    public List<PlayerData> _allPlayers;
+    public List<PlayerData> sortedPlayers;
+
+    public bool testLocally;
 
     void Start()
     {
         // get references to all relevant scripts:
         _timer = GetComponent<PianoRollTimer>();
         _audioRoll = GetComponentInChildren<AudioRoll>();
-        //_audioRoll.SetUpAllInstances();
-        _audioRoll.TestSetup();
+        if (testLocally) _audioRoll.TestSetup();
+        else _audioRoll.SetUpAllInstances();
+        _playerInput = GetComponentInChildren<PlayerInputRR>();
 
-        // get all players in scene and sort according to creativity points
-        //_allPlayers = FindObjectsOfType<PlayerData>().ToList();
-        // MISSING sort list @Martina
+        // deactivate player input + set ui:
+        SetPlayerInput(false);
+        _ui.SetDisplayToSelf();
 
         currentPlayer = 0;
         currentBar = 0;
@@ -61,7 +66,15 @@ public class PianoRollTLKoffer : MonoBehaviour
         currentStage = KofferStages.IDLE;
 
         // FOR TESTING LOCALLY:
-        WriteTestBars();
+        if (testLocally) WriteTestBars();
+        else
+        {
+            // get all players in scene and sort according to creativity points
+            sortedPlayers = new List<PlayerData>();
+            List<PlayerData> allPlayers = new List<PlayerData>();
+            allPlayers = FindObjectsOfType<PlayerData>().ToList();
+            sortedPlayers = allPlayers.OrderByDescending(allPlayers => allPlayers.PointsCreativity).ToList();
+        }
 
         StartCoroutine(WaitToStart());
     }
@@ -125,6 +138,10 @@ public class PianoRollTLKoffer : MonoBehaviour
         // set current stage
         currentStage = KofferStages.COUNTINPB;
 
+        // stop player input + set ui (character, prompt, schubidu)
+        SetPlayerInput(false);
+        _ui.Schubidu(true, 0);
+
         // tell preview to start as well
         GetComponent<PianoRollPrevKoffer>().StartPlayback();
     }
@@ -139,8 +156,16 @@ public class PianoRollTLKoffer : MonoBehaviour
         if (currentStage == KofferStages.PLAYBACK)
         {
             // test version:
-            if (testPlayers[currentPlayer][((currentBar * 8) + _timer.timelineBeat) - 1].contains)
-                _audioRoll.TestSound(testPlayers[currentPlayer][((currentBar * 8) + _timer.timelineBeat) - 1].instrumentID);
+            if (testLocally)
+            {
+                if (testPlayers[currentPlayer][((currentBar * 8) + _timer.timelineBeat) - 1].contains)
+                    _audioRoll.TestSound(testPlayers[currentPlayer][((currentBar * 8) + _timer.timelineBeat) - 1].instrumentID);
+            }
+            else
+            {
+                if (sortedPlayers[currentPlayer].Recording[((currentBar * 8) + _timer.timelineBeat) - 1].contains)
+                    _audioRoll.PlayerInputSound(sortedPlayers[currentPlayer].Recording[((currentBar * 8) + _timer.timelineBeat) - 1].instrumentID);
+            }
         }
     }
 
@@ -214,7 +239,22 @@ public class PianoRollTLKoffer : MonoBehaviour
                 }
                 break;
             case KofferStages.END:
+                if (_timer.timelineBar - barTimer >= fadeOut)
+                {
+                    Debug.Log("end of koffer stage");
+                }
                 break;
         }
+    }
+
+    void Schubidu()
+    {
+
+    }
+
+    void SetPlayerInput(bool _active)
+    {
+        _playerInput.active = _active;
+        _ui.GreyOutDJPult(!_active);
     }
 }

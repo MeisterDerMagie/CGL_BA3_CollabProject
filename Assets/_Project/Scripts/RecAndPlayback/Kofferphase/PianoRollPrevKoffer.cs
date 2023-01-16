@@ -58,8 +58,16 @@ public class PianoRollPrevKoffer : MonoBehaviour
         if (currentStage == PianoRollTLKoffer.KofferStages.RHYTHMREPEAT || currentStage == PianoRollTLKoffer.KofferStages.PLAYBACK)
         {
             // with test players:
-            if (_timeline.testPlayers[currentPlayer][((currentBar * 8) + _timer.previewBeat) - 1].contains)
-                _spawner.SpawnTestNote(_timeline.testPlayers[currentPlayer][((currentBar * 8) + _timer.previewBeat) - 1].instrumentID, _timeline.bpm);
+            if (_timeline.testLocally)
+            {
+                if (_timeline.testPlayers[currentPlayer][((currentBar * 8) + _timer.previewBeat) - 1].contains)
+                    _spawner.SpawnTestNote(_timeline.testPlayers[currentPlayer][((currentBar * 8) + _timer.previewBeat) - 1].instrumentID, _timeline.bpm);
+            }
+            else
+            {
+                if (_timeline.sortedPlayers[currentPlayer].Recording[((currentBar * 8) + _timer.previewBeat) - 1].contains)
+                    _spawner.SpawnNote(_timeline.sortedPlayers[currentPlayer].Recording[((currentBar * 8) + _timer.previewBeat) - 1].instrumentID, _timeline.bpm);
+            }
         }
     }
 

@@ -91,4 +91,14 @@ public class MrSchubidu : MonoBehaviour
         //call finished event
         onSchubiduFinished.Invoke();
     }
+
+    public void Talk(List<string> strings)
+    {
+
+    }
+
+    public void StopTalking()
+    {
+
+    }
 }
