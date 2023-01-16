@@ -117,7 +117,7 @@ public class PianoRollTLKoffer : MonoBehaviour
         GetComponentInChildren<BackingTrack>().StartMusic();
 
         // reset variables:
-        barTimer = _timer.timelineBar;
+        barTimer = _timer.timelineBar + 1;
         currentPlayer = 0;
         currentBar = 0;
         amountPlaybackPlayers = 1;
@@ -131,7 +131,6 @@ public class PianoRollTLKoffer : MonoBehaviour
 
     public void NextBeat()
     {
-        /*
         if (currentStage == KofferStages.IDLE) return;
 
         if (_timer.timelineBeat == 1) UpdateStage();
@@ -140,10 +139,9 @@ public class PianoRollTLKoffer : MonoBehaviour
         if (currentStage == KofferStages.PLAYBACK)
         {
             // test version:
-            if (testPlayers[currentPlayer][((currentBar * 8) + _timer.previewBeat) - 1].contains)
-                _audioRoll.PlayerInputSound(testPlayers[currentPlayer][((currentBar * 8) + _timer.previewBeat) - 1].instrumentID);
+            if (testPlayers[currentPlayer][((currentBar * 8) + _timer.timelineBeat) - 1].contains)
+                _audioRoll.TestSound(testPlayers[currentPlayer][((currentBar * 8) + _timer.timelineBeat) - 1].instrumentID);
         }
-        */
     }
 
     void UpdateStage()
@@ -154,12 +152,66 @@ public class PianoRollTLKoffer : MonoBehaviour
                 // shouldn't even be in here
                 break;
             case KofferStages.COUNTINPB:
+                // if timer reaches count in --> go to next stage, reset all variables (reset current bar + bar timer)
+                if (_timer.timelineBar - barTimer >= countInToPlayback)
+                {
+                    currentStage = KofferStages.PLAYBACK;
+                    barTimer = _timer.timelineBar;
+                    currentBar = 0;
+                }
                 break;
             case KofferStages.PLAYBACK:
+                currentBar++;
+                if (currentBar >= Constants.RECORDING_LENGTH)
+                {
+                    // we're always playing back one player, so if current bar hits length of recording --> go to next stage
+                    currentStage = KofferStages.COUNTINRR;
+                    barTimer = _timer.timelineBar;
+                }
                 break;
             case KofferStages.COUNTINRR:
+                // if the amount of bars passed is the amount of count in bars go to next stage and reset variables
+                if (_timer.timelineBar - barTimer >= countInToRhythmRepeat)
+                {
+                    currentStage = KofferStages.RHYTHMREPEAT;
+                    barTimer = _timer.timelineBar;
+                    currentPlayer = 0;
+                    currentBar = 0;
+                }
                 break;
             case KofferStages.RHYTHMREPEAT:
+                // go to next bar
+                currentBar++;
+                // if next bar is greater than length of recording
+                if (currentBar >= Constants.RECORDING_LENGTH)
+                {
+                    // go to next player and reset bar
+                    currentPlayer++;
+                    currentBar = 0;
+
+                    // if the next player is greater than the total amount of players we're currently playing back
+                    if (currentPlayer >= amountPlaybackPlayers)
+                    {
+                        // check if amount of Playback players is greater than total amount of players in scene
+                        if (amountPlaybackPlayers >= testPlayers.Count) // elfenbeinstein CHANGE to player data
+                        {
+                            // if so, leave the rhythm section
+                            currentStage = KofferStages.END;
+                            barTimer = _timer.timelineBar;
+
+                        }
+                        // else go back to count in the playback session and reset variables
+                        else
+                        {
+                            amountPlaybackPlayers++;
+                            currentPlayer = amountPlaybackPlayers - 1;
+                            currentBar = 0;
+                            barTimer = _timer.timelineBar;
+
+                            currentStage = KofferStages.COUNTINPB;
+                        }
+                    }
+                }
                 break;
             case KofferStages.END:
                 break;

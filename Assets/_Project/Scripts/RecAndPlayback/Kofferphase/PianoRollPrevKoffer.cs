@@ -37,7 +37,7 @@ public class PianoRollPrevKoffer : MonoBehaviour
         _spawner.spawnActive = true;
 
         // reset variables
-        barTimer = _timer.previewBar + 1; // might have to adjust +- 1
+        barTimer = _timer.previewBar - 1; // might have to adjust +- 1
         currentPlayer = 0;
         currentBar = 0;
         amountPlaybackPlayers = 1;
@@ -48,7 +48,7 @@ public class PianoRollPrevKoffer : MonoBehaviour
 
     public void NextBeat()
     {
-        if (currentStage == PianoRollTLKoffer.KofferStages.IDLE) return;
+        if (currentStage == PianoRollTLKoffer.KofferStages.IDLE || currentStage == PianoRollTLKoffer.KofferStages.END) return;
 
         if (_timer.previewBeat == 1) UpdateStage();
 
