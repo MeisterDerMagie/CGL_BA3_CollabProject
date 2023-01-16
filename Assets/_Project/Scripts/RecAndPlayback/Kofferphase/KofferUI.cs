@@ -5,6 +5,7 @@ using UnityEngine;
 public class KofferUI : MonoBehaviour
 {
     [SerializeField] private CharDisplayPB _charDisplay;
+    [SerializeField] private Light _light;
 
     [SerializeField] private List<SpriteRenderer> djPultRenderers;
     [SerializeField] [Range(0,1)] private float greyedAlpha;
@@ -34,7 +35,7 @@ public class KofferUI : MonoBehaviour
 
     public void GreyOutDJPult(bool greyed)
     {
-        if (greyed)
+        if (greyed) // then grey out the dj pult
         {
             foreach (SpriteRenderer renderer in djPultRenderers)
             {
@@ -43,7 +44,7 @@ public class KofferUI : MonoBehaviour
                 renderer.color = c;
             }
         }
-        else
+        else // then stop greying out the dj pult
         {
             foreach (SpriteRenderer renderer in djPultRenderers)
             {
@@ -72,5 +73,16 @@ public class KofferUI : MonoBehaviour
     public void CountInText(string text)
     {
         countInText.text = text;
+    }
+
+    public void PromptText(string text)
+    {
+        _charDisplay.SetPrompt(text);
+    }
+
+    public void TurnOnLight(bool value)
+    {
+        if (value == true) _light.TurnOn();
+        else _light.TurnOff();
     }
 }

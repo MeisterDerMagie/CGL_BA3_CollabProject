@@ -16,7 +16,12 @@ public class PlayerInputRR : MonoBehaviour
         
     }
 
-    public void StartRecording(int countInBars)
+    public void SetUpRecording(int countIn)
+    {
+
+    }
+
+    public void StartRecording()
     {
 
     }
