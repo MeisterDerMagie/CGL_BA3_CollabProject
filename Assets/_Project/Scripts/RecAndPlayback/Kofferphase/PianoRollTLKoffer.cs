@@ -60,7 +60,7 @@ public class PianoRollTLKoffer : MonoBehaviour
 
         // deactivate player input + set ui:
         SetPlayerInput(false);
-        _ui.SetDisplayToSelf();
+        if (!testLocally)  _ui.SetDisplayToSelf();
 
         currentPlayer = 0;
         currentBar = 0;
@@ -162,7 +162,8 @@ public class PianoRollTLKoffer : MonoBehaviour
         // set up Schubidu:
         _ui.Schubidu(1, true);
 
-        // set up character
+        // display character and prompt
+        if (!testLocally) _ui.SetDisplay(sortedPlayers[currentPlayer]);
     }
 
     public void NextBeat()
@@ -244,6 +245,9 @@ public class PianoRollTLKoffer : MonoBehaviour
 
                     // start schubidu:
                     _ui.Schubidu(amountPlaybackPlayers, false);
+
+                    // reset display to self
+                    if (!testLocally)  _ui.SetDisplayToSelf();
                     #endregion
                 }
                 break;
@@ -263,6 +267,9 @@ public class PianoRollTLKoffer : MonoBehaviour
 
                     // turn off schubidu:
                     _ui.Schubidu(-1);
+
+                    // set prompt text
+                    if (!testLocally) _ui.PromptText(sortedPlayers[currentPlayer].AssignedPrompt);
                     #endregion
                 }
                 break;
@@ -308,6 +315,9 @@ public class PianoRollTLKoffer : MonoBehaviour
 
                             // schubidu count in moderation:
                             _ui.Schubidu(amountPlaybackPlayers);
+
+                            // display character and prompt
+                            if (!testLocally) _ui.SetDisplay(sortedPlayers[currentPlayer]);
                             #endregion
                         }
 
@@ -315,6 +325,11 @@ public class PianoRollTLKoffer : MonoBehaviour
                         SetPlayerInput(false);
                         _playerInput.StopRecording();
                         _ui.TurnOnLight(false);
+                    }
+                    else
+                    {
+                        // set prompt to next player:
+                        _ui.PromptText(sortedPlayers[currentPlayer].AssignedPrompt);
                     }
                 }
                 break;

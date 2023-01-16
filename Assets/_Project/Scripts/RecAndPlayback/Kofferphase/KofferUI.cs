@@ -31,7 +31,7 @@ public class KofferUI : MonoBehaviour
         countInText.gameObject.SetActive(true);
         countInText.text = "";
 
-        //_charDisplay.SetCharacterDisplay("", PlayerData.LocalPlayerData.PlayerName);
+        _charDisplay.SetCharacterDisplay("", PlayerData.LocalPlayerData.PlayerName, CharacterManager.Instance.GetCharacter(PlayerData.LocalPlayerData.CharacterId).characterImage);
 
         TurnOnLight(false);
     }
@@ -60,12 +60,14 @@ public class KofferUI : MonoBehaviour
 
     public void SetDisplayToSelf()
     {
-        //_charDisplay.
+        _charDisplay.SetDuringRR("", PlayerData.LocalPlayerData.PlayerName, 
+            CharacterManager.Instance.GetCharacter(PlayerData.LocalPlayerData.CharacterId).characterImage);
     }
 
-    public void SetDisplay(int player)
+    public void SetDisplay(PlayerData player)
     {
-
+        _charDisplay.SetDuringRR(player.AssignedPrompt, player.PlayerName, 
+            CharacterManager.Instance.GetCharacter(player.CharacterId).characterImage);
     }
 
     public void Schubidu(int player, bool pb = true)
