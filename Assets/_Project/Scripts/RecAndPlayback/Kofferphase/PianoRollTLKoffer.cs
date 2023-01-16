@@ -27,9 +27,11 @@ public class PianoRollTLKoffer : MonoBehaviour
     public float bpm = 110f;
     [Tooltip("seconds after loading before start of scene")]
     [SerializeField] private float startTime = 2.5f;
-    [Tooltip("amount of bars before first bar")]
+    [Tooltip("Duration in seconds, how long first schubidu moderation lasts")]
+    [SerializeField] private float schubiduTime = 2.5f;
+    [Tooltip("amount of bars before audio bar")]
     public int countInToPlayback = 4;
-    [Tooltip("amount of bars between bars")]
+    [Tooltip("amount of bars before rhythm repeat")]
     public int countInToRhythmRepeat = 4;
     [Tooltip("bars after everything finished before going to next screen")]
     public int fadeOut = 2;
@@ -76,7 +78,7 @@ public class PianoRollTLKoffer : MonoBehaviour
             sortedPlayers = allPlayers.OrderByDescending(allPlayers => allPlayers.PointsCreativity).ToList();
         }
 
-        StartCoroutine(WaitToStart());
+        StartCoroutine(WaitForSchubidu());
     }
 
 
@@ -118,9 +120,21 @@ public class PianoRollTLKoffer : MonoBehaviour
         }
     }
 
-    IEnumerator WaitToStart()
+    IEnumerator WaitForSchubidu()
     {
         yield return new WaitForSeconds(startTime);
+
+        // SCHUBIDU anfangen
+        _ui.Schubidu(0, true);
+        // MISSING: Trommelwirbel
+
+        StartCoroutine(WaitToStart());
+    }
+
+    IEnumerator WaitToStart()
+    {
+        yield return new WaitForSeconds(schubiduTime);
+
         StartPlayback();
     }
 
@@ -138,14 +152,17 @@ public class PianoRollTLKoffer : MonoBehaviour
         // set current stage
         currentStage = KofferStages.COUNTINPB;
 
-        // stop player input + set ui (character, prompt, schubidu)
+        // stop player input (should already be inactive, just in case)
         SetPlayerInput(false);
-        _ui.Schubidu(true, 0);
+        _playerInput.SetUpRecording(countInToRhythmRepeat);
 
         // tell preview to start as well
         GetComponent<PianoRollPrevKoffer>().StartPlayback();
 
-        _playerInput.SetUpRecording(countInToRhythmRepeat);
+        // set up Schubidu:
+        _ui.Schubidu(1, true);
+
+        // set up character
     }
 
     public void NextBeat()
@@ -162,7 +179,12 @@ public class PianoRollTLKoffer : MonoBehaviour
             else if (_timer.timelineBeat == 5) _ui.CountInText("2");
             else if (_timer.timelineBeat == 7) _ui.CountInText("1");
 
-            // if in count in to rr dann feedback anmachen
+            // if in count in to rr dann feedback anmachen + start recording
+            if (currentStage == KofferStages.COUNTINRR)
+            {
+                _playerInput.StartRecording();
+                // MISSING: feedback anmachen (oder ist evtl über start rec schon gelöst)
+            }
         }
 
         // if we're playing back (then we're playing back with audio --> play audio)
@@ -201,6 +223,9 @@ public class PianoRollTLKoffer : MonoBehaviour
                     // stop count In text
                     _ui.CountInText("");
                     _ui.TurnOnLight(true);
+
+                    // stop schubidu:
+                    _ui.Schubidu(-1);
                     #endregion
                 }
                 break;
@@ -213,10 +238,12 @@ public class PianoRollTLKoffer : MonoBehaviour
                     currentStage = KofferStages.COUNTINRR;
                     barTimer = _timer.timelineBar;
 
-                    // set player input active when going into the count in to rhythm repeat and start recording
+                    // set player input active when going into the count in to rhythm repeat
                     SetPlayerInput(true);
-                    _playerInput.StartRecording();
                     _ui.TurnOnLight(false);
+
+                    // start schubidu:
+                    _ui.Schubidu(amountPlaybackPlayers, false);
                     #endregion
                 }
                 break;
@@ -233,6 +260,9 @@ public class PianoRollTLKoffer : MonoBehaviour
                     // stop count In text
                     _ui.CountInText("");
                     _ui.TurnOnLight(true);
+
+                    // turn off schubidu:
+                    _ui.Schubidu(-1);
                     #endregion
                 }
                 break;
@@ -259,6 +289,7 @@ public class PianoRollTLKoffer : MonoBehaviour
                             
                             _ui.TurnOnLight(false);
                             _ui.PromptText("We're done now, matey!");
+                            _ui.Schubidu(9);
                             #endregion
 
                         }
@@ -274,6 +305,9 @@ public class PianoRollTLKoffer : MonoBehaviour
                             currentStage = KofferStages.COUNTINPB;
 
                             _ui.PromptText("");
+
+                            // schubidu count in moderation:
+                            _ui.Schubidu(amountPlaybackPlayers);
                             #endregion
                         }
 

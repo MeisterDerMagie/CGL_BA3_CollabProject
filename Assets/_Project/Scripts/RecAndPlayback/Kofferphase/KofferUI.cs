@@ -16,6 +16,7 @@ public class KofferUI : MonoBehaviour
     private MrSchubidu schubidu;
     // reference to scriptable object with strings
     [SerializeField] private KofferModeration moderation;
+    [SerializeField] private GameObject schubiduPrefab;
 
     // liste für jedes mal das schubidu spricht --> scriptable object
 
@@ -67,9 +68,72 @@ public class KofferUI : MonoBehaviour
 
     }
 
-    public void Schubidu(bool start, int i)
+    public void Schubidu(int player, bool pb = true)
     {
+        Debug.Log("Schubidu + " + player + ", " + pb);
 
+        if (schubiduPrefab == null) return;
+
+        if (player == -1)
+        {
+            // turn off schubidu
+            schubidu.StopTalking();
+        }
+        else
+        {
+            // set up schubidu and sent correct list of strings over
+            if (schubidu != null) schubidu.StopTalking();
+
+            // create new instance of schubidu + save schubidu script
+            GameObject clone = Instantiate(schubiduPrefab);
+            schubidu = clone.GetComponent<MrSchubidu>();
+
+            // hand over correct list and tell to start
+            if (player == 1)
+            {
+                if (pb == true) schubidu.Talk(moderation.playback1);
+                else schubidu.Talk(moderation.repeat1);
+            }
+            else if (player == 2)
+            {
+                if (pb == true) schubidu.Talk(moderation.playback2);
+                else schubidu.Talk(moderation.repeat2);
+            }
+            else if (player == 3)
+            {
+                if (pb == true) schubidu.Talk(moderation.playback3);
+                else schubidu.Talk(moderation.repeat3);
+            }
+            else if (player == 4)
+            {
+                if (pb == true) schubidu.Talk(moderation.playback4);
+                else schubidu.Talk(moderation.repeat4);
+            }
+            else if (player == 5)
+            {
+                if (pb == true) schubidu.Talk(moderation.playback5);
+                else schubidu.Talk(moderation.repeat5);
+            }
+            else if (player == 6)
+            {
+                if (pb == true) schubidu.Talk(moderation.playback6);
+                else schubidu.Talk(moderation.repeat6);
+            }
+            else if (player == 7)
+            {
+                if (pb == true) schubidu.Talk(moderation.playback7);
+                else schubidu.Talk(moderation.repeat7);
+            }
+            else if (player == 8)
+            {
+                if (pb == true) schubidu.Talk(moderation.playback8);
+                else schubidu.Talk(moderation.repeat8);
+            }
+            else if (player == 9) // we have max of 8 players, so 9 means closing moderation
+            {
+                schubidu.Talk(moderation.closingModeration);
+            }
+        }
     }
 
     public void CountInText(string text)

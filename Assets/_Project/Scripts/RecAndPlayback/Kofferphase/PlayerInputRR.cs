@@ -18,7 +18,7 @@ public class PlayerInputRR : MonoBehaviour
 
     public void SetUpRecording(int countIn)
     {
-
+        // tell beatmapping script to write compare to bars
     }
 
     public void StartRecording()
