@@ -31,6 +31,8 @@ public class KofferUI : MonoBehaviour
         countInText.text = "";
 
         //_charDisplay.SetCharacterDisplay("", PlayerData.LocalPlayerData.PlayerName);
+
+        TurnOnLight(false);
     }
 
     public void GreyOutDJPult(bool greyed)

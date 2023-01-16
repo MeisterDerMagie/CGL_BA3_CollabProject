@@ -193,13 +193,14 @@ public class PianoRollTLKoffer : MonoBehaviour
                 // if timer reaches count in --> go to next stage, reset all variables (reset current bar + bar timer)
                 if (_timer.timelineBar - barTimer >= countInToPlayback)
                 {
-                    #region GO TO PLAYBACK STAGE
+                    #region START PLAYBACK STAGE
                     currentStage = KofferStages.PLAYBACK;
                     barTimer = _timer.timelineBar;
                     currentBar = 0;
 
                     // stop count In text
                     _ui.CountInText("");
+                    _ui.TurnOnLight(true);
                     #endregion
                 }
                 break;
@@ -207,7 +208,7 @@ public class PianoRollTLKoffer : MonoBehaviour
                 currentBar++;
                 if (currentBar >= Constants.RECORDING_LENGTH)
                 {
-                    #region GO TO COUNT IN TO RHYTHM REPEAT
+                    #region START COUNT IN TO RHYTHM REPEAT
                     // we're always playing back one player, so if current bar hits length of recording --> go to next stage
                     currentStage = KofferStages.COUNTINRR;
                     barTimer = _timer.timelineBar;
@@ -215,6 +216,7 @@ public class PianoRollTLKoffer : MonoBehaviour
                     // set player input active when going into the count in to rhythm repeat and start recording
                     SetPlayerInput(true);
                     _playerInput.StartRecording();
+                    _ui.TurnOnLight(false);
                     #endregion
                 }
                 break;
@@ -222,7 +224,7 @@ public class PianoRollTLKoffer : MonoBehaviour
                 // if the amount of bars passed is the amount of count in bars go to next stage and reset variables
                 if (_timer.timelineBar - barTimer >= countInToRhythmRepeat)
                 {
-                    #region GO TO RHYTHM REPEAT STAGE
+                    #region START RHYTHM REPEAT STAGE
                     currentStage = KofferStages.RHYTHMREPEAT;
                     barTimer = _timer.timelineBar;
                     currentPlayer = 0;
@@ -230,6 +232,7 @@ public class PianoRollTLKoffer : MonoBehaviour
 
                     // stop count In text
                     _ui.CountInText("");
+                    _ui.TurnOnLight(true);
                     #endregion
                 }
                 break;
@@ -253,25 +256,31 @@ public class PianoRollTLKoffer : MonoBehaviour
                             // if so, leave the rhythm section
                             currentStage = KofferStages.END;
                             barTimer = _timer.timelineBar;
+                            
+                            _ui.TurnOnLight(false);
+                            _ui.PromptText("We're done now, matey!");
                             #endregion
 
                         }
                         // else go back to count in the playback session and reset variables
                         else
                         {
-                            #region GO TO COUNT IN PLAYBACK
+                            #region START COUNT IN PLAYBACK
                             amountPlaybackPlayers++;
                             currentPlayer = amountPlaybackPlayers - 1;
                             currentBar = 0;
                             barTimer = _timer.timelineBar;
 
                             currentStage = KofferStages.COUNTINPB;
+
+                            _ui.PromptText("");
                             #endregion
                         }
 
                         // either way, stop recording and stop player input:
                         SetPlayerInput(false);
                         _playerInput.StopRecording();
+                        _ui.TurnOnLight(false);
                     }
                 }
                 break;
