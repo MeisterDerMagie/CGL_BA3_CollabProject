@@ -5,6 +5,7 @@ using UnityEngine;
 public class BeatMapping : MonoBehaviour
 {
     private RecordInput _recordInput;
+    private AccuracyScoring scoring;
 
     public float dispersion;
     public List<float> compareTo;
@@ -25,6 +26,7 @@ public class BeatMapping : MonoBehaviour
         MISS
     }
 
+    [System.Serializable]
     public struct ScoringNote
     {
         public float timeStamp;
