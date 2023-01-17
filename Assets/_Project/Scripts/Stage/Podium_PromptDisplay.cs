@@ -22,15 +22,12 @@ public class Podium_PromptDisplay : NetworkBehaviour
     private void Start()
     {
         AssignedPrompt.OnValueChanged += OnPromptSet;
-        Debug.Log($"Prompt: {AssignedPrompt.Value.Value}");
         promptTextField.SetText(AssignedPrompt.Value.Value);
         Hide();
     }
 
     private void OnPromptSet(FixedString512Bytes previousvalue, FixedString512Bytes newvalue)
     {
-        Debug.Log($"OnPromptSet: {AssignedPrompt.Value.Value}");
-
         promptTextField.SetText(newvalue.Value);
     }
 

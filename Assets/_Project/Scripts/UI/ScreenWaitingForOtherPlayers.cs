@@ -93,6 +93,8 @@ public class ScreenWaitingForOtherPlayers : NetworkBehaviour
     #if UNITY_EDITOR
     private void Update()
     {
+        if (Application.isPlaying) return;
+        
         PrefabStage currentPrefabStage = PrefabStageUtility.GetPrefabStage(gameObject);
         
         //if we are not in prefab stage: hide the canvas because otherwise it will get into the way

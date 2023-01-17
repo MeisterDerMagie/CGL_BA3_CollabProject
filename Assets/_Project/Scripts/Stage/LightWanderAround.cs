@@ -16,6 +16,7 @@ public class LightWanderAround : MonoBehaviour
     [SerializeField] private Ease ease;
 
     private Transform startPoint;
+    private Tween wanderTween;
     
     private void Start()
     {
@@ -38,7 +39,7 @@ public class LightWanderAround : MonoBehaviour
             float duration = Random.Range(durationRange.minimum, durationRange.maximum);
             bool tweenKilled = false;
 
-            lightTarget.DOMove(nextPoint.position, duration).SetEase(ease).OnKill(()=> tweenKilled = true);
+            wanderTween = lightTarget.DOMove(nextPoint.position, duration).SetEase(ease).OnKill(()=> tweenKilled = true);
 
             lastPoint = nextPoint;
 
@@ -46,5 +47,10 @@ public class LightWanderAround : MonoBehaviour
 
             yield return Timing.WaitForSeconds(Random.Range(idleTime.minimum, idleTime.maximum));
         }
+    }
+
+    private void OnDestroy()
+    {
+        wanderTween?.Kill();
     }
 }

@@ -22,8 +22,6 @@ public class LoadingScreen : NetworkBehaviour
     [ClientRpc]
     public void PlayOutAnimationClientRpc()
     {
-        Debug.Log("Play out animation.");
-        
         //play out-animation
         outAnim.Play();
     }

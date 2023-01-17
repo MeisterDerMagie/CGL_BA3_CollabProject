@@ -7,11 +7,11 @@ using Wichtel.Extensions;
 
 public class CopyLobbyCodeToClipboard : MonoBehaviour
 {
-    [SerializeField] private DOTweenAnimation animation;
+    [SerializeField] private DOTweenAnimation doTweenAnimation;
     
     public void Copy()
     {
         LobbyCode.Instance.code.CopyToClipboard();
-        animation.DORestart();
+        doTweenAnimation.DORestart();
     }
 }
