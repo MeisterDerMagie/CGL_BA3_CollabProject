@@ -49,6 +49,7 @@ public class PianoRollTLKoffer : MonoBehaviour
 
     public bool testLocally;
     public int testPlayerAmount;
+    public bool counterPlayback = true;
 
     void Start()
     {
@@ -175,7 +176,7 @@ public class PianoRollTLKoffer : MonoBehaviour
         if (_timer.timelineBeat == 1) UpdateStage();
 
         // set count in text if we're in last bar before the playback or rhythm repeat stage
-        if ((currentStage == KofferStages.COUNTINPB && _timer.timelineBar - barTimer >= countInToPlayback - 1) || (currentStage == KofferStages.COUNTINRR && _timer.timelineBar - barTimer >= countInToRhythmRepeat - 1))
+        if ((currentStage == KofferStages.COUNTINPB && _timer.timelineBar - barTimer >= countInToPlayback - 1 && counterPlayback) || (currentStage == KofferStages.COUNTINRR && _timer.timelineBar - barTimer >= countInToRhythmRepeat - 1))
         {
             if (_timer.timelineBeat == 1) _ui.CountInText("4");
             else if (_timer.timelineBeat == 3) _ui.CountInText("3");
@@ -246,6 +247,7 @@ public class PianoRollTLKoffer : MonoBehaviour
 
                     // set player input active when going into the count in to rhythm repeat
                     SetPlayerInput(true);
+                    _ui.RecFrame(true);
                     _ui.TurnOnLight(false);
                     if (amountPlaybackPlayers == 1) _playerInput.scorePlayability = true;
 
@@ -329,6 +331,7 @@ public class PianoRollTLKoffer : MonoBehaviour
 
                         // either way, stop recording and stop player input:
                         SetPlayerInput(false);
+                        _ui.RecFrame(false);
                         _playerInput.StopRecording();
                         _ui.TurnOnLight(false);
                         _playerInput.scorePlayability = false;

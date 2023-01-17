@@ -18,14 +18,8 @@ public class KofferUI : MonoBehaviour
     [SerializeField] private KofferModeration moderation;
     [SerializeField] private GameObject schubiduPrefab;
 
-    // liste für jedes mal das schubidu spricht --> scriptable object
+    [SerializeField] private GameObject recFrame;
 
-    // spawn neuen schubdiu wenn er was sagt
-    // speicher reference
-    // talk funktion oder stop talking
-    // der talk funktion geben wir ne liste an strings mit die er sagen soll
-
-    // Start is called before the first frame update
     void Start()
     {
         countInText.gameObject.SetActive(true);
@@ -34,6 +28,8 @@ public class KofferUI : MonoBehaviour
         //_charDisplay.SetCharacterDisplay("", PlayerData.LocalPlayerData.PlayerName, CharacterManager.Instance.GetCharacter(PlayerData.LocalPlayerData.CharacterId).characterImage);
 
         TurnOnLight(false);
+
+        RecFrame(false);
     }
 
     public void GreyOutDJPult(bool greyed)
@@ -152,5 +148,10 @@ public class KofferUI : MonoBehaviour
     {
         if (value == true) _light.TurnOn();
         else _light.TurnOff();
+    }
+
+    public void RecFrame(bool value)
+    {
+        recFrame.SetActive(value);
     }
 }
