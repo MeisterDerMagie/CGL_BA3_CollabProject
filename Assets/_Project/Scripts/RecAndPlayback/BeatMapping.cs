@@ -111,20 +111,25 @@ public class BeatMapping : MonoBehaviour
         }
         */
 
+        // for every player in our game
         for (int p = 0; p < _list.Count / (Constants.RECORDING_LENGTH * 8); p++)
         {
+            // go through every eighth in their bar
             for (int i = 0; i < Constants.RECORDING_LENGTH * 8; i++)
             {
-                ScoringNote note = new ScoringNote();
+                if (_list[i + p * Constants.RECORDING_LENGTH * 8].contains)
+                {
+                    ScoringNote note = new ScoringNote();
 
-                // timestamp of eighth is: duration of a bar (because timer starts 1 bar before first eighth) = 60/bpm is duration of a quarter note, times 4 is duration of a bar
-                // PLUS duration of a bar * which player it is * recording length
-                // PLUS eighth times duration of an eighth = 60 / bpm / 2
-                note.timeStamp = ((60f / bpm) * 4f) + p * ((60f / bpm) * 4f) * Constants.RECORDING_LENGTH + i * ((60f / bpm) / 2f);
-                note.instrumentID = _list[i].instrumentID;
-                note.playerID = p;
+                    // timestamp of eighth is: duration of a bar (because timer starts 1 bar before first eighth) = 60/bpm is duration of a quarter note, times 4 is duration of a bar
+                    // PLUS duration of a bar * which player it is * recording length
+                    // PLUS eighth times duration of an eighth = 60 / bpm / 2
+                    note.timeStamp = ((60f / bpm) * 4f) + p * ((60f / bpm) * 4f) * Constants.RECORDING_LENGTH + i * ((60f / bpm) / 2f);
+                    note.instrumentID = _list[i].instrumentID;
+                    note.playerID = p;
 
-                compareToScoring.Add(note);
+                    compareToScoring.Add(note);
+                }
             }
         }
 
