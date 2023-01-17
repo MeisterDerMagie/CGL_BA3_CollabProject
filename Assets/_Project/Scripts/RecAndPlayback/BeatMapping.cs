@@ -19,6 +19,8 @@ public class BeatMapping : MonoBehaviour
     public float almost = 0.103f;
     public float latency;
 
+    public ScoringType _type;
+
     public enum ScoringType
     {
         HIT,
@@ -31,12 +33,13 @@ public class BeatMapping : MonoBehaviour
     {
         public float timeStamp;
         public float instrumentID;
-        public float playerID;
+        public int playerID;
     }
 
     private void Start()
     {
         _recordInput = GetComponent<RecordInput>();
+        scoring = GetComponent<AccuracyScoring>();
     }
 
     public void SetUp(float _bpm)
@@ -83,7 +86,7 @@ public class BeatMapping : MonoBehaviour
         }
     }
 
-    public void PrepareAccuracyScoring(float _bpm, List<Eighth> _list)
+    public void PrepareAccuracyScoring(float _bpm, List<Eighth> _list, int amountPlayers)
     {
         bpm = _bpm;
 
@@ -125,11 +128,13 @@ public class BeatMapping : MonoBehaviour
             }
         }
 
+        scoring.SetUpScoring(compareToScoring, amountPlayers);
     }
 
     public void ScoreAccuracy(RecordingNote note, bool scorePlayability)
     {
         ScoringType type = ScoringType.HIT;
+        int player = 0;
 
         // MISSING: actually determine if it was hit or miss
 
@@ -138,5 +143,17 @@ public class BeatMapping : MonoBehaviour
 
         }
 
+        _type = type; // for testing
+
+        // send over to score accuracy and playability:
+        scoring.Score(type);
+        if (scorePlayability) scoring.ScorePlayability(type, player);
     }
+
+#if UNITY_EDITOR
+    private void OnGUI()
+    {
+        GUILayout.Box($"last beat was a {_type}");
+    }
+#endif
 }

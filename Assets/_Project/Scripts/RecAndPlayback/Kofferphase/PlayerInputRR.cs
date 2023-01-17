@@ -16,9 +16,12 @@ public class PlayerInputRR : MonoBehaviour
     [SerializeField] private KeyCode[] keyInputs;
     [SerializeField] private float cooldown = 0.1f;
 
+    bool testLocally;
+
     void Start()
     {
         _beatMapping = GetComponent<BeatMapping>();
+        testLocally = GetComponentInParent<PianoRollTLKoffer>().testLocally;
     }
 
     void Update()
@@ -37,8 +40,10 @@ public class PlayerInputRR : MonoBehaviour
                     if (recording)
                     {
                         RecordingNote n = new RecordingNote();
-                        //n.soundID = PlayerData.LocalPlayerData.InstrumentIds[i];
-                        n.soundID = i;
+
+                        if (testLocally) n.soundID = i;
+                        else n.soundID = PlayerData.LocalPlayerData.InstrumentIds[i];
+
                         n.timeStamp = timer;
 
                         _beatMapping.ScoreAccuracy(n, scorePlayability);
@@ -93,7 +98,9 @@ public class PlayerInputRR : MonoBehaviour
 
         // tell beatmapping script to write compare to bars
         if (_beatMapping == null) _beatMapping = GetComponent<BeatMapping>();
-        _beatMapping.PrepareAccuracyScoring(bpm, allRecordings);
+        if (script.testLocally)
+            _beatMapping.PrepareAccuracyScoring(bpm, allRecordings, script.testPlayerAmount);
+        else _beatMapping.PrepareAccuracyScoring(bpm, allRecordings, script.sortedPlayers.Count);
     }
 
     public void StartRecording()

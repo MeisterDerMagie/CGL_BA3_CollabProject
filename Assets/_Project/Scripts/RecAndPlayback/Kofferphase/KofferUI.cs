@@ -68,7 +68,7 @@ public class KofferUI : MonoBehaviour
 
     public void Schubidu(int player, bool pb = true)
     {
-        Debug.Log("Schubidu + " + player + ", " + pb);
+        //Debug.Log("Schubidu + " + player + ", " + pb);
 
         if (schubiduPrefab == null) return;
 
@@ -79,12 +79,14 @@ public class KofferUI : MonoBehaviour
         }
         else
         {
-            // set up schubidu and sent correct list of strings over
-            if (schubidu != null) schubidu.Kill();
+            //if (schubidu != null) schubidu.Kill();
 
             // create new instance of schubidu + save schubidu script
-            GameObject clone = Instantiate(schubiduPrefab);
-            schubidu = clone.GetComponent<MrSchubidu>();
+            if (player != 1 && pb != true)
+            {
+                GameObject clone = Instantiate(schubiduPrefab);
+                schubidu = clone.GetComponent<MrSchubidu>();
+            }
 
             // hand over correct list and tell to start
             if (player == 1)
@@ -130,6 +132,12 @@ public class KofferUI : MonoBehaviour
             else if (player == 9) // we have max of 8 players, so 9 means closing moderation
             {
                 schubidu.SetLinesAndShowNextLine(moderation.closingModerationLines);
+            }
+            else if (player == 0) // starting moderation
+            {
+                GameObject clone = Instantiate(schubiduPrefab);
+                schubidu = clone.GetComponent<MrSchubidu>();
+                schubidu.SetLinesAndShowNextLine(moderation.startModerationLines);
             }
         }
     }

@@ -191,6 +191,7 @@ public class PianoRollTLKoffer : MonoBehaviour
             }
         }
 
+        // if we're amout to start playing the last Player's bar --> start scoring for accuracy
         if (currentStage == KofferStages.RHYTHMREPEAT && _timer.timelineBeat == 8 && currentPlayer == amountPlaybackPlayers - 2)
             _playerInput.AccuracyStart(bpm);
 
