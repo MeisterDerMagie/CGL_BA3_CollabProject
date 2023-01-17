@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Instrument-16_Instr_Varvitos
   m_EditorClassIdentifier: 
   instrumentId: 16
+  category: 4
   friendlyName: Varvitos
   soundEvent:
     Guid:

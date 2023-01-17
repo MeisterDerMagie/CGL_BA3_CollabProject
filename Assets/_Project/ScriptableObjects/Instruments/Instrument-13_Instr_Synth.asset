@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Instrument-13_Instr_Synth
   m_EditorClassIdentifier: 
   instrumentId: 13
+  category: 3
   friendlyName: Synth
   soundEvent:
     Guid:

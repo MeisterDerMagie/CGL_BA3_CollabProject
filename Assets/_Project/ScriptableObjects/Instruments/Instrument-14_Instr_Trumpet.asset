@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Instrument-14_Instr_Trumpet
   m_EditorClassIdentifier: 
   instrumentId: 14
+  category: 4
   friendlyName: Trumpet
   soundEvent:
     Guid:

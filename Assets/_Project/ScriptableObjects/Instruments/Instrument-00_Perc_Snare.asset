@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Instrument-00_Perc_Snare
   m_EditorClassIdentifier: 
   instrumentId: 0
+  category: 1
   friendlyName: Snare
   soundEvent:
     Guid:

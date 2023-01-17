@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Instrument-01_Perc_HiHat
   m_EditorClassIdentifier: 
   instrumentId: 1
+  category: 1
   friendlyName: HiHat
   soundEvent:
     Guid:

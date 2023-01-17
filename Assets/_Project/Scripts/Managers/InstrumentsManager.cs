@@ -26,6 +26,18 @@ public class InstrumentsManager : MonoBehaviour
 
     [SerializeField, ReadOnly] public List<Instrument> instruments = new List<Instrument>();
 
+    public List<Instrument> GetAllInstrumentsOfCategory(InstrumentCategory category)
+    {
+        List<Instrument> instrumentsByCategory = new List<Instrument>();
+
+        foreach (Instrument instrument in instruments)
+        {
+            if (instrument.category == category) instrumentsByCategory.Add(instrument);
+        }
+
+        return instrumentsByCategory;
+    }
+
     public Instrument GetInstrument(int id)
     {
         foreach (Instrument instrument in instruments)

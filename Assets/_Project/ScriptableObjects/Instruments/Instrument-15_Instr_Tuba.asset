@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Instrument-15_Instr_Tuba
   m_EditorClassIdentifier: 
   instrumentId: 15
+  category: 4
   friendlyName: Tuba
   soundEvent:
     Guid:

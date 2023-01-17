@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Instrument-07_Perc_Woodblock
   m_EditorClassIdentifier: 
   instrumentId: 7
+  category: 2
   friendlyName: Woodblock
   soundEvent:
     Guid:

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Instrument-03_Perc_Bell
   m_EditorClassIdentifier: 
   instrumentId: 3
+  category: 1
   friendlyName: Bell
   soundEvent:
     Guid:

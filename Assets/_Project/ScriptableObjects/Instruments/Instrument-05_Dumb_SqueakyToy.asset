@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Instrument-05_Dumb_SqueakyToy
   m_EditorClassIdentifier: 
   instrumentId: 5
+  category: 2
   friendlyName: Squeaky Toy
   soundEvent:
     Guid:

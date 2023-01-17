@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Instrument-09_Instr_Violin
   m_EditorClassIdentifier: 
   instrumentId: 9
+  category: 3
   friendlyName: Violin
   soundEvent:
     Guid:

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Instrument-02_Inst_Flute
   m_EditorClassIdentifier: 
   instrumentId: 2
+  category: 1
   friendlyName: Flute
   soundEvent:
     Guid:

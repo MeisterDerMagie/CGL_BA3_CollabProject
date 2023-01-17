@@ -10,39 +10,36 @@ public class AssignInstruments : MonoBehaviour
         //only run on server
         if (!NetworkManager.Singleton.IsServer) return;
         
-        //randomize instruments
-        List<Instrument> allInstruments = InstrumentsManager.Instance.instruments;
         var assignedInstruments = new List<int>();
-            
-        for (int i = 0; i < Constants.INSTRUMENTS_AMOUNT; i++)
-        {
-            int iterations = 0;
-            while (true)
-            {
-                //safety exit
-                iterations += 1;
-                if (iterations == 1000)
-                {
-                    Debug.LogError("Something went wrong and we got caught in a while loop while assigning instruments.", this);
-                    break;
-                }
-                    
-                //generate random instrument
-                int randomInstrumentsIndex = Random.Range(0, allInstruments.Count);
-                    
-                //check if the instrument was already chosen. If yes, we try again.
-                if (assignedInstruments.Contains(allInstruments[randomInstrumentsIndex].instrumentId)) continue;
-                    
-                //if the instrument wasn't chosen before, assign it.
-                assignedInstruments.Add(allInstruments[randomInstrumentsIndex].instrumentId);
-                break;
-            }
-        }
         
+        //get random silly harmonic instrument
+        assignedInstruments.Add(GetRandomInstrumentIdOfCategory(InstrumentCategory.SillyHarmonic));
+        
+        //get random silly rhythmic instrument
+        assignedInstruments.Add(GetRandomInstrumentIdOfCategory(InstrumentCategory.SillyRhythmic));
+
+        //get random harmonic instrument
+        assignedInstruments.Add(GetRandomInstrumentIdOfCategory(InstrumentCategory.Harmonic));
+
+        //get random rhythmic instrument
+        assignedInstruments.Add(GetRandomInstrumentIdOfCategory(InstrumentCategory.Rhythmic));
+
         //assign random instruments to players
         foreach (NetworkClient client in NetworkManager.Singleton.ConnectedClientsList)
         {
             client.PlayerObject.GetComponent<PlayerData>().SetInstruments(assignedInstruments);
         }
+    }
+
+    private int GetRandomInstrumentIdOfCategory(InstrumentCategory category)
+    {
+        //get all instruments of category
+        List<Instrument> allInstrumentsOfCategory = InstrumentsManager.Instance.GetAllInstrumentsOfCategory(category);
+        
+        //generate random instrument
+        int randomIndex = Random.Range(0, allInstrumentsOfCategory.Count);
+        
+        //return instrument id
+        return allInstrumentsOfCategory[randomIndex].instrumentId;
     }
 }

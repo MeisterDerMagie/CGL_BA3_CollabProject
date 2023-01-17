@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Instrument-12_Instr_Piano
   m_EditorClassIdentifier: 
   instrumentId: 12
+  category: 3
   friendlyName: Piano
   soundEvent:
     Guid:

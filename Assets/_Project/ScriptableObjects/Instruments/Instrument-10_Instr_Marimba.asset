@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Instrument-10_Instr_Marimba
   m_EditorClassIdentifier: 
   instrumentId: 10
+  category: 3
   friendlyName: Marimba
   soundEvent:
     Guid:

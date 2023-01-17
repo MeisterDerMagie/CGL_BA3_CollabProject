@@ -9,6 +9,7 @@ using UnityEngine;
 public class Instrument : ScriptableObject
 {
     public int instrumentId;
+    public InstrumentCategory category;
     public string friendlyName;
     public EventReference soundEvent;
     [PreviewField] public Sprite instrumentIcon;

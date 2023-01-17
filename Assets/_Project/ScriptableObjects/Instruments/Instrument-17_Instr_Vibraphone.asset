@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Instrument-17_Instr_Vibraphone
   m_EditorClassIdentifier: 
   instrumentId: 17
+  category: 4
   friendlyName: Vibraphone
   soundEvent:
     Guid:

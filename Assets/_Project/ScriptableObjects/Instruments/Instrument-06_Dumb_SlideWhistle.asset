@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Instrument-06_Dumb_SlideWhistle
   m_EditorClassIdentifier: 
   instrumentId: 6
+  category: 2
   friendlyName: Slide Whistle
   soundEvent:
     Guid:

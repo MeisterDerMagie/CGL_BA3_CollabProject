@@ -37,8 +37,6 @@ public class MrSchubidu : MonoBehaviour
     }
 
     //either skip the currently running text animation, or if animation finished, show next line
-    // ReSharper disable Unity.PerformanceAnalysis
-    [Button, DisableInEditorMode]
     public void Next(bool forceNextLine = false)
     {
         if (_wasKilled)
@@ -151,22 +149,8 @@ public class MrSchubidu : MonoBehaviour
         SetLines(lines);
         Next(true);
     }
-    
-    [Button]
-    private void TEST_SetLinesAndRestart()
-    {
-        var lines = new List<DialogLine>()
-        {
-            new DialogLine("1"),
-            new DialogLine("2", 4f),
-            new DialogLine("3", 2f),
-        };
-        
-        SetLinesAndShowNextLine(lines);
-    }
 
     //stop schubidu and anim out
-    [Button]
     public void Kill()
     {
         _wasKilled = true;
@@ -185,7 +169,6 @@ public class MrSchubidu : MonoBehaviour
     }
 
     /// <summary> Kill schubidu without out-animation </summary>
-    [Button]
     public void KillImmediate()
     {
         //stop text animation and delayed Next
