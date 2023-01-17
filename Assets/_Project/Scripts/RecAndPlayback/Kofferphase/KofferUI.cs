@@ -75,69 +75,69 @@ public class KofferUI : MonoBehaviour
         if (player == -1)
         {
             // turn off schubidu
-            schubidu.Kill();
+            if (schubidu != null) schubidu.Kill();
         }
         else
         {
-            //if (schubidu != null) schubidu.Kill();
-
-            // create new instance of schubidu + save schubidu script
-            if (player != 1 && pb != true)
-            {
-                GameObject clone = Instantiate(schubiduPrefab);
-                schubidu = clone.GetComponent<MrSchubidu>();
-            }
-
             // hand over correct list and tell to start
             if (player == 1)
             {
                 if (pb == true) schubidu.SetLinesAndShowNextLine(moderation.playback1Lines);
-                else schubidu.SetLinesAndShowNextLine(moderation.repeat1Lines);
+                else
+                {
+                    GameObject clone = Instantiate(schubiduPrefab);
+                    schubidu = clone.GetComponent<MrSchubidu>();
+                    schubidu.SetLinesAndShowNextLine(moderation.repeat1Lines);
+                }
             }
-            else if (player == 2)
-            {
-                if (pb == true) schubidu.SetLinesAndShowNextLine(moderation.playback2Lines);
-                else schubidu.SetLinesAndShowNextLine(moderation.repeat2Lines);
-            }
-            else if (player == 3)
-            {
-                if (pb == true) schubidu.SetLinesAndShowNextLine(moderation.playback3Lines);
-                else schubidu.SetLinesAndShowNextLine(moderation.repeat3Lines);
-            }
-            else if (player == 4)
-            {
-                if (pb == true) schubidu.SetLinesAndShowNextLine(moderation.playback4Lines);
-                else schubidu.SetLinesAndShowNextLine(moderation.repeat4Lines);
-            }
-            else if (player == 5)
-            {
-                if (pb == true) schubidu.SetLinesAndShowNextLine(moderation.playback5Lines);
-                else schubidu.SetLinesAndShowNextLine(moderation.repeat5Lines);
-            }
-            else if (player == 6)
-            {
-                if (pb == true) schubidu.SetLinesAndShowNextLine(moderation.playback6Lines);
-                else schubidu.SetLinesAndShowNextLine(moderation.repeat6Lines);
-            }
-            else if (player == 7)
-            {
-                if (pb == true) schubidu.SetLinesAndShowNextLine(moderation.playback7Lines);
-                else schubidu.SetLinesAndShowNextLine(moderation.repeat7Lines);
-            }
-            else if (player == 8)
-            {
-                if (pb == true) schubidu.SetLinesAndShowNextLine(moderation.playback8Lines);
-                else schubidu.SetLinesAndShowNextLine(moderation.repeat8Lines);
-            }
-            else if (player == 9) // we have max of 8 players, so 9 means closing moderation
-            {
-                schubidu.SetLinesAndShowNextLine(moderation.closingModerationLines);
-            }
-            else if (player == 0) // starting moderation
+            else
             {
                 GameObject clone = Instantiate(schubiduPrefab);
                 schubidu = clone.GetComponent<MrSchubidu>();
-                schubidu.SetLinesAndShowNextLine(moderation.startModerationLines);
+
+                if (player == 2)
+                {
+                    if (pb == true) schubidu.SetLinesAndShowNextLine(moderation.playback2Lines);
+                    else schubidu.SetLinesAndShowNextLine(moderation.repeat2Lines);
+                }
+                else if (player == 3)
+                {
+                    if (pb == true) schubidu.SetLinesAndShowNextLine(moderation.playback3Lines);
+                    else schubidu.SetLinesAndShowNextLine(moderation.repeat3Lines);
+                }
+                else if (player == 4)
+                {
+                    if (pb == true) schubidu.SetLinesAndShowNextLine(moderation.playback4Lines);
+                    else schubidu.SetLinesAndShowNextLine(moderation.repeat4Lines);
+                }
+                else if (player == 5)
+                {
+                    if (pb == true) schubidu.SetLinesAndShowNextLine(moderation.playback5Lines);
+                    else schubidu.SetLinesAndShowNextLine(moderation.repeat5Lines);
+                }
+                else if (player == 6)
+                {
+                    if (pb == true) schubidu.SetLinesAndShowNextLine(moderation.playback6Lines);
+                    else schubidu.SetLinesAndShowNextLine(moderation.repeat6Lines);
+                }
+                else if (player == 7)
+                {
+                    if (pb == true) schubidu.SetLinesAndShowNextLine(moderation.playback7Lines);
+                    else schubidu.SetLinesAndShowNextLine(moderation.repeat7Lines);
+                }
+                else if (player == 8)
+                {
+                    if (pb == true) schubidu.SetLinesAndShowNextLine(moderation.playback8Lines);
+                    else schubidu.SetLinesAndShowNextLine(moderation.repeat8Lines);
+                }
+                else if (player == 9) // we have max of 8 players, so 9 means closing moderation
+                {
+                    schubidu.SetLinesAndShowNextLine(moderation.closingModerationLines);
+                }
+                else if (player == 0) // starting moderation
+                {
+                    schubidu.SetLinesAndShowNextLine(moderation.startModerationLines);
+                }
             }
         }
     }
