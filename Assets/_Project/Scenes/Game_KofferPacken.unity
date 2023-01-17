@@ -331,7 +331,7 @@ MonoBehaviour:
   greyedAlpha: 0.566
   countInText: {fileID: 603052016}
   moderation: {fileID: 11400000, guid: c7953439e56258d4ebf3593c8ec87f01, type: 2}
-  schubiduPrefab: {fileID: 0}
+  schubiduPrefab: {fileID: 3413040361111245755, guid: e1388985622d9c346ba2ef67d24955b0, type: 3}
   recFrame: {fileID: 1851225238}
 --- !u!4 &232119336
 Transform:

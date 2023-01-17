@@ -154,6 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextScene: {fileID: 11400000, guid: e5e893ccc04bf9645bb298bdb9bfbcdb, type: 2}
+  loadDelay: 1
 --- !u!114 &743612578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -204,6 +205,10 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 3146684785
       objectReference: {fileID: 0}
+    - target: {fileID: 1232380703942225253, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2879325727017348162, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 3688446102
@@ -247,6 +252,10 @@ PrefabInstance:
     - target: {fileID: 6046905706122264679, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6046905706990376252, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7032948872996644835, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
       propertyPath: GlobalObjectIdHash
@@ -411,6 +420,37 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: lines.Array.data[5]
+      value: "Since chances are high that as you climb high,\nyou fall low, \nlow
+        on points that is! "
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: dialogLines.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: dialogLines.Array.data[0].text
+      value: "How did you perform? Bad? \n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: dialogLines.Array.data[1].text
+      value: "Well, Wannabe's, honeybee's, \none bar wonder- bee's,"
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: dialogLines.Array.data[2].text
+      value: 'At the end of the day it''s all the same isn''t it?
+
+        Zombies...'
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: dialogLines.Array.data[3].text
+      value: Let's take a look at your points.
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: dialogLines.Array.data[4].text
+      value: "But do not fret, there is no reason to be \ndissa-point-ed."
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: dialogLines.Array.data[5].text
       value: "Since chances are high that as you climb high,\nyou fall low, \nlow
         on points that is! "
       objectReference: {fileID: 0}

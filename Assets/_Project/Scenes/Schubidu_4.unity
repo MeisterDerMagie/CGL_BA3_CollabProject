@@ -210,6 +210,10 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 2219979102
       objectReference: {fileID: 0}
+    - target: {fileID: 1232380703942225253, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2879325727017348162, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 153843623
@@ -281,6 +285,10 @@ PrefabInstance:
     - target: {fileID: 6046905706122264679, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6046905706990376252, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7032948872996644835, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
       propertyPath: GlobalObjectIdHash
@@ -457,6 +465,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextScene: {fileID: 11400000, guid: 4c3ff06c438edb540a887420f55d0764, type: 2}
+  loadDelay: 1
 --- !u!4 &1971938793
 Transform:
   m_ObjectHideFlags: 0
@@ -525,6 +534,54 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: lines.Array.data[9]
+      value: Simple as that, but too complicated for small brains!
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: dialogLines.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: dialogLines.Array.data[0].text
+      value: ' It''s time to prove you''re even better than your rival composers!'
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: dialogLines.Array.data[1].text
+      value: ' Follow my advice and you might not burn yourself on this,...'
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: dialogLines.Array.data[2].text
+      value: ...although our stage sometimes catches fire.
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: dialogLines.Array.data[3].text
+      value: It's like pack your suitcase, but with a rhythm game combined! Don't
+        like it? Not my problem.
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: dialogLines.Array.data[4].text
+      value: Have you ever even packed a suitcase or can't you afford that luxus?
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: dialogLines.Array.data[5].text
+      value: Well, since you're here I guess it's the later. Now you will learn how
+        it works( or not)!
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: dialogLines.Array.data[6].text
+      value: One by one you will pack your melody into our imagenary suitcase.
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: dialogLines.Array.data[7].text
+      value: 'And since your memory is probably just as bad as mine,
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: dialogLines.Array.data[8].text
+      value: you will always repeat what was put inside before! YAY!
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: dialogLines.Array.data[9].text
       value: Simple as that, but too complicated for small brains!
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
@@ -609,7 +666,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3204870652210103703, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 51.562546
+      value: 51.5625
       objectReference: {fileID: 0}
     - target: {fileID: 3204870652210103703, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: m_AnchoredPosition.y
