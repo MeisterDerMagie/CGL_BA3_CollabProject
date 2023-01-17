@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,58 +6,31 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SchubiduModeration", menuName = "One Bar Wonder/SchubiduModeration", order = 0)]
 public class KofferModeration : ScriptableObject
 {
-    [TextArea]
-    public List<string> startModeration;
-
-    [Space]
-    [TextArea]
-    public List<string> playback1;
-    [TextArea]
-    public List<string> repeat1;
-
-    [Space]
-    [TextArea]
-    public List<string> playback2;
-    [TextArea]
-    public List<string> repeat2;
-
-    [Space]
-    [TextArea]
-    public List<string> playback3;
-    [TextArea]
-    public List<string> repeat3;
-
-    [Space]
-    [TextArea]
-    public List<string> playback4;
-    [TextArea]
-    public List<string> repeat4;
-
-    [Space]
-    [TextArea]
-    public List<string> playback5;
-    [TextArea]
-    public List<string> repeat5;
-
-    [Space]
-    [TextArea]
-    public List<string> playback6;
-    [TextArea]
-    public List<string> repeat6;
-
-    [Space]
-    [TextArea]
-    public List<string> playback7;
-    [TextArea]
-    public List<string> repeat7;
-
-    [Space]
-    [TextArea]
-    public List<string> playback8;
-    [TextArea]
-    public List<string> repeat8;
-
-    [Space]
-    [TextArea]
-    public List<string> closingModeration;
+    public List<DialogLine> startModerationLines = new();
+    
+    public List<DialogLine> playback1Lines = new();
+    public List<DialogLine> repeat1Lines = new();
+    
+    public List<DialogLine> playback2Lines = new();
+    public List<DialogLine> repeat2Lines = new();
+    
+    public List<DialogLine> playback3Lines = new();
+    public List<DialogLine> repeat3Lines = new();
+    
+    public List<DialogLine> playback4Lines = new();
+    public List<DialogLine> repeat4Lines = new();
+    
+    public List<DialogLine> playback5Lines = new();
+    public List<DialogLine> repeat5Lines = new();
+    
+    public List<DialogLine> playback6Lines = new();
+    public List<DialogLine> repeat6Lines = new();
+    
+    public List<DialogLine> playback7Lines = new();
+    public List<DialogLine> repeat7Lines = new();
+    
+    public List<DialogLine> playback8Lines = new();
+    public List<DialogLine> repeat8Lines = new();
+    
+    public List<DialogLine> closingModerationLines = new();
 }

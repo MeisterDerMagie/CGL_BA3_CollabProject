@@ -17,12 +17,11 @@ public class MrSchubidu : MonoBehaviour
     [SerializeField] private TextMeshProUGUI speechbubbleTextField;
     [SerializeField] private List<DialogLine> dialogLines = new();
     [SerializeField, Min(0.01f)] private float textAnimationSpeed = 1f;
-    [SerializeField] private RectTransform speechbubble;
     [SerializeField] private UnityEvent onSchubiduFinished;
 
     [Title("Animations")]
-    [SerializeField] private AnimatorStateReference speechbubbleIn;
-    [SerializeField] private AnimatorStateReference speechbubbleOut, speechbubbleNextLine, schubiduIdle, schubiduTalking;
+    [SerializeField] private AnimatorStateReference schubiduIn;
+    [SerializeField] private AnimatorStateReference schubiduOut, speechbubbleNextLine, schubiduIdle, schubiduTalking;
 
     private int _currentLine = -1;
     private Tween _textAnimation;
@@ -30,17 +29,24 @@ public class MrSchubidu : MonoBehaviour
     private CoroutineHandle _delayedNext;
 
     private bool _isAnimating;
+    private bool _wasKilled;
 
     private void Start()
     {
-        Next();
-        speechbubbleIn.Play();
+        Timing.RunCoroutine(_AnimSchubiduIn());
     }
 
     //either skip the currently running text animation, or if animation finished, show next line
+    // ReSharper disable Unity.PerformanceAnalysis
     [Button, DisableInEditorMode]
     public void Next(bool forceNextLine = false)
     {
+        if (_wasKilled)
+        {
+            Debug.LogWarning("This MrSchubidu has been killed. Don't call Next() on him.", this);
+            return;
+        }
+        
         //if the typewriter animation is playing, skip it and instead show the whole text immediately
         if (!forceNextLine && _isAnimating)
         {
@@ -55,7 +61,7 @@ public class MrSchubidu : MonoBehaviour
         _currentLine++;
         if (_currentLine > dialogLines.Count - 1)
         {
-            Exit();
+            Kill();
             return;
         }
 
@@ -87,12 +93,14 @@ public class MrSchubidu : MonoBehaviour
 
         //stop previous sound in case it's still playing
         _soundEventInstance.stop(STOP_MODE.ALLOWFADEOUT);
-        
+        _soundEventInstance.release();
+
         //play sound
         if (!line.soundEvent.IsNull)
         {
             _soundEventInstance = RuntimeManager.CreateInstance(line.soundEvent);
             _soundEventInstance.start();
+            _soundEventInstance.release();
         }
         
         //if a duration was specified, automatically show the next line after that time
@@ -111,34 +119,86 @@ public class MrSchubidu : MonoBehaviour
         Next(true);
     }
 
-    private void Exit()
+    private IEnumerator<float> _AnimSchubiduIn()
     {
-        schubiduIdle.Play();
-        Timing.RunCoroutine(_AnimSpeechbubbleOut());
-    }
-
-    private IEnumerator<float> _AnimSpeechbubbleOut()
-    {
-        //anim out
-        yield return Timing.WaitUntilDone(Timing.RunCoroutine(speechbubbleOut._Play()));
+        //play in-animation
+        yield return Timing.WaitUntilDone(Timing.RunCoroutine(schubiduIn._Play()));
         
-        //hide speechbubble
-        speechbubble.gameObject.SetActive(false);
-        
-        //call finished event
-        onSchubiduFinished.Invoke();
-    }
-
-    public void Talk(List<string> strings)
-    {
-
-    }
-
-    public void StopTalking()
-    {
-
+        //then start the text by calling Next()
+        Next();
     }
     
+    private IEnumerator<float> _AnimSchubiduOutAndDestroy()
+    {
+        //anim out
+        yield return Timing.WaitUntilDone(Timing.RunCoroutine(schubiduOut._Play()));
+
+        //call finished event
+        onSchubiduFinished.Invoke();
+        
+        //destroy game object
+        Destroy(gameObject);
+    }
+
+    public void SetLines(List<DialogLine> lines)
+    {
+        dialogLines = lines;
+        _currentLine = -1;
+    }
+
+    public void SetLinesAndShowNextLine(List<DialogLine> lines)
+    {
+        SetLines(lines);
+        Next(true);
+    }
+    
+    [Button]
+    private void TEST_SetLinesAndRestart()
+    {
+        var lines = new List<DialogLine>()
+        {
+            new DialogLine("1"),
+            new DialogLine("2", 4f),
+            new DialogLine("3", 2f),
+        };
+        
+        SetLinesAndShowNextLine(lines);
+    }
+
+    //stop schubidu and anim out
+    [Button]
+    public void Kill()
+    {
+        _wasKilled = true;
+        
+        //stop text animation and delayed Next
+        Timing.KillCoroutines(_delayedNext);
+        _textAnimation?.Kill();
+        
+        //stop sound
+        _soundEventInstance.stop(STOP_MODE.ALLOWFADEOUT);
+        _soundEventInstance.release();
+        
+        //play out animations
+        schubiduIdle.Play();
+        Timing.RunCoroutine(_AnimSchubiduOutAndDestroy());
+    }
+
+    /// <summary> Kill schubidu without out-animation </summary>
+    [Button]
+    public void KillImmediate()
+    {
+        //stop text animation and delayed Next
+        Timing.KillCoroutines(_delayedNext);
+        _textAnimation?.Kill();
+        
+        //stop sound
+        _soundEventInstance.stop(STOP_MODE.ALLOWFADEOUT);
+        _soundEventInstance.release();
+
+        //destroy object
+        Destroy(gameObject);
+    }
 }
 
 [Serializable]

@@ -26,7 +26,7 @@ AnimationClip:
     - time: 0.33333334
       value: {fileID: 21300000, guid: 808cfacb6684c6c4696bbd4c10604baa, type: 3}
     attribute: m_Sprite
-    path: Content/img_Schubidu
+    path: Content/img_Kreis/img_Schubidu
     classID: 114
     script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_SampleRate: 60
@@ -37,7 +37,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 747331253
+      path: 662384147
       attribute: 2015549526
       script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
       typeID: 114

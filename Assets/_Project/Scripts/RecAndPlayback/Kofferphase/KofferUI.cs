@@ -75,12 +75,12 @@ public class KofferUI : MonoBehaviour
         if (player == -1)
         {
             // turn off schubidu
-            schubidu.StopTalking();
+            schubidu.Kill();
         }
         else
         {
             // set up schubidu and sent correct list of strings over
-            if (schubidu != null) schubidu.StopTalking();
+            if (schubidu != null) schubidu.Kill();
 
             // create new instance of schubidu + save schubidu script
             GameObject clone = Instantiate(schubiduPrefab);
@@ -89,47 +89,47 @@ public class KofferUI : MonoBehaviour
             // hand over correct list and tell to start
             if (player == 1)
             {
-                if (pb == true) schubidu.Talk(moderation.playback1);
-                else schubidu.Talk(moderation.repeat1);
+                if (pb == true) schubidu.SetLinesAndShowNextLine(moderation.playback1Lines);
+                else schubidu.SetLinesAndShowNextLine(moderation.repeat1Lines);
             }
             else if (player == 2)
             {
-                if (pb == true) schubidu.Talk(moderation.playback2);
-                else schubidu.Talk(moderation.repeat2);
+                if (pb == true) schubidu.SetLinesAndShowNextLine(moderation.playback2Lines);
+                else schubidu.SetLinesAndShowNextLine(moderation.repeat2Lines);
             }
             else if (player == 3)
             {
-                if (pb == true) schubidu.Talk(moderation.playback3);
-                else schubidu.Talk(moderation.repeat3);
+                if (pb == true) schubidu.SetLinesAndShowNextLine(moderation.playback3Lines);
+                else schubidu.SetLinesAndShowNextLine(moderation.repeat3Lines);
             }
             else if (player == 4)
             {
-                if (pb == true) schubidu.Talk(moderation.playback4);
-                else schubidu.Talk(moderation.repeat4);
+                if (pb == true) schubidu.SetLinesAndShowNextLine(moderation.playback4Lines);
+                else schubidu.SetLinesAndShowNextLine(moderation.repeat4Lines);
             }
             else if (player == 5)
             {
-                if (pb == true) schubidu.Talk(moderation.playback5);
-                else schubidu.Talk(moderation.repeat5);
+                if (pb == true) schubidu.SetLinesAndShowNextLine(moderation.playback5Lines);
+                else schubidu.SetLinesAndShowNextLine(moderation.repeat5Lines);
             }
             else if (player == 6)
             {
-                if (pb == true) schubidu.Talk(moderation.playback6);
-                else schubidu.Talk(moderation.repeat6);
+                if (pb == true) schubidu.SetLinesAndShowNextLine(moderation.playback6Lines);
+                else schubidu.SetLinesAndShowNextLine(moderation.repeat6Lines);
             }
             else if (player == 7)
             {
-                if (pb == true) schubidu.Talk(moderation.playback7);
-                else schubidu.Talk(moderation.repeat7);
+                if (pb == true) schubidu.SetLinesAndShowNextLine(moderation.playback7Lines);
+                else schubidu.SetLinesAndShowNextLine(moderation.repeat7Lines);
             }
             else if (player == 8)
             {
-                if (pb == true) schubidu.Talk(moderation.playback8);
-                else schubidu.Talk(moderation.repeat8);
+                if (pb == true) schubidu.SetLinesAndShowNextLine(moderation.playback8Lines);
+                else schubidu.SetLinesAndShowNextLine(moderation.repeat8Lines);
             }
             else if (player == 9) // we have max of 8 players, so 9 means closing moderation
             {
-                schubidu.Talk(moderation.closingModeration);
+                schubidu.SetLinesAndShowNextLine(moderation.closingModerationLines);
             }
         }
     }

@@ -12,6 +12,189 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad3e487d4f101ae4a860f808ae72be43, type: 3}
   m_Name: SchubiduModeration
   m_EditorClassIdentifier: 
+  startModerationLines:
+  - text: "Let\u2019s see who starts! It\u2019s the one with the most points! :D
+      Who would\u2019ve though that!"
+    duration: 0
+    soundEvent:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
+  playback1Lines:
+  - text: 'Player one packs his bags and takes with him.
+
+      Listen carefully:'
+    duration: 0
+    soundEvent:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
+  repeat1Lines:
+  - text: And now everyone!
+    duration: 0
+    soundEvent:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
+  playback2Lines:
+  - text: 'Player two packs his bags and takes with him:'
+    duration: 0
+    soundEvent:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
+  repeat2Lines:
+  - text: And now everyone!
+    duration: 0
+    soundEvent:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
+  playback3Lines:
+  - text: 'Player three packs his bags and takes with him:'
+    duration: 0
+    soundEvent:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
+  repeat3Lines:
+  - text: And now everyone!
+    duration: 0
+    soundEvent:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
+  playback4Lines:
+  - text: 'Player four packs his bags and takes with him:'
+    duration: 0
+    soundEvent:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
+  repeat4Lines:
+  - text: And now everyone!
+    duration: 0
+    soundEvent:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
+  playback5Lines:
+  - text: 'Player five packs his bags and takes with him:'
+    duration: 0
+    soundEvent:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
+  repeat5Lines:
+  - text: And now everyone!
+    duration: 0
+    soundEvent:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
+  playback6Lines:
+  - text: 'Player six packs his bags and takes with him:'
+    duration: 0
+    soundEvent:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
+  repeat6Lines:
+  - text: And now everyone!
+    duration: 0
+    soundEvent:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
+  playback7Lines:
+  - text: 'Player seven packs his bags and takes with him:'
+    duration: 0
+    soundEvent:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
+  repeat7Lines:
+  - text: And now everyone!
+    duration: 0
+    soundEvent:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
+  playback8Lines:
+  - text: 'Player eight packs his bags and takes with him:'
+    duration: 0
+    soundEvent:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
+  repeat8Lines:
+  - text: And now everything one last time!
+    duration: 0
+    soundEvent:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
+  closingModerationLines:
+  - text: "Phew, that\u2019s a heavy bag..."
+    duration: 0
+    soundEvent:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
   startModeration:
   - "Let\u2019s see who starts! It\u2019s the one with the most points! :D Who would\u2019ve
     though that!"
