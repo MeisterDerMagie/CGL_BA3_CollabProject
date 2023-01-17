@@ -306,6 +306,8 @@ public class PianoRollTLKoffer : MonoBehaviour
                             _ui.TurnOnLight(false);
                             _ui.PromptText("We're done now, matey!");
                             _ui.Schubidu(9);
+
+                            GetComponentInChildren<AccuracyScoring>().SendToServer();
                             #endregion
 
                         }

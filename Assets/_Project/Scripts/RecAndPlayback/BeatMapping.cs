@@ -138,14 +138,24 @@ public class BeatMapping : MonoBehaviour
 
     public void ScoreAccuracy(RecordingNote note, bool scorePlayability)
     {
-        ScoringType type = ScoringType.HIT;
+        ScoringType type = ScoringType.MISS;
         int player = 0;
 
         // MISSING: actually determine if it was hit or miss
 
         for (int i = 0; i < compareToScoring.Count; i++)
         {
-
+            // check if it was a hit
+            //if (note.timeStamp >= compareTo[i] - dispersion && note.timeStamp < compareTo[i] + dispersion)
+            if (note.timeStamp >= compareToScoring[i].timeStamp - latency - hit && note.timeStamp <= compareToScoring[i].timeStamp - latency + hit)
+            {
+                type = ScoringType.HIT;
+            }
+            // check if it was almost a hit
+            else if (note.timeStamp >= compareToScoring[i].timeStamp - latency - almost && note.timeStamp <= compareToScoring[i].timeStamp - latency + almost)
+            {
+                type = ScoringType.ALMOST;
+            }
         }
 
         _type = type; // for testing

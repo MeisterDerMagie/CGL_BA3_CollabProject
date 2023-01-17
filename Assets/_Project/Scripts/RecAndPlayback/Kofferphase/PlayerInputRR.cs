@@ -26,6 +26,8 @@ public class PlayerInputRR : MonoBehaviour
 
     void Update()
     {
+        timer += Time.deltaTime;
+
         if (active)
         {
             for (int i = 0; i < keyInputs.Length; i++)
@@ -106,6 +108,7 @@ public class PlayerInputRR : MonoBehaviour
     public void StartRecording()
     {
         recording = true;
+        timer = 0;
     }
 
     public void StopRecording()
