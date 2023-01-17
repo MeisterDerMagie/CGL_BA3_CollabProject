@@ -33,7 +33,7 @@ public class MrSchubidu : MonoBehaviour
 
     private void Start()
     {
-        Timing.RunCoroutine(_AnimSchubiduIn());
+        Timing.RunCoroutine(_AnimSchubiduIn().CancelWith(gameObject));
     }
 
     //either skip the currently running text animation, or if animation finished, show next line
@@ -107,7 +107,7 @@ public class MrSchubidu : MonoBehaviour
         Timing.KillCoroutines(_delayedNext);
         if (line.duration > 0f)
         {
-            _delayedNext = Timing.RunCoroutine(_NextDelayed(line.duration));
+            _delayedNext = Timing.RunCoroutine(_NextDelayed(line.duration).CancelWith(gameObject));
         }
 
         _isAnimating = true;
@@ -122,7 +122,7 @@ public class MrSchubidu : MonoBehaviour
     private IEnumerator<float> _AnimSchubiduIn()
     {
         //play in-animation
-        yield return Timing.WaitUntilDone(Timing.RunCoroutine(schubiduIn._Play()));
+        yield return Timing.WaitUntilDone(Timing.RunCoroutine(schubiduIn._Play().CancelWith(gameObject)));
         
         //then start the text by calling Next()
         Next();
@@ -131,7 +131,7 @@ public class MrSchubidu : MonoBehaviour
     private IEnumerator<float> _AnimSchubiduOutAndDestroy()
     {
         //anim out
-        yield return Timing.WaitUntilDone(Timing.RunCoroutine(schubiduOut._Play()));
+        yield return Timing.WaitUntilDone(Timing.RunCoroutine(schubiduOut._Play().CancelWith(gameObject)));
 
         //call finished event
         onSchubiduFinished.Invoke();
@@ -181,7 +181,7 @@ public class MrSchubidu : MonoBehaviour
         
         //play out animations
         schubiduIdle.Play();
-        Timing.RunCoroutine(_AnimSchubiduOutAndDestroy());
+        Timing.RunCoroutine(_AnimSchubiduOutAndDestroy().CancelWith(gameObject));
     }
 
     /// <summary> Kill schubidu without out-animation </summary>
