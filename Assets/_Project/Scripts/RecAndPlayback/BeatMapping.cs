@@ -15,6 +15,10 @@ public class BeatMapping : MonoBehaviour
     float bpm;
 
     // dispersion for:
+    [Tooltip("percent of duration of an eighth needed for a hit")]
+    public float hitPercent = 25f;
+    [Tooltip("percent of duration of an eighth needed for an almost")]
+    public float almostPercent = 45f;
     public float hit = 0.034f;
     public float almost = 0.103f;
     public float latency;
@@ -112,7 +116,7 @@ public class BeatMapping : MonoBehaviour
         */
 
         // for every player in our game
-        for (int p = 0; p < _list.Count / (Constants.RECORDING_LENGTH * 8); p++)
+        for (int p = 0; p < amountPlayers; p++)
         {
             // go through every eighth in their bar
             for (int i = 0; i < Constants.RECORDING_LENGTH * 8; i++)
@@ -168,7 +172,7 @@ public class BeatMapping : MonoBehaviour
 #if UNITY_EDITOR
     private void OnGUI()
     {
-        GUILayout.Box($"last beat was a {_type}");
+        GUILayout.Box($"last beat was a {_type}, current accuracy amount is {scoring.playerPoints}");
     }
 #endif
 }

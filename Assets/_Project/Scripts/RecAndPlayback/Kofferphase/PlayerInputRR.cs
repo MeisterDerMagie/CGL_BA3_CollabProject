@@ -71,7 +71,7 @@ public class PlayerInputRR : MonoBehaviour
         {
             foreach (PlayerData player in script.sortedPlayers)
             {
-                for (int i = 0; i < Constants.RECORDING_LENGTH; i++)
+                for (int i = 0; i < player.Recording.Count; i++)
                 {
                     Eighth e = new Eighth();
 
@@ -86,7 +86,7 @@ public class PlayerInputRR : MonoBehaviour
         {
             foreach (List<Eighth> list in script.testPlayers)
             {
-                for (int i = 0; i < Constants.RECORDING_LENGTH; i++)
+                for (int i = 0; i < Constants.RECORDING_LENGTH * 8; i++)
                 {
                     Eighth e = new Eighth();
 
