@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using MEC;
 using Unity.Netcode;
 using UnityEngine;
@@ -55,11 +56,14 @@ public class StageController : NetworkBehaviour
             _clientIdsAssignToPodiums.Add(ulong.MaxValue);
         }
         
-        //set up the stage
-        for (int i = 0; i < NetworkManager.ConnectedClientsList.Count; i++)
+        //sort players by total points (most points is first one int the list)
+        List<NetworkClient> connectedClientsOrderedByPoints = NetworkManager.ConnectedClientsList.OrderByDescending(networkClient=>networkClient.PlayerObject.GetComponent<PlayerData>().TotalPoints).ToList();
+
+        //set up the stage (the player with the most points is in the center)
+        for (int i = 0; i < connectedClientsOrderedByPoints.Count; i++)
         {
-            ulong clientId = NetworkManager.ConnectedClientsList[i].ClientId;
-            NetworkObject player = NetworkManager.ConnectedClientsList[i].PlayerObject;
+            ulong clientId = connectedClientsOrderedByPoints[i].ClientId;
+            NetworkObject player = connectedClientsOrderedByPoints[i].PlayerObject;
             PlayerData playerData = player.GetComponent<PlayerData>();
             Podium podium = podiums[i];
             
@@ -88,11 +92,16 @@ public class StageController : NetworkBehaviour
                 podiumPromptDisplay.AssignedPrompt.Value = playerData.AssignedPrompt;
             }
 
-            //position player on podium
-            player.GetComponent<PlayerVisuals>().SetPosition(podium.PlayerPosition);
+            var playerVisuals = player.GetComponent<PlayerVisuals>();
             
+            //position player on podium
+            playerVisuals.SetPosition(podium.PlayerPosition);
+            
+            //set player sort order
+            playerVisuals.SetSortOrderClientRpc((uint)i);
+                
             //set player visible
-            player.GetComponent<PlayerVisuals>().isVisible.Value = true;
+            playerVisuals.isVisible.Value = true;
         }
         
         //call initialized event

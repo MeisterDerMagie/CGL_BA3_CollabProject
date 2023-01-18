@@ -37,6 +37,14 @@ public class PlayerVisuals : NetworkBehaviour
         transform.position = newPosition;
     }
 
+    /// <summary>Set the sorting order of characters. Min value: 0, max value: 7 </summary>
+    /// <param name="order">value between 0 (foremost) and 7 (rearmost)</param>
+    [ClientRpc]
+    public void SetSortOrderClientRpc(uint order)
+    {
+        characterImage.sortingOrder -= (int)order;
+    }
+
     private void Update()
     {
         if (_characterIdCached != _playerData.CharacterId)
