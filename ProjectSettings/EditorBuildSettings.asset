@@ -27,9 +27,6 @@ EditorBuildSettings:
     path: Assets/_Project/Scenes/Game_Composition.unity
     guid: 50c24bdef4ed6cc4c8b21a7e497f3c55
   - enabled: 1
-    path: Assets/_Project/Scenes/Game_Stage.unity
-    guid: 7e61499d8b035474d8cc15d7c79b81ac
-  - enabled: 1
     path: Assets/_Project/Scenes/Game_Stage_VoteForCreativity.unity
     guid: 9d88bc7edd9edfb47bf947e9f7eb3299
   - enabled: 1
