@@ -46,6 +46,7 @@ public class AccuracyScoring : MonoBehaviour
         // for every player: add first players note amount * total amount of players, next one less, next one less, etc.
         for (int i = 0; i < playerAmount; i++)
             maxPointsAccuracy += (playerAmount - i) * amountPerPlayer[i];
+        maxPointsAccuracy *= pointForHit;
 
         #endregion
     }
