@@ -8,9 +8,9 @@ public class BeatMapping : MonoBehaviour
     private AccuracyScoring scoring;
 
     public float dispersion;
-    public List<float> compareTo;
+    public List<float> targetTimeStamps;
 
-    public List<ScoringNote> compareToScoring;
+    public List<ScoringNote> targetScoring;
 
     float bpm;
 
@@ -54,13 +54,13 @@ public class BeatMapping : MonoBehaviour
 
     public void PrepareRecording()
     {
-        compareTo = new List<float>();
+        targetTimeStamps = new List<float>();
         for (int i = 0; i < 8 * Constants.RECORDING_LENGTH ; i++)
         {
             // time signature of every eighth in the bar times the amount of bars counted from one bar before
             // so duration of an eighth * which eighth in the bar + duration of a bar
             float time = (60f / bpm / 2f) * i + (60f / bpm * 4f);
-            compareTo.Add(time);
+            targetTimeStamps.Add(time);
         }
 
         // dispersion is the duration of half an eighth
@@ -72,7 +72,7 @@ public class BeatMapping : MonoBehaviour
         for (int i = 0; i < 8 * Constants.RECORDING_LENGTH; i++)
         {
             // compare to the timestamp of the eighth saved +- dispersion value of half the duration of an eighth
-            if (note.timeStamp >= compareTo[i] - dispersion && note.timeStamp < compareTo[i] + dispersion)
+            if (note.timeStamp >= targetTimeStamps[i] - dispersion && note.timeStamp < targetTimeStamps[i] + dispersion)
             {
                 Eighth e = new Eighth();
                 e.contains = true;
@@ -94,7 +94,7 @@ public class BeatMapping : MonoBehaviour
     {
         bpm = _bpm;
 
-        compareToScoring = new List<ScoringNote>();
+        targetScoring = new List<ScoringNote>();
 
         /*
         // go through list of eighths (which are all recordings of all players and write new list of floats with time stamps
@@ -132,12 +132,12 @@ public class BeatMapping : MonoBehaviour
                     note.instrumentID = _list[i].instrumentID;
                     note.playerID = p;
 
-                    compareToScoring.Add(note);
+                    targetScoring.Add(note);
                 }
             }
         }
 
-        scoring.SetUpScoring(compareToScoring, amountPlayers);
+        scoring.SetUpScoring(targetScoring, amountPlayers);
     }
 
     public void ScoreAccuracy(RecordingNote note, bool scorePlayability)
@@ -147,16 +147,16 @@ public class BeatMapping : MonoBehaviour
 
         // MISSING: actually determine if it was hit or miss
 
-        for (int i = 0; i < compareToScoring.Count; i++)
+        for (int i = 0; i < targetScoring.Count; i++)
         {
             // check if it was a hit
             //if (note.timeStamp >= compareTo[i] - dispersion && note.timeStamp < compareTo[i] + dispersion)
-            if (note.timeStamp >= compareToScoring[i].timeStamp - latency - hit && note.timeStamp <= compareToScoring[i].timeStamp - latency + hit)
+            if (note.timeStamp >= targetScoring[i].timeStamp - latency - hit && note.timeStamp <= targetScoring[i].timeStamp - latency + hit)
             {
                 type = ScoringType.HIT;
             }
             // check if it was almost a hit
-            else if (note.timeStamp >= compareToScoring[i].timeStamp - latency - almost && note.timeStamp <= compareToScoring[i].timeStamp - latency + almost)
+            else if (note.timeStamp >= targetScoring[i].timeStamp - latency - almost && note.timeStamp <= targetScoring[i].timeStamp - latency + almost)
             {
                 type = ScoringType.ALMOST;
             }
