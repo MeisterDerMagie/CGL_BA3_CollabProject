@@ -57,7 +57,7 @@ public class Latency : MonoBehaviour
                 _audio.TestSound(0);
 
                 // compare note and save to list
-                SaveNote();
+                SaveNote(time);
             }
         }
     }
@@ -66,6 +66,9 @@ public class Latency : MonoBehaviour
     {
         if (_backingTrack.lastBeat == 1)
             barCounter++;
+
+        if (_backingTrack.lastBeat == 1 && barCounter == 1)
+            time = 0;
 
         if (barCounter == amountOfTestBars + 3)
         {
@@ -78,7 +81,7 @@ public class Latency : MonoBehaviour
 
     void CreateCompareList()
     {
-        float introTime = 60f / bpm * 4f * 2f;
+        float introTime = 60f / bpm * 4f;
         dispersion = 60f / bpm / 2f;
 
         targetTimeStamps = new List<float>();
@@ -96,15 +99,15 @@ public class Latency : MonoBehaviour
         }
     }
 
-    void SaveNote()
+    void SaveNote(float timeStamp)
     {
         // which eighth does it belong to
         for (int i = lastCorrectStamp; i < targetTimeStamps.Count; i++)
         {
-            if (time >= targetTimeStamps[i] - dispersion && time <= targetTimeStamps[i] + dispersion)
+            if (timeStamp >= targetTimeStamps[i] - dispersion && timeStamp <= targetTimeStamps[i] + dispersion)
             {
                 // send over to writer script list
-                _csWriter.AddNewNote(targetTimeStamps[i], time);
+                _csWriter.AddNewNote(targetTimeStamps[i], timeStamp);
 
                 // reset last correct Stamp to this (so we don't go through entire list from beginning
                 lastCorrectStamp = i;

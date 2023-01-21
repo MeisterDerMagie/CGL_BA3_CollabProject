@@ -49,7 +49,7 @@ public class CSWriter : MonoBehaviour
             TextWriter tw = new StreamWriter(fileName, true);
             for (int i = 0; i < testEighths.Count; i++)
             {
-                tw.WriteLine(testEighths[i].targetTime + ";" + testEighths[i].actualTime);
+                tw.WriteLine(testEighths[i].targetTime.ToString() + ";" + testEighths[i].actualTime.ToString());
             }
             tw.Close();
         }
