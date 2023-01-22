@@ -24,7 +24,7 @@ public class Latency : MonoBehaviour
         _csWriter = GetComponent<CSWriter>();
 
         _backingTrack = GetComponentInChildren<BackingTrack>();
-        _backingTrack.beatUpdated += NextBeat;
+        _backingTrack.barUpdated += NextBeat;
 
         _audio = GetComponentInChildren<AudioRoll>();
         _audio.TestSetup();
@@ -41,7 +41,7 @@ public class Latency : MonoBehaviour
 
     private void OnDestroy()
     {
-        _backingTrack.beatUpdated -= NextBeat;
+        _backingTrack.barUpdated -= NextBeat;
     }
 
     // Update is called once per frame
@@ -50,20 +50,19 @@ public class Latency : MonoBehaviour
         if (active)
         {
             time += Time.deltaTime;
-
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                // play audio
-                _audio.TestSound(0);
-
-                // compare note and save to list
-                SaveNote(time);
-            }
         }
     }
 
     void NextBeat()
     {
+        //-----
+        if (active)
+        {
+            _csWriter.timelineTimestamps.Add(time);
+        }
+        //-----
+        
+        
         if (_backingTrack.lastBeat == 1)
             barCounter++;
 
@@ -89,14 +88,11 @@ public class Latency : MonoBehaviour
         // for every bar we want to test
         for (int b = 0; b < amountOfTestBars; b++)
         {
-            // save the time stamp of each quarter note in that bar
-            for (int q = 0; q < 4; q++)
-            {
-                // time stamp is intro time + durationn of a bar * which bar we are in + duration of a quarter note * which quarter note we are in
-                float timeStamp = introTime + (60f / bpm) * 4 * b + (60f / bpm) * q;
-                targetTimeStamps.Add(timeStamp);
-            }
+            float timeStamp = introTime + (60f / bpm) * 4 * b;
+            targetTimeStamps.Add(timeStamp);
         }
+
+        _csWriter.timerTimestamps = targetTimeStamps;
     }
 
     void SaveNote(float timeStamp)
