@@ -6,40 +6,29 @@ public class PlayerInputRR : MonoBehaviour
 {
     public bool active;
     private bool recording;
-    private float timer;
+
     public bool scorePlayability;
+
+    private float startScoring;
 
     [SerializeField] private AudioRoll _audioRoll;
     private BeatMapping _beatMapping;
     private PianoRollTLKoffer _timeline;
+    [SerializeField] private BackingTrack _backingTrack;
 
     [Space]
     [SerializeField] private KeyCode[] keyInputs;
     [SerializeField] private float cooldown = 0.1f;
-
-    float newTimer;
-    List<RecordingNote> inputs;
-    float timeStampLastEighth;
-    Eighth lastEighth;
-    float halfEighthDuration;
 
     void Start()
     {
         _timeline = GetComponentInParent<PianoRollTLKoffer>();
         _beatMapping = GetComponent<BeatMapping>();
 
-        newTimer = 0;
-        timeStampLastEighth = 0;
-        inputs = new List<RecordingNote>();
-
-        halfEighthDuration = 60f /_timeline.bpm / 4;
     }
 
     void Update()
     {
-        timer += Time.deltaTime;
-        newTimer += Time.deltaTime;
-
         if (active)
         {
             for (int i = 0; i < keyInputs.Length; i++)
@@ -58,12 +47,8 @@ public class PlayerInputRR : MonoBehaviour
                         if (_timeline.testLocally) n.soundID = i;
                         else n.soundID = PlayerData.LocalPlayerData.InstrumentIds[i];
 
-                        n.timeStamp = timer;
+                        n.timeStamp = _backingTrack.timeSinceStart - startScoring;
 
-                        if (timer - timeStampLastEighth < halfEighthDuration)
-                        {
-
-                        }
                         _beatMapping.ScoreAccuracy(n, scorePlayability);
                     }
                 }
@@ -121,21 +106,10 @@ public class PlayerInputRR : MonoBehaviour
         else _beatMapping.PrepareAccuracyScoring(bpm, allRecordings, script.sortedPlayers.Count);
     }
 
-    public void NextBeat(Eighth e)
-    {
-        timeStampLastEighth = newTimer;
-
-        if (inputs.Count != 0)
-            for (int i = 0; i < inputs.Count; i++)
-            {
-
-            }
-    }
-
     public void StartRecording()
     {
         recording = true;
-        timer = 0;
+        startScoring = _backingTrack.timeSinceStart;
     }
 
     public void StopRecording()

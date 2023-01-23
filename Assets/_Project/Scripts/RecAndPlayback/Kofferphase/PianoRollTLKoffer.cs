@@ -216,14 +216,6 @@ public class PianoRollTLKoffer : MonoBehaviour
                     _audioRoll.PlayerInputSound(sortedPlayers[currentPlayer].Recording[((currentBar * 8) + _timer.timelineBeat) - 1].instrumentID);
             }
         }
-
-        if (currentStage == KofferStages.RHYTHMREPEAT)
-        {
-            if (testLocally)
-                _playerInput.NextBeat(testPlayers[currentPlayer][((currentBar * 8) + _timer.timelineBeat) - 1]);
-            else _playerInput.NextBeat(sortedPlayers[currentPlayer].Recording[((currentBar * 8) + _timer.timelineBeat) - 1]);
-        }
-        else _playerInput.NextBeat(empty);
     }
 
     void UpdateStage()

@@ -140,15 +140,13 @@ public class BeatMapping : MonoBehaviour
         scoring.SetUpScoring(targetScoring, amountPlayers);
     }
 
-    public void ScoreAccuracy(RecordingNote note, bool scorePlayability)
+    public void ScoreAccuracy(RecordingNote note, bool scorePlayability, int player = 0)
     {
         ScoringType type = ScoringType.MISS;
-        int player = 0;
 
         for (int i = 0; i < targetScoring.Count; i++)
         {
             // check if it was a hit
-            //if (note.timeStamp >= compareTo[i] - dispersion && note.timeStamp < compareTo[i] + dispersion)
             if (note.timeStamp >= targetScoring[i].timeStamp + (latency/1000f) - (hit/1000f) && note.timeStamp <= targetScoring[i].timeStamp + (latency / 1000f) + (hit / 1000f))
             {
                 type = ScoringType.HIT;
@@ -167,30 +165,6 @@ public class BeatMapping : MonoBehaviour
         if (scorePlayability) scoring.ScorePlayability(type, player);
     }
 
-    public void ScoreAccuracyNew(RecordingNote note, float targetTime, bool scorePlayability)
-    {
-        ScoringType type = ScoringType.MISS;
-        int player = 0;
-
-        for (int i = 0; i < targetScoring.Count; i++)
-        {
-            // check if it was a hit
-            if (note.timeStamp >= targetTime + (latency / 1000f) - (hit / 1000f) && note.timeStamp <= targetTime + (latency / 1000f) + (hit / 1000f))
-            {
-                type = ScoringType.HIT;
-            }
-            // check if it was almost a hit
-            else if (note.timeStamp >= targetTime + (latency / 1000f) - (almost / 1000f) && note.timeStamp <= targetTime + (latency / 1000f) + (almost / 1000f))
-            {
-                type = ScoringType.ALMOST;
-            }
-        }
-
-        _type = type; // for testing
-
-        scoring.Score(type);
-        if (scorePlayability) scoring.ScorePlayability(type, player);
-    }
 
 #if UNITY_EDITOR
     private void OnGUI()

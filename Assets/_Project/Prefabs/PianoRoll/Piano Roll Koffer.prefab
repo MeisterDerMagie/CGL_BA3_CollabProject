@@ -516,8 +516,6 @@ MonoBehaviour:
   dispersion: 0
   targetTimeStamps: []
   targetScoring: []
-  hitPercent: 25
-  almostPercent: 45
   hit: 60
   almost: 130
   latency: 15
@@ -537,6 +535,7 @@ MonoBehaviour:
   active: 0
   scorePlayability: 0
   _audioRoll: {fileID: 3516646983549203104}
+  _backingTrack: {fileID: 3516646983549203107}
   keyInputs: 61000000730000006400000066000000
   cooldown: 0.1
 --- !u!114 &7119779634103677370

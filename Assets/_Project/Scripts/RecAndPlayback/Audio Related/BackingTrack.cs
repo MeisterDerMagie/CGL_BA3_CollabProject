@@ -29,6 +29,11 @@ public class BackingTrack : MonoBehaviour
     public int lastBeat = 0;
     public int lastBar = 0;
 
+    public static BackingTrack Singleton;
+
+    public DateTime startTime = DateTime.MinValue;
+    public float timeSinceStart => (float)(DateTime.Now - startTime).TotalSeconds;
+
     [StructLayout(LayoutKind.Sequential)]
     public class TimelineInfo
     {
@@ -43,10 +48,13 @@ public class BackingTrack : MonoBehaviour
         timelineHandle = GCHandle.Alloc(timelineInfo, GCHandleType.Pinned);
         musicInstance.setUserData(GCHandle.ToIntPtr(timelineHandle));
         musicInstance.setCallback(beatCallback, FMOD.Studio.EVENT_CALLBACK_TYPE.TIMELINE_BEAT);
+
+        Singleton = this;
     }
 
     private void Update()
     {
+        /*
         if (lastBeat != timelineInfo.currentBeat)
         {
             lastBeat = timelineInfo.currentBeat;
@@ -62,6 +70,7 @@ public class BackingTrack : MonoBehaviour
             if (barUpdated != null)
                 barUpdated();
         }
+        */
     }
 
     public void StartMusic()
@@ -121,6 +130,24 @@ public class BackingTrack : MonoBehaviour
                         var parameter = (FMOD.Studio.TIMELINE_BEAT_PROPERTIES)Marshal.PtrToStructure(parameterPtr, typeof(FMOD.Studio.TIMELINE_BEAT_PROPERTIES));
                         timelineInfo.currentBeat = parameter.beat;
                         timelineInfo.currentBar = parameter.bar;
+
+                        if (Singleton.startTime == DateTime.MinValue) Singleton.startTime = DateTime.Now;
+
+                        if (Singleton.lastBeat != timelineInfo.currentBeat)
+                        {
+                            Singleton.lastBeat = timelineInfo.currentBeat;
+
+                            if (Singleton.beatUpdated != null)
+                                Singleton.beatUpdated();
+                        }
+
+                        if (Singleton.lastBar != timelineInfo.currentBar)
+                        {
+                            Singleton.lastBar = timelineInfo.currentBar;
+
+                            if (Singleton.barUpdated != null)
+                                Singleton.barUpdated();
+                        }
                     }
                     break;
             }
