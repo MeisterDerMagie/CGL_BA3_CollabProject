@@ -51,6 +51,8 @@ public class PianoRollTLKoffer : MonoBehaviour
     public int testPlayerAmount;
     public bool counterPlayback = true;
 
+    Eighth empty;
+
     void Start()
     {
         // get references to all relevant scripts:
@@ -82,6 +84,10 @@ public class PianoRollTLKoffer : MonoBehaviour
         }
 
         StartCoroutine(WaitForSchubidu());
+
+        empty = new Eighth();
+        empty.contains = false;
+        empty.instrumentID = -1;
     }
 
 
@@ -210,6 +216,14 @@ public class PianoRollTLKoffer : MonoBehaviour
                     _audioRoll.PlayerInputSound(sortedPlayers[currentPlayer].Recording[((currentBar * 8) + _timer.timelineBeat) - 1].instrumentID);
             }
         }
+
+        if (currentStage == KofferStages.RHYTHMREPEAT)
+        {
+            if (testLocally)
+                _playerInput.NextBeat(testPlayers[currentPlayer][((currentBar * 8) + _timer.timelineBeat) - 1]);
+            else _playerInput.NextBeat(sortedPlayers[currentPlayer].Recording[((currentBar * 8) + _timer.timelineBeat) - 1]);
+        }
+        else _playerInput.NextBeat(empty);
     }
 
     void UpdateStage()
