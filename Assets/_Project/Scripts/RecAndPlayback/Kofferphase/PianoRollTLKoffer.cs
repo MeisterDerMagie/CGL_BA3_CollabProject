@@ -199,7 +199,7 @@ public class PianoRollTLKoffer : MonoBehaviour
 
         // if we're amout to start playing the last Player's bar --> start scoring for accuracy
         if (currentStage == KofferStages.RHYTHMREPEAT && _timer.timelineBeat == 8 && currentPlayer == amountPlaybackPlayers - 2)
-            _playerInput.AccuracyStart(bpm);
+            _playerInput.AccuracyStart(bpm, currentPlayer + 1);
 
         // if we're playing back (then we're playing back with audio --> play audio)
         if (currentStage == KofferStages.PLAYBACK)

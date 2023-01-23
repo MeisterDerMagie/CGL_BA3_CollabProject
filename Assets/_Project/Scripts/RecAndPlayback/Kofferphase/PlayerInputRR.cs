@@ -20,6 +20,8 @@ public class PlayerInputRR : MonoBehaviour
     [SerializeField] private KeyCode[] keyInputs;
     [SerializeField] private float cooldown = 0.1f;
 
+    int player;
+
     void Start()
     {
         _timeline = GetComponentInParent<PianoRollTLKoffer>();
@@ -49,7 +51,7 @@ public class PlayerInputRR : MonoBehaviour
 
                         n.timeStamp = _backingTrack.timeSinceStart - startScoring;
 
-                        _beatMapping.ScoreAccuracy(n, scorePlayability);
+                        _beatMapping.ScoreAccuracy(n, scorePlayability, player);
                     }
                 }
             }
@@ -117,7 +119,7 @@ public class PlayerInputRR : MonoBehaviour
         recording = false;
     }
 
-    public void AccuracyStart(float bpm)
+    public void AccuracyStart(float bpm, int player)
     {
         StartCoroutine(StartAccuracy(60f / bpm / 4f));
     }
