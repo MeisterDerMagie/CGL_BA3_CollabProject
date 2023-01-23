@@ -18,15 +18,27 @@ public class PlayerInputRR : MonoBehaviour
 
     bool testLocally;
 
+    float newTimer;
+    List<RecordingNote> inputs;
+    float lastEight;
+    float halfEighthDuration;
+
     void Start()
     {
         _beatMapping = GetComponent<BeatMapping>();
         testLocally = GetComponentInParent<PianoRollTLKoffer>().testLocally;
+
+        newTimer = 0;
+        lastEight = 0;
+        inputs = new List<RecordingNote>();
+
+        halfEighthDuration = 60f / GetComponentInParent<PianoRollTLKoffer>().bpm / 4;
     }
 
     void Update()
     {
         timer += Time.deltaTime;
+        newTimer += Time.deltaTime;
 
         if (active)
         {
@@ -103,6 +115,17 @@ public class PlayerInputRR : MonoBehaviour
         if (script.testLocally)
             _beatMapping.PrepareAccuracyScoring(bpm, allRecordings, script.testPlayerAmount);
         else _beatMapping.PrepareAccuracyScoring(bpm, allRecordings, script.sortedPlayers.Count);
+    }
+
+    public void NextBeat()
+    {
+        lastEight = newTimer;
+
+        if (inputs.Count != 0)
+            for (int i = 0; i < inputs.Count; i++)
+            {
+
+            }
     }
 
     public void StartRecording()

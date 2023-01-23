@@ -33,6 +33,7 @@ public class PianoRollTimer : MonoBehaviour
     private PlaybackVoting _voting;
     private PianoRollTLKoffer _tlKoffer;
     private PianoRollPrevKoffer _prevKoffer;
+    private PlayerInputRR _playerInputRR;
 
 
     void Start()
@@ -59,6 +60,7 @@ public class PianoRollTimer : MonoBehaviour
             case CurrentGameStage.Repeat:
                 _tlKoffer = GetComponent<PianoRollTLKoffer>();
                 _prevKoffer = GetComponent<PianoRollPrevKoffer>();
+                _playerInputRR = GetComponentInChildren<PlayerInputRR>();
                 break;
         }
     }
@@ -124,6 +126,7 @@ public class PianoRollTimer : MonoBehaviour
             case CurrentGameStage.Repeat:
                 _tlKoffer.NextBeat();
                 _prevKoffer.NextBeat();
+                _playerInputRR.NextBeat();
                 break;
         }
     }

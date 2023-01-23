@@ -514,10 +514,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dispersion: 0
-  compareTo: []
-  hit: 0.034
-  almost: 0.103
-  latency: 0
+  targetTimeStamps: []
+  targetScoring: []
+  hitPercent: 25
+  almostPercent: 45
+  hit: 60
+  almost: 130
+  latency: 15
+  _type: 0
 --- !u!114 &8630594058755696320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -547,8 +551,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c092a0198435b304eb61dfb494e40563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pointForHit: 25
+  pointForAlmost: 10
+  pointForMiss: 0
   maxPointsAccuracy: 0
   maxPointsPlayability: []
+  playerPoints: 0
+  playabilityPoints: []
 --- !u!1 &3516646984460612235
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,7 +617,6 @@ MonoBehaviour:
   timelineBeat: 0
   previewBar: 0
   timelineBar: 0
-  resetPrevCounter: 3
   stage: 3
 --- !u!114 &3516646984460612229
 MonoBehaviour:

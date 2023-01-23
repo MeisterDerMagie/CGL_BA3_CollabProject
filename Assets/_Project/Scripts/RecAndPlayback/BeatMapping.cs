@@ -15,13 +15,11 @@ public class BeatMapping : MonoBehaviour
 
     float bpm;
 
-    // dispersion for:
-    [Tooltip("percent of duration of an eighth needed for a hit")]
-    public float hitPercent = 25f;
-    [Tooltip("percent of duration of an eighth needed for an almost")]
-    public float almostPercent = 45f;
+    [Tooltip("dispersion for hit in ms")]
     public float hit = 0.034f;
+    [Tooltip("dispersion for almost in ms")]
     public float almost = 0.103f;
+    [Tooltip("latency in ms")]
     public float latency;
 
     public ScoringType _type;
@@ -147,18 +145,16 @@ public class BeatMapping : MonoBehaviour
         ScoringType type = ScoringType.MISS;
         int player = 0;
 
-        // MISSING: actually determine if it was hit or miss
-
         for (int i = 0; i < targetScoring.Count; i++)
         {
             // check if it was a hit
             //if (note.timeStamp >= compareTo[i] - dispersion && note.timeStamp < compareTo[i] + dispersion)
-            if (note.timeStamp >= targetScoring[i].timeStamp - latency - hit && note.timeStamp <= targetScoring[i].timeStamp - latency + hit)
+            if (note.timeStamp >= targetScoring[i].timeStamp + (latency/1000f) - (hit/1000f) && note.timeStamp <= targetScoring[i].timeStamp + (latency / 1000f) + (hit / 1000f))
             {
                 type = ScoringType.HIT;
             }
             // check if it was almost a hit
-            else if (note.timeStamp >= targetScoring[i].timeStamp - latency - almost && note.timeStamp <= targetScoring[i].timeStamp - latency + almost)
+            else if (note.timeStamp >= targetScoring[i].timeStamp + (latency / 1000f) - (almost / 1000f) && note.timeStamp <= targetScoring[i].timeStamp + (latency / 1000f) + (almost / 1000f))
             {
                 type = ScoringType.ALMOST;
             }
@@ -167,6 +163,31 @@ public class BeatMapping : MonoBehaviour
         _type = type; // for testing
 
         // send over to score accuracy and playability:
+        scoring.Score(type);
+        if (scorePlayability) scoring.ScorePlayability(type, player);
+    }
+
+    public void ScoreAccuracyNew(RecordingNote note, float targetTime, bool scorePlayability)
+    {
+        ScoringType type = ScoringType.MISS;
+        int player = 0;
+
+        for (int i = 0; i < targetScoring.Count; i++)
+        {
+            // check if it was a hit
+            if (note.timeStamp >= targetTime + (latency / 1000f) - (hit / 1000f) && note.timeStamp <= targetTime + (latency / 1000f) + (hit / 1000f))
+            {
+                type = ScoringType.HIT;
+            }
+            // check if it was almost a hit
+            else if (note.timeStamp >= targetTime + (latency / 1000f) - (almost / 1000f) && note.timeStamp <= targetTime + (latency / 1000f) + (almost / 1000f))
+            {
+                type = ScoringType.ALMOST;
+            }
+        }
+
+        _type = type; // for testing
+
         scoring.Score(type);
         if (scorePlayability) scoring.ScorePlayability(type, player);
     }

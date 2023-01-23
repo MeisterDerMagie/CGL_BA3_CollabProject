@@ -2096,14 +2096,6 @@ PrefabInstance:
       propertyPath: events.Array.data[4].Guid.Data4
       value: 1688991779
       objectReference: {fileID: 0}
-    - target: {fileID: 3516646984250982405, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
-      propertyPath: hit
-      value: 0.068
-      objectReference: {fileID: 0}
-    - target: {fileID: 3516646984250982405, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
-      propertyPath: almost
-      value: 0.13
-      objectReference: {fileID: 0}
     - target: {fileID: 4866164918744373566, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
       propertyPath: m_Enabled
       value: 0
