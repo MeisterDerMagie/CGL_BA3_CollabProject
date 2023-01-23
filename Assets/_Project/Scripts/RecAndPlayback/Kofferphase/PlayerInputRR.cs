@@ -14,7 +14,7 @@ public class PlayerInputRR : MonoBehaviour
     [SerializeField] private AudioRoll _audioRoll;
     private BeatMapping _beatMapping;
     private PianoRollTLKoffer _timeline;
-    [SerializeField] private BackingTrack _backingTrack;
+    private BackingTrack _backingTrack;
 
     [Space]
     [SerializeField] private KeyCode[] keyInputs;
@@ -26,6 +26,7 @@ public class PlayerInputRR : MonoBehaviour
     {
         _timeline = GetComponentInParent<PianoRollTLKoffer>();
         _beatMapping = GetComponent<BeatMapping>();
+        _backingTrack = _audioRoll.GetComponent<BackingTrack>();
 
     }
 
