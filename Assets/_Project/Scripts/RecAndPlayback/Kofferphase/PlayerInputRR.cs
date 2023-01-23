@@ -11,28 +11,28 @@ public class PlayerInputRR : MonoBehaviour
 
     [SerializeField] private AudioRoll _audioRoll;
     private BeatMapping _beatMapping;
+    private PianoRollTLKoffer _timeline;
 
     [Space]
     [SerializeField] private KeyCode[] keyInputs;
     [SerializeField] private float cooldown = 0.1f;
 
-    bool testLocally;
-
     float newTimer;
     List<RecordingNote> inputs;
-    float lastEight;
+    float timeStampLastEighth;
+    Eighth lastEighth;
     float halfEighthDuration;
 
     void Start()
     {
+        _timeline = GetComponentInParent<PianoRollTLKoffer>();
         _beatMapping = GetComponent<BeatMapping>();
-        testLocally = GetComponentInParent<PianoRollTLKoffer>().testLocally;
 
         newTimer = 0;
-        lastEight = 0;
+        timeStampLastEighth = 0;
         inputs = new List<RecordingNote>();
 
-        halfEighthDuration = 60f / GetComponentInParent<PianoRollTLKoffer>().bpm / 4;
+        halfEighthDuration = 60f /_timeline.bpm / 4;
     }
 
     void Update()
@@ -55,11 +55,15 @@ public class PlayerInputRR : MonoBehaviour
                     {
                         RecordingNote n = new RecordingNote();
 
-                        if (testLocally) n.soundID = i;
+                        if (_timeline.testLocally) n.soundID = i;
                         else n.soundID = PlayerData.LocalPlayerData.InstrumentIds[i];
 
                         n.timeStamp = timer;
 
+                        if (timer - timeStampLastEighth < halfEighthDuration)
+                        {
+
+                        }
                         _beatMapping.ScoreAccuracy(n, scorePlayability);
                     }
                 }
@@ -117,9 +121,9 @@ public class PlayerInputRR : MonoBehaviour
         else _beatMapping.PrepareAccuracyScoring(bpm, allRecordings, script.sortedPlayers.Count);
     }
 
-    public void NextBeat()
+    public void NextBeat(Eighth e)
     {
-        lastEight = newTimer;
+        timeStampLastEighth = newTimer;
 
         if (inputs.Count != 0)
             for (int i = 0; i < inputs.Count; i++)
