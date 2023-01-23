@@ -8,9 +8,6 @@ public class CSWriter : MonoBehaviour
 {
     string fileName = "";
 
-    public List<float> timelineTimestamps = new List<float>();
-    public List<float> timerTimestamps = new List<float>();
-
     [System.Serializable]
     public class LatencyTestEighth
     {
@@ -41,17 +38,21 @@ public class CSWriter : MonoBehaviour
 
     public void WriteFile()
     {
-        TextWriter tw = new StreamWriter(fileName, true);
-        
-        for (int i = 0; i < timelineTimestamps.Count; i++)
+        if (testEighths.Count > 0)
         {
-            string line = string.Empty;
-            line += i < timerTimestamps.Count ? timerTimestamps[i] + ";" : ";";
-            line += i < timelineTimestamps.Count ? timelineTimestamps[i] : "";
-                
-            tw.WriteLine(line);
+            /*
+            TextWriter tw = new StreamWriter(fileName, false);
+            tw.WriteLine("Target Time, Actual Time");
+            tw.Close();
+            */
+
+            TextWriter tw = new StreamWriter(fileName, true);
+            for (int i = 0; i < testEighths.Count; i++)
+            {
+                tw.WriteLine(testEighths[i].targetTime.ToString() + ";" + testEighths[i].actualTime.ToString());
+            }
+            tw.Close();
         }
-        tw.Close();
         Debug.Log("Saved File To Desktop");
     }
 }
