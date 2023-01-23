@@ -2117,9 +2117,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3917342088663982191, guid: cff43b450958a3b41bedd54ecd1eda11, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3436554045
+      objectReference: {fileID: 0}
     - target: {fileID: 5220558870585210448, guid: cff43b450958a3b41bedd54ecd1eda11, type: 3}
       propertyPath: m_Name
-      value: Players Feedback Leiste
+      value: HitFeedbackBar
       objectReference: {fileID: 0}
     - target: {fileID: 5220558870585210455, guid: cff43b450958a3b41bedd54ecd1eda11, type: 3}
       propertyPath: m_RootOrder
