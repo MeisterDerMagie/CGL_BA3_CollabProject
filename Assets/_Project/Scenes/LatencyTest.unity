@@ -2101,6 +2101,26 @@ PrefabInstance:
       propertyPath: events.Array.data[4].Guid.Data4
       value: 1688991779
       objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203107, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: track.Path
+      value: event:/Music/AngryBirds
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203107, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: track.Guid.Data1
+      value: 182634659
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203107, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: track.Guid.Data2
+      value: 1222372851
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203107, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: track.Guid.Data3
+      value: 734552224
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516646983549203107, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: track.Guid.Data4
+      value: 418547871
+      objectReference: {fileID: 0}
     - target: {fileID: 3516646984250982405, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
       propertyPath: hit
       value: 0.068
@@ -2139,6 +2159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testEighths: []
+  _fileName: LatencyTest - NewFunk
 --- !u!114 &1988122958506871221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2151,7 +2172,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f903c021dbfd594686cbcc9c69d6628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amountOfTestBars: 50
+  bpm: 120
+  amountOfTestBars: 150
   targetTimeStamps: []
 --- !u!1001 &5220558870833070003
 PrefabInstance:

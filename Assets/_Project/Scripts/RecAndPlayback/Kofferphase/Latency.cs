@@ -8,7 +8,7 @@ public class Latency : MonoBehaviour
     BackingTrack _backingTrack;
     AudioRoll _audio;
 
-    float bpm = 110f;
+    [SerializeField] float bpm = 110f;
     [SerializeField] private int amountOfTestBars = 50;
     int barCounter;
     float time;
@@ -77,6 +77,11 @@ public class Latency : MonoBehaviour
             _backingTrack.StopMusic();
             Debug.Log("Done Testing");
         }
+
+        //if (_backingTrack.lastBeat == 1 || _backingTrack.lastBeat == 3 || _backingTrack.lastBeat == 5 || _backingTrack.lastBeat == 7) SaveNote(time);
+        SaveNote(time);
+
+        _audio.TestSound(0);
     }
 
     void CreateCompareList()

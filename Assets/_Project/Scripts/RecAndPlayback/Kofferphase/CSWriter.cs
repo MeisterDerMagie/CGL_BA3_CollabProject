@@ -22,10 +22,11 @@ public class CSWriter : MonoBehaviour
     }
 
     public List<LatencyTestEighth> testEighths;
+    [SerializeField] string _fileName = "LatencyTest";
 
     void Start()
     {
-        fileName = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/LatencyTest.csv";
+        fileName = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/" + _fileName + ".csv";
         testEighths = new List<LatencyTestEighth>();
     }
 
