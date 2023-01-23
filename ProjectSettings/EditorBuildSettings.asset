@@ -6,9 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_Project/Scenes/LatencyTest.unity
-    guid: 29c2bf4deb8683e46a28cced0baa0338
-  - enabled: 1
     path: Assets/_Project/Scenes/Pre-Startup-Screen.unity
     guid: d5703c73727db3c41a90e941ef292be9
   - enabled: 1

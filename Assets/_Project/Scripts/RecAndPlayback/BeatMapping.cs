@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,6 +26,7 @@ public class BeatMapping : MonoBehaviour
 
     public ScoringType _type;
 
+    [Serializable]
     public enum ScoringType
     {
         HIT,
