@@ -140,6 +140,18 @@ public class ReadyCountdown : NetworkBehaviour
         //inform server provider about the started game
         ServerProviderCommunication.Instance.ServerInGame();
         
+        //give players without name a default name
+        foreach (KeyValuePair<ulong,NetworkClient> client in NetworkManager.ConnectedClients)
+        {
+            var playerData = client.Value.PlayerObject.GetComponent<PlayerData>();
+
+            if (!string.IsNullOrWhiteSpace(playerData.PlayerName)) continue;
+            
+            string defaultPlayerName = $"Player {client.Key.ToString()}";
+            playerData.SetPlayerNameServer(defaultPlayerName);
+        }
+        
+        
         //load the next scene to start the game
         StartGame();
     }

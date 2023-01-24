@@ -128,6 +128,7 @@ public class PlayerData : NetworkBehaviour
     {
         //default playerName
         _defaultPlayerName = $"Player {OwnerClientId.ToString()}";
+        //_defaultPlayerName = string.Empty;//$"Player {OwnerClientId.ToString()}";
         
         //load player prefs
         if (!IsLocalPlayer) return;
@@ -153,8 +154,8 @@ public class PlayerData : NetworkBehaviour
             string previousName = PlayerPrefs.GetString("playerName");
             if (previousName == null)
             {
-                _playerNameLocal = _defaultPlayerName;
-                SetPlayerNameServerRpc(_defaultPlayerName);
+                _playerNameLocal = string.Empty;//_defaultPlayerName;
+                SetPlayerNameServerRpc(string.Empty);
             }
             //if the name is longer than 18 characters, it was not the real previous name but was changed in the registry. Set it to something default to avoid bugs.
             else if (previousName.Length > 18) previousName = "Little Hacker";
@@ -165,8 +166,8 @@ public class PlayerData : NetworkBehaviour
         else
         {
             //if there is no previous name in player prefs, create default name ("Player 1")
-            _playerNameLocal = _defaultPlayerName;
-            SetPlayerNameServerRpc(_defaultPlayerName);
+            _playerNameLocal = string.Empty;//_defaultPlayerName;
+            SetPlayerNameServerRpc(string.Empty/*_defaultPlayerName*/);
         }
 
         if (PlayerPrefs.HasKey("characterId"))
@@ -219,7 +220,7 @@ public class PlayerData : NetworkBehaviour
         if (IsLocalPlayer)
         {
             //if the new name is the default player name, remove the entry from player prefs. This prevents old names to be retrieved if the player chose to play with the default name.
-            if (newvalue == _defaultPlayerName)
+            if (newvalue == _defaultPlayerName || string.IsNullOrEmpty(newvalue.Value))
                 PlayerPrefs.DeleteKey("playerName");
             //otherwise, save it to the prefs
             else
@@ -252,8 +253,14 @@ public class PlayerData : NetworkBehaviour
     public void SetPlayerName(string newName)
     {
         _playerNameIsSynced = false;
-        _playerNameLocal = string.IsNullOrWhiteSpace(newName) ? _defaultPlayerName : newName;
+        _playerNameLocal = newName;//string.IsNullOrWhiteSpace(newName) ? _defaultPlayerName : newName;
         SetPlayerNameServerRpc(newName);
+    }
+
+    //Call this on the server!
+    public void SetPlayerNameServer(string newName)
+    {
+        _playerName.Value = newName;
     }
 
     //here we check the name for profanity and then set it (default name if profanity was found)
@@ -263,11 +270,12 @@ public class PlayerData : NetworkBehaviour
         //set the name to something different so that the onChanged event always gets called, even if the name didn't change (we need this in order to update the view correctly on clients)
         _playerName.Value = "DEFAULT_TEXT_SO_THAT_CHANGED_EVENT_GETS_CALLED";
         
-        //if the new value is empty or whitespace, use the default name instead
-        if (string.IsNullOrWhiteSpace(newName))
-            _playerName.Value = _defaultPlayerName;
+        //if the new value is empty or whitespace, use the default name instead (no, we now only check this at the end of the lobby)
+        //if (string.IsNullOrWhiteSpace(newName))
+        //    _playerName.Value = _defaultPlayerName;
+        
         //then check if the name contains profanity. if it does, use the default name. if it doesn't use the new name
-        else
+        //else
             _playerName.Value = ProfanityFilter.Instance.ContainsProfanity(newName) ? _defaultPlayerName :  new FixedString128Bytes(newName);
     }
 
@@ -350,9 +358,6 @@ public class PlayerData : NetworkBehaviour
     public void SetAssignedPrompt(string prompt)
     {
         _assignedPrompt.Value = prompt;
-
-        //-----------DEBUG
-        Debug.Log($"Player {PlayerName} (id: {OwnerClientId.ToString()}) with own prompt \"{Prompt}\" got assigned prompt \"{AssignedPrompt}\".");
     }
 
     public void SetInstruments(List<int> instrumentIds)
