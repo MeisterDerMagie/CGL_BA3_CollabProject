@@ -43,10 +43,13 @@ public class RecordInput : MonoBehaviour
     [HideInInspector] public bool stageEnded;
 
     bool spawnNote;
+    bool active;
+    [SerializeField] float buttonCooldown = 0.1f;
 
     void Start()
     {
         spawnNote = false;
+        active = true;
 
         if (NetworkManager.Singleton.IsServer) return;
 
@@ -93,30 +96,41 @@ public class RecordInput : MonoBehaviour
         // we start the timer once we start counting in, in case the first input is a little before the beginning of the beat
         if (recordingState == RecordingState.COUNTIN || recordingState == RecordingState.REC) timer += Time.deltaTime;
 
-        for (int i = 0; i < keyInputs.Length; i++)
+        if (active)
         {
-            if (Input.GetKeyDown(keyInputs[i]))
+            for (int i = 0; i < keyInputs.Length; i++)
             {
-                // play Sound
-                _audioRoll.PlayerInputSound(i);
-
-                // if recording / count in
-                if (recordingState == RecordingState.REC || recordingState == RecordingState.COUNTIN)
+                if (Input.GetKeyDown(keyInputs[i]))
                 {
-                    // save input to list of time stamps
-                    RecordingNote n = new RecordingNote();
-                    n.soundID = PlayerData.LocalPlayerData.InstrumentIds[i];
-                    n.timeStamp = timer;
-                    recordedTimeStamps.Add(n);
+                    // play Sound
+                    _audioRoll.PlayerInputSound(i);
 
-                    // process input and save to grid
-                    _beatMapping.MapRecording(n);
+                    // if recording / count in
+                    if (recordingState == RecordingState.REC || recordingState == RecordingState.COUNTIN)
+                    {
+                        // save input to list of time stamps
+                        RecordingNote n = new RecordingNote();
+                        n.soundID = PlayerData.LocalPlayerData.InstrumentIds[i];
+                        n.timeStamp = timer;
+                        recordedTimeStamps.Add(n);
 
-                    // spawn note on piano roll
-                    if (spawnNote) _spawner.SpawnNoteAtLocationMarker(i, _pianoRoll.bpm);
+                        // process input and save to grid
+                        _beatMapping.MapRecording(n);
+
+                        // spawn note on piano roll
+                        if (spawnNote) _spawner.SpawnNoteAtLocationMarker(i, _pianoRoll.bpm);
+                    }
+                    StartCoroutine(ButtonCooldown());
                 }
             }
         }
+    }
+
+    IEnumerator ButtonCooldown()
+    {
+        active = false;
+        yield return new WaitForSeconds(buttonCooldown);
+        active = true;
     }
 
     public void RecordButton()
