@@ -298,7 +298,7 @@ public class PianoRollTLKoffer : MonoBehaviour
                     if (currentPlayer >= amountPlaybackPlayers)
                     {
                         // check if amount of Playback players is greater than total amount of players in scene
-                        if ((amountPlaybackPlayers >= testPlayers.Count && testLocally) || (!testLocally && amountPlaybackPlayers >= sortedPlayers.Count))
+                        if ((testLocally && amountPlaybackPlayers >= testPlayers.Count) || (!testLocally && amountPlaybackPlayers >= sortedPlayers.Count))
                         {
                             #region GO TO END
                             // if so, leave the rhythm section
