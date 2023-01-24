@@ -5,64 +5,64 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/_Project/Scenes/Pre-Startup-Screen.unity
     guid: d5703c73727db3c41a90e941ef292be9
-  - enabled: 0
+  - enabled: 1
     path: Assets/_Project/Scenes/Startup.unity
     guid: e61179c21df1a624f9b7420e0503b670
-  - enabled: 0
+  - enabled: 1
     path: Assets/_Project/Scenes/MainMenu.unity
     guid: c928ab2557234a64cbc0fcf6cde8666b
-  - enabled: 0
+  - enabled: 1
     path: Assets/_Project/Scenes/Lobby.unity
     guid: 5272a0cd8dd8fbf42bd4bd98ed166f49
-  - enabled: 0
+  - enabled: 1
     path: Assets/_Project/Scenes/Game_PromptInput.unity
     guid: 063a4e4689a19474cb76cf23be0dbbdc
-  - enabled: 0
+  - enabled: 1
     path: Assets/_Project/Scenes/Game_AssignPromptAndInstruments.unity
     guid: b71d04baa6bb92940b9bcf22b42234be
-  - enabled: 0
+  - enabled: 1
     path: Assets/_Project/Scenes/Game_Composition.unity
     guid: 50c24bdef4ed6cc4c8b21a7e497f3c55
-  - enabled: 0
+  - enabled: 1
     path: Assets/_Project/Scenes/Game_Stage_VoteForCreativity.unity
     guid: 9d88bc7edd9edfb47bf947e9f7eb3299
-  - enabled: 0
+  - enabled: 1
     path: Assets/_Project/Scenes/Game_Recording.unity
     guid: 0338a2c1689715f4db8f333074ee3122
-  - enabled: 0
+  - enabled: 1
     path: Assets/_Project/Scenes/Game_Scores-1.unity
     guid: 3b2991003c4c0a843b877afadde72c9d
   - enabled: 1
     path: Assets/_Project/Scenes/Game_KofferPacken.unity
     guid: 5d07341d21781a748ac88f02c9c5e995
-  - enabled: 0
+  - enabled: 1
     path: Assets/_Project/Scenes/Game_Playback.unity
     guid: 56b8800ad603a004db8ffa02248daf14
-  - enabled: 0
+  - enabled: 1
     path: Assets/_Project/Scenes/Schubidu_1.unity
     guid: 01794b5f7346b3448b830a16bb1bb84e
-  - enabled: 0
+  - enabled: 1
     path: Assets/_Project/Scenes/Schubidu_2.unity
     guid: bf2e1c0c802286149911eef3b61d8dcc
-  - enabled: 0
+  - enabled: 1
     path: Assets/_Project/Scenes/Schubidu_3.unity
     guid: a1594c6ef8494504f9c06cc29dac25ab
-  - enabled: 0
+  - enabled: 1
     path: Assets/_Project/Scenes/Schubidu_4.unity
     guid: db6566c49eff92f49ab6a965e9c4a942
-  - enabled: 0
+  - enabled: 1
     path: Assets/_Project/Scenes/Schubidu_5.unity
     guid: 0165ce1483e35a948b4d4d6989df6208
-  - enabled: 0
+  - enabled: 1
     path: Assets/_Project/Scenes/Schubidu_6.unity
     guid: 0d81f7ea7f293d640bba1df2fa1672d0
-  - enabled: 0
+  - enabled: 1
     path: Assets/_Project/Scenes/Game_Jury.unity
     guid: c5968bd71ead95c439cbd748fec8ef53
-  - enabled: 0
+  - enabled: 1
     path: Assets/_Project/Scenes/Game_Winners.unity
     guid: 8b316690ed06f8a459567fcbbd50ad9f
   m_configObjects: {}
