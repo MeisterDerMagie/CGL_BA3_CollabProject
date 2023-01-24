@@ -25,7 +25,7 @@ public class KofferUI : MonoBehaviour
         countInText.gameObject.SetActive(true);
         countInText.text = "";
 
-        //_charDisplay.SetCharacterDisplay("", PlayerData.LocalPlayerData.PlayerName, CharacterManager.Instance.GetCharacter(PlayerData.LocalPlayerData.CharacterId).characterImage);
+        _charDisplay.SetCharacterDisplay("", PlayerData.LocalPlayerData.PlayerName, CharacterManager.Instance.GetCharacter(PlayerData.LocalPlayerData.CharacterId).characterImage);
 
         TurnOnLight(false);
 

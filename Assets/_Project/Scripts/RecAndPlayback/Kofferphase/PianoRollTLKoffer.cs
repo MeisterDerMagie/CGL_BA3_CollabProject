@@ -188,13 +188,6 @@ public class PianoRollTLKoffer : MonoBehaviour
             else if (_timer.timelineBeat == 3) _ui.CountInText("3");
             else if (_timer.timelineBeat == 5) _ui.CountInText("2");
             else if (_timer.timelineBeat == 7) _ui.CountInText("1");
-
-            // if in count in to rr dann feedback anmachen + start recording
-            if (currentStage == KofferStages.COUNTINRR)
-            {
-                //_playerInput.StartRecording();
-                // MISSING: feedback anmachen (oder ist evtl über start rec schon gelöst)
-            }
         }
 
         // if we're amout to start playing the last Player's bar --> start scoring for accuracy

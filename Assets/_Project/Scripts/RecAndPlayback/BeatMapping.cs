@@ -7,6 +7,7 @@ public class BeatMapping : MonoBehaviour
 {
     private RecordInput _recordInput;
     private AccuracyScoring scoring;
+    [SerializeField] private HitFeedback hitFeedback;
 
     public float dispersion;
     public List<float> targetTimeStamps;
@@ -167,7 +168,8 @@ public class BeatMapping : MonoBehaviour
             }
         }
 
-        _type = type; // for testing
+        //_type = type; // for testing
+        hitFeedback.SendHitFeedback(type);
 
         // send over to score accuracy and playability:
         scoring.Score(type);
@@ -225,7 +227,7 @@ public class BeatMapping : MonoBehaviour
 #if UNITY_EDITOR
     private void OnGUI()
     {
-        GUILayout.Box($"last beat was a {_type}, current accuracy amount is {scoring.playerPoints}");
+        //GUILayout.Box($"last beat was a {_type}, current accuracy amount is {scoring.playerPoints}");
     }
 #endif
 }
