@@ -1922,7 +1922,7 @@ PrefabInstance:
       objectReference: {fileID: 1071365773}
     - target: {fileID: 2623974932172434105, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
       propertyPath: testLocally
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2623974932172434105, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
       propertyPath: counterPlayback
@@ -2098,7 +2098,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4866164918744373566, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
