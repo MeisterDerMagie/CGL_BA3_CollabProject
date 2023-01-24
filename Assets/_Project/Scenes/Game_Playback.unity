@@ -1055,6 +1055,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextScene: {fileID: 11400000, guid: 2ee995e988076f94db4a10fe5f2093ce, type: 2}
+  loadDelay: 1
 --- !u!1 &1405309696
 GameObject:
   m_ObjectHideFlags: 0
