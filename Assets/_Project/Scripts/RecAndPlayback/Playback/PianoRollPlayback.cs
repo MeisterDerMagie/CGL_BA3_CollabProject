@@ -212,8 +212,8 @@ public class PianoRollPlayback : NetworkBehaviour
         // play audio
         if (timelineStage == PlaybackStage.PLAYING)
             if (recordings[timelinePlayer][timelineBar][_timer.timelineBeat - 1].contains)
-                _audioRoll.PlaySound(recordings[timelinePlayer][timelineBar][_timer.timelineBeat - 1].instrumentID);
-
+                _audioRoll.PlayerInputSound(PlayerData.LocalPlayerData.InstrumentIds.IndexOf(recordings[timelinePlayer][timelineBar][_timer.timelineBeat - 1].instrumentID));
+        
         /*
         // update display
         if (previewStage == PlaybackStage.PLAYING)

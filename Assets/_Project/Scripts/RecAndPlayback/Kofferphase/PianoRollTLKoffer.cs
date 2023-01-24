@@ -207,8 +207,6 @@ public class PianoRollTLKoffer : MonoBehaviour
             {
                 if (sortedPlayers[currentPlayer].Recording[((currentBar * 8) + _timer.timelineBeat) - 1].contains)
                     _audioRoll.PlayerInputSound(PlayerData.LocalPlayerData.InstrumentIds.IndexOf(sortedPlayers[currentPlayer].Recording[((currentBar * 8) + _timer.timelineBeat) - 1].instrumentID));
-
-                // _audioRoll.PlayerInputSound(PlayerData.LocalPlayerData.InstrumentIds.IndexOf(recording[timer][_timer.timelineBeat - 1].instrumentID));
             }
         }
     }
@@ -309,7 +307,7 @@ public class PianoRollTLKoffer : MonoBehaviour
                             _ui.PromptText("We're done now, matey!");
                             _ui.Schubidu(9);
 
-                            GetComponentInChildren<AccuracyScoring>().SendToServer();
+                            GetComponentInChildren<AccuracyScoring>().SendToServer(testLocally);
                             #endregion
 
                         }
