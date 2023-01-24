@@ -139,12 +139,14 @@ public class BeatMapping : MonoBehaviour
 
         scoring.SetUpScoring(targetScoring, amountPlayers);
 
+        /*
         List<float> testBars = new List<float>();
         for (int i = 0; i < targetScoring.Count; i++)
         {
             testBars.Add(targetScoring[i].timeStamp);
         }
         GetComponent<CSWriterKoffer>().WriteTestBars(testBars);
+        */
     }
 
     public void ScoreAccuracy(RecordingNote note, bool scorePlayability, int player = 0)

@@ -133,8 +133,10 @@ public class PianoRollTimer : MonoBehaviour
         }
 
         // for latency scoring:
+        /*
         eighth++;
         float targetDate = 0 + eighth * ((60f / 110f) / 2f);
         if (csWriter != null) csWriter.AddNewFmod(targetDate, targetDate, _backingTrack.timeSinceStart, _backingTrack.timeSinceStartUnity);
+        */
     }
 }

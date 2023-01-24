@@ -35,19 +35,18 @@ public class PlayerInputRR : MonoBehaviour
     {
         if (active)
         {
-            /*
             for (int i = 0; i < keyInputs.Length; i++)
             {
                 if (Input.GetKeyDown(keyInputs[i]))
                 {
                     // play Sound
-                    //_audioRoll.PlayerInputSound(i);
-                    _audioRoll.TestSound(i);
+                    if (_timeline.testLocally) _audioRoll.TestSound(i);
+                    else _audioRoll.PlayerInputSound(i);
+
                     StartCoroutine(ButtonCoolDown());
 
                     if (recording)
                     {
-                        /*
                         RecordingNote n = new RecordingNote();
 
                         if (_timeline.testLocally) n.soundID = i;
@@ -56,18 +55,17 @@ public class PlayerInputRR : MonoBehaviour
                         n.timeStamp = _backingTrack.timeSinceStart - startScoringDate;
 
                         _beatMapping.ScoreAccuracy(n, scorePlayability, player);
-
-                        _beatMapping.LatencyTestScoring(_backingTrack.timeSinceStart - startScoringDate, _backingTrack.timeSinceStartUnity - startScoringUnity);
                     }
                 }
             }
-            */
+            /*
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 _audioRoll.TestSound(0);
                 StartCoroutine(ButtonCoolDown());
                 if(recording) _beatMapping.LatencyTestScoring(_backingTrack.timeSinceStart - startScoringDate, _backingTrack.timeSinceStartUnity - startScoringUnity);
             }
+            */
         }
     }
 
