@@ -57,6 +57,7 @@ public class CSWriterKoffer : MonoBehaviour
     private void OnDestroy()
     {
         WriteFile();
+        WriteFmodFile();
     }
 
     public void WriteFile()
@@ -67,6 +68,7 @@ public class CSWriterKoffer : MonoBehaviour
             tw.WriteLine("Target Time Date; Target Time Unity; Is Time Input Date; Is Time Input Unity; Score Date; Score Unity");
             tw.Close();
 
+            tw = new StreamWriter(fileName, true);
             for (int i = 0; i < testNotes.Count; i++)
             {
                 tw.WriteLine(testNotes[i].targetDate.ToString() + ";" + testNotes[i].targetUnity.ToString() + ";" +
@@ -82,10 +84,11 @@ public class CSWriterKoffer : MonoBehaviour
     {
         if (testFmod.Count > 0)
         {
-            TextWriter tw = new StreamWriter(fileFmodName, true);
+            TextWriter tw = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/" + fileFmodName + ".csv", true);
             tw.WriteLine("Target Time Date; Target Time Unity; Is Time Fmod Date; Is Time Fmod Unity");
             tw.Close();
 
+            tw = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/" + fileFmodName + ".csv", true);
             for (int i = 0; i <testFmod.Count; i++)
             {
                 tw.WriteLine(testFmod[i].targetDate.ToString() + ";" + testFmod[i].targetUnity.ToString() + ";" +
@@ -93,5 +96,15 @@ public class CSWriterKoffer : MonoBehaviour
             }
             tw.Close();
         }
+    }
+
+    public void WriteTestBars(List<float> testEighths)
+    {
+        TextWriter tw = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/" + "TestBars" + ".csv", true);
+        for (int i = 0; i < testEighths.Count; i++)
+        {
+            tw.WriteLine(testEighths[i].ToString());
+        }
+        tw.Close();
     }
 }

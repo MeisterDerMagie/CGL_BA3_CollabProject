@@ -35,6 +35,7 @@ public class PlayerInputRR : MonoBehaviour
     {
         if (active)
         {
+            /*
             for (int i = 0; i < keyInputs.Length; i++)
             {
                 if (Input.GetKeyDown(keyInputs[i]))
@@ -55,11 +56,17 @@ public class PlayerInputRR : MonoBehaviour
                         n.timeStamp = _backingTrack.timeSinceStart - startScoringDate;
 
                         _beatMapping.ScoreAccuracy(n, scorePlayability, player);
-                        */
 
                         _beatMapping.LatencyTestScoring(_backingTrack.timeSinceStart - startScoringDate, _backingTrack.timeSinceStartUnity - startScoringUnity);
                     }
                 }
+            }
+            */
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                _audioRoll.TestSound(0);
+                StartCoroutine(ButtonCoolDown());
+                if(recording) _beatMapping.LatencyTestScoring(_backingTrack.timeSinceStart - startScoringDate, _backingTrack.timeSinceStartUnity - startScoringUnity);
             }
         }
     }
@@ -110,8 +117,8 @@ public class PlayerInputRR : MonoBehaviour
         // tell beatmapping script to write compare to bars
         if (_beatMapping == null) _beatMapping = GetComponent<BeatMapping>();
         if (script.testLocally)
-            _beatMapping.PrepareAccuracyScoring(bpm, allRecordings, script.testPlayerAmount);
-        else _beatMapping.PrepareAccuracyScoring(bpm, allRecordings, script.sortedPlayers.Count);
+            _beatMapping.PrepareAccuracyScoring(bpm, allRecordings, script.testPlayerAmount, _timeline.countInToRhythmRepeat);
+        else _beatMapping.PrepareAccuracyScoring(bpm, allRecordings, script.sortedPlayers.Count, _timeline.countInToRhythmRepeat);
     }
 
     public void StartRecording()

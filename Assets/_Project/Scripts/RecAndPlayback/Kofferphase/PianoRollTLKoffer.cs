@@ -192,7 +192,7 @@ public class PianoRollTLKoffer : MonoBehaviour
             // if in count in to rr dann feedback anmachen + start recording
             if (currentStage == KofferStages.COUNTINRR)
             {
-                _playerInput.StartRecording();
+                //_playerInput.StartRecording();
                 // MISSING: feedback anmachen (oder ist evtl über start rec schon gelöst)
             }
         }
@@ -254,6 +254,7 @@ public class PianoRollTLKoffer : MonoBehaviour
 
                     // set player input active when going into the count in to rhythm repeat
                     SetPlayerInput(true);
+                    _playerInput.StartRecording();
                     _ui.RecFrame(true);
                     _ui.TurnOnLight(false);
                     if (amountPlaybackPlayers == 1) _playerInput.scorePlayability = true;

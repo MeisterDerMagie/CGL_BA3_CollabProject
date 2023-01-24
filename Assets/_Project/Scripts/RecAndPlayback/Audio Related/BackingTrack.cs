@@ -34,7 +34,7 @@ public class BackingTrack : MonoBehaviour
     public DateTime startTime = DateTime.MinValue;
     public float startUnity = -1f;
     public float timeSinceStart => (float)(DateTime.Now - startTime).TotalSeconds;
-    public float timeSinceStartUnity => startUnity - Time.time;
+    public float timeSinceStartUnity => Time.time - startUnity;
 
     [StructLayout(LayoutKind.Sequential)]
     public class TimelineInfo

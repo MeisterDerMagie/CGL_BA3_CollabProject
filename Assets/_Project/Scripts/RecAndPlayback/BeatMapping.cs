@@ -90,7 +90,7 @@ public class BeatMapping : MonoBehaviour
         }
     }
 
-    public void PrepareAccuracyScoring(float _bpm, List<Eighth> _list, int amountPlayers)
+    public void PrepareAccuracyScoring(float _bpm, List<Eighth> _list, int amountPlayers, int countIn)
     {
         bpm = _bpm;
 
@@ -128,7 +128,7 @@ public class BeatMapping : MonoBehaviour
                     // timestamp of eighth is: duration of a bar (because timer starts 1 bar before first eighth) = 60/bpm is duration of a quarter note, times 4 is duration of a bar
                     // PLUS duration of a bar * which player it is * recording length
                     // PLUS eighth times duration of an eighth = 60 / bpm / 2
-                    note.timeStamp = ((60f / bpm) * 4f) + p * ((60f / bpm) * 4f) * Constants.RECORDING_LENGTH + i * ((60f / bpm) / 2f);
+                    note.timeStamp = countIn * ((60f / bpm) * 4f) + p * ((60f / bpm) * 4f) * Constants.RECORDING_LENGTH + i * ((60f / bpm) / 2f);
                     note.instrumentID = _list[i].instrumentID;
                     note.playerID = p;
 
@@ -138,6 +138,13 @@ public class BeatMapping : MonoBehaviour
         }
 
         scoring.SetUpScoring(targetScoring, amountPlayers);
+
+        List<float> testBars = new List<float>();
+        for (int i = 0; i < targetScoring.Count; i++)
+        {
+            testBars.Add(targetScoring[i].timeStamp);
+        }
+        GetComponent<CSWriterKoffer>().WriteTestBars(testBars);
     }
 
     public void ScoreAccuracy(RecordingNote note, bool scorePlayability, int player = 0)
@@ -179,13 +186,14 @@ public class BeatMapping : MonoBehaviour
             if (isTimeDate >= targetScoring[i].timeStamp + (latency / 1000f) - (hit / 1000f) && isTimeDate <= targetScoring[i].timeStamp + (latency / 1000f) + (hit / 1000f))
             {
                 typeDate = ScoringType.HIT;
+                targetTimeDate = targetScoring[i].timeStamp;
             }
             // check if it was almost a hit
             else if (isTimeDate >= targetScoring[i].timeStamp + (latency / 1000f) - (almost / 1000f) && isTimeDate <= targetScoring[i].timeStamp + (latency / 1000f) + (almost / 1000f))
             {
                 typeDate = ScoringType.ALMOST;
+                targetTimeDate = targetScoring[i].timeStamp;
             }
-            targetTimeDate = targetScoring[i].timeStamp;
         }
 
         // unity wert checken
@@ -195,17 +203,20 @@ public class BeatMapping : MonoBehaviour
             if (isTimeUnity >= targetScoring[i].timeStamp + (latency / 1000f) - (hit / 1000f) && isTimeUnity <= targetScoring[i].timeStamp + (latency / 1000f) + (hit / 1000f))
             {
                 typeUnity = ScoringType.HIT;
+                targetTimeUnity = targetScoring[i].timeStamp;
             }
             // check if it was almost a hit
             else if (isTimeUnity >= targetScoring[i].timeStamp + (latency / 1000f) - (almost / 1000f) && isTimeUnity <= targetScoring[i].timeStamp + (latency / 1000f) + (almost / 1000f))
             {
                 typeUnity = ScoringType.ALMOST;
+                targetTimeUnity = targetScoring[i].timeStamp;
             }
-            targetTimeUnity = targetScoring[i].timeStamp;
         }
 
-        GetComponent<CSWriterKoffer>().AddNewNote(targetTimeDate, targetTimeUnity, isTimeDate, isTimeUnity, typeDate.ToString(), typeUnity.ToString());
+        _type = typeDate;
+        scoring.Score(_type);
 
+        GetComponent<CSWriterKoffer>().AddNewNote(targetTimeDate, targetTimeUnity, isTimeDate, isTimeUnity, typeDate.ToString(), typeUnity.ToString());
     }
 
 
