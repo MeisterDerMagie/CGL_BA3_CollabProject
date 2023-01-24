@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AccuracyScoring : MonoBehaviour
 {
+    [SerializeField] private LoadNextSceneWhenAllClientsAreDone _loadNext;
+
     [SerializeField] float pointForHit = 25f;
     [SerializeField] float pointForAlmost = 10f;
     [SerializeField] float pointForMiss = 0f;
@@ -15,7 +17,7 @@ public class AccuracyScoring : MonoBehaviour
     public float playerPoints;
     public List<float> playabilityPoints;
 
-    public void SetUpScoring(List<BeatMapping.ScoringNote> notes, int playerAmount)
+    public void SetUpScoringLocal(List<BeatMapping.ScoringNote> notes, int playerAmount)
     {
         maxPointsPlayability = new List<float>();
         playabilityPoints = new List<float>();
@@ -49,6 +51,31 @@ public class AccuracyScoring : MonoBehaviour
         maxPointsAccuracy *= pointForHit;
 
         #endregion
+    }
+
+    public void SetUpScoringNetwork(List<PlayerData> players)
+    {
+        maxPointsPlayability = new List<float>();
+        playabilityPoints = new List<float>();
+
+        // for every player
+        for (int i = 0; i < players.Count; i++)
+        {
+            int amount = 0;
+
+            // create a 0 for playability points
+            playabilityPoints.Add(0);
+
+            // go through every player's recording, count how many notes contain
+            for (int note = 0; note < players[i].Recording.Count; note++)
+                if (players[i].Recording[note].contains) amount++;
+
+            // add playability points for that player
+            maxPointsPlayability.Add(amount * pointForHit);
+
+            // add to maxpoints accuracy the amount of that player
+            maxPointsAccuracy += amount * pointForHit;
+        }
     }
 
     public void Score(BeatMapping.ScoringType type)
@@ -88,22 +115,32 @@ public class AccuracyScoring : MonoBehaviour
 
     public void SendToServer(bool testLocally)
     {
+        if (Unity.Netcode.NetworkManager.Singleton.IsServer) return;
+
         // prozentsatz für local player accuracy ermitteln
-        float accuracyPercent = (playerPoints * 100) / maxPointsAccuracy;
+        float accuracyPercent = (playerPoints) / maxPointsAccuracy;
         if (testLocally) Debug.Log("players accuracy was: " + accuracyPercent);
 
         // prozentsatz für alle spieler playability ermitteln
         List<float> playabilityPercent = new List<float>();
         for (int i = 0; i < maxPointsPlayability.Count; i++)
         {
-            float playability = (playabilityPoints[i] * 100) / maxPointsPlayability[i];
+            float playability = (playabilityPoints[i]) / maxPointsPlayability[i];
             if (testLocally) Debug.Log($"Playability for player {i + 1} was {playability}");
         }
 
         if (!testLocally)
         {
             // send to server
-            // make player ready for next stage
+            PlayerData.LocalPlayerData.AddPointsPerformancePercent(accuracyPercent);
+
+            for (int i = 0; i < playabilityPercent.Count; i++)
+            {
+
+            }
+
+            // send player to next stage
+            _loadNext.Done();
         }
     }
 }

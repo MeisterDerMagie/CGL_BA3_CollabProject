@@ -97,25 +97,6 @@ public class BeatMapping : MonoBehaviour
 
         targetScoring = new List<ScoringNote>();
 
-        /*
-        // go through list of eighths (which are all recordings of all players and write new list of floats with time stamps
-        for (int i = 0; i < _list.Count; i++)
-        {
-            // for every eighth that contains a note, add to compare to list
-            if (_list[i].contains)
-            {
-                ScoringNote note = new ScoringNote();
-
-                // timestamp of eighth is: duration of a bar (because timer starts 1 bar before first eighth) PLUS eighth times duration of an eighth
-                // duration of a bar: 60/bpm is duration of a quarter note, times 4 is duration of a bar
-                // duration of an eighth is 60 / bpm / 2
-                note.timeStamp = ((60f / bpm) * 4f) + i * ((60f / bpm) / 2f);
-                note.instrumentID = _list[i].instrumentID;
-                //note.playerID = 
-            }
-        }
-        */
-
         // for every player in our game
         for (int p = 0; p < amountPlayers; p++)
         {
@@ -138,7 +119,7 @@ public class BeatMapping : MonoBehaviour
             }
         }
 
-        scoring.SetUpScoring(targetScoring, amountPlayers);
+        scoring.SetUpScoringLocal(targetScoring, amountPlayers);
 
         /*
         List<float> testBars = new List<float>();
@@ -148,6 +129,11 @@ public class BeatMapping : MonoBehaviour
         }
         GetComponent<CSWriterKoffer>().WriteTestBars(testBars);
         */
+    }
+
+    public void PrepareAccuracyScoringNetwork(float _bpm, List<PlayerData> _list, int countIn)
+    {
+        scoring.SetUpScoringNetwork(_list);
     }
 
     public void ScoreAccuracy(RecordingNote note, bool scorePlayability, int player = 0)

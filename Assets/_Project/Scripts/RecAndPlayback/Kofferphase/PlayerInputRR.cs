@@ -80,22 +80,11 @@ public class PlayerInputRR : MonoBehaviour
     {
         // convert player data info into a list of eighth for beat mapping:
         List<Eighth> allRecordings = new List<Eighth>();
+        // tell beatmapping script to write compare to bars
+        if (_beatMapping == null) _beatMapping = GetComponent<BeatMapping>();
 
         if (!script.testLocally)
-        {
-            foreach (PlayerData player in script.sortedPlayers)
-            {
-                for (int i = 0; i < player.Recording.Count; i++)
-                {
-                    Eighth e = new Eighth();
-
-                    e.contains = player.Recording[i].contains;
-                    e.instrumentID = player.Recording[i].instrumentID;
-
-                    allRecordings.Add(e);
-                }
-            }
-        }
+            _beatMapping.PrepareAccuracyScoringNetwork(bpm, script.sortedPlayers, _timeline.countInToRhythmRepeat);
         else
         {
             foreach (List<Eighth> list in script.testPlayers)
@@ -110,13 +99,8 @@ public class PlayerInputRR : MonoBehaviour
                     allRecordings.Add(e);
                 }
             }
-        }
-
-        // tell beatmapping script to write compare to bars
-        if (_beatMapping == null) _beatMapping = GetComponent<BeatMapping>();
-        if (script.testLocally)
             _beatMapping.PrepareAccuracyScoring(bpm, allRecordings, script.testPlayerAmount, _timeline.countInToRhythmRepeat);
-        else _beatMapping.PrepareAccuracyScoring(bpm, allRecordings, script.sortedPlayers.Count, _timeline.countInToRhythmRepeat);
+        }
     }
 
     public void StartRecording()
