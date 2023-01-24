@@ -382,6 +382,7 @@ MonoBehaviour:
     Path: event:/Music/Funk
   lastBeat: 0
   lastBar: 0
+  startUnity: -1
 --- !u!1 &3516646983735807525
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,9 +517,9 @@ MonoBehaviour:
   dispersion: 0
   targetTimeStamps: []
   targetScoring: []
-  hit: 60
-  almost: 130
-  latency: 15
+  hit: 30
+  almost: 90
+  latency: 0
   _type: 0
 --- !u!114 &8630594058755696320
 MonoBehaviour:
@@ -535,7 +536,6 @@ MonoBehaviour:
   active: 0
   scorePlayability: 0
   _audioRoll: {fileID: 3516646983549203104}
-  _backingTrack: {fileID: 3516646983549203107}
   keyInputs: 61000000730000006400000066000000
   cooldown: 0.1
 --- !u!114 &7119779634103677370
@@ -617,6 +617,7 @@ MonoBehaviour:
   previewBar: 0
   timelineBar: 0
   stage: 3
+  csWriter: {fileID: 0}
 --- !u!114 &3516646984460612229
 MonoBehaviour:
   m_ObjectHideFlags: 0

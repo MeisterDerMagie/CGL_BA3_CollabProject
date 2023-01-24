@@ -1930,7 +1930,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2623974932172434105, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
       propertyPath: testPlayerAmount
-      value: 4
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2623974932172434105, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
       propertyPath: countInToPlayback
