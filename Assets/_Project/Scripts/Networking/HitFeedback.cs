@@ -65,7 +65,7 @@ public class HitFeedback : NetworkBehaviour
         SendHitFeedbackServerRpc(NetworkManager.LocalClientId, scoringType);
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     private void SendHitFeedbackServerRpc(ulong clientId, BeatMapping.ScoringType scoringType)
     {
         BroadcastFeedbackClientRpc(_clientIdCharacterIdMap[clientId], scoringType);

@@ -218,6 +218,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: HitFeedbackIcon_Player_0
       objectReference: {fileID: 0}
+    - target: {fileID: 9153676861892693591, guid: 11e54723c2f6f6a479a110f05f3384d2, type: 3}
+      propertyPath: missFeedback.state.isLooping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9153676861892693591, guid: 11e54723c2f6f6a479a110f05f3384d2, type: 3}
+      propertyPath: almostFeedback.state.isLooping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9153676861892693591, guid: 11e54723c2f6f6a479a110f05f3384d2, type: 3}
+      propertyPath: missFeedback.state.stateLayerIndex
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9153676861892693591, guid: 11e54723c2f6f6a479a110f05f3384d2, type: 3}
+      propertyPath: almostFeedback.state.stateLayerIndex
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11e54723c2f6f6a479a110f05f3384d2, type: 3}
 --- !u!4 &256405762739561604 stripped
