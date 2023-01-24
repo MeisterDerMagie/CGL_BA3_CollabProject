@@ -89,6 +89,8 @@ public class PianoRollTimer : MonoBehaviour
     // called from FMOD events via BackingTrack script
     void NextBeat()
     {
+        if (Unity.Netcode.NetworkManager.Singleton.IsServer) return;
+
         timelineBeat = _backingTrack.lastBeat;
 
             if (timelineBeat == 1)
