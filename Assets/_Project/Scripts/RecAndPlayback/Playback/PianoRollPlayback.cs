@@ -46,7 +46,7 @@ public class PianoRollPlayback : NetworkBehaviour
     int previewPlayer;
 
     int timelineTimer;
-    int previewTimer;
+    int startPreviewBar;
 
     int timelineBar;
     int previewBar;
@@ -138,7 +138,7 @@ public class PianoRollPlayback : NetworkBehaviour
         _spawner.spawnActive = true;
 
         timelineTimer = _timer.timelineBar;
-        previewTimer = _timer.previewBar;
+        startPreviewBar = _timer.previewBar;
 
         // set currentPlayer to zero
         timelinePlayer = 0;
@@ -191,8 +191,6 @@ public class PianoRollPlayback : NetworkBehaviour
         if (!playingBack) return;
         if (_timer.timelineBeat == 0) return;
         
-        PlayQuarterNote();
-
         // if timeline beat is 1 --> see for next stage
         if (_timer.timelineBeat == 1)
         {
@@ -203,6 +201,8 @@ public class PianoRollPlayback : NetworkBehaviour
         {
             UpdatePreviewStage();
         }
+
+        PlayQuarterNote();
 
         // update display
         if (previewStage == PlaybackStage.PLAYING)
@@ -302,25 +302,25 @@ public class PianoRollPlayback : NetworkBehaviour
             case PlaybackStage.COUNTIN:
                 if (previewPlayer == 0)
                 {
-                    if (_timer.previewBar - previewTimer == countIn - 1)
+                    if (_timer.previewBar - startPreviewBar == countIn - 1)
                     {
                         previewStage = PlaybackStage.PLAYING;
-                        previewTimer = _timer.previewBar;
+                        startPreviewBar = _timer.previewBar;
                         previewBar = 0;
                     }
                 }
                 else
                 {
-                    if (_timer.previewBar - previewTimer == barsBetween)
+                    if (_timer.previewBar - startPreviewBar == barsBetween)
                     {
                         previewStage = PlaybackStage.PLAYING;
-                        previewTimer = _timer.previewBar;
+                        startPreviewBar = _timer.previewBar;
                         previewBar = 0;
                     }
                 }
                 break;
             case PlaybackStage.PLAYING:
-                if (_timer.previewBar - previewTimer == Constants.RECORDING_LENGTH)
+                if (_timer.previewBar - startPreviewBar == Constants.RECORDING_LENGTH)
                 {
                     previewPlayer++;
                     // check if last player
@@ -331,7 +331,7 @@ public class PianoRollPlayback : NetworkBehaviour
                     else
                     {
                         previewStage = PlaybackStage.COUNTIN;
-                        previewTimer = _timer.previewBar;
+                        startPreviewBar = _timer.previewBar;
                     }
                 }
                 else previewBar++;
@@ -352,7 +352,14 @@ public class PianoRollPlayback : NetworkBehaviour
     void PlayQuarterNote()
     {
         // only spawn lines on 1s and 3s, so on first and fifth eighth
-        if (_timer.previewBeat == 1) _spawner.SpawnLine(bpm, 1);
+        if (_timer.previewBeat == 1)
+        {
+            if (previewStage == PlaybackStage.PLAYING && previewBar == 0)
+                _spawner.SpawnLine(bpm, 1, true);
+            else if (previewStage == PlaybackStage.COUNTIN && previewPlayer != 0 && _timer.previewBar - startPreviewBar == 0)
+                _spawner.SpawnLine(bpm, 1, true);
+            else _spawner.SpawnLine(bpm, 1);
+        }
         if (_timer.previewBeat == 3) _spawner.SpawnLine(bpm, 2);
         if (_timer.previewBeat == 5) _spawner.SpawnLine(bpm, 3);
         if (_timer.previewBeat == 7) _spawner.SpawnLine(bpm, 4);
