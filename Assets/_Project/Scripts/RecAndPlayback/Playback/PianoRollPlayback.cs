@@ -62,6 +62,10 @@ public class PianoRollPlayback : NetworkBehaviour
     {
         // find all players and their data
         playerDatas = FindObjectsOfType<PlayerData>().ToList();
+        
+        //sort player datas 
+        playerDatas = playerDatas.OrderBy(data => data.PlayerName).ToList();
+        
         timelinePlayer = 0;
         previewPlayer = 0;
 
