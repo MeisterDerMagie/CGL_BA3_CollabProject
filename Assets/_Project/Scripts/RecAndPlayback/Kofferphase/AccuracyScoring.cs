@@ -86,18 +86,24 @@ public class AccuracyScoring : MonoBehaviour
         }
     }
 
-    public void SendToServer()
+    public void SendToServer(bool testLocally)
     {
         // prozentsatz für local player accuracy ermitteln
         float accuracyPercent = (playerPoints * 100) / maxPointsAccuracy;
-        Debug.Log("players accuracy was: " + accuracyPercent);
+        if (testLocally) Debug.Log("players accuracy was: " + accuracyPercent);
 
         // prozentsatz für alle spieler playability ermitteln
         List<float> playabilityPercent = new List<float>();
         for (int i = 0; i < maxPointsPlayability.Count; i++)
         {
             float playability = (playabilityPoints[i] * 100) / maxPointsPlayability[i];
-            Debug.Log($"Playability for player {i + 1} was {playability}");
+            if (testLocally) Debug.Log($"Playability for player {i + 1} was {playability}");
+        }
+
+        if (!testLocally)
+        {
+            // send to server
+            // make player ready for next stage
         }
     }
 }

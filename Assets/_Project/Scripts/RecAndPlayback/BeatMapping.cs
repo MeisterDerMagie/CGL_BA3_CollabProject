@@ -159,12 +159,12 @@ public class BeatMapping : MonoBehaviour
             // check if it was a hit
             if (note.timeStamp >= targetScoring[i].timeStamp + (latency/1000f) - (hit/1000f) && note.timeStamp <= targetScoring[i].timeStamp + (latency / 1000f) + (hit / 1000f))
             {
-                type = ScoringType.HIT;
+                if (note.soundID == targetScoring[i].instrumentID) type = ScoringType.HIT;
             }
             // check if it was almost a hit
             else if (note.timeStamp >= targetScoring[i].timeStamp + (latency / 1000f) - (almost / 1000f) && note.timeStamp <= targetScoring[i].timeStamp + (latency / 1000f) + (almost / 1000f))
             {
-                type = ScoringType.ALMOST;
+                if (note.soundID == targetScoring[i].instrumentID) type = ScoringType.ALMOST;
             }
         }
 
