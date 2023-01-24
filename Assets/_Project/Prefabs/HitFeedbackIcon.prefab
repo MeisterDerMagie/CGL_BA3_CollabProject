@@ -334,16 +334,16 @@ MonoBehaviour:
     animator: {fileID: 8654658883074043954}
     state:
       stateName: anim_AlmostHit
-      stateLayerIndex: 0
-      isLooping: 1
+      stateLayerIndex: 2
+      isLooping: 0
       duration: 0.5
     stateIsMissing: 0
   missFeedback:
     animator: {fileID: 8654658883074043954}
     state:
       stateName: anim_Miss
-      stateLayerIndex: 0
-      isLooping: 1
+      stateLayerIndex: 3
+      isLooping: 0
       duration: 0.5
     stateIsMissing: 0
 --- !u!1 &6435036745946949736
