@@ -120,22 +120,45 @@ public class PianoRollPrevKoffer : MonoBehaviour
                     if (currentPlayer >= amountPlaybackPlayers)
                     {
                         // check if amount of Playback players is greater than total amount of players in scene
-                        if (amountPlaybackPlayers >= _timeline.testPlayers.Count) // elfenbeinstein CHANGE to player data
+                        if (_timeline.testLocally)
                         {
-                            // if so, leave the rhythm section
-                            currentStage = PianoRollTLKoffer.KofferStages.END;
-                            barTimer = _timer.previewBar;
+                            if (amountPlaybackPlayers >= _timeline.testPlayers.Count)
+                            {
+                                // if so, leave the rhythm section
+                                currentStage = PianoRollTLKoffer.KofferStages.END;
+                                barTimer = _timer.previewBar;
 
+                            }
+                            // else go back to count in the playback session and reset variables
+                            else
+                            {
+                                amountPlaybackPlayers++;
+                                currentPlayer = amountPlaybackPlayers - 1;
+                                currentBar = 0;
+                                barTimer = _timer.previewBar;
+
+                                currentStage = PianoRollTLKoffer.KofferStages.COUNTINPB;
+                            }
                         }
-                        // else go back to count in the playback session and reset variables
                         else
                         {
-                            amountPlaybackPlayers++;
-                            currentPlayer = amountPlaybackPlayers - 1;
-                            currentBar = 0;
-                            barTimer = _timer.previewBar;
+                            if (amountPlaybackPlayers >= _timeline.sortedPlayers.Count)
+                            {
+                                // if so, leave the rhythm section
+                                currentStage = PianoRollTLKoffer.KofferStages.END;
+                                barTimer = _timer.previewBar;
 
-                            currentStage = PianoRollTLKoffer.KofferStages.COUNTINPB;
+                            }
+                            // else go back to count in the playback session and reset variables
+                            else
+                            {
+                                amountPlaybackPlayers++;
+                                currentPlayer = amountPlaybackPlayers - 1;
+                                currentBar = 0;
+                                barTimer = _timer.previewBar;
+
+                                currentStage = PianoRollTLKoffer.KofferStages.COUNTINPB;
+                            }
                         }
                     }
                 }
