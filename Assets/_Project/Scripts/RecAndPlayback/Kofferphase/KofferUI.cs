@@ -22,6 +22,8 @@ public class KofferUI : MonoBehaviour
 
     void Start()
     {
+        if (Unity.Netcode.NetworkManager.Singleton.IsServer) return;
+
         countInText.gameObject.SetActive(true);
         countInText.text = "";
 

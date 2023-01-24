@@ -59,7 +59,7 @@ public class PlaybackVoting : MonoBehaviour
             else
             {
                 timer++;
-                if (timer > Constants.RECORDING_LENGTH - 1) timer = 0;
+                if (timer > Constants.RECORDING_LENGTH - 1) playback = false;
             }
         }
 

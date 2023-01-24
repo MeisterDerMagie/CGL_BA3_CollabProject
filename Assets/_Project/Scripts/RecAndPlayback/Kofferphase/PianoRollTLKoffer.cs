@@ -206,7 +206,9 @@ public class PianoRollTLKoffer : MonoBehaviour
             else
             {
                 if (sortedPlayers[currentPlayer].Recording[((currentBar * 8) + _timer.timelineBeat) - 1].contains)
-                    _audioRoll.PlayerInputSound(sortedPlayers[currentPlayer].Recording[((currentBar * 8) + _timer.timelineBeat) - 1].instrumentID);
+                    _audioRoll.PlayerInputSound(PlayerData.LocalPlayerData.InstrumentIds.IndexOf(sortedPlayers[currentPlayer].Recording[((currentBar * 8) + _timer.timelineBeat) - 1].instrumentID));
+
+                // _audioRoll.PlayerInputSound(PlayerData.LocalPlayerData.InstrumentIds.IndexOf(recording[timer][_timer.timelineBeat - 1].instrumentID));
             }
         }
     }
