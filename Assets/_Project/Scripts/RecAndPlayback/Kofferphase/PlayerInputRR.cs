@@ -9,7 +9,8 @@ public class PlayerInputRR : MonoBehaviour
 
     public bool scorePlayability;
 
-    private float startScoring;
+    private float startScoringDate;
+    private float startScoringUnity;
 
     [SerializeField] private AudioRoll _audioRoll;
     private BeatMapping _beatMapping;
@@ -45,14 +46,18 @@ public class PlayerInputRR : MonoBehaviour
 
                     if (recording)
                     {
+                        /*
                         RecordingNote n = new RecordingNote();
 
                         if (_timeline.testLocally) n.soundID = i;
                         else n.soundID = PlayerData.LocalPlayerData.InstrumentIds[i];
 
-                        n.timeStamp = _backingTrack.timeSinceStart - startScoring;
+                        n.timeStamp = _backingTrack.timeSinceStart - startScoringDate;
 
                         _beatMapping.ScoreAccuracy(n, scorePlayability, player);
+                        */
+
+                        _beatMapping.LatencyTestScoring(_backingTrack.timeSinceStart - startScoringDate, _backingTrack.timeSinceStartUnity - startScoringUnity);
                     }
                 }
             }
@@ -112,7 +117,8 @@ public class PlayerInputRR : MonoBehaviour
     public void StartRecording()
     {
         recording = true;
-        startScoring = _backingTrack.timeSinceStart;
+        startScoringDate = _backingTrack.timeSinceStart;
+        startScoringUnity = _backingTrack.timeSinceStartUnity;
     }
 
     public void StopRecording()

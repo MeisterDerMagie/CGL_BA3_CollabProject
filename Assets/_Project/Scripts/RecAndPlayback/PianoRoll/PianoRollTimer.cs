@@ -34,10 +34,15 @@ public class PianoRollTimer : MonoBehaviour
     private PianoRollTLKoffer _tlKoffer;
     private PianoRollPrevKoffer _prevKoffer;
 
+    [SerializeField] CSWriterKoffer csWriter;
+
+    int eighth;
+
 
     void Start()
     {
         _backingTrack = GetComponentInChildren<BackingTrack>();
+        eighth = -1;
 
         // add self to event delegate for beat updates
         _backingTrack.beatUpdated += NextBeat;
@@ -126,5 +131,10 @@ public class PianoRollTimer : MonoBehaviour
                 _prevKoffer.NextBeat();
                 break;
         }
+
+        // for latency scoring:
+        eighth++;
+        float targetDate = 0 + eighth * ((60f / 110f) / 2f);
+        if (csWriter != null) csWriter.AddNewFmod(targetDate, targetDate, _backingTrack.timeSinceStart, _backingTrack.timeSinceStartUnity);
     }
 }

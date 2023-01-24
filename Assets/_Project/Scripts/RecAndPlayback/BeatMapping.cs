@@ -165,6 +165,49 @@ public class BeatMapping : MonoBehaviour
         if (scorePlayability) scoring.ScorePlayability(type, player);
     }
 
+    public void LatencyTestScoring(float isTimeDate, float isTimeUnity)
+    {
+        ScoringType typeDate = ScoringType.MISS;
+        ScoringType typeUnity = ScoringType.MISS;
+        float targetTimeDate = 0;
+        float targetTimeUnity = 0;
+
+        // date wert checken
+        for (int i = 0; i < targetScoring.Count; i++)
+        {
+            // check if it was a hit
+            if (isTimeDate >= targetScoring[i].timeStamp + (latency / 1000f) - (hit / 1000f) && isTimeDate <= targetScoring[i].timeStamp + (latency / 1000f) + (hit / 1000f))
+            {
+                typeDate = ScoringType.HIT;
+            }
+            // check if it was almost a hit
+            else if (isTimeDate >= targetScoring[i].timeStamp + (latency / 1000f) - (almost / 1000f) && isTimeDate <= targetScoring[i].timeStamp + (latency / 1000f) + (almost / 1000f))
+            {
+                typeDate = ScoringType.ALMOST;
+            }
+            targetTimeDate = targetScoring[i].timeStamp;
+        }
+
+        // unity wert checken
+        for (int i = 0; i < targetScoring.Count; i++)
+        {
+            // check if it was a hit
+            if (isTimeUnity >= targetScoring[i].timeStamp + (latency / 1000f) - (hit / 1000f) && isTimeUnity <= targetScoring[i].timeStamp + (latency / 1000f) + (hit / 1000f))
+            {
+                typeUnity = ScoringType.HIT;
+            }
+            // check if it was almost a hit
+            else if (isTimeUnity >= targetScoring[i].timeStamp + (latency / 1000f) - (almost / 1000f) && isTimeUnity <= targetScoring[i].timeStamp + (latency / 1000f) + (almost / 1000f))
+            {
+                typeUnity = ScoringType.ALMOST;
+            }
+            targetTimeUnity = targetScoring[i].timeStamp;
+        }
+
+        GetComponent<CSWriterKoffer>().AddNewNote(targetTimeDate, targetTimeUnity, isTimeDate, isTimeUnity, typeDate.ToString(), typeUnity.ToString());
+
+    }
+
 
 #if UNITY_EDITOR
     private void OnGUI()

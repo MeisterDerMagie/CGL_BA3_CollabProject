@@ -32,7 +32,9 @@ public class BackingTrack : MonoBehaviour
     public static BackingTrack Singleton;
 
     public DateTime startTime = DateTime.MinValue;
+    public float startUnity = -1f;
     public float timeSinceStart => (float)(DateTime.Now - startTime).TotalSeconds;
+    public float timeSinceStartUnity => startUnity - Time.time;
 
     [StructLayout(LayoutKind.Sequential)]
     public class TimelineInfo
@@ -132,6 +134,7 @@ public class BackingTrack : MonoBehaviour
                         timelineInfo.currentBar = parameter.bar;
 
                         if (Singleton.startTime == DateTime.MinValue) Singleton.startTime = DateTime.Now;
+                        if (Singleton.startUnity == -1) Singleton.startUnity = Time.time;
 
                         if (Singleton.lastBeat != timelineInfo.currentBeat)
                         {
