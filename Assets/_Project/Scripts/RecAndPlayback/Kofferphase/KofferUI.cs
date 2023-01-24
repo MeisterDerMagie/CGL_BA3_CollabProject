@@ -58,18 +58,21 @@ public class KofferUI : MonoBehaviour
 
     public void SetDisplayToSelf()
     {
+        if (Unity.Netcode.NetworkManager.Singleton.IsServer) return;
         _charDisplay.SetDuringRR("", PlayerData.LocalPlayerData.PlayerName, 
             CharacterManager.Instance.GetCharacter(PlayerData.LocalPlayerData.CharacterId).characterImage);
     }
 
     public void SetDisplay(PlayerData player)
     {
+        if (Unity.Netcode.NetworkManager.Singleton.IsServer) return;
         _charDisplay.SetDuringRR(player.AssignedPrompt, player.PlayerName, 
             CharacterManager.Instance.GetCharacter(player.CharacterId).characterImage);
     }
 
     public void Schubidu(int player, bool pb = true)
     {
+        if (Unity.Netcode.NetworkManager.Singleton.IsServer) return;
         //Debug.Log("Schubidu + " + player + ", " + pb);
 
         if (schubiduPrefab == null) return;
