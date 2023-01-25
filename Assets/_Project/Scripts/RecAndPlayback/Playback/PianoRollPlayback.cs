@@ -112,9 +112,12 @@ public class PianoRollPlayback : NetworkBehaviour
         timelineStage = PlaybackStage.IDLE;
         previewStage = PlaybackStage.IDLE;
 
-        //
+        // ui stuff
         _light.TurnOff();
         _display.TurnOffCharacter();
+
+        // preload instances of player sounds:
+        _audioRoll.SetUpAllInstances();
 
         // wait short time for playback to start
         StartCoroutine(WaitToStart());
