@@ -711,6 +711,7 @@ MonoBehaviour:
   _audioRoll: {fileID: 3516646983549203104}
   keyInputs: 61000000730000006400000066000000
   cooldown: 0.1
+  player: 0
 --- !u!114 &7119779634103677370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -723,7 +724,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c092a0198435b304eb61dfb494e40563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _loadNext: {fileID: 0}
+  playabilityCalculation: {fileID: 0}
   pointForHit: 25
   pointForAlmost: 10
   pointForMiss: 0
@@ -731,6 +732,7 @@ MonoBehaviour:
   maxPointsPlayability: []
   playerPoints: 0
   playabilityPoints: []
+  clientIds: 
 --- !u!1 &3516646984460612235
 GameObject:
   m_ObjectHideFlags: 0

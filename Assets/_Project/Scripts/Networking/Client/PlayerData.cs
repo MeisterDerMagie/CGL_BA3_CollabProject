@@ -21,6 +21,7 @@ public class PlayerData : NetworkBehaviour
     }
     
     #region Public Properties
+    public ulong ClientIdentifier => _clientIdentifier.Value;
     public Guid ClientGuid => Guid.Parse(_clientGuid.Value.ToString());
     public string PlayerName
     {
@@ -93,7 +94,7 @@ public class PlayerData : NetworkBehaviour
     
     //Network Variables
     #region Network Variables
-    public NetworkVariable<ulong> clientIdentifier; //this is the same as the clientId but also accessible to other players, not just the server
+    private NetworkVariable<ulong> _clientIdentifier; //this is the same as the clientId but also accessible to other players, not just the server
     private NetworkVariable<FixedString64Bytes> _clientGuid;
     private NetworkVariable<FixedString128Bytes> _playerName;
     private NetworkVariable<uint> _characterId;
@@ -113,7 +114,7 @@ public class PlayerData : NetworkBehaviour
     private void Awake()
     {
         //instantiate NetworkVariables
-        clientIdentifier = new NetworkVariable<ulong>();
+        _clientIdentifier = new NetworkVariable<ulong>();
         _clientGuid = new NetworkVariable<FixedString64Bytes>(Guid.NewGuid().ToString());
         _playerName = new NetworkVariable<FixedString128Bytes>(string.Empty);
         _characterId = new NetworkVariable<uint>(0);
@@ -203,14 +204,14 @@ public class PlayerData : NetworkBehaviour
 
     private void SetClientIdentifier()
     {
-        clientIdentifier.Value = OwnerClientId;
+        _clientIdentifier.Value = OwnerClientId;
 
         foreach (KeyValuePair<ulong,NetworkClient> client in NetworkManager.ConnectedClients)
         {
             var playerData = client.Value.PlayerObject.GetComponent<PlayerData>();
-            if (playerData.clientIdentifier.Value != client.Key)
+            if (playerData._clientIdentifier.Value != client.Key)
             {
-                Debug.Log($"Client with ID {client.Key} has a _clientId of {clientIdentifier.Value}. This is wrong.");
+                Debug.Log($"Client with ID {client.Key} has a _clientId of {_clientIdentifier.Value}. This is wrong.");
             }
         }
 
@@ -396,19 +397,6 @@ public class PlayerData : NetworkBehaviour
         {
             _instrumentIds.Add(id);
         }
-
-        //-----------DEBUG
-        string instruments = string.Empty;
-
-        foreach (int id in InstrumentIds)
-        {
-            instruments += InstrumentsManager.Instance.GetInstrument(id).friendlyName;
-            instruments += ", ";
-        }
-
-        instruments = instruments.Substring(0,instruments.Length-2);
-
-        Debug.Log($"Player {PlayerName} (id: {OwnerClientId.ToString()}) got assigned the following instruments: {instruments}");
     }
 
     public void SetRecording(List<Eighth> recording)
@@ -419,13 +407,6 @@ public class PlayerData : NetworkBehaviour
         {
             _recording.Add(eighth);
         }
-
-        //-----------DEBUG
-        Debug.Log($"Recording of Player {PlayerName}: ");
-        foreach (Eighth eighth in Recording)
-        {
-            Debug.Log($"{eighth.contains.ToString()}, {eighth.instrumentID.ToString()}");
-        }
     }
     
     //The points should not have a ServerRPC (the client should not have the authority to set its points). The server should calculate those based on the user input
@@ -435,12 +416,13 @@ public class PlayerData : NetworkBehaviour
     public void AddPointsPerformance(int valueToAdd) => _pointsPerformance.Value += valueToAdd;
     public void AddPointsPlayabilityPercent(float accuracyPercent)
     {
-        float accuracyPercentRoundedToNearestFive = Mathf.RoundToInt(accuracyPercent / 5f * 100f) * 5f / 100f;
+        float accuracyPercentRoundedToNearestFive = Mathf.Round(accuracyPercent / 5f * 100f) * 5f / 100f;
         int playabilityPoints = (int)(accuracyPercentRoundedToNearestFive * Constants.MAX_POINTS_PLAYABILITY);
         AddPointsPlayability(playabilityPoints);
     }
 
-    public void AddPointsPerformancePercent(float accuracyPercent)
+    [ServerRpc(RequireOwnership = false)]
+    public void AddPointsPerformancePercentServerRpc(float accuracyPercent)
     {
         float accuracyPercentRoundedToNearestFive = Mathf.Round(accuracyPercent / 5f * 100f) * 5f / 100f;
         int performancePoints = (int)(accuracyPercentRoundedToNearestFive * Constants.MAX_POINTS_PERFORMANCE);
