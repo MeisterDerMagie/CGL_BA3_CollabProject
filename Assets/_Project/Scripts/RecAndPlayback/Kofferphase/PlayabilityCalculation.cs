@@ -6,10 +6,13 @@ using System.Linq;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayabilityCalculation : NetworkBehaviour
 {    
     private Dictionary<ulong /*playerId*/, List<float> /*ratings*/> _ratings = new();
+    private List<ulong> _donePlayers = new();
+    [SerializeField] private NetworkSceneLoader nextScene;
 
     public override void OnNetworkSpawn()
     {
@@ -18,7 +21,7 @@ public class PlayabilityCalculation : NetworkBehaviour
         _ratings.Clear();
         foreach (KeyValuePair<ulong,NetworkClient> client in NetworkManager.Singleton.ConnectedClients)
         {
-            ulong playerGuid = client.Value.PlayerObject.GetComponent<PlayerData>().clientIdentifier.Value;
+            ulong playerGuid = client.Value.PlayerObject.GetComponent<PlayerData>().ClientIdentifier;
             _ratings.Add(playerGuid, new List<float>());
         }
     }
@@ -27,6 +30,25 @@ public class PlayabilityCalculation : NetworkBehaviour
     public void SubmitPlayabilityServerRpc(ulong performingPlayer, ulong ratedPlayer, float percent)
     {
         _ratings[ratedPlayer].Add(percent);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void DoneServerRpc(ulong clientId)
+    {
+        _donePlayers.Add(clientId);
+        
+        //then if all players are done, load the next scene
+        if(AllPlayersAreReady()) NetworkSceneLoading.LoadNetworkScene(nextScene, LoadSceneMode.Single);
+    }
+
+    private bool AllPlayersAreReady()
+    {
+        foreach (ulong client in NetworkManager.ConnectedClientsIds)
+        {
+            if (!_donePlayers.Contains(client)) return false;
+        }
+
+        return true;
     }
 
     public override void OnDestroy()
@@ -39,7 +61,7 @@ public class PlayabilityCalculation : NetworkBehaviour
         foreach (var client in NetworkManager.ConnectedClients)
         {
             var playerData = client.Value.PlayerObject.GetComponent<PlayerData>();
-            ulong clientId = playerData.clientIdentifier.Value;
+            ulong clientId = playerData.ClientIdentifier;
             if (!_ratings.ContainsKey(clientId))
             {
                 Debug.LogError($"The client with the guid {clientId} apparently had not been rated any playability points. What happened?", this);

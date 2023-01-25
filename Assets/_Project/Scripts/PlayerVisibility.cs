@@ -24,29 +24,30 @@ public class PlayerVisibility : MonoBehaviour
         }
     }
 
-    public void HidePlayers()
+    public static void HidePlayers()
     {
-        GameObject[] playerVisuals = FindPlayerVisuals();
+        Visuals[] playerVisuals = FindPlayerVisuals();
 
-        foreach (GameObject playerVisual in playerVisuals)
+        foreach (Visuals playerVisual in playerVisuals)
         {
-            playerVisual.SetActive(false);
+            playerVisual.gameObject.SetActive(false);
         }
     }
 
-    public void ShowPlayers()
+    public static void ShowPlayers()
     {
-        GameObject[] playerVisuals = FindPlayerVisuals();
+        Visuals[] playerVisuals = FindPlayerVisuals();
 
-        foreach (GameObject playerVisual in playerVisuals)
+        foreach (Visuals playerVisual in playerVisuals)
         {
-            playerVisual.SetActive(true);
+            playerVisual.gameObject.SetActive(true);
         }
     }
 
-    private GameObject[] FindPlayerVisuals()
+    private static Visuals[] FindPlayerVisuals()
     {
-        return GameObject.FindGameObjectsWithTag("PlayerVisuals");
+        return GameObject.FindObjectsOfType<Visuals>(true);
+        //return GameObject.FindGameObjectsWithTag("PlayerVisuals");
     }
     
     private enum Visibility

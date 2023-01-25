@@ -21,7 +21,7 @@ public class PlayerInputRR : MonoBehaviour
     [SerializeField] private KeyCode[] keyInputs;
     [SerializeField] private float cooldown = 0.1f;
 
-    int player;
+    public int player;
 
     void Start()
     {

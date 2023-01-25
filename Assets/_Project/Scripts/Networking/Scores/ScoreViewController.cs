@@ -9,6 +9,7 @@ public class ScoreViewController : NetworkBehaviour
 {
     [SerializeField] private StageController stageController;
     [SerializeField] private List<DetailedScores> detailedScores;
+    [SerializeField] private bool showScoreOnPodiumText = true;
 
     public void Start()
     {
@@ -39,7 +40,7 @@ public class ScoreViewController : NetworkBehaviour
             PlayerData playerData = NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject.GetComponent<PlayerData>();
             int totalPoints = playerData.TotalPoints;
             
-            podium.SetPodiumTextClientRpc(totalPoints.ToString());
+            if(showScoreOnPodiumText) podium.SetPodiumTextClientRpc(totalPoints.ToString());
             
             //Detailed Points
             Debug.Log($"Set detailed points: podium {i.ToString()}, creat: {playerData.PointsCreativity.ToString()}, playab: {playerData.PointsPlayability.ToString()}, perf: {playerData.PointsPerformance.ToString()}");

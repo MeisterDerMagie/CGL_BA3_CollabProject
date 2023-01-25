@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Unity.Netcode;
 
-public class AccuracyScoring : MonoBehaviour
+public class AccuracyScoring : NetworkBehaviour
 {
-    [SerializeField] private LoadNextSceneWhenAllClientsAreDone _loadNext;
     [SerializeField] private PlayabilityCalculation playabilityCalculation;
 
     [SerializeField] float pointForHit = 25f;
@@ -78,9 +78,9 @@ public class AccuracyScoring : MonoBehaviour
             maxPointsPlayability.Add(amount * pointForHit);
 
             // add to maxpoints accuracy the amount of that player
-            maxPointsAccuracy += amount * pointForHit;
+            maxPointsAccuracy += (amount * pointForHit) * (players.Count - i);
 
-            clientIds.Add(players[i].clientIdentifier.Value);
+            clientIds.Add(players[i].ClientIdentifier);
         }
     }
 
@@ -132,25 +132,26 @@ public class AccuracyScoring : MonoBehaviour
         for (int i = 0; i < maxPointsPlayability.Count; i++)
         {
             float playability = (playabilityPoints[i]) / maxPointsPlayability[i];
+            playabilityPercent.Add(playability);
             if (testLocally) Debug.Log($"Playability for player {i + 1} was {playability}");
         }
 
         if (!testLocally)
         {
             // send to server
-            PlayerData.LocalPlayerData.AddPointsPerformancePercent(accuracyPercent);
+            PlayerData.LocalPlayerData.AddPointsPerformancePercentServerRpc(accuracyPercent);
 
             for (int i = 0; i < playabilityPercent.Count; i++)
             {
                 // skip yourself
-                if (clientIds[i] != PlayerData.LocalPlayerData.clientIdentifier.Value)
+                if (clientIds[i] != PlayerData.LocalPlayerData.ClientIdentifier)
                 {
-                    playabilityCalculation.SubmitPlayabilityServerRpc(PlayerData.LocalPlayerData.clientIdentifier.Value, clientIds[i], playabilityPercent[i]);
+                    playabilityCalculation.SubmitPlayabilityServerRpc(PlayerData.LocalPlayerData.ClientIdentifier, clientIds[i], playabilityPercent[i]);
                 }
             }
 
             // send player to next stage
-            _loadNext.Done();
+            playabilityCalculation.DoneServerRpc(PlayerData.LocalPlayerData.ClientIdentifier);
         }
     }
 }
