@@ -4,6 +4,7 @@ using UnityEngine;
 using FMODUnity;
 using System;
 using System.Runtime.InteropServices;
+using Unity.Netcode;
 
 /// <summary>
 /// communication with FMOD via this script about current beat + bar + other markers
@@ -77,6 +78,14 @@ public class BackingTrack : MonoBehaviour
 
     public void StartMusic()
     {
+        if (NetworkManager.Singleton == null)
+        {
+            // start locally saved track
+        }
+        else
+        {
+            // start track saved in playerdata
+        }
         musicInstance = RuntimeManager.CreateInstance(track);
         musicInstance.start();
 
