@@ -339,6 +339,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -0.03
       objectReference: {fileID: 0}
+    - target: {fileID: 6647486527149523381, guid: 3ae1a8fe31b4dcc41b598e0317ff59ac, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 1.22
+      objectReference: {fileID: 0}
     - target: {fileID: 6720679256484685227, guid: 3ae1a8fe31b4dcc41b598e0317ff59ac, type: 3}
       propertyPath: stage
       value: 1
@@ -422,6 +426,10 @@ PrefabInstance:
     - target: {fileID: 6720679258209323061, guid: 3ae1a8fe31b4dcc41b598e0317ff59ac, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8251597286612469376, guid: 3ae1a8fe31b4dcc41b598e0317ff59ac, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ae1a8fe31b4dcc41b598e0317ff59ac, type: 3}
