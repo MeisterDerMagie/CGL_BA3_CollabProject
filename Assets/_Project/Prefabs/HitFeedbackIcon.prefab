@@ -321,7 +321,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 647b3b89960e48d4bef1284c64af7a8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerIcon: {fileID: 4661548590447986292}
   hitFeedback:
     animator: {fileID: 8654658883074043954}
     state:
@@ -346,6 +345,7 @@ MonoBehaviour:
       isLooping: 0
       duration: 0.5
     stateIsMissing: 0
+  playerIcon: {fileID: 4661548590447986292}
 --- !u!1 &6435036745946949736
 GameObject:
   m_ObjectHideFlags: 0
