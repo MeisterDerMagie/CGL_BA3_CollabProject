@@ -193,7 +193,7 @@ public class PianoRollTLKoffer : MonoBehaviour
             else if (_timer.timelineBeat == 5) _ui.CountInText("2");
             else if (_timer.timelineBeat == 7) _ui.CountInText("1");
 
-            if (currentStage == KofferStages.RHYTHMREPEAT && _timer.timelineBeat == 1)
+            if (currentStage == KofferStages.COUNTINRR && _timer.timelineBeat == 1)
                 _playerInput.StartRecording();
         }
 
