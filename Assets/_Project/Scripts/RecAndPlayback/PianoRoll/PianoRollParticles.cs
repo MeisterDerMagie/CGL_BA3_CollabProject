@@ -12,7 +12,8 @@ public class PianoRollParticles : MonoBehaviour
         glow.SetActive(active);
         if (active)
         {
-            particle.Play();
+            if (!particle.isPlaying)
+                particle.Play();
         }
         else
         {

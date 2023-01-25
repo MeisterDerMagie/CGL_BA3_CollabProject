@@ -27,6 +27,7 @@ public class PianoRollPlayback : NetworkBehaviour
     private PianoRollTimer _timer;
     private AudioRoll _audioRoll;
     private NoteSpawner _spawner;
+    private PianoRollParticles _particles;
     [SerializeField] private Light _light;
     [SerializeField] private LoadNextSceneWhenAllClientsAreDone _loadNext;
 
@@ -104,6 +105,7 @@ public class PianoRollPlayback : NetworkBehaviour
         _timer = GetComponent<PianoRollTimer>();
         _audioRoll = GetComponentInChildren<AudioRoll>();
         _spawner = GetComponent<NoteSpawner>();
+        _particles = GetComponentInChildren<PianoRollParticles>();
 
         // set up playing back to false --> don't start too soon
         playingBack = false;
@@ -154,6 +156,8 @@ public class PianoRollPlayback : NetworkBehaviour
 
         // update display and switch off light
         _light.TurnOff();
+
+        _particles.TurnOnParticle(true);
     }
 
     // only needed for testing
@@ -378,6 +382,9 @@ public class PianoRollPlayback : NetworkBehaviour
 
     void End()
     {
+        GetComponentInChildren<BackingTrack>().StopMusic();
+        _particles.TurnOnParticle(false);
+
         if (!NetworkManager.IsServer)
             _loadNext.Done();
     }

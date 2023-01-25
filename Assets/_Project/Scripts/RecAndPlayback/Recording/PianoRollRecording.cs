@@ -14,6 +14,7 @@ using UnityEngine;
 public class PianoRollRecording : MonoBehaviour
 {
     private BackingTrack _backingTrack;
+    private PianoRollParticles _particles;
     private AudioRoll _audioRoll;
     private PianoRollTimer _timer;
     private RecordInput _recordInput;
@@ -48,6 +49,7 @@ public class PianoRollRecording : MonoBehaviour
         _backingTrack = GetComponentInChildren<BackingTrack>();
         _timer = GetComponent<PianoRollTimer>();
         _recordInput = GetComponentInChildren<RecordInput>();
+        _particles = GetComponentInChildren<PianoRollParticles>();
 
         _spawner = GetComponent<NoteSpawner>();
 
@@ -164,6 +166,7 @@ public class PianoRollRecording : MonoBehaviour
         switch (_recStage)
         {
             case RecPBStage.INACTIVE:
+                _particles.TurnOnParticle(false);
                 playback = false;
                 withAudio = false;
                 _spawner.ActivateLines(false);
@@ -172,6 +175,7 @@ public class PianoRollRecording : MonoBehaviour
                 _spawner.ActivateIdleLines(true);
                 break;
             case RecPBStage.ONLYLINES:
+                _particles.TurnOnParticle(true);
                 playback = false;
                 withAudio = false;
                 _spawner.ActivateLines(true);
@@ -204,6 +208,7 @@ public class PianoRollRecording : MonoBehaviour
                 _spawner.ActivateIdleLines(false);*/
                 break;
             case RecPBStage.WAITFORPB:
+                _particles.TurnOnParticle(true);
                 _spawner.ActivateLines(true);
                 _spawner.spawnActive = true;
                 _spawner.ActivateIdleLines(false);

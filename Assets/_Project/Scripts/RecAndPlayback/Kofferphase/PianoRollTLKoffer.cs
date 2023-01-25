@@ -365,6 +365,7 @@ public class PianoRollTLKoffer : MonoBehaviour
     {
         Debug.Log("end of koffer stage");
         GetComponentInChildren<BackingTrack>().StopMusic();
+        particles.TurnOnParticle(false);
         currentStage = KofferStages.IDLE;
         _playerInput.active = false;
 

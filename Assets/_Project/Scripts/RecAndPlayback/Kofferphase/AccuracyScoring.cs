@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class AccuracyScoring : MonoBehaviour
 {
     [SerializeField] private LoadNextSceneWhenAllClientsAreDone _loadNext;
+    [SerializeField] private PlayabilityCalculation playabilityCalculation;
 
     [SerializeField] float pointForHit = 25f;
     [SerializeField] float pointForAlmost = 10f;
@@ -16,6 +18,7 @@ public class AccuracyScoring : MonoBehaviour
 
     public float playerPoints;
     public List<float> playabilityPoints;
+    public List<Guid> playerGuids;
 
     public void SetUpScoringLocal(List<BeatMapping.ScoringNote> notes, int playerAmount)
     {
@@ -57,6 +60,7 @@ public class AccuracyScoring : MonoBehaviour
     {
         maxPointsPlayability = new List<float>();
         playabilityPoints = new List<float>();
+        playerGuids = new List<Guid>();
 
         // for every player
         for (int i = 0; i < players.Count; i++)
@@ -75,6 +79,8 @@ public class AccuracyScoring : MonoBehaviour
 
             // add to maxpoints accuracy the amount of that player
             maxPointsAccuracy += amount * pointForHit;
+
+            playerGuids.Add(players[i].ClientGuid);
         }
     }
 
@@ -136,7 +142,11 @@ public class AccuracyScoring : MonoBehaviour
 
             for (int i = 0; i < playabilityPercent.Count; i++)
             {
-
+                // skip yourself
+                if (playerGuids[i] != PlayerData.LocalPlayerData.ClientGuid)
+                {
+                    playabilityCalculation.SubmitPlayabilityServerRpc(PlayerData.LocalPlayerData.ClientGuid.ToString(), playerGuids[i].ToString(), playabilityPercent[i]);
+                }
             }
 
             // send player to next stage
