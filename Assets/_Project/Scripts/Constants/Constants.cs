@@ -27,6 +27,22 @@ public class Constants : ScriptableObject
     public static int RECORDING_LENGTH => instance._RECORDING_LENGTH;
     [SerializeField] private int _RECORDING_LENGTH;
     
+    [Title("Scoring")]
+    public static int POINTS_CREATIVITY_FIRST_VOTE => instance._POINTS_CREATIVITY_FIRST_VOTE;
+    [SerializeField] private int _POINTS_CREATIVITY_FIRST_VOTE;
+    
+    public static int POINTS_CREATIVITY_SECOND_VOTE => instance._POINTS_CREATIVITY_SECOND_VOTE;
+    [SerializeField] private int _POINTS_CREATIVITY_SECOND_VOTE;
+    
+    public static int POINTS_CREATIVITY_THIRD_VOTE => instance._POINTS_CREATIVITY_THIRD_VOTE;
+    [SerializeField] private int _POINTS_CREATIVITY_THIRD_VOTE;
+    
+    public static int MAX_POINTS_PERFORMANCE => instance._MAX_POINTS_PERFORMANCE;
+    [SerializeField] private int _MAX_POINTS_PERFORMANCE;
+    
+    public static int MAX_POINTS_PLAYABILITY => instance._MAX_POINTS_PLAYABILITY;
+    [SerializeField] private int _MAX_POINTS_PLAYABILITY;
+    
     //Singleton
     #region Singleton
     private static Constants _instance;

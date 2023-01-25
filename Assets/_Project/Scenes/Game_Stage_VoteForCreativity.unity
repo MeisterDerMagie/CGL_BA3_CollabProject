@@ -1379,9 +1379,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0780bc07c08f4a94c851858e35133262, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointsFirstVote: 1000
-  pointsSecondVote: 800
-  pointsThirdVote: 500
+  pointsFirstVote: 100
+  pointsSecondVote: 80
+  pointsThirdVote: 50
   stageController: {fileID: 484646668}
   lightsController: {fileID: 1480184386}
   waitingScreen: {fileID: 760567820}

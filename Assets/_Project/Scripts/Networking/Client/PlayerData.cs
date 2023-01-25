@@ -407,12 +407,16 @@ public class PlayerData : NetworkBehaviour
     public void AddPointsPerformance(int valueToAdd) => _pointsPerformance.Value += valueToAdd;
     public void AddPointsPlayabilityPercent(float accuracyPercent)
     {
-        
+        float accuracyPercentRoundedToNearestFive = Mathf.RoundToInt(accuracyPercent / 5f * 100f) * 5f / 100f;
+        int playabilityPoints = (int)(accuracyPercentRoundedToNearestFive * Constants.MAX_POINTS_PLAYABILITY);
+        AddPointsPlayability(playabilityPoints);
     }
 
     public void AddPointsPerformancePercent(float accuracyPercent)
     {
-        
+        float accuracyPercentRoundedToNearestFive = Mathf.Round(accuracyPercent / 5f * 100f) * 5f / 100f;
+        int performancePoints = (int)(accuracyPercentRoundedToNearestFive * Constants.MAX_POINTS_PERFORMANCE);
+        AddPointsPerformance(performancePoints);
     }
     
     #endregion

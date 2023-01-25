@@ -10,7 +10,6 @@ using UnityEngine.SceneManagement;
 
 public class VoteCreativity : NetworkBehaviour
 {
-    [SerializeField] private int pointsFirstVote, pointsSecondVote, pointsThirdVote;
     [SerializeField] private StageController stageController;
     [SerializeField] private LightsController lightsController;
     [SerializeField] private WaitingScreenController_VoteForCreativity waitingScreen;
@@ -156,9 +155,9 @@ public class VoteCreativity : NetworkBehaviour
 
     private int GetVoteValue(ulong votingClient)
     {
-        if (_awardedVotes[votingClient].Count == 0) return pointsFirstVote;
-        if (_awardedVotes[votingClient].Count == 1) return pointsSecondVote;
-        if (_awardedVotes[votingClient].Count == 2) return pointsThirdVote;
+        if (_awardedVotes[votingClient].Count == 0) return Constants.POINTS_CREATIVITY_FIRST_VOTE;
+        if (_awardedVotes[votingClient].Count == 1) return Constants.POINTS_CREATIVITY_SECOND_VOTE;
+        if (_awardedVotes[votingClient].Count == 2) return Constants.POINTS_CREATIVITY_THIRD_VOTE;
         return 0;
     }
 }
