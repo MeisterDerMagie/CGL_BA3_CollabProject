@@ -257,7 +257,11 @@ public class PianoRollTLKoffer : MonoBehaviour
                     //_playerInput.StartRecording();
                     _ui.RecFrame(true);
                     _ui.TurnOnLight(false);
-                    if (amountPlaybackPlayers == 1) _playerInput.scorePlayability = true;
+                    if (amountPlaybackPlayers == 1)
+                    {
+                        _playerInput.scorePlayability = true;
+                        _playerInput.player = 0;
+                    }
 
                     // start schubidu:
                     _ui.Schubidu(amountPlaybackPlayers, false);
