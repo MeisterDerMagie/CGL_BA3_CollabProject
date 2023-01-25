@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,15 +12,15 @@ public class AccuracyScoring : MonoBehaviour
 
     [Space]
     public float maxPointsAccuracy;
-    public Dictionary<Guid/*clientGuid*/, float/*playability percent*/> maxPointsPlayability = new();
+    public List<float> maxPointsPlayability;
 
     public float playerPoints;
-    public Dictionary<Guid/*clientGuid*/, float/*playability percent*/> playabilityPoints = new();
+    public List<float> playabilityPoints;
 
     public void SetUpScoringLocal(List<BeatMapping.ScoringNote> notes, int playerAmount)
     {
-        maxPointsPlayability.Clear();
-        playabilityPoints.Clear();
+        maxPointsPlayability = new List<float>();
+        playabilityPoints = new List<float>();
 
         #region playability max points per player ermitteln
         // get the amount of notes in each player's recording:
@@ -56,27 +55,26 @@ public class AccuracyScoring : MonoBehaviour
 
     public void SetUpScoringNetwork(List<PlayerData> players)
     {
-        maxPointsPlayability.Clear();
-        playabilityPoints.Clear();
+        maxPointsPlayability = new List<float>();
+        playabilityPoints = new List<float>();
 
         // for every player
-        foreach (PlayerData player in players)
+        for (int i = 0; i < players.Count; i++)
         {
             int amount = 0;
 
             // create a 0 for playability points
-            playabilityPoints.Add(player.ClientGuid, 0);
+            playabilityPoints.Add(0);
 
             // go through every player's recording, count how many notes contain
-            for (int note = 0; note < player.Recording.Count; note++)
-                if (player.Recording[note].contains) amount++;
+            for (int note = 0; note < players[i].Recording.Count; note++)
+                if (players[i].Recording[note].contains) amount++;
 
             // add playability points for that player
-            float points = amount * pointForHit;
-            maxPointsPlayability.Add(player.ClientGuid, points);
+            maxPointsPlayability.Add(amount * pointForHit);
 
             // add to maxpoints accuracy the amount of that player
-            maxPointsAccuracy += points;
+            maxPointsAccuracy += amount * pointForHit;
         }
     }
 

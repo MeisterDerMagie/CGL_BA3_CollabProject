@@ -7,8 +7,7 @@ public class BeatMapping : MonoBehaviour
 {
     private RecordInput _recordInput;
     private AccuracyScoring scoring;
-    [SerializeField] private HitFeedback networkHitFeedback;
-    [SerializeField] private HitFeedbackAnimations localHitFeedback;
+    [SerializeField] private HitFeedback hitFeedback;
 
     public float dispersion;
     public List<float> targetTimeStamps;
@@ -181,8 +180,7 @@ public class BeatMapping : MonoBehaviour
         }
 
         //_type = type; // for testing
-        networkHitFeedback.SendHitFeedback(type);
-        localHitFeedback.ShowFeedback(type);
+        hitFeedback.SendHitFeedback(type);
 
         // send over to score accuracy and playability:
         scoring.Score(type);
