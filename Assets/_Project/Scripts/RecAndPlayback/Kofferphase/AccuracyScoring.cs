@@ -78,7 +78,7 @@ public class AccuracyScoring : MonoBehaviour
             maxPointsPlayability.Add(amount * pointForHit);
 
             // add to maxpoints accuracy the amount of that player
-            maxPointsAccuracy += amount * pointForHit;
+            maxPointsAccuracy += (amount * pointForHit) * (players.Count - i);
 
             clientIds.Add(players[i].clientIdentifier.Value);
         }
