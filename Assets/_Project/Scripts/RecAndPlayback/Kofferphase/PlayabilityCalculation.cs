@@ -8,7 +8,7 @@ using UnityEngine;
 public class PlayabilityCalculation : NetworkBehaviour
 {
     [ServerRpc(RequireOwnership = false)]
-    public void SubmitPlayabilityServerRpc(Guid performingPlayer, Guid ratedPlayer, float percent)
+    public void SubmitPlayabilityServerRpc(string performingPlayerGuid, string ratedPlayerGuid, float percent)
     {
         
     }
