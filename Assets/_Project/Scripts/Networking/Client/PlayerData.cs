@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MEC;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
@@ -92,6 +93,7 @@ public class PlayerData : NetworkBehaviour
     
     //Network Variables
     #region Network Variables
+    public NetworkVariable<ulong> clientIdentifier; //this is the same as the clientId but also accessible to other players, not just the server
     private NetworkVariable<FixedString64Bytes> _clientGuid;
     private NetworkVariable<FixedString128Bytes> _playerName;
     private NetworkVariable<uint> _characterId;
@@ -111,6 +113,7 @@ public class PlayerData : NetworkBehaviour
     private void Awake()
     {
         //instantiate NetworkVariables
+        clientIdentifier = new NetworkVariable<ulong>();
         _clientGuid = new NetworkVariable<FixedString64Bytes>(Guid.NewGuid().ToString());
         _playerName = new NetworkVariable<FixedString128Bytes>(string.Empty);
         _characterId = new NetworkVariable<uint>(0);
@@ -187,6 +190,31 @@ public class PlayerData : NetworkBehaviour
         //subscribe to change events
         _playerName.OnValueChanged += OnPlayerNameChanged;
         _characterId.OnValueChanged += OnCharacterIdNetworkVarChanged;
+    }
+
+    
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+        if (!NetworkManager.Singleton.IsServer) return;
+
+        SetClientIdentifier();
+    }
+
+    private void SetClientIdentifier()
+    {
+        clientIdentifier.Value = OwnerClientId;
+
+        foreach (KeyValuePair<ulong,NetworkClient> client in NetworkManager.ConnectedClients)
+        {
+            var playerData = client.Value.PlayerObject.GetComponent<PlayerData>();
+            if (playerData.clientIdentifier.Value != client.Key)
+            {
+                Debug.Log($"Client with ID {client.Key} has a _clientId of {clientIdentifier.Value}. This is wrong.");
+            }
+        }
+
+        Debug.Log($"Set _clientId.");
     }
 
 
