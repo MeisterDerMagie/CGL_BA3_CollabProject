@@ -115,9 +115,10 @@ public class PlayerInputRR : MonoBehaviour
         recording = false;
     }
 
-    public void AccuracyStart(float bpm, int player)
+    public void AccuracyStart(float bpm, int _player)
     {
         StartCoroutine(StartAccuracy(60f / bpm / 4f));
+        player = _player;
     }
 
     IEnumerator StartAccuracy(float duration)

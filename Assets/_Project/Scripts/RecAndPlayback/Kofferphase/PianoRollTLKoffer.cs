@@ -22,6 +22,7 @@ public class PianoRollTLKoffer : MonoBehaviour
     [SerializeField] private Light _light;
     private PlayerInputRR _playerInput;
     [SerializeField] private KofferUI _ui;
+    private PianoRollParticles particles;
 
     [Space]
     public float bpm = 110f;
@@ -62,6 +63,8 @@ public class PianoRollTLKoffer : MonoBehaviour
         else _audioRoll.SetUpAllInstances();
         _playerInput = GetComponentInChildren<PlayerInputRR>();
         _playerInput.scorePlayability = false;
+
+        particles = GetComponentInChildren<PianoRollParticles>();
 
         // deactivate player input + set ui:
         SetPlayerInput(false);
@@ -151,6 +154,7 @@ public class PianoRollTLKoffer : MonoBehaviour
     {
         // start backing track
         GetComponentInChildren<BackingTrack>().StartMusic();
+        particles.TurnOnParticle(true);
 
         // reset variables:
         barTimer = _timer.timelineBar + 1;
@@ -193,7 +197,7 @@ public class PianoRollTLKoffer : MonoBehaviour
                 _playerInput.StartRecording();
         }
 
-        // if we're amout to start playing the last Player's bar --> start scoring for accuracy
+        // if we're about to start playing the last Player's bar --> start scoring for accuracy
         if (currentStage == KofferStages.RHYTHMREPEAT && _timer.timelineBeat == 8 && currentPlayer == amountPlaybackPlayers - 2)
             _playerInput.AccuracyStart(bpm, currentPlayer + 1);
 
@@ -309,8 +313,7 @@ public class PianoRollTLKoffer : MonoBehaviour
                             _ui.TurnOnLight(false);
                             _ui.PromptText("We're done now, matey!");
                             _ui.Schubidu(9);
-
-                            GetComponentInChildren<AccuracyScoring>().SendToServer(testLocally);
+                            
                             #endregion
 
                         }
@@ -352,15 +355,22 @@ public class PianoRollTLKoffer : MonoBehaviour
             case KofferStages.END:
                 if (_timer.timelineBar - barTimer >= fadeOut)
                 {
-                    Debug.Log("end of koffer stage");
+                    EndKoffer();
                 }
                 break;
         }
     }
 
-    void Schubidu()
+    void EndKoffer()
     {
+        Debug.Log("end of koffer stage");
+        GetComponentInChildren<BackingTrack>().StopMusic();
+        currentStage = KofferStages.IDLE;
+        _playerInput.active = false;
 
+        // applaus gedöns MISSING
+
+        GetComponentInChildren<AccuracyScoring>().SendToServer(testLocally);
     }
 
     void SetPlayerInput(bool _active)

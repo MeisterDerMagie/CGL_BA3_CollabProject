@@ -686,8 +686,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdae0190066ce9a47afe9540dfe222ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  networkHitFeedback: {fileID: 0}
-  localHitFeedback: {fileID: 0}
+  hitFeedback: {fileID: 0}
   dispersion: 0
   targetTimeStamps: []
   targetScoring: []
@@ -1415,7 +1414,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
