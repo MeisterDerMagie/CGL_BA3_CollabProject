@@ -188,6 +188,9 @@ public class PianoRollTLKoffer : MonoBehaviour
             else if (_timer.timelineBeat == 3) _ui.CountInText("3");
             else if (_timer.timelineBeat == 5) _ui.CountInText("2");
             else if (_timer.timelineBeat == 7) _ui.CountInText("1");
+
+            if (currentStage == KofferStages.RHYTHMREPEAT && _timer.timelineBeat == 1)
+                _playerInput.StartRecording();
         }
 
         // if we're amout to start playing the last Player's bar --> start scoring for accuracy
@@ -247,7 +250,7 @@ public class PianoRollTLKoffer : MonoBehaviour
 
                     // set player input active when going into the count in to rhythm repeat
                     SetPlayerInput(true);
-                    _playerInput.StartRecording();
+                    //_playerInput.StartRecording();
                     _ui.RecFrame(true);
                     _ui.TurnOnLight(false);
                     if (amountPlaybackPlayers == 1) _playerInput.scorePlayability = true;

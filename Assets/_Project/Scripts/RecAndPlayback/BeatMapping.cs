@@ -110,7 +110,7 @@ public class BeatMapping : MonoBehaviour
                     // timestamp of eighth is: duration of a bar (because timer starts 1 bar before first eighth) = 60/bpm is duration of a quarter note, times 4 is duration of a bar
                     // PLUS duration of a bar * which player it is * recording length
                     // PLUS eighth times duration of an eighth = 60 / bpm / 2
-                    note.timeStamp = countIn * ((60f / bpm) * 4f) + p * ((60f / bpm) * 4f) * Constants.RECORDING_LENGTH + i * ((60f / bpm) / 2f);
+                    note.timeStamp = ((60f / _bpm) * 4f) + p * ((60f / _bpm) * 4f) * Constants.RECORDING_LENGTH + i * ((60f / _bpm) / 2f);
                     note.instrumentID = _list[i].instrumentID;
                     note.playerID = p;
 
@@ -134,6 +134,31 @@ public class BeatMapping : MonoBehaviour
     public void PrepareAccuracyScoringNetwork(float _bpm, List<PlayerData> _list, int countIn)
     {
         scoring.SetUpScoringNetwork(_list);
+
+        targetScoring = new List<ScoringNote>();
+
+        // for every player in our game
+        for (int p = 0; p < _list.Count; p++)
+        {
+            // go through every eighth in their recording
+            for (int n = 0; n < _list[p].Recording.Count; n++)
+            {
+                if (_list[p].Recording[n].contains)
+                {
+                    // if the note in the recording contains --> create a new scoring note and add to list
+                    ScoringNote note = new ScoringNote();
+
+                    // timestamp of eighth is: duration of a bar (because timer starts 1 bar before first eighth) = 60/bpm is duration of a quarter note, times 4 is duration of a bar
+                    // PLUS duration of a bar * which player it is * recording length
+                    // PLUS eighth times duration of an eighth = 60 / bpm / 2
+                    note.timeStamp = ((60f / _bpm) * 4f) + p * ((60f / _bpm) * 4f) * Constants.RECORDING_LENGTH + n * ((60f / _bpm) / 2f);
+                    note.instrumentID = _list[p].Recording[n].instrumentID;
+                    note.playerID = p;
+
+                    targetScoring.Add(note);
+                }
+            }
+        }
     }
 
     public void ScoreAccuracy(RecordingNote note, bool scorePlayability, int player = 0)
