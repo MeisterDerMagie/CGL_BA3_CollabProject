@@ -406,8 +406,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: '[ 00 ]'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 28a0f107a402901409f9ae93b2964560, type: 2}
-  m_sharedMaterial: {fileID: 9078250517697275973, guid: 28a0f107a402901409f9ae93b2964560, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: eef4b878e55abd94d9a8a4e8a7532e9a, type: 2}
+  m_sharedMaterial: {fileID: -7157825288753734987, guid: eef4b878e55abd94d9a8a4e8a7532e9a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1971,8 +1971,8 @@ PrefabInstance:
     - target: {fileID: 1263212057488331792, guid: 47120a2e8d7507d4c80340413283d7a4, type: 3}
       propertyPath: m_text
       value: " Let's collect some prompt ideas!\n Remember they will be given to
-        someone else to make a composition with!\nEverything you say, can and WILL\n
-        be used against you."
+        someone else to make a composition with!\nEverything you say, can and WILL\nbe
+        used against you."
       objectReference: {fileID: 0}
     - target: {fileID: 1263212057488331792, guid: 47120a2e8d7507d4c80340413283d7a4, type: 3}
       propertyPath: m_fontSize
