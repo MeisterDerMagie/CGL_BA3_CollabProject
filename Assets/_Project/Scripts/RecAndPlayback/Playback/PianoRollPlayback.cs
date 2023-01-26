@@ -333,7 +333,8 @@ public class PianoRollPlayback : NetworkBehaviour
                     // check if last player
                     if (previewPlayer > playerDatas.Count - 1)
                     {
-                        previewStage = PlaybackStage.IDLE;
+                        previewStage = PlaybackStage.END;
+                        startPreviewBar = _timer.previewBar;
                     }
                     else
                     {
@@ -342,6 +343,9 @@ public class PianoRollPlayback : NetworkBehaviour
                     }
                 }
                 else previewBar++;
+                break;
+            case PlaybackStage.END:
+                previewStage = PlaybackStage.IDLE;
                 break;
             default:
                 break;
@@ -364,6 +368,8 @@ public class PianoRollPlayback : NetworkBehaviour
             if (previewStage == PlaybackStage.PLAYING && previewBar == 0)
                 _spawner.SpawnLine(bpm, 1, true);
             else if (previewStage == PlaybackStage.COUNTIN && previewPlayer != 0 && _timer.previewBar - startPreviewBar == 0)
+                _spawner.SpawnLine(bpm, 1, true);
+            else if (previewStage == PlaybackStage.END && _timer.previewBar - startPreviewBar == 0)
                 _spawner.SpawnLine(bpm, 1, true);
             else _spawner.SpawnLine(bpm, 1);
         }

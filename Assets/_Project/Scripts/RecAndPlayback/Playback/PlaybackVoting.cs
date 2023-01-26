@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Unity.Netcode;
+using System;
 
 /// <summary>
 /// controls the audio playback during the voting stage (when players vote for other's creativity)
@@ -21,6 +22,8 @@ public class PlaybackVoting : MonoBehaviour
 
     private List<List<Eighth>> recording;
     private int timer;
+
+    public static event Action onPlaybackEnded = delegate { };
 
     void Start()
     {
@@ -59,7 +62,11 @@ public class PlaybackVoting : MonoBehaviour
             else
             {
                 timer++;
-                if (timer > Constants.RECORDING_LENGTH - 1) playback = false;
+                if (timer > Constants.RECORDING_LENGTH - 1)
+                {
+                    onPlaybackEnded?.Invoke();
+                    playback = false;
+                }
             }
         }
 
