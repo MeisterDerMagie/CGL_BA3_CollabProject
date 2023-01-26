@@ -315,7 +315,7 @@ public class PianoRollTLKoffer : MonoBehaviour
                             barTimer = _timer.timelineBar;
                             
                             _ui.TurnOnLight(false);
-                            _ui.PromptText("We're done now, matey!");
+                            _ui.PromptText("");
                             _ui.Schubidu(9);
                             
                             #endregion
