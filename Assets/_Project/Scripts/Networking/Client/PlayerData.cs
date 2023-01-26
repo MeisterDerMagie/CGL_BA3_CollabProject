@@ -44,6 +44,7 @@ public class PlayerData : NetworkBehaviour
     public string Prompt => _prompt.Value.ToString();
     public string AssignedPrompt => _assignedPrompt.Value.ToString();
     public bool SubmittedPrompt => _submittedPrompt.Value;
+    public int BackingTrackId => _backingTrackId.Value;
     public List<int> InstrumentIds
     {
         get
@@ -101,6 +102,7 @@ public class PlayerData : NetworkBehaviour
     private NetworkVariable<FixedString512Bytes> _prompt;
     private NetworkVariable<FixedString512Bytes> _assignedPrompt;
     private NetworkVariable<bool> _submittedPrompt;
+    private NetworkVariable<int> _backingTrackId;
 
     private NetworkList<int> _instrumentIds;
     private NetworkList<Eighth> _recording;
@@ -121,6 +123,8 @@ public class PlayerData : NetworkBehaviour
         _prompt = new NetworkVariable<FixedString512Bytes>(string.Empty);
         _assignedPrompt = new NetworkVariable<FixedString512Bytes>(string.Empty);
         _submittedPrompt = new NetworkVariable<bool>(false);
+        _backingTrackId = new NetworkVariable<int>();
+        
         _instrumentIds = new NetworkList<int>();
         _recording = new NetworkList<Eighth>(writePerm: NetworkVariableWritePermission.Owner);
         _pointsCreativity = new NetworkVariable<int>(0);
@@ -387,6 +391,11 @@ public class PlayerData : NetworkBehaviour
     public void SetAssignedPrompt(string prompt)
     {
         _assignedPrompt.Value = prompt;
+    }
+
+    public void SetBackingTrackId(int backingTrackId)
+    {
+        _backingTrackId.Value = backingTrackId;
     }
 
     public void SetInstruments(List<int> instrumentIds)
