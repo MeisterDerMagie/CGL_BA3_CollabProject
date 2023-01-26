@@ -182,6 +182,7 @@ MonoBehaviour:
   - {fileID: 1616110109}
   - {fileID: 1616110108}
   - {fileID: 1616110107}
+  showScoreOnPodiumText: 1
 --- !u!1 &841015286
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,6 +245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextScene: {fileID: 11400000, guid: d50b50afe4a60f947a8c9e342d494dde, type: 2}
+  loadDelay: 1
 --- !u!1001 &1473543959
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -387,6 +389,10 @@ PrefabInstance:
     - target: {fileID: 6046905706122264679, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
       propertyPath: m_Name
       value: Screen_WaitingForOtherPlayers
+      objectReference: {fileID: 0}
+    - target: {fileID: 6046905706990376252, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}

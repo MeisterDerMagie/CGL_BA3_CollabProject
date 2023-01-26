@@ -234,8 +234,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter your prompt!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d038cb14ac94dd5408f16fb7b934f9e2, type: 2}
-  m_sharedMaterial: {fileID: 2097287856733595076, guid: d038cb14ac94dd5408f16fb7b934f9e2, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: eef4b878e55abd94d9a8a4e8a7532e9a, type: 2}
+  m_sharedMaterial: {fileID: -7157825288753734987, guid: eef4b878e55abd94d9a8a4e8a7532e9a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -269,7 +269,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 4.1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -406,8 +406,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: '[ 00 ]'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f8144fa378396d04d9ed4f50eba133b0, type: 2}
-  m_sharedMaterial: {fileID: 7273621228614831439, guid: f8144fa378396d04d9ed4f50eba133b0, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 28a0f107a402901409f9ae93b2964560, type: 2}
+  m_sharedMaterial: {fileID: 9078250517697275973, guid: 28a0f107a402901409f9ae93b2964560, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -541,15 +541,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Mr.Schubidu
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d038cb14ac94dd5408f16fb7b934f9e2, type: 2}
-  m_sharedMaterial: {fileID: 2097287856733595076, guid: d038cb14ac94dd5408f16fb7b934f9e2, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: eef4b878e55abd94d9a8a4e8a7532e9a, type: 2}
+  m_sharedMaterial: {fileID: -7157825288753734987, guid: eef4b878e55abd94d9a8a4e8a7532e9a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4282388262
+  m_fontColor: {r: 0.14901961, g: 0.058823533, b: 0.2509804, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -566,8 +566,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 57
-  m_fontSizeBase: 57
+  m_fontSize: 60.67
+  m_fontSizeBase: 60.67
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -576,7 +576,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 4
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -776,8 +776,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: '[Your Prompt]'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: eef4b878e55abd94d9a8a4e8a7532e9a, type: 2}
+  m_sharedMaterial: {fileID: -7157825288753734987, guid: eef4b878e55abd94d9a8a4e8a7532e9a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -811,7 +811,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 4.1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -891,8 +891,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Nah c'mon, you can do better than that...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d038cb14ac94dd5408f16fb7b934f9e2, type: 2}
-  m_sharedMaterial: {fileID: 2097287856733595076, guid: d038cb14ac94dd5408f16fb7b934f9e2, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: eef4b878e55abd94d9a8a4e8a7532e9a, type: 2}
+  m_sharedMaterial: {fileID: -7157825288753734987, guid: eef4b878e55abd94d9a8a4e8a7532e9a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -926,7 +926,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 4.1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1896,6 +1896,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas_Schubidu_comments
       objectReference: {fileID: 0}
+    - target: {fileID: 1263212056485310175, guid: 47120a2e8d7507d4c80340413283d7a4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1263212057348649559, guid: 47120a2e8d7507d4c80340413283d7a4, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1966,17 +1970,53 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: ed073a9386c3c1f45a33009a9bfbcf94, type: 3}
     - target: {fileID: 1263212057488331792, guid: 47120a2e8d7507d4c80340413283d7a4, type: 3}
       propertyPath: m_text
-      value: " Let's collect some prompt ideas! Remember they will be given to someone
-        else to make a composition with! Everything you say, can and WILL be \nused
-        against you."
+      value: " Let's collect some prompt ideas!\n Remember they will be given to
+        someone else to make a composition with!\nEverything you say, can and WILL\n
+        be used against you."
       objectReference: {fileID: 0}
     - target: {fileID: 1263212057488331792, guid: 47120a2e8d7507d4c80340413283d7a4, type: 3}
       propertyPath: m_fontSize
       value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 1263212057488331792, guid: 47120a2e8d7507d4c80340413283d7a4, type: 3}
+      propertyPath: m_margin.w
+      value: 161.92429
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263212057488331792, guid: 47120a2e8d7507d4c80340413283d7a4, type: 3}
+      propertyPath: m_margin.x
+      value: 20.948364
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263212057488331792, guid: 47120a2e8d7507d4c80340413283d7a4, type: 3}
+      propertyPath: m_margin.y
+      value: 175.60913
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263212057488331792, guid: 47120a2e8d7507d4c80340413283d7a4, type: 3}
+      propertyPath: m_margin.z
+      value: -77.362946
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263212057488331792, guid: 47120a2e8d7507d4c80340413283d7a4, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.7264151
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263212057488331792, guid: 47120a2e8d7507d4c80340413283d7a4, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.20901564
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263212057488331792, guid: 47120a2e8d7507d4c80340413283d7a4, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.29735205
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263212057488331792, guid: 47120a2e8d7507d4c80340413283d7a4, type: 3}
       propertyPath: m_fontSizeBase
       value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263212057488331792, guid: 47120a2e8d7507d4c80340413283d7a4, type: 3}
+      propertyPath: m_characterSpacing
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263212057488331792, guid: 47120a2e8d7507d4c80340413283d7a4, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4290327884
       objectReference: {fileID: 0}
     - target: {fileID: 1263212057488331792, guid: 47120a2e8d7507d4c80340413283d7a4, type: 3}
       propertyPath: m_HorizontalAlignment
@@ -1992,7 +2032,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1263212057488331793, guid: 47120a2e8d7507d4c80340413283d7a4, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -45.000015
+      value: -40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5295915813914112790, guid: 47120a2e8d7507d4c80340413283d7a4, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 47120a2e8d7507d4c80340413283d7a4, type: 3}
@@ -2135,6 +2179,18 @@ PrefabInstance:
     - target: {fileID: 123467069252663599, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 2459865895
+      objectReference: {fileID: 0}
+    - target: {fileID: 188007645412314145, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: eef4b878e55abd94d9a8a4e8a7532e9a, type: 2}
+    - target: {fileID: 188007645412314145, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -7157825288753734987, guid: eef4b878e55abd94d9a8a4e8a7532e9a, type: 2}
+    - target: {fileID: 188007645412314145, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
+      propertyPath: m_characterSpacing
+      value: 4.1
       objectReference: {fileID: 0}
     - target: {fileID: 217767772978836889, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
       propertyPath: GlobalObjectIdHash
@@ -2290,7 +2346,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6046905706990376252, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6478454995890501737, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
       propertyPath: GlobalObjectIdHash
