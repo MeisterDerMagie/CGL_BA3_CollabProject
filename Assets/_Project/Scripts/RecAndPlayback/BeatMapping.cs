@@ -183,9 +183,7 @@ public class BeatMapping : MonoBehaviour
         //_type = type; // for testing
         networkHitFeedback.SendHitFeedback(type);
         localHitFeedback.ShowFeedback(type);
-
-        Debug.Log($"ScoreAccuracy: {type.ToString()}");
-
+        
         // send over to score accuracy and playability:
         scoring.Score(type);
         if (scorePlayability) scoring.ScorePlayability(type, player);

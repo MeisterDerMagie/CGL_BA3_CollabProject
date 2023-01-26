@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Wichtel.Extensions;
@@ -11,6 +12,7 @@ public class ChatUI : MonoBehaviour
     [SerializeField] private RectTransform chatWindow;
     [SerializeField] private Image scrim;
     [SerializeField] private RectTransform newMessagePopup, newMessagePopupContainer;
+    [SerializeField] private TMP_InputField inputField;
 
     [SerializeField] private float animDuration = 0.5f;
     [SerializeField] private Ease ease;
@@ -41,6 +43,13 @@ public class ChatUI : MonoBehaviour
         _chatWindowTween?.Kill();
         _scrimTween?.Kill();
 
+        //activate inputField
+        inputField.interactable = true;
+        
+        //focus inputField
+        inputField.Select();
+        inputField.ActivateInputField();
+
         //activate scrim
         scrim.raycastTarget = true;
         _scrimTween = scrim.DOFade(_scrimDefaultAlpha, animDuration/2f).SetEase(Ease.Linear);
@@ -59,6 +68,9 @@ public class ChatUI : MonoBehaviour
     {
         _chatWindowTween?.Kill();
         _scrimTween?.Kill();
+        
+        //deactivate inputField
+        inputField.interactable = false;
 
         //deactivate scrim
         //scrim.gameObject.SetActive(false);

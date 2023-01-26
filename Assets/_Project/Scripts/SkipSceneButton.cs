@@ -11,7 +11,7 @@ public class SkipSceneButton : MonoBehaviour
     
     private void OnGUI()
     {
-        if (NetworkManager.Singleton != null || !NetworkManager.Singleton.IsServer)
+        if (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsServer)
             return;
         
         GUILayout.BeginArea(new Rect(10, 10, 300, 300));

@@ -19,6 +19,14 @@ public class Podium_PlayComposition : NetworkBehaviour
         _composition = new NetworkList<Eighth>();
 
         _allPodiumPlayCompositions = FindObjectsOfType<Podium_PlayComposition>().ToList();
+        
+        //stop when playback ended
+        playbackVoting.onPlaybackEnded += Stop;
+    }
+
+    public override void OnDestroy()
+    {
+        playbackVoting.onPlaybackEnded -= Stop;
     }
 
     public void SetComposition(List<Eighth> composition)

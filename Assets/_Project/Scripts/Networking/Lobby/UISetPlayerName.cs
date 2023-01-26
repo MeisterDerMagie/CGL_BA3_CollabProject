@@ -35,8 +35,6 @@ public class UISetPlayerName : MonoBehaviour
             wait = false;
             yield return Timing.WaitForOneFrame;
         }
-
-        Debug.Log("ended poll for player name");
     }
 
     private void Update()
