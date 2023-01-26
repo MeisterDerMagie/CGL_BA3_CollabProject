@@ -458,8 +458,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 479, y: -54}
-  m_SizeDelta: {x: 948.8, y: 53.8}
+  m_AnchoredPosition: {x: 708, y: -59}
+  m_SizeDelta: {x: 1333.5654, y: 60.4569}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &188737108
 MonoBehaviour:
@@ -508,8 +508,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 17.8
-  m_fontSizeBase: 17.8
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5749,8 +5749,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 174, y: -69}
-  m_SizeDelta: {x: 37.676575, y: 50}
+  m_AnchoredPosition: {x: 588.8, y: -135.01}
+  m_SizeDelta: {x: 50.7834, y: 52.955}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &646306778
 MonoBehaviour:
@@ -5799,8 +5799,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 27
-  m_fontSizeBase: 27
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -6646,7 +6646,7 @@ GameObject:
   - component: {fileID: 794541448}
   - component: {fileID: 794541447}
   m_Layer: 5
-  m_Name: img_bg
+  m_Name: LobbyCodeSchild
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6685,7 +6685,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.85882354}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6968,7 +6968,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -7840,8 +7840,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 205, y: -76}
-  m_SizeDelta: {x: 396.6, y: 50}
+  m_AnchoredPosition: {x: 291.1955, y: -135.01392}
+  m_SizeDelta: {x: 506.991, y: 52.9572}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1409899153
 MonoBehaviour:
@@ -7890,8 +7890,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 17.8
-  m_fontSizeBase: 17.8
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -8511,7 +8511,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -9904,6 +9904,10 @@ PrefabInstance:
     - target: {fileID: 5546650576938951393, guid: 9c6b4507418f32c4cbbb5cdb432ca6fe, type: 3}
       propertyPath: m_Name
       value: Canvas_Schubidu_comments
+      objectReference: {fileID: 0}
+    - target: {fileID: 5546650576938951393, guid: 9c6b4507418f32c4cbbb5cdb432ca6fe, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5546650576938951397, guid: 9c6b4507418f32c4cbbb5cdb432ca6fe, type: 3}
       propertyPath: m_Pivot.x

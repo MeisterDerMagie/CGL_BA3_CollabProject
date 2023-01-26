@@ -23,7 +23,7 @@ public class PlaybackVoting : MonoBehaviour
     private List<List<Eighth>> recording;
     private int timer;
 
-    public static event Action onPlaybackEnded = delegate { };
+    public event Action onPlaybackEnded = delegate { };
 
     void Start()
     {

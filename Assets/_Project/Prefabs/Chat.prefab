@@ -355,6 +355,7 @@ MonoBehaviour:
   scrim: {fileID: 6948826038825481460}
   newMessagePopup: {fileID: 6948826039044649316}
   newMessagePopupContainer: {fileID: 6948826039673864268}
+  inputField: {fileID: 6948826038945272108}
   animDuration: 0.5
   ease: 10
 --- !u!114 &7854837736117072436

@@ -570,7 +570,7 @@ GameObject:
   - component: {fileID: 888726415}
   - component: {fileID: 888726414}
   m_Layer: 0
-  m_Name: DevelopmentBuild_SkipScene
+  m_Name: Server_SkipScene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -73,7 +73,6 @@ public class VoteCreativity : NetworkBehaviour
         
         
         //if either all players awarded three votes or there are no more votes that can be awarded, load the next scene
-        Debug.Log("All votes were awarded. Load next scene.");
         NetworkSceneLoading.LoadNetworkScene(nextScene, LoadSceneMode.Single);
     }
 
@@ -87,7 +86,6 @@ public class VoteCreativity : NetworkBehaviour
         if (stageController.GetClientIdAssignedToPodium(podiumIndex) == NetworkManager.LocalClientId)
         {
             onUserTriedToVoteForThemselves.Invoke();
-            Debug.Log("Player tried to vote for themselves");
             return;
         }
         
@@ -98,15 +96,12 @@ public class VoteCreativity : NetworkBehaviour
         _awardedVotesClient.Add(podiumIndex);
         AwardVoteServerRpc(NetworkManager.LocalClientId, podiumIndex);
         
-        Debug.Log("Award vote client");
-        
         //show UI feedback
         lightsController.ForceLightPower(podiumIndex, 1f);
         
         //now, if you voted for three players, wait then show waiting screen
         if (_awardedVotesClient.Count >= 3)
         {
-            Debug.Log($"(Client) Player {NetworkManager.LocalClientId.ToString()} voted three times. Show them the waiting screen.");
             waitingScreen.Show();
         }
     }
@@ -115,8 +110,6 @@ public class VoteCreativity : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void AwardVoteServerRpc(ulong votingClient, int podiumIndex)
     {
-        Debug.Log("award vote server");
-        
         //the client who gets the points
         ulong clientWhoWasVotedFor = stageController.GetClientIdAssignedToPodium(podiumIndex);
 
@@ -129,7 +122,6 @@ public class VoteCreativity : NetworkBehaviour
             if (client.Key != clientWhoWasVotedFor) continue;
 
             client.Value.PlayerObject.GetComponent<PlayerData>().AddPointsCreativity(points);
-            Debug.Log($"Player {client.Key.ToString()} received {points.ToString()} creativity points and now has a total of {client.Value.PlayerObject.GetComponent<PlayerData>().PointsCreativity.ToString()} creativity points.");
         }
 
         //remember who was voted for
@@ -141,7 +133,6 @@ public class VoteCreativity : NetworkBehaviour
         //then if the voting player voted three times, show them the waiting screen
         if (_awardedVotes[votingClient].Count >= 3)
         {
-            Debug.Log($"(Server) Player {votingClient.ToString()} voted three times. Show them the waiting screen.");
             waitingScreen.ClientAwardedAllVotes(votingClient);
         }
     }
