@@ -253,6 +253,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6423adbf6bc71de4498b5d5dcb8c6c0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _loadNext: {fileID: 0}
+  _waitScreen: {fileID: 0}
   buttons:
   - {fileID: 0}
   - {fileID: 0}
@@ -270,8 +272,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdae0190066ce9a47afe9540dfe222ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  networkHitFeedback: {fileID: 0}
+  localHitFeedback: {fileID: 0}
   dispersion: 0
-  compareTo: []
+  targetTimeStamps: []
+  targetScoring: []
+  hit: 0.034
+  almost: 0.103
+  latency: 0
+  _type: 0
 --- !u!114 &68763268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,8 +298,8 @@ MonoBehaviour:
   _audioRoll: {fileID: 911255744}
   recFrame: {fileID: 349542584}
   recordingState: 0
-  recordedBar: []
   stageEnded: 0
+  buttonCooldown: 0.1
 --- !u!1 &156527603
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,147 +475,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _display: {fileID: 900555320}
+  _light: {fileID: 0}
+  _loadNext: {fileID: 0}
   bpm: 110
   countIn: 2
   barsBetween: 3
+  time: 2.5
+  fadeOut: 2
   playerDatas: []
-  bars:
-  - eighth:
-    - contains: 1
-      instrumentID: 0
-    - contains: 0
-      instrumentID: 0
-    - contains: 1
-      instrumentID: 1
-    - contains: 0
-      instrumentID: 0
-    - contains: 1
-      instrumentID: 2
-    - contains: 0
-      instrumentID: 0
-    - contains: 1
-      instrumentID: 3
-    - contains: 0
-      instrumentID: 0
-  - eighth:
-    - contains: 1
-      instrumentID: 0
-    - contains: 0
-      instrumentID: 0
-    - contains: 1
-      instrumentID: 0
-    - contains: 0
-      instrumentID: 0
-    - contains: 0
-      instrumentID: 0
-    - contains: 0
-      instrumentID: 0
-    - contains: 1
-      instrumentID: 0
-    - contains: 1
-      instrumentID: 3
-  - eighth:
-    - contains: 1
-      instrumentID: 0
-    - contains: 0
-      instrumentID: 0
-    - contains: 1
-      instrumentID: 0
-    - contains: 0
-      instrumentID: 0
-    - contains: 1
-      instrumentID: 0
-    - contains: 1
-      instrumentID: 0
-    - contains: 0
-      instrumentID: 0
-    - contains: 1
-      instrumentID: 0
-  - eighth:
-    - contains: 1
-      instrumentID: 0
-    - contains: 0
-      instrumentID: 0
-    - contains: 0
-      instrumentID: 0
-    - contains: 0
-      instrumentID: 0
-    - contains: 1
-      instrumentID: 0
-    - contains: 0
-      instrumentID: 0
-    - contains: 0
-      instrumentID: 0
-    - contains: 0
-      instrumentID: 0
-  - eighth:
-    - contains: 0
-      instrumentID: 0
-    - contains: 1
-      instrumentID: 0
-    - contains: 0
-      instrumentID: 0
-    - contains: 1
-      instrumentID: 0
-    - contains: 0
-      instrumentID: 0
-    - contains: 1
-      instrumentID: 0
-    - contains: 0
-      instrumentID: 0
-    - contains: 1
-      instrumentID: 0
-  - eighth:
-    - contains: 1
-      instrumentID: 0
-    - contains: 1
-      instrumentID: 1
-    - contains: 1
-      instrumentID: 2
-    - contains: 1
-      instrumentID: 3
-    - contains: 1
-      instrumentID: 3
-    - contains: 1
-      instrumentID: 2
-    - contains: 1
-      instrumentID: 1
-    - contains: 1
-      instrumentID: 0
-  - eighth:
-    - contains: 1
-      instrumentID: 2
-    - contains: 0
-      instrumentID: 0
-    - contains: 0
-      instrumentID: 0
-    - contains: 0
-      instrumentID: 0
-    - contains: 1
-      instrumentID: 3
-    - contains: 0
-      instrumentID: 0
-    - contains: 1
-      instrumentID: 0
-    - contains: 0
-      instrumentID: 0
-  - eighth:
-    - contains: 0
-      instrumentID: 0
-    - contains: 0
-      instrumentID: 0
-    - contains: 0
-      instrumentID: 0
-    - contains: 1
-      instrumentID: 0
-    - contains: 0
-      instrumentID: 0
-    - contains: 0
-      instrumentID: 0
-    - contains: 1
-      instrumentID: 0
-    - contains: 0
-      instrumentID: 0
 --- !u!1 &213306202
 GameObject:
   m_ObjectHideFlags: 0
@@ -885,7 +761,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bpm: 120
-  bars: []
 --- !u!114 &294009755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -902,8 +777,8 @@ MonoBehaviour:
   timelineBeat: 0
   previewBar: 0
   timelineBar: 0
-  resetPrevCounter: 3
   stage: 0
+  csWriter: {fileID: 0}
 --- !u!1 &349542584
 GameObject:
   m_ObjectHideFlags: 0
@@ -1374,8 +1249,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdae0190066ce9a47afe9540dfe222ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  networkHitFeedback: {fileID: 0}
+  localHitFeedback: {fileID: 0}
   dispersion: 0
-  compareTo: []
+  targetTimeStamps: []
+  targetScoring: []
+  hit: 0.034
+  almost: 0.103
+  latency: 0
+  _type: 0
 --- !u!114 &738560281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1393,8 +1275,8 @@ MonoBehaviour:
   _audioRoll: {fileID: 1515797437}
   recFrame: {fileID: 1386667388}
   recordingState: 0
-  recordedBar: []
   stageEnded: 0
+  buttonCooldown: 0.1
 --- !u!114 &738560282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1407,6 +1289,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6423adbf6bc71de4498b5d5dcb8c6c0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _loadNext: {fileID: 0}
+  _waitScreen: {fileID: 0}
   buttons:
   - {fileID: 0}
   - {fileID: 0}
@@ -1664,7 +1548,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bpm: 120
-  bars: []
 --- !u!114 &894518016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1681,8 +1564,8 @@ MonoBehaviour:
   timelineBeat: 0
   previewBar: 0
   timelineBar: 0
-  resetPrevCounter: 3
   stage: 0
+  csWriter: {fileID: 0}
 --- !u!1 &900555318
 GameObject:
   m_ObjectHideFlags: 0
@@ -1730,8 +1613,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fce89ea82a854948bde329437b4472e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightOn: {fileID: 1371273134}
-  lightOff: {fileID: 1205572120}
   prompt: {fileID: 1874231153}
   playerName: {fileID: 1046074954}
   playerImage: {fileID: 1319541449}
@@ -1765,6 +1646,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4473800c27ae3de489587f7a10e77240, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  events: []
 --- !u!114 &911255745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1783,9 +1665,10 @@ MonoBehaviour:
       Data2: 1197749216
       Data3: 1377092251
       Data4: -121171411
-    Path: event:/Music/BackingTrack
+    Path: event:/Music/AngryBirds88
   lastBeat: 0
   lastBar: 0
+  startUnity: -1
 --- !u!4 &911255746
 Transform:
   m_ObjectHideFlags: 0
@@ -2933,6 +2816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4473800c27ae3de489587f7a10e77240, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  events: []
 --- !u!114 &1515797438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2951,9 +2835,10 @@ MonoBehaviour:
       Data2: 1197749216
       Data3: 1377092251
       Data4: -121171411
-    Path: event:/Music/BackingTrack
+    Path: event:/Music/AngryBirds88
   lastBeat: 0
   lastBar: 0
+  startUnity: -1
 --- !u!4 &1515797439
 Transform:
   m_ObjectHideFlags: 0

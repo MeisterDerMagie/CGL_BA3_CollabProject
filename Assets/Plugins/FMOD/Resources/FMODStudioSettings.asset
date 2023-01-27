@@ -646,6 +646,7 @@ MonoBehaviour:
   - Desktop/Bank A
   - Desktop/Music
   - Desktop/Samples
+  - Desktop/UI
   BanksToLoad: []
   LiveUpdatePort: 9264
   EnableMemoryTracking: 0
