@@ -7330,11 +7330,11 @@ MonoBehaviour:
   delay: 0.5
   characterChange:
     Guid:
-      Data1: 329856704
-      Data2: 1160530532
-      Data3: 746446750
-      Data4: 314075505
-    Path: event:/UI/Buttons/Swoosh 4
+      Data1: -452198396
+      Data2: 1171267257
+      Data3: 1944182922
+      Data4: 296124824
+    Path: event:/UI/Buttons/Button
 --- !u!4 &1005551574
 Transform:
   m_ObjectHideFlags: 0

@@ -587,6 +587,7 @@ GameObject:
   - component: {fileID: 9213552980660792352}
   - component: {fileID: 3416381829466210346}
   - component: {fileID: 787605811322378297}
+  - component: {fileID: 8326403867021958480}
   m_Layer: 0
   m_Name: Podium
   m_TagString: Untagged
@@ -682,6 +683,36 @@ MonoBehaviour:
   onMouseUp:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8326403867021958480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9213552980660792357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1964006033
+      Data2: 1131793588
+      Data3: -2122232135
+      Data4: 672451224
+    Path: event:/UI/Buttons/Button 2
+  Event: 
+  PlayEvent: 13
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &9213552981383122837
 GameObject:
   m_ObjectHideFlags: 0
