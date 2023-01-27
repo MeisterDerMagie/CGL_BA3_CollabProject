@@ -283,6 +283,7 @@ public class NoteSpawner : MonoBehaviour
 
     public void ActivateStartLine()
     {
+        if (startRecLine == null) return;
         startRecLine.GetComponent<Notes>().StartLine(true);
         startRecLine.GetComponent<Notes>().isStartingLine = true;
     }

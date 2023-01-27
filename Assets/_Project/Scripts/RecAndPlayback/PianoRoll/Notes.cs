@@ -142,18 +142,18 @@ public class Notes : MonoBehaviour
     // used during recording stage to make the beginning and end of the bar clearly visible 
     public void StartLine(bool value)
     {
-        if (startLine == null) return;
-        startLine.SetActive(value);
+        if (startLine != null)
+            startLine.SetActive(value);
         if (fatLine != null) fatLine.SetActive(!value);
-        visuals.SetActive(!value);
+        if (startLine != null) visuals.SetActive(!value);
     }
 
     public void FatLine(bool value)
     {
-        if (fatLine == null) return;
-        fatLine.SetActive(value);
+        if (fatLine != null)
+            fatLine.SetActive(value);
         if (startLine != null) startLine.SetActive(!value);
-        visuals.SetActive(!value);
-        isFatLine = value;
+        if (fatLine != null) visuals.SetActive(!value);
+        if (fatLine != null) isFatLine = value;
     }
 }

@@ -149,7 +149,7 @@ public class PianoRollRecording : MonoBehaviour
     {
         if (_timer.previewBeat == 1)
         {
-            if (stage == RecPBStage.PBNOAUDIO || stage == RecPBStage.PBWAITAUDIO || stage == RecPBStage.PBWITHAUDIO && previewBar == 0)
+            if ((stage == RecPBStage.PBNOAUDIO || stage == RecPBStage.PBWAITAUDIO || stage == RecPBStage.PBWITHAUDIO) && previewBar == 0)
             {
                 _spawner.SpawnLine(bpm, 1, true);
             }
