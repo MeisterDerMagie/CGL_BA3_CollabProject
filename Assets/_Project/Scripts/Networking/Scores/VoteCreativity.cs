@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using FMODUnity;
 using MEC;
 using Unity.Netcode;
 using UnityEngine;
@@ -14,6 +14,8 @@ public class VoteCreativity : NetworkBehaviour
     [SerializeField] private LightsController lightsController;
     [SerializeField] private WaitingScreenController_VoteForCreativity waitingScreen;
     [SerializeField] private NetworkSceneLoader nextScene;
+    [SerializeField] private EventReference soundFirstVote, soundSecondVote, soundThirdVote;
+    [SerializeField] private BackingTrack backingTrack;
     
     //SERVER
     private Dictionary<ulong, List<ulong>> _awardedVotes = new();
@@ -99,10 +101,23 @@ public class VoteCreativity : NetworkBehaviour
         //show UI feedback
         lightsController.ForceLightPower(podiumIndex, 1f);
         
-        //now, if you voted for three players, wait then show waiting screen
+        //play sound
+        if(_awardedVotesClient.Count == 1) RuntimeManager.PlayOneShot(soundFirstVote);
+        if(_awardedVotesClient.Count == 2) RuntimeManager.PlayOneShot(soundSecondVote);
+        if(_awardedVotesClient.Count == 3) RuntimeManager.PlayOneShot(soundThirdVote);
+        
+        //now, if you voted for three players ...
         if (_awardedVotesClient.Count >= 3)
         {
+            //... show waiting screen
             waitingScreen.Show();
+            
+            //... stop backing track
+            backingTrack.StopMusic();
+            
+            //... play ambience and main theme
+            PersistentAudioManager.Singleton.FadeInMainTheme();
+            PersistentAudioManager.Singleton.FadeInAmbience();
         }
     }
 
