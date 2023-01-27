@@ -1,6 +1,7 @@
 ﻿//(c) copyright by Martin M. Klöckener
 using System.Collections;
 using System.Collections.Generic;
+using FMODUnity;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -9,5 +10,6 @@ public class Character : ScriptableObject
 {
     public uint characterId;
     public Sprite characterImage;
+    public EventReference catchPhrase;
     public Sprite characterIcon;
 }

@@ -14,4 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterId: 0
   characterImage: {fileID: 21300000, guid: a79e77cecd8b0754c9b2f3d849dfd46f, type: 3}
+  catchPhrase:
+    Guid:
+      Data1: -1373674276
+      Data2: 1100376935
+      Data3: 324265605
+      Data4: 1296918658
+    Path: event:/UI/Characters/Cat
   characterIcon: {fileID: 21300000, guid: 5af3db38a296ba64db46e8fc5c86fee3, type: 3}
