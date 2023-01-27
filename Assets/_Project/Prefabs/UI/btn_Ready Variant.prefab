@@ -125,7 +125,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3635035986634108061, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3635035986634108061, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -133,7 +133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3635035986634108061, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3635035986634108061, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
@@ -146,7 +146,7 @@ PrefabInstance:
     - target: {fileID: 3635035986634108061, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 6197469590199876283}
+      objectReference: {fileID: 1455249407037761405}
     - target: {fileID: 3635035986634108061, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
@@ -169,7 +169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3635035986634108061, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: SetActive
+      value: Play
       objectReference: {fileID: 0}
     - target: {fileID: 3635035986634108061, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
@@ -181,7 +181,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3635035986634108061, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: UnityEngine.GameObject, UnityEngine
+      value: FMODUnity.StudioEventEmitter, FMODUnity
       objectReference: {fileID: 0}
     - target: {fileID: 3635035986634108061, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
@@ -207,6 +207,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -1.300003
       objectReference: {fileID: 0}
+    - target: {fileID: 6270723700594726647, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
+      propertyPath: EventReference.Path
+      value: event:/UI/Buttons/PourDrink
+      objectReference: {fileID: 0}
+    - target: {fileID: 6270723700594726647, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
+      propertyPath: EventReference.Guid.Data1
+      value: 1013031217
+      objectReference: {fileID: 0}
+    - target: {fileID: 6270723700594726647, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
+      propertyPath: EventReference.Guid.Data2
+      value: 1108695541
+      objectReference: {fileID: 0}
+    - target: {fileID: 6270723700594726647, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
+      propertyPath: EventReference.Guid.Data3
+      value: -334219631
+      objectReference: {fileID: 0}
+    - target: {fileID: 6270723700594726647, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
+      propertyPath: EventReference.Guid.Data4
+      value: -1233289598
+      objectReference: {fileID: 0}
     - target: {fileID: 6785176864020347185, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
       propertyPath: m_Type
       value: 1
@@ -229,6 +249,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
+--- !u!114 &1455249407037761405 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6270723700594726647, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
+  m_PrefabInstance: {fileID: 4842495892261384586}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6197469590199876283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6197469590199876283 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1528362509363383089, guid: ae1bb1d159cc22e48ab6dcc2127e3a68, type: 3}
