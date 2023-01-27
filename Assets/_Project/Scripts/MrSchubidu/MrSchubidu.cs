@@ -19,6 +19,9 @@ public class MrSchubidu : MonoBehaviour
     [SerializeField, Min(0.01f)] private float textAnimationSpeed = 1f;
     [SerializeField] private UnityEvent onSchubiduFinished;
 
+    [Title("Sounds")]
+    [SerializeField] private EventReference inSound, outSound, nextSound, skipTextAnimationSound;
+    
     [Title("Animations")]
     [SerializeField] private AnimatorStateReference schubiduIn;
     [SerializeField] private AnimatorStateReference schubiduOut, speechbubbleNextLine, schubiduIdle, schubiduTalking;
@@ -51,6 +54,7 @@ public class MrSchubidu : MonoBehaviour
             _textAnimation?.Kill();
             _isAnimating = false;
             speechbubbleTextField.maxVisibleCharacters = speechbubbleTextField.textInfo.characterCount;
+            RuntimeManager.PlayOneShot(skipTextAnimationSound);
             schubiduIdle.Play();
             return;
         }
@@ -62,7 +66,7 @@ public class MrSchubidu : MonoBehaviour
             Kill();
             return;
         }
-
+        
         //get line
         DialogLine line = dialogLines[_currentLine];
         
@@ -85,6 +89,9 @@ public class MrSchubidu : MonoBehaviour
             schubiduIdle.Play();
         });
 
+        //play sound
+        RuntimeManager.PlayOneShot(nextSound);
+        
         //play animations
         speechbubbleNextLine.Play();
         schubiduTalking.Play();
@@ -119,6 +126,9 @@ public class MrSchubidu : MonoBehaviour
 
     private IEnumerator<float> _AnimSchubiduIn()
     {
+        //play in-sound
+        RuntimeManager.PlayOneShot(inSound);
+        
         //play in-animation
         yield return Timing.WaitUntilDone(Timing.RunCoroutine(schubiduIn._Play().CancelWith(gameObject)));
         
@@ -128,7 +138,10 @@ public class MrSchubidu : MonoBehaviour
     
     private IEnumerator<float> _AnimSchubiduOutAndDestroy()
     {
-        //anim out
+        //play out-sound
+        RuntimeManager.PlayOneShot(outSound);
+
+            //anim out
         yield return Timing.WaitUntilDone(Timing.RunCoroutine(schubiduOut._Play().CancelWith(gameObject)));
 
         //call finished event
