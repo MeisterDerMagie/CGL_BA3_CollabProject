@@ -1159,6 +1159,7 @@ GameObject:
   - component: {fileID: 9083059063066602022}
   - component: {fileID: 5998613724578698933}
   - component: {fileID: 455883827109763921}
+  - component: {fileID: 6359201866897312793}
   m_Layer: 0
   m_Name: LobbySeat
   m_TagString: Untagged
@@ -1241,6 +1242,26 @@ MonoBehaviour:
   onNewCharacterSelected:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6359201866897312793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6325279452668649170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f8a7f0bc743fd74bb09fd99aa6a203d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 0.5
+  characterChange:
+    Guid:
+      Data1: 329856704
+      Data2: 1160530532
+      Data3: 746446750
+      Data4: 314075505
+    Path: event:/UI/Buttons/Swoosh 4
 --- !u!1 &6325279453342909295
 GameObject:
   m_ObjectHideFlags: 0

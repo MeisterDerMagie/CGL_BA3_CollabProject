@@ -8,7 +8,13 @@ using UnityEngine.Events;
 public class UISetCharacter : MonoBehaviour
 {
     [SerializeField] private UnityEvent onNewCharacterSelected;
-    
+    private CharacterCatchphrase catchphrase;
+
+    private void Start()
+    {
+        catchphrase = GetComponent<CharacterCatchphrase>();
+    }
+
     public void NextCharacter()
     {
         if (NetworkManager.Singleton.IsServer)
@@ -19,6 +25,8 @@ public class UISetCharacter : MonoBehaviour
 
         onNewCharacterSelected.Invoke();
         PlayerData.LocalPlayerData.SetCharacterId(CharacterManager.Instance.GetNextId(PlayerData.LocalPlayerData.CharacterId));
+        catchphrase.PlayCharacterChange();
+        catchphrase.PlayCatchphrase();
     }
 
     public void PreviousCharacter()
@@ -31,5 +39,7 @@ public class UISetCharacter : MonoBehaviour
 
         onNewCharacterSelected.Invoke();
         PlayerData.LocalPlayerData.SetCharacterId(CharacterManager.Instance.GetPreviousId(PlayerData.LocalPlayerData.CharacterId));
+        catchphrase.PlayCharacterChange();
+        catchphrase.PlayCatchphrase();
     }
 }
