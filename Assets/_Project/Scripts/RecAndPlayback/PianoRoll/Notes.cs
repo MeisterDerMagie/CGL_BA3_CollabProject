@@ -133,9 +133,9 @@ public class Notes : MonoBehaviour
         }
         else
         {
-            if (isStartingLine && startLine != null) startLine.SetActive(false);
-            else if (isFatLine && fatLine != null) fatLine.SetActive(false);
-            else visuals.SetActive(false);
+            if (startLine != null) startLine.SetActive(false);
+            if (fatLine != null) fatLine.SetActive(false);
+            visuals.SetActive(false);
         }
     }
 

@@ -25,6 +25,7 @@ public class BeatMapping : MonoBehaviour
     public float latency;
 
     public ScoringType _type;
+    int lastComparedNote;
 
     [Serializable]
     public enum ScoringType
@@ -46,6 +47,7 @@ public class BeatMapping : MonoBehaviour
     {
         _recordInput = GetComponent<RecordInput>();
         scoring = GetComponent<AccuracyScoring>();
+        lastComparedNote = -1;
     }
 
     public void SetUp(float _bpm)
@@ -171,12 +173,20 @@ public class BeatMapping : MonoBehaviour
             // check if it was a hit
             if (note.timeStamp >= targetScoring[i].timeStamp + (latency/1000f) - (hit/1000f) && note.timeStamp <= targetScoring[i].timeStamp + (latency / 1000f) + (hit / 1000f))
             {
-                if (note.soundID == targetScoring[i].instrumentID) type = ScoringType.HIT;
+                if (note.soundID == targetScoring[i].instrumentID && lastComparedNote != i)
+                {
+                    type = ScoringType.HIT;
+                    lastComparedNote = i;
+                }
             }
             // check if it was almost a hit
             else if (note.timeStamp >= targetScoring[i].timeStamp + (latency / 1000f) - (almost / 1000f) && note.timeStamp <= targetScoring[i].timeStamp + (latency / 1000f) + (almost / 1000f))
             {
-                if (note.soundID == targetScoring[i].instrumentID) type = ScoringType.ALMOST;
+                if (note.soundID == targetScoring[i].instrumentID && lastComparedNote != i)
+                {
+                    type = ScoringType.ALMOST;
+                    lastComparedNote = i;
+                }
             }
         }
 
@@ -187,6 +197,11 @@ public class BeatMapping : MonoBehaviour
         // send over to score accuracy and playability:
         scoring.Score(type);
         if (scorePlayability) scoring.ScorePlayability(type, player);
+    }
+
+    public void ResetLastComparedNote()
+    {
+        lastComparedNote = -1;
     }
 
     public void LatencyTestScoring(float isTimeDate, float isTimeUnity)

@@ -295,7 +295,6 @@ public class RecordInput : MonoBehaviour
         // set UI object inactive
         recFrame.SetActive(false);
         _recordingUI.UpdateCountIn(false, "");
-        //countInText.gameObject.SetActive(false);
 
         _pianoRoll.ControlPlayback(PianoRollRecording.RecPBStage.INACTIVE);
         _recordingUI.playingBack = false;

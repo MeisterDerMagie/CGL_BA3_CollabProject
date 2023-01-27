@@ -108,6 +108,7 @@ public class PlayerInputRR : MonoBehaviour
         recording = true;
         startScoringDate = _backingTrack.timeSinceStart;
         startScoringUnity = _backingTrack.timeSinceStartUnity;
+        _beatMapping.ResetLastComparedNote();
     }
 
     public void StopRecording()

@@ -121,7 +121,8 @@ public class NoteSpawner : MonoBehaviour
         if (currentLines.Count == 0) return;
         for (int i = currentLines.Count - 1; i >= 0; i--)
         {
-            currentLines[i].GetComponent<Notes>().Activate(value);
+            if (currentLines[i] != null)
+                currentLines[i].GetComponent<Notes>().Activate(value);
         }
     }
 
