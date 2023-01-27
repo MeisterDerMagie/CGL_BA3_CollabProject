@@ -433,6 +433,7 @@ GameObject:
   - component: {fileID: 8727728862852949262}
   - component: {fileID: 6948826038924830557}
   - component: {fileID: 7854837736117072436}
+  - component: {fileID: 7453906152109222933}
   m_Layer: 0
   m_Name: Chat
   m_TagString: Untagged
@@ -532,9 +533,54 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6948826038924830557}
+        m_TargetAssemblyTypeName: ChatUI, Assembly-CSharp
+        m_MethodName: PlayNewMessageSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onNewMessage:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7453906152109222933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6948826038924830559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7908e76e7c8af4c40af25357972a8bf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  open:
+    Guid:
+      Data1: 1901577886
+      Data2: 1139639397
+      Data3: 1541219968
+      Data4: -1272361952
+    Path: event:/UI/Chat/Chat_Open
+  close:
+    Guid:
+      Data1: -1437574300
+      Data2: 1121916556
+      Data3: 540102323
+      Data4: 1011865477
+    Path: event:/UI/Chat/Chat_Close
+  msg:
+    Guid:
+      Data1: -361086279
+      Data2: 1132782224
+      Data3: -334092105
+      Data4: -1467180745
+    Path: event:/UI/Chat/Chat_Message
 --- !u!1 &6948826038945272110
 GameObject:
   m_ObjectHideFlags: 0

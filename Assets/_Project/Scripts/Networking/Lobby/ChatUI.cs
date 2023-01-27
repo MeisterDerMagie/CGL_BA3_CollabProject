@@ -21,6 +21,7 @@ public class ChatUI : MonoBehaviour
     private Tween _chatWindowTween;
     private Tween _scrimTween;
     private float _scrimDefaultAlpha;
+    private ChatSounds sounds;
     
     private void Start()
     {
@@ -28,6 +29,7 @@ public class ChatUI : MonoBehaviour
         _scrimDefaultAlpha = scrim.color.a;
         scrim.color = scrim.color.With(a: 0f);
         scrim.raycastTarget = false;
+        sounds = GetComponent<ChatSounds>();
     }
 
     public void ToggleFold()
@@ -62,6 +64,7 @@ public class ChatUI : MonoBehaviour
         newMessagePopup.gameObject.SetActive(false);
 
         _isUnfolded = true;
+        if (sounds != null) sounds.PlayOpen();
     }
 
     private void Fold()
@@ -85,5 +88,12 @@ public class ChatUI : MonoBehaviour
         newMessagePopup.gameObject.SetActive(false);
         
         _isUnfolded = false;
+        if (sounds != null) sounds.PlayClose();
+    }
+
+    public void PlayNewMessageSound()
+    {
+        if (!_isUnfolded)
+            if (sounds != null) sounds.PlayMessage();
     }
 }
