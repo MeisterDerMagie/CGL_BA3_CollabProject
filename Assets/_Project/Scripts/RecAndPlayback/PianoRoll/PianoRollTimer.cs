@@ -23,7 +23,6 @@ public class PianoRollTimer : MonoBehaviour
     public int timelineBar; // keeps track which bar location marker is currently in
 
     private BackingTrack _backingTrack;
-    //[SerializeField] private int resetPrevCounter = 3;
 
     [SerializeField]
     private CurrentGameStage stage;

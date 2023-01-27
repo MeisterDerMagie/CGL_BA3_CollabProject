@@ -18,7 +18,7 @@ public class PianoRollRecording : MonoBehaviour
     private AudioRoll _audioRoll;
     private PianoRollTimer _timer;
     private RecordInput _recordInput;
-    
+
     public float bpm = 110f;
 
     bool musicPlaying;

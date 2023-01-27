@@ -21,6 +21,7 @@ public struct RecordingNote
 public class RecordInput : MonoBehaviour
 {
     [SerializeField] private RecordingUI _recordingUI;
+    [SerializeField] private CountInSounds _countInSounds;
 
     [SerializeField] private KeyCode[] keyInputs;
     [SerializeField] private AudioRoll _audioRoll;
@@ -229,6 +230,7 @@ public class RecordInput : MonoBehaviour
 
                     // activate text field + set to one
                     _recordingUI.UpdateCountIn(true, "4");
+                    _countInSounds.PlayCountIn(4);
 
                     // reset timer for recording:
                     timer = 0;
@@ -260,14 +262,24 @@ public class RecordInput : MonoBehaviour
             if (recordingState == RecordingState.COUNTIN)
             {
                 if (_backingTrack.lastBeat == 1)
+                {
                     _recordingUI.UpdateCountIn(true, "4");
+                    _countInSounds.PlayCountIn(4);
+                }
                 else if (_backingTrack.lastBeat == 3)
+                {
                     _recordingUI.UpdateCountIn(true, "3");
+                    _countInSounds.PlayCountIn(3);
+                }
                 else if (_backingTrack.lastBeat == 5)
+                {
                     _recordingUI.UpdateCountIn(true, "2");
+                    _countInSounds.PlayCountIn(2);
+                }
                 else if (_backingTrack.lastBeat == 7)
                 {
                     _recordingUI.UpdateCountIn(true, "1");
+                    _countInSounds.PlayCountIn(1);
                     spawnNote = true;
                 }
             }
