@@ -6114,6 +6114,7 @@ GameObject:
   m_Component:
   - component: {fileID: 656962254}
   - component: {fileID: 656962253}
+  - component: {fileID: 656962255}
   m_Layer: 0
   m_Name: JurySounds
   m_TagString: Untagged
@@ -6190,6 +6191,66 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &656962255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 656962252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: f4c6e40618ba1d5419696d13aa643f23, type: 2}
+    - {fileID: 11400000, guid: 5d016e7d768d02d41a9860b98c402760, type: 2}
+    - {fileID: 11400000, guid: fa8dce202f27e2547816779ae3482dcd, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 656962253}
+          m_TargetAssemblyTypeName: JurySounds, Assembly-CSharp
+          m_MethodName: StartDrumRoll
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 656962253}
+          m_TargetAssemblyTypeName: JurySounds, Assembly-CSharp
+          m_MethodName: PlayApplause
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 656962253}
+          m_TargetAssemblyTypeName: JurySounds, Assembly-CSharp
+          m_MethodName: PlaySchild
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &717256175 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6046905706122264679, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
@@ -6811,6 +6872,8 @@ PlayableDirector:
     value: {fileID: 1567834114}
   - key: {fileID: 7101960211105582345, guid: 7972cd0b4d50e2c41a1a8da2042503b9, type: 2}
     value: {fileID: 1567834114}
+  - key: {fileID: 8572243173699859537, guid: 7972cd0b4d50e2c41a1a8da2042503b9, type: 2}
+    value: {fileID: 656962255}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &1149152084
