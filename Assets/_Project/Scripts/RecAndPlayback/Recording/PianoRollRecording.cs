@@ -147,10 +147,9 @@ public class PianoRollRecording : MonoBehaviour
 
     void PlaybackLines()
     {
-        // only spawn lines on 1s and 3s, so on first and fifth eighth
         if (_timer.previewBeat == 1)
         {
-            if (stage == RecPBStage.PBNOAUDIO || stage == RecPBStage.PBWAITAUDIO || stage == RecPBStage.PBWITHAUDIO && timelineBar == 0)
+            if (stage == RecPBStage.PBNOAUDIO || stage == RecPBStage.PBWAITAUDIO || stage == RecPBStage.PBWITHAUDIO && previewBar == 0)
             {
                 _spawner.SpawnLine(bpm, 1, true);
             }
