@@ -13,7 +13,7 @@ using Unity.Netcode;
 
 public class BackingTrack : MonoBehaviour
 {
-    [SerializeField] private EventReference track;
+    [SerializeField] private EventReference localTrack;
     private FMOD.Studio.EventInstance musicInstance;
 
     public TimelineInfo timelineInfo = null;
@@ -55,38 +55,19 @@ public class BackingTrack : MonoBehaviour
         Singleton = this;
     }
 
-    private void Update()
-    {
-        /*
-        if (lastBeat != timelineInfo.currentBeat)
-        {
-            lastBeat = timelineInfo.currentBeat;
-
-            if(beatUpdated != null)
-                beatUpdated();
-        }
-
-        if (lastBar != timelineInfo.currentBar)
-        {
-            lastBar = timelineInfo.currentBar;
-
-            if (barUpdated != null)
-                barUpdated();
-        }
-        */
-    }
-
     public void StartMusic()
     {
         if (NetworkManager.Singleton == null)
         {
             // start locally saved track
+            musicInstance = RuntimeManager.CreateInstance(localTrack);
         }
         else
         {
             // start track saved in playerdata
+            musicInstance = RuntimeManager.CreateInstance(BackingTrackManager.Instance.GetBackingTrack(PlayerData.LocalPlayerData.BackingTrackId).soundEvent);
         }
-        musicInstance = RuntimeManager.CreateInstance(track);
+
         musicInstance.start();
 
         timelineInfo = new TimelineInfo();

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0db7e9d89611480891f7a2858f93654e, type: 3}
+  m_Name: 00_BackingTrack_Reggaeton
+  m_EditorClassIdentifier: 
+  backingTrackId: 1
+  friendlyName: Reggaeton
+  soundEvent:
+    Guid:
+      Data1: -1810426356
+      Data2: 1277262457
+      Data3: -949348200
+      Data4: -1616006511
+    Path: event:/Music/Reggaeton
