@@ -1287,7 +1287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae7dee569dee07d45a76996ecb2af8cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  track:
+  localTrack:
     Guid:
       Data1: -812379756
       Data2: 1245298029

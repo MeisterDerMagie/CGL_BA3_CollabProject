@@ -1327,11 +1327,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   localTrack:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -812379756
+      Data2: 1245298029
+      Data3: 810586249
+      Data4: 1595780251
+    Path: event:/Music/Funk
   lastBeat: 0
   lastBar: 0
   startUnity: -1
