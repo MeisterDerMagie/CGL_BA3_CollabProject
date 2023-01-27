@@ -1693,7 +1693,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerView: {fileID: 518810330}
-  duration: 20
+  duration: 60
   syncInterval: 3
   startOnNetworkSpawn: 1
   onTimerEndedServer:

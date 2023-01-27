@@ -736,11 +736,11 @@ MonoBehaviour:
     Path: event:/UI/Buttons/Button
   skipTextAnimationSound:
     Guid:
-      Data1: 1861095940
-      Data2: 1303484323
-      Data3: 934655896
-      Data4: 1852780789
-    Path: event:/UI/Buttons/Button 4
+      Data1: -1964006033
+      Data2: 1131793588
+      Data3: -2122232135
+      Data4: 672451224
+    Path: event:/UI/Buttons/Button 2
   schubiduIn:
     animator: {fileID: 3204870652742266778}
     state:
