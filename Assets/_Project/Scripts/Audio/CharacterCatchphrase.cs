@@ -35,4 +35,16 @@ public class CharacterCatchphrase : MonoBehaviour
     {
         RuntimeManager.PlayOneShot(characterChange);
     }
+
+    public void InstantCatchPhrase()
+    {
+        instance.getPlaybackState(out PLAYBACK_STATE state);
+        if (state == PLAYBACK_STATE.PLAYING) return;
+        else RuntimeManager.PlayOneShot(CharacterManager.Instance.GetCharacter(PlayerData.LocalPlayerData.CharacterId).catchPhrase);
+    }
+
+    private void OnDestroy()
+    {
+        instance.release();
+    }
 }

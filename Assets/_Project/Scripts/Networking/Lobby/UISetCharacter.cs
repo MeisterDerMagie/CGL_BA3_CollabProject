@@ -8,12 +8,7 @@ using UnityEngine.Events;
 public class UISetCharacter : MonoBehaviour
 {
     [SerializeField] private UnityEvent onNewCharacterSelected;
-    private CharacterCatchphrase catchphrase;
-
-    private void Start()
-    {
-        catchphrase = GetComponent<CharacterCatchphrase>();
-    }
+    [SerializeField] private CharacterCatchphrase catchphrase;
 
     public void NextCharacter()
     {
