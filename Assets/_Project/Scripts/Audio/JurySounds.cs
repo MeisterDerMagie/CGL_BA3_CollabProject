@@ -18,7 +18,10 @@ public class JurySounds : MonoBehaviour
     {
         crowdInstance = RuntimeManager.CreateInstance(crowd);
         crowdInstance.start();
+    }
 
+    public void StartDrumRoll()
+    {
         RuntimeManager.PlayOneShot(drumroll);
     }
 
