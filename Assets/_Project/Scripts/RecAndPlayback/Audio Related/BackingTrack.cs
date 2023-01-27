@@ -57,6 +57,8 @@ public class BackingTrack : MonoBehaviour
 
     public void StartMusic()
     {
+        if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer) return;
+
         if (NetworkManager.Singleton == null)
         {
             // start locally saved track
@@ -79,6 +81,7 @@ public class BackingTrack : MonoBehaviour
 
     public void StopMusic()
     {
+        if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer) return;
         musicInstance.setUserData(IntPtr.Zero);
         musicInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         musicInstance.release();
@@ -86,6 +89,7 @@ public class BackingTrack : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer) return;
         musicInstance.setUserData(IntPtr.Zero);
         musicInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         musicInstance.release();

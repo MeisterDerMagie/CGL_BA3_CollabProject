@@ -35,13 +35,9 @@ public class PianoRollTimer : MonoBehaviour
 
     [SerializeField] CSWriterKoffer csWriter;
 
-    int eighth;
-
-
     void Start()
     {
         _backingTrack = GetComponentInChildren<BackingTrack>();
-        eighth = -1;
 
         // add self to event delegate for beat updates
         _backingTrack.beatUpdated += NextBeat;

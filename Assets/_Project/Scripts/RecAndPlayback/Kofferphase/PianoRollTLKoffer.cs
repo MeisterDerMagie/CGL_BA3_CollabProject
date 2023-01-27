@@ -52,8 +52,6 @@ public class PianoRollTLKoffer : MonoBehaviour
     public int testPlayerAmount;
     public bool counterPlayback = true;
 
-    Eighth empty;
-
     void Start()
     {
         // get references to all relevant scripts:
@@ -87,10 +85,6 @@ public class PianoRollTLKoffer : MonoBehaviour
         }
 
         StartCoroutine(WaitForSchubidu());
-
-        empty = new Eighth();
-        empty.contains = false;
-        empty.instrumentID = -1;
     }
 
 
