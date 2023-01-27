@@ -7997,6 +7997,13 @@ MonoBehaviour:
   countdownNumberText: {fileID: 646306778}
   notEnoughPlayersUI: {fileID: 1561286476}
   sceneToLoadAfterCountdownFinished: {fileID: 11400000, guid: 314f75b4f083d9c49948d0ecce4a5e45, type: 2}
+  timerSound:
+    Guid:
+      Data1: 1751495815
+      Data2: 1177161900
+      Data3: -215625319
+      Data4: 1153404591
+    Path: event:/UI/Timer/Timer_Ding
   readyCountdownHasStarted: 0
 --- !u!4 &1401380175
 Transform:
