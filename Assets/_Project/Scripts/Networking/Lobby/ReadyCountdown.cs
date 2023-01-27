@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using FMODUnity;
 using MEC;
 using TMPro;
 using Unity.Netcode;
@@ -16,11 +17,13 @@ public class ReadyCountdown : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI countdownNumberText;
     [SerializeField] private Transform notEnoughPlayersUI;
     [SerializeField] private NetworkSceneLoader sceneToLoadAfterCountdownFinished;
+    [SerializeField] private EventReference timerSound;
 
     [HideInInspector] public bool readyCountdownHasStarted = false;
     private NetworkVariable<float> countdown;
     private NetworkVariable<bool> enoughPlayersToStartTheGame;
     private CoroutineHandle coroutine;
+    
 
     [ClientRpc]
     private void StartCountdownOnClientClientRpc() => ShowCountdownUI();
@@ -76,6 +79,9 @@ public class ReadyCountdown : NetworkBehaviour
         //if client
         else
         {
+            //play sound (when a new number is shown)
+            if(countdownNumberText.text != CountdownToString()) RuntimeManager.PlayOneShot(timerSound);
+            
             //update ui
             countdownNumberText.SetText(CountdownToString());
         }
