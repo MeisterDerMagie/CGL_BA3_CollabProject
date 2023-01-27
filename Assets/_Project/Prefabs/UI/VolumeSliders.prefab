@@ -302,6 +302,22 @@ PrefabInstance:
       propertyPath: m_text
       value: Instruments Volume
       objectReference: {fileID: 0}
+    - target: {fileID: 8385288564071831779, guid: 61047ced6062b6649acb7ab2eab98fb9, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: eef4b878e55abd94d9a8a4e8a7532e9a, type: 2}
+    - target: {fileID: 8385288564071831779, guid: 61047ced6062b6649acb7ab2eab98fb9, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.7607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385288564071831779, guid: 61047ced6062b6649acb7ab2eab98fb9, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.85490197
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385288564071831779, guid: 61047ced6062b6649acb7ab2eab98fb9, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 61047ced6062b6649acb7ab2eab98fb9, type: 3}
 --- !u!224 &4287570362781022033 stripped
@@ -431,6 +447,22 @@ PrefabInstance:
     - target: {fileID: 8385288564071831779, guid: 61047ced6062b6649acb7ab2eab98fb9, type: 3}
       propertyPath: m_text
       value: Music Volume
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385288564071831779, guid: 61047ced6062b6649acb7ab2eab98fb9, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: eef4b878e55abd94d9a8a4e8a7532e9a, type: 2}
+    - target: {fileID: 8385288564071831779, guid: 61047ced6062b6649acb7ab2eab98fb9, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.7607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385288564071831779, guid: 61047ced6062b6649acb7ab2eab98fb9, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.85490197
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385288564071831779, guid: 61047ced6062b6649acb7ab2eab98fb9, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 61047ced6062b6649acb7ab2eab98fb9, type: 3}
