@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using FMODUnity;
 using JetBrains.Annotations;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class Light : MonoBehaviour
     [SerializeField] private Transform pivot, target;
     [SerializeField] private float offset;
     [SerializeField, OnValueChanged("OnPowerChangedInInspector"), Range(0f, 1f)] private float power;
+    [SerializeField] private EventReference turnOnSound, turnOffSound;
 
     public void SetPower(float newPower)
     {
@@ -34,11 +36,13 @@ public class Light : MonoBehaviour
     
     public void TurnOn()
     {
+        RuntimeManager.PlayOneShot(turnOnSound);
         SetPower(1f);
     }
 
     public void TurnOff()
     {
+        RuntimeManager.PlayOneShot(turnOffSound);
         SetPower(0f);
     }
 

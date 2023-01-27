@@ -304,6 +304,20 @@ MonoBehaviour:
   target: {fileID: 7247037227994288892}
   offset: 0
   power: 0
+  turnOnSound:
+    Guid:
+      Data1: 1340493697
+      Data2: 1119260933
+      Data3: -762844509
+      Data4: -1032880455
+    Path: event:/UI/Ambience/Light_On
+  turnOffSound:
+    Guid:
+      Data1: 493592495
+      Data2: 1214611683
+      Data3: -1089029957
+      Data4: 1319944884
+    Path: event:/UI/Ambience/Light_Off
 --- !u!1 &7247037227994288895
 GameObject:
   m_ObjectHideFlags: 0
