@@ -24,6 +24,8 @@ public class PianoRollPlayback : NetworkBehaviour
     }
 
     [SerializeField] private CharDisplayPB _display;
+    [SerializeField] private PlaybackScenesAudio _playbackAudio;
+    [SerializeField] private CountInSounds _countInSounds;
     private PianoRollTimer _timer;
     private AudioRoll _audioRoll;
     private NoteSpawner _spawner;

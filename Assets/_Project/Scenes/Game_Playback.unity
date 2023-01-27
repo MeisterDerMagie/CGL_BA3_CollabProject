@@ -499,6 +499,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _display: {fileID: 900555320}
+  _playbackAudio: {fileID: 322219318}
+  _countInSounds: {fileID: 322219316}
   _light: {fileID: 141448576}
   _loadNext: {fileID: 1373608149}
   bpm: 110
@@ -607,6 +609,109 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &322219315
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 322219317}
+  - component: {fileID: 322219316}
+  - component: {fileID: 322219318}
+  m_Layer: 0
+  m_Name: Sounds
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &322219316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322219315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7980b5f2d33e69243a33feef91e80b83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  countInSounds:
+  - Guid:
+      Data1: 1215748429
+      Data2: 1322974543
+      Data3: 1576692100
+      Data4: -274336162
+    Path: event:/UI/Reactions/Countdown 1
+  - Guid:
+      Data1: 440439238
+      Data2: 1267050579
+      Data3: -722851169
+      Data4: -1312057106
+    Path: event:/UI/Reactions/Countdown 2
+  - Guid:
+      Data1: -879785489
+      Data2: 1252428167
+      Data3: 1632804272
+      Data4: -1692009161
+    Path: event:/UI/Reactions/Countdown 3
+  - Guid:
+      Data1: -1356404521
+      Data2: 1106928010
+      Data3: -1222457982
+      Data4: 1528983862
+    Path: event:/UI/Reactions/Countdown 4
+--- !u!4 &322219317
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322219315}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &322219318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322219315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b03f7ad276a70a04fa278be10fd8f7aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  applause:
+    Guid:
+      Data1: 1548140184
+      Data2: 1158875972
+      Data3: -1850676845
+      Data4: 1040837427
+    Path: event:/UI/Applauses/Applause_Hi
+  crowd:
+    Guid:
+      Data1: 1464843823
+      Data2: 1178480017
+      Data3: 873482940
+      Data4: -201323696
+    Path: event:/UI/Ambience/CrowdWaiting
+  drumroll:
+    Guid:
+      Data1: -347319176
+      Data2: 1098106898
+      Data3: 1272090253
+      Data4: -1149155399
+    Path: event:/UI/Reactions/DrumRoll-mid
 --- !u!1 &888726413
 GameObject:
   m_ObjectHideFlags: 0
@@ -1474,7 +1579,7 @@ GameObject:
   - component: {fileID: 2051878434}
   - component: {fileID: 2051878433}
   m_Layer: 0
-  m_Name: Stop Main THeme
+  m_Name: Stop Main Theme
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,18 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class PlaybackScenesAudio : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private EventReference applause;
+    [SerializeField] private EventReference crowd;
+    [SerializeField] private EventReference drumroll;
+    private FMOD.Studio.EventInstance crowdInstance;
+
+    public void PlayCrowd()
     {
-        
+        crowdInstance = RuntimeManager.CreateInstance(crowd);
+        crowdInstance.start();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void StopCrowd()
     {
-        
+        crowdInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        crowdInstance.release();
+    }
+
+    public void PlayDrumRoll()
+    {
+        RuntimeManager.PlayOneShot(drumroll);
+    }
+
+    public void PlayApplause()
+    {
+        RuntimeManager.PlayOneShot(applause);
     }
 }
