@@ -8,7 +8,7 @@ public class StartMainThemeAndAmbience : MonoBehaviour
 {
     private void Start()
     {
-        PersistentAudioManager.Singleton.StartMainTheme();
+        //PersistentAudioManager.Singleton.StartMainTheme();
         PersistentAudioManager.Singleton.StartAmbience();
     }
 }

@@ -1062,6 +1062,27 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  tenSeconds:
+    Guid:
+      Data1: 1073447314
+      Data2: 1158805680
+      Data3: 87294368
+      Data4: -38532030
+    Path: event:/UI/Timer/Timer_Alarm
+  threeSeconds:
+    Guid:
+      Data1: 1751495815
+      Data2: 1177161900
+      Data3: -215625319
+      Data4: 1153404591
+    Path: event:/UI/Timer/Timer_Ding
+  timeUp:
+    Guid:
+      Data1: 388955888
+      Data2: 1341889426
+      Data3: -717742423
+      Data4: -376843605
+    Path: event:/UI/Timer/Timer_Up
 --- !u!4 &750067559
 Transform:
   m_ObjectHideFlags: 0

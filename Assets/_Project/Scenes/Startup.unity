@@ -154,6 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backingTracks:
   - {fileID: 11400000, guid: 684f6880334829a459daad4d6de16d28, type: 2}
+  - {fileID: 11400000, guid: b20f519effd8897479c82fd61ea73116, type: 2}
 --- !u!4 &131897564
 Transform:
   m_ObjectHideFlags: 0
@@ -448,7 +449,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 439776390}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 03779781ee0a7ab4d8d59307b2885f7e, type: 3}
   m_Name: 

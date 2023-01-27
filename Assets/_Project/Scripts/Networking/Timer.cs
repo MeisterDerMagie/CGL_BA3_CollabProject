@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using FMODUnity;
 using MEC;
 using TMPro;
 using Unity.Netcode;
@@ -15,6 +16,8 @@ public class Timer : NetworkBehaviour
     [SerializeField] private float syncInterval = 3f;
     [SerializeField] private bool startOnNetworkSpawn = true;
     [SerializeField] private UnityEvent onTimerEndedServer, onTimerEndedClient;
+
+    [SerializeField] private EventReference tenSeconds, threeSeconds, timeUp;
     
     public event Action OnTimerEndedServer = delegate {  };
     public event Action OnTimerEndedClient = delegate {  };
@@ -23,6 +26,8 @@ public class Timer : NetworkBehaviour
 
     private float _timerLocal;
     private CoroutineHandle _timerCoroutine;
+
+    private bool _playedTenSecondsSound, _playedThreeSecondsSound, _playedTwoSecondsSound, _playedOneSecondSound;
 
     public override void OnNetworkSpawn()
     {
@@ -83,13 +88,35 @@ public class Timer : NetworkBehaviour
         //count down the timer on the client
         _timerLocal = Mathf.Max(_timerLocal - Time.deltaTime, 0f);
         UpdateView();
+        
+        //play sound when timer reaches 10 seconds
+        if (_timerLocal <= 11f && !_playedTenSecondsSound)
+        {
+            RuntimeManager.PlayOneShot(tenSeconds);
+            _playedTenSecondsSound = true;
+        }
+        //play sound when timer reaches 3 seconds
+        else if (_timerLocal <= 4f && !_playedThreeSecondsSound)
+        {
+            RuntimeManager.PlayOneShot(threeSeconds);
+            _playedThreeSecondsSound = true;
+        }
+        else if (_timerLocal <= 3f && !_playedTwoSecondsSound)
+        {
+            RuntimeManager.PlayOneShot(threeSeconds);
+            _playedTwoSecondsSound = true;
+        }
+        else if (_timerLocal <= 2f && !_playedOneSecondSound)
+        {
+            RuntimeManager.PlayOneShot(threeSeconds);
+            _playedOneSecondSound = true;
+        }
     }
 
     private IEnumerator<float> _RunTimer()
     {
         while (true)
         {
-            
             //if it's not paused, decrease timer and ensure that it's never smaller than 0
             _timerLocal = Mathf.Max(_timerLocal - Time.deltaTime, 0f);
             
@@ -152,6 +179,9 @@ public class Timer : NetworkBehaviour
     [ClientRpc]
     private void OnTimerEndedClientRpc()
     {
+        //play sound
+        RuntimeManager.PlayOneShot(timeUp);
+        
         //timer ended: call events on client
         OnTimerEndedClient?.Invoke();
         onTimerEndedClient.Invoke();
