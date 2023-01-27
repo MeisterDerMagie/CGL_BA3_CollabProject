@@ -14,4 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterId: 1
   characterImage: {fileID: 21300000, guid: 74afe429f31a8f448911758174c74638, type: 3}
+  catchPhrase:
+    Guid:
+      Data1: -458075841
+      Data2: 1275765896
+      Data3: 398651565
+      Data4: -1212748333
+    Path: event:/UI/Characters/Chameleon
   characterIcon: {fileID: 21300000, guid: 055025186b150c348ba8d59208aa219d, type: 3}
