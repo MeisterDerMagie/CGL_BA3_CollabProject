@@ -15,6 +15,7 @@ public class PlayerLeavesLobbySound : NetworkBehaviour
 
     private void OnDestroy()
     {
+        if (NetworkManager.Singleton == null) return;
         NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnect;
     }
 
