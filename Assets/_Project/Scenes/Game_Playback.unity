@@ -500,13 +500,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _display: {fileID: 900555320}
   _playbackAudio: {fileID: 322219318}
-  _countInSounds: {fileID: 322219316}
   _light: {fileID: 141448576}
   _loadNext: {fileID: 1373608149}
   bpm: 110
   countIn: 2
   barsBetween: 3
-  time: 2.5
+  time: 4
   fadeOut: 2
   playerDatas: []
 --- !u!114 &187330879
@@ -618,7 +617,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 322219317}
-  - component: {fileID: 322219316}
   - component: {fileID: 322219318}
   m_Layer: 0
   m_Name: Sounds
@@ -627,43 +625,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &322219316
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 322219315}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7980b5f2d33e69243a33feef91e80b83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  countInSounds:
-  - Guid:
-      Data1: 1215748429
-      Data2: 1322974543
-      Data3: 1576692100
-      Data4: -274336162
-    Path: event:/UI/Reactions/Countdown 1
-  - Guid:
-      Data1: 440439238
-      Data2: 1267050579
-      Data3: -722851169
-      Data4: -1312057106
-    Path: event:/UI/Reactions/Countdown 2
-  - Guid:
-      Data1: -879785489
-      Data2: 1252428167
-      Data3: 1632804272
-      Data4: -1692009161
-    Path: event:/UI/Reactions/Countdown 3
-  - Guid:
-      Data1: -1356404521
-      Data2: 1106928010
-      Data3: -1222457982
-      Data4: 1528983862
-    Path: event:/UI/Reactions/Countdown 4
 --- !u!4 &322219317
 Transform:
   m_ObjectHideFlags: 0
@@ -712,6 +673,13 @@ MonoBehaviour:
       Data3: 1272090253
       Data4: -1149155399
     Path: event:/UI/Reactions/DrumRoll-mid
+  charSwish:
+    Guid:
+      Data1: 290007877
+      Data2: 1307799237
+      Data3: -1073699907
+      Data4: 1084338456
+    Path: event:/UI/Buttons/CharSwish
 --- !u!1 &888726413
 GameObject:
   m_ObjectHideFlags: 0

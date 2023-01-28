@@ -25,7 +25,6 @@ public class PianoRollPlayback : NetworkBehaviour
 
     [SerializeField] private CharDisplayPB _display;
     [SerializeField] private PlaybackScenesAudio _playbackAudio;
-    [SerializeField] private CountInSounds _countInSounds;
     private PianoRollTimer _timer;
     private AudioRoll _audioRoll;
     private NoteSpawner _spawner;
@@ -117,6 +116,8 @@ public class PianoRollPlayback : NetworkBehaviour
         // ui stuff
         _light.TurnOff();
         _display.TurnOffCharacter();
+        _playbackAudio.PlayDrumRoll();
+        _playbackAudio.PlayCrowd();
 
         // preload instances of player sounds:
         _audioRoll.SetUpAllInstances();
@@ -360,6 +361,10 @@ public class PianoRollPlayback : NetworkBehaviour
         _display.SetCharacterDisplay(playerDatas[timelinePlayer].AssignedPrompt, 
             playerDatas[timelinePlayer].PlayerName, 
             CharacterManager.Instance.GetCharacter(playerDatas[timelinePlayer].CharacterId).characterImage);
+
+        // play audio:
+        _playbackAudio.PlayCharSwish();
+        _playbackAudio.PlayCatchPhrase(CharacterManager.Instance.GetCharacter(playerDatas[timelinePlayer].CharacterId).catchPhrase);
     }
 
     void PlayQuarterNote()
@@ -389,12 +394,17 @@ public class PianoRollPlayback : NetworkBehaviour
 
         _light.TurnOff();
         _display.TurnOffCharacter();
+        _playbackAudio.PlayCharSwish();
     }
 
     void End()
     {
         GetComponentInChildren<BackingTrack>().StopMusic();
         _particles.TurnOnParticle(false);
+        _playbackAudio.StopCrowd();
+        _playbackAudio.PlayApplause();
+        PersistentAudioManager.Singleton.FadeInAmbience();
+        PersistentAudioManager.Singleton.FadeInMainTheme();
 
         if (!NetworkManager.IsServer)
             _loadNext.Done();

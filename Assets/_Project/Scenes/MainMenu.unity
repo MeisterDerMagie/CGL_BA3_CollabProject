@@ -481,11 +481,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sound:
     Guid:
-      Data1: 533454727
-      Data2: 1299602133
-      Data3: -640172101
-      Data4: -1713645085
-    Path: event:/UI/Applauses/Applause_Short
+      Data1: 2008289338
+      Data2: 1338446155
+      Data3: -175199350
+      Data4: 1168879056
+    Path: event:/UI/Applauses/Applause_Hover
 --- !u!1 &36809595
 GameObject:
   m_ObjectHideFlags: 0
@@ -2503,11 +2503,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sound:
     Guid:
-      Data1: 1888958213
-      Data2: 1199851662
-      Data3: 2036667570
-      Data4: -1932901644
-    Path: event:/UI/Reactions/Aww_short
+      Data1: -1182800553
+      Data2: 1078953701
+      Data3: 647865524
+      Data4: -1590425150
+    Path: event:/UI/Reactions/Aww_long
 --- !u!1001 &873258665
 PrefabInstance:
   m_ObjectHideFlags: 0
