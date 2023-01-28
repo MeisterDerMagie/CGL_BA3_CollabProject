@@ -1,14 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Doodlenite;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Wichtel.SceneManagement;
 
-namespace Doodlenite {
 public class HostLobby : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI errorMessage;
@@ -31,9 +29,8 @@ public class HostLobby : MonoBehaviour
 
     private void OnDestroy()
     {
-        NetworkManager.Singleton.OnClientDisconnectCallback -= OnConnectionAttemptFailed;
+        if(NetworkManager.Singleton != null) NetworkManager.Singleton.OnClientDisconnectCallback -= OnConnectionAttemptFailed;
         ServerProviderClient.OnHostGameFailed -= OnHostGameFailed;
-
     }
 
     private void OnHostGameFailed(string reason)
@@ -43,7 +40,7 @@ public class HostLobby : MonoBehaviour
 
     private void OnConnectionAttemptFailed(ulong clientId)
     {
-        ShowErrorMessage("Could not connect to the game server. Please try again.");
+        ShowErrorMessage("Could not connect to the game server (check your firewall settings). Please try again.");
     }
 
     private void ShowErrorMessage(string message)
@@ -51,5 +48,4 @@ public class HostLobby : MonoBehaviour
         errorMessage.SetText(message);
         errorMessage.gameObject.SetActive(true);
     }
-}
 }
