@@ -840,11 +840,11 @@ MonoBehaviour:
     Path: event:/UI/Ambience/Konfetti
   celebration:
     Guid:
-      Data1: 1305105155
-      Data2: 1160049348
-      Data3: -7001719
-      Data4: -1688188577
-    Path: event:/UI/Applauses/Applause_Hi 2
+      Data1: -2004196683
+      Data2: 1236508394
+      Data3: 573437620
+      Data4: -1398751562
+    Path: event:/UI/Applauses/Applause_FinalCelebration
 --- !u!4 &1569839953
 Transform:
   m_ObjectHideFlags: 0
