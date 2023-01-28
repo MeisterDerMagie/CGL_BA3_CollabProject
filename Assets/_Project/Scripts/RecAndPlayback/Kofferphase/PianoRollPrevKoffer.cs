@@ -14,6 +14,7 @@ public class PianoRollPrevKoffer : MonoBehaviour
     int barTimer;
 
     PianoRollTLKoffer.KofferStages currentStage;
+    bool noFatLine;
 
 
     void Start()
@@ -27,6 +28,7 @@ public class PianoRollPrevKoffer : MonoBehaviour
         currentBar = 0;
 
         currentStage = PianoRollTLKoffer.KofferStages.IDLE;
+        noFatLine = true;
     }
 
     public void StartPlayback()
@@ -48,7 +50,13 @@ public class PianoRollPrevKoffer : MonoBehaviour
 
     public void NextBeat()
     {
-        if (currentStage == PianoRollTLKoffer.KofferStages.IDLE || currentStage == PianoRollTLKoffer.KofferStages.END) return;
+        if (currentStage == PianoRollTLKoffer.KofferStages.IDLE) return;
+
+        if (currentStage == PianoRollTLKoffer.KofferStages.END)
+        {
+            if (!noFatLine && currentBar == 0 && _timer.previewBeat == 1) _spawner.SpawnLine(_timeline.bpm, 1, true);
+            else return;
+        }
 
         if (_timer.previewBeat == 1) UpdateStage();
 
@@ -85,7 +93,9 @@ public class PianoRollPrevKoffer : MonoBehaviour
                     currentStage = PianoRollTLKoffer.KofferStages.PLAYBACK;
                     barTimer = _timer.previewBar;
                     currentBar = 0;
+                    noFatLine = false;
                 }
+                else currentBar++;
                 break;
             case PianoRollTLKoffer.KofferStages.PLAYBACK:
                 currentBar++;
@@ -94,9 +104,11 @@ public class PianoRollPrevKoffer : MonoBehaviour
                     // we're always playing back one player, so if current bar hits length of recording --> go to next stage
                     currentStage = PianoRollTLKoffer.KofferStages.COUNTINRR;
                     barTimer = _timer.previewBar;
+                    currentBar = 0;
                 }
                 break;
             case PianoRollTLKoffer.KofferStages.COUNTINRR:
+                currentBar++;
                 // if the amount of bars passed is the amount of count in bars go to next stage and reset variables
                 if (_timer.previewBar - barTimer >= _timeline.countInToRhythmRepeat)
                 {
@@ -115,6 +127,7 @@ public class PianoRollPrevKoffer : MonoBehaviour
                     // go to next player and reset bar
                     currentPlayer++;
                     currentBar = 0;
+                    noFatLine = true;
 
                     // if the next player is greater than the total amount of players we're currently playing back
                     if (currentPlayer >= amountPlaybackPlayers)
@@ -138,6 +151,7 @@ public class PianoRollPrevKoffer : MonoBehaviour
                                 barTimer = _timer.previewBar;
 
                                 currentStage = PianoRollTLKoffer.KofferStages.COUNTINPB;
+                                noFatLine = false;
                             }
                         }
                         else
@@ -158,6 +172,7 @@ public class PianoRollPrevKoffer : MonoBehaviour
                                 barTimer = _timer.previewBar;
 
                                 currentStage = PianoRollTLKoffer.KofferStages.COUNTINPB;
+                                noFatLine = false;
                             }
                         }
                     }
@@ -174,6 +189,12 @@ public class PianoRollPrevKoffer : MonoBehaviour
         if (_timer.previewBeat == 1)
         {
             if (currentStage == PianoRollTLKoffer.KofferStages.PLAYBACK && currentBar == 0)
+                _spawner.SpawnLine(_timeline.bpm, 1, true);
+            else if (currentStage == PianoRollTLKoffer.KofferStages.COUNTINRR && currentBar == 0)
+                _spawner.SpawnLine(_timeline.bpm, 1, true);
+            else if (currentStage == PianoRollTLKoffer.KofferStages.RHYTHMREPEAT && !noFatLine && currentBar == 0)
+                _spawner.SpawnLine(_timeline.bpm, 1, true);
+            else if (currentStage == PianoRollTLKoffer.KofferStages.COUNTINPB && !noFatLine && currentBar == 0)
                 _spawner.SpawnLine(_timeline.bpm, 1, true);
             else _spawner.SpawnLine(_timeline.bpm, 1);
         }
