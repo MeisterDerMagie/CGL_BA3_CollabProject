@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8037663b8db3864a858aef560e5fcac, type: 3}
   m_Name: UnityGitVersionSetting
   m_EditorClassIdentifier: 
-  versionStringFormat: -%d
-  versionStringFormatWithDiff: c-%c-%d
+  versionStringFormat: '%c'
+  versionStringFormatWithDiff: '%c_diff-%d'
   versionStringFormatWithTag: '%t'
   versionStringFormatWithTagAndDiff: '%t-%d'

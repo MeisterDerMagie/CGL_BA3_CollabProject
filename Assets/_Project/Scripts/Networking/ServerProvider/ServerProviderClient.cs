@@ -17,12 +17,13 @@ internal class ServerProviderClient
     private static WatsonTcpClient _Client = null;
     
     public static Action OnCouldNotConnectToServerProvider = delegate { };
-    public static Action<string> OnLobbyJoinFailed = delegate(string _reason) {  };
+    public static Action<string> OnLobbyJoinFailed = delegate(string reason) {  };
+    public static Action<string> OnHostGameFailed = delegate(string reason) {  };
 
-    public ServerProviderClient(string _serverIp, int _serverPort)
+    public ServerProviderClient(string serverIp, int serverPort)
     {
-        _ServerIp = _serverIp;
-        _ServerPort = _serverPort;
+        _ServerIp = serverIp;
+        _ServerPort = serverPort;
         
         ConnectClient();
     }
@@ -56,9 +57,9 @@ internal class ServerProviderClient
         if(_Client.Connected) _Client.Disconnect();
     }
 
-    public static void SendMessage(string _message, Dictionary<object, object> _metadata)
+    public static void SendMessage(string message, Dictionary<object, object> metadata)
     {
-        _Client.Send(_message, _metadata);
+        _Client.Send(message, metadata);
     }
 
     private static void MessageReceived(object sender, MessageReceivedEventArgs args)
@@ -92,6 +93,13 @@ internal class ServerProviderClient
             if(args.Metadata != null && args.Metadata.ContainsKey("reason")) reason = (string)args.Metadata["reason"];
             UnityThread.ExecuteInUpdate(()=> OnLobbyJoinFailed?.Invoke(reason));
         }
+
+        if (receivedString == "hostGameFailed")
+        {
+            string reason = "[unknown error]";
+            if(args.Metadata != null && args.Metadata.ContainsKey("reason")) reason = (string)args.Metadata["reason"];
+            UnityThread.ExecuteInUpdate(()=> OnHostGameFailed?.Invoke(reason));
+        }
     }
 
     private static void ServerConnected(object sender, ConnectionEventArgs args) 
@@ -101,7 +109,7 @@ internal class ServerProviderClient
 
     private static void ServerDisconnected(object sender, DisconnectionEventArgs args)
     {
-        Debug.Log(args.IpPort + " disconnected: " + args.Reason.ToString());
+        Debug.Log(args.IpPort + " disconnected: " + args.Reason);
     }
 
     private static void Logger(Severity sev, string msg)

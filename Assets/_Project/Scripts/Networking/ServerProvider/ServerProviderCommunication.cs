@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
+using PlanetaGameLabo.UnityGitVersion;
 using Sirenix.OdinInspector;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
@@ -65,7 +66,9 @@ public class ServerProviderCommunication : MonoBehaviour
     //-- Client -> Provider --
     public void HostRequest()
     {
-        ServerProviderClient.SendMessage("host", null);
+        var metadata = new Dictionary<object, object>();
+        metadata.Add("version", GitVersion.version.versionString);
+        ServerProviderClient.SendMessage("host", metadata);
     }
 
     public void CancelHostRequest()
@@ -77,6 +80,7 @@ public class ServerProviderCommunication : MonoBehaviour
     {
         var metadata = new Dictionary<object, object>();
         metadata.Add("lobbyCode", lobbyCode);
+        metadata.Add("version", GitVersion.version.versionString);
         ServerProviderClient.SendMessage("join", metadata);
     }
     
@@ -85,6 +89,7 @@ public class ServerProviderCommunication : MonoBehaviour
     {
         var metadata = new Dictionary<object, object>();
         metadata.Add("lobbyCode", LobbyCode.Instance.code);
+        metadata.Add("version", GitVersion.version.versionString);
         ServerProviderClient.SendMessage("serverStarted", metadata);
     }
 
