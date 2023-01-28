@@ -17,6 +17,7 @@ public class PianoRollTLKoffer : MonoBehaviour
 
     // scripts
     [SerializeField] private CharDisplayPB _display;
+    [SerializeField] private PlaybackScenesAudio _playbackAudio;
     private PianoRollTimer _timer;
     private AudioRoll _audioRoll;
     [SerializeField] private Light _light;
@@ -67,6 +68,7 @@ public class PianoRollTLKoffer : MonoBehaviour
         // deactivate player input + set ui:
         SetPlayerInput(false);
         if (!testLocally)  _ui.SetDisplayToSelf();
+        _playbackAudio.PlayCrowd();
 
         currentPlayer = 0;
         currentBar = 0;
@@ -132,7 +134,7 @@ public class PianoRollTLKoffer : MonoBehaviour
 
         // SCHUBIDU anfangen
         _ui.Schubidu(0, true);
-        // MISSING: Trommelwirbel
+        _playbackAudio.PlayDrumRoll();
 
         StartCoroutine(WaitToStart());
     }
@@ -367,7 +369,10 @@ public class PianoRollTLKoffer : MonoBehaviour
         currentStage = KofferStages.IDLE;
         _playerInput.active = false;
 
-        // applaus gedöns MISSING
+        _playbackAudio.PlayApplause();
+        _playbackAudio.StopCrowd();
+        PersistentAudioManager.Singleton.FadeInAmbience();
+        PersistentAudioManager.Singleton.FadeInMainTheme();
 
         GetComponentInChildren<AccuracyScoring>().SendToServer(testLocally);
     }

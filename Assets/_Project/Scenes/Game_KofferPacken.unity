@@ -1518,6 +1518,78 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1262235120
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1262235122}
+  - component: {fileID: 1262235121}
+  m_Layer: 0
+  m_Name: Audio
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1262235121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1262235120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b03f7ad276a70a04fa278be10fd8f7aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  applause:
+    Guid:
+      Data1: 1548140184
+      Data2: 1158875972
+      Data3: -1850676845
+      Data4: 1040837427
+    Path: event:/UI/Applauses/Applause_Hi
+  crowd:
+    Guid:
+      Data1: 1464843823
+      Data2: 1178480017
+      Data3: 873482940
+      Data4: -201323696
+    Path: event:/UI/Ambience/CrowdWaiting
+  drumroll:
+    Guid:
+      Data1: -1410486912
+      Data2: 1203192129
+      Data3: -1045894750
+      Data4: -571754558
+    Path: event:/UI/Reactions/DrumRoll-short
+  charSwish:
+    Guid:
+      Data1: 290007877
+      Data2: 1307799237
+      Data3: -1073699907
+      Data4: 1084338456
+    Path: event:/UI/Buttons/CharSwish
+--- !u!4 &1262235122
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1262235120}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1348574398
 GameObject:
   m_ObjectHideFlags: 1
@@ -1858,6 +1930,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0b9445ffb40ea64daebbc250b47cc59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1578410399
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1578410401}
+  - component: {fileID: 1578410400}
+  m_Layer: 0
+  m_Name: Stop Main Theme
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1578410400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1578410399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f255a3fd1155744dab9a970a5aaff6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1578410401
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1578410399}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1676011370
 GameObject:
   m_ObjectHideFlags: 0
@@ -2388,6 +2504,10 @@ PrefabInstance:
       propertyPath: testLocally
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2623974932172434105, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: _playbackAudio
+      value: 
+      objectReference: {fileID: 1262235121}
     - target: {fileID: 2623974932172434105, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
       propertyPath: counterPlayback
       value: 1
