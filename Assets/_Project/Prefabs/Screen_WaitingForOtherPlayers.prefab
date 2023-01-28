@@ -577,7 +577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e54a175b6e225f4b98e2a7e9fd8a4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uselessTippTextField: {fileID: 0}
+  uselessTippTextField: {fileID: 6904494263063418291}
   uselessTipps:
   - 
 --- !u!1001 &112812665875254633
