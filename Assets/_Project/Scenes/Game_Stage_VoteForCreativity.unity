@@ -974,6 +974,10 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 1762846551
       objectReference: {fileID: 0}
+    - target: {fileID: 4010009835893622984, guid: 32d1ee880e306cf4d902e5420378886f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6bbb6435ba7a40042a038cf15eee631e, type: 3}
     - target: {fileID: 4205554649476204130, guid: 32d1ee880e306cf4d902e5420378886f, type: 3}
       propertyPath: m_fontSize
       value: 34

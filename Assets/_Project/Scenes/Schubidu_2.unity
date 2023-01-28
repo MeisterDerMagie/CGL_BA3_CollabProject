@@ -148,15 +148,37 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: dialogLines.Array.size
-      value: 2
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: dialogLines.Array.data[0].text
-      value: All those prompts are ehhh.... mesmerizing!
+      value: All those prompts are ehhh.... mesmerizing! And yours is just WOW! You
+        should go to prison for that.
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: dialogLines.Array.data[1].text
-      value: And yours is just WOW! You should go to prison for that.
+      value: Next up, it's time to make some noise by recording a melody by pressing
+        ASDF!
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: dialogLines.Array.data[2].text
+      value: 'You can create your very own composition and try to impress ME..ehh
+        I mean the jury. Even though you already look unimpressing. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: dialogLines.Array.data[3].text
+      value: 'Don''t press the recording button twice unless you want to overwrite
+        your old composition! '
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: dialogLines.Array.data[4].text
+      value: 'OH...and the DJ Pult, it''s made out of styrofoam, so it''s useless.
+        We don''t have the budget for a real one. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: dialogLines.Array.data[5].text
+      value: 'Your composition will later get points for playability from the jury.
+        Means, how well others performed on it! So dont go too crazy! '
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: onSchubiduFinished.m_PersistentCalls.m_Calls.Array.size
