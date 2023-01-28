@@ -138,6 +138,11 @@ namespace PlanetaGameLabo.UnityGitVersion.Editor
             }
 
             versionString = Regex.Replace(versionString, "%.", MatchEvaluator);
+            
+            //----- von mir (Martin) hinzugefügt: Unity Version als prefix -----
+            versionString = "v" + Application.version + "_" + versionString;
+            //-----
+            
             return new GitVersion.Version(versionString, currentTag, commitId, diffHash);
         }
 
