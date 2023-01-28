@@ -54,7 +54,11 @@ public class PianoRollPrevKoffer : MonoBehaviour
 
         if (currentStage == PianoRollTLKoffer.KofferStages.END)
         {
-            if (!noFatLine && currentBar == 0 && _timer.previewBeat == 1) _spawner.SpawnLine(_timeline.bpm, 1, true);
+            if (!noFatLine && currentBar == 0 && _timer.previewBeat == 1)
+            {
+                _spawner.SpawnLine(_timeline.bpm, 1, true); 
+                noFatLine = true;
+            }
             else return;
         }
 
@@ -132,15 +136,14 @@ public class PianoRollPrevKoffer : MonoBehaviour
                     // if the next player is greater than the total amount of players we're currently playing back
                     if (currentPlayer >= amountPlaybackPlayers)
                     {
-                        // check if amount of Playback players is greater than total amount of players in scene
                         if (_timeline.testLocally)
                         {
+                            // check if amount of Playback players is greater than total amount of players in scene
                             if (amountPlaybackPlayers >= _timeline.testPlayers.Count)
                             {
                                 // if so, leave the rhythm section
                                 currentStage = PianoRollTLKoffer.KofferStages.END;
                                 barTimer = _timer.previewBar;
-
                             }
                             // else go back to count in the playback session and reset variables
                             else
@@ -151,17 +154,16 @@ public class PianoRollPrevKoffer : MonoBehaviour
                                 barTimer = _timer.previewBar;
 
                                 currentStage = PianoRollTLKoffer.KofferStages.COUNTINPB;
-                                noFatLine = false;
                             }
                         }
                         else
                         {
+                            // check if amount of Playback players is greater than total amount of players in scene
                             if (amountPlaybackPlayers >= _timeline.sortedPlayers.Count)
                             {
                                 // if so, leave the rhythm section
                                 currentStage = PianoRollTLKoffer.KofferStages.END;
                                 barTimer = _timer.previewBar;
-
                             }
                             // else go back to count in the playback session and reset variables
                             else
@@ -172,9 +174,9 @@ public class PianoRollPrevKoffer : MonoBehaviour
                                 barTimer = _timer.previewBar;
 
                                 currentStage = PianoRollTLKoffer.KofferStages.COUNTINPB;
-                                noFatLine = false;
                             }
                         }
+                        noFatLine = false;
                     }
                 }
                 break;
