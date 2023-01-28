@@ -6,10 +6,12 @@ using FMODUnity;
 public class PlaybackScenesAudio : MonoBehaviour
 {
     [SerializeField] private EventReference applause;
+    [SerializeField] private EventReference applauseShort;
     [SerializeField] private EventReference crowd;
     [SerializeField] private EventReference drumroll;
     private FMOD.Studio.EventInstance crowdInstance;
     [SerializeField] private EventReference charSwish;
+    [SerializeField] private EventReference yourTurn;
 
     public void PlayCrowd()
     {
@@ -35,6 +37,11 @@ public class PlaybackScenesAudio : MonoBehaviour
         RuntimeManager.PlayOneShot(applause);
     }
 
+    public void PlayApplauseShort()
+    {
+        RuntimeManager.PlayOneShot(applauseShort);
+    }
+
     public void PlayCatchPhrase(EventReference catchphrase)
     {
         RuntimeManager.PlayOneShot(catchphrase);
@@ -43,5 +50,10 @@ public class PlaybackScenesAudio : MonoBehaviour
     public void PlayCharSwish()
     {
         RuntimeManager.PlayOneShot(charSwish);
+    }
+
+    public void PlayYourTurn()
+    {
+        RuntimeManager.PlayOneShot(yourTurn);
     }
 }

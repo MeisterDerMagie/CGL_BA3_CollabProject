@@ -659,6 +659,13 @@ MonoBehaviour:
       Data3: -1850676845
       Data4: 1040837427
     Path: event:/UI/Applauses/Applause_Hi
+  applauseShort:
+    Guid:
+      Data1: 748935015
+      Data2: 1137609522
+      Data3: 1172498560
+      Data4: 278643996
+    Path: event:/UI/Applauses/Applause_Hi_RR
   crowd:
     Guid:
       Data1: 1464843823
@@ -680,6 +687,13 @@ MonoBehaviour:
       Data3: -1073699907
       Data4: 1084338456
     Path: event:/UI/Buttons/CharSwish
+  yourTurn:
+    Guid:
+      Data1: 27795442
+      Data2: 1162358377
+      Data3: -1336876881
+      Data4: 90222473
+    Path: event:/UI/Reactions/YourTurn
 --- !u!1 &888726413
 GameObject:
   m_ObjectHideFlags: 0

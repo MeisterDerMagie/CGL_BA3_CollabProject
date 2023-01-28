@@ -1528,6 +1528,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1262235122}
   - component: {fileID: 1262235121}
+  - component: {fileID: 1262235123}
   m_Layer: 0
   m_Name: Audio
   m_TagString: Untagged
@@ -1554,6 +1555,13 @@ MonoBehaviour:
       Data3: -1850676845
       Data4: 1040837427
     Path: event:/UI/Applauses/Applause_Hi
+  applauseShort:
+    Guid:
+      Data1: 748935015
+      Data2: 1137609522
+      Data3: 1172498560
+      Data4: 278643996
+    Path: event:/UI/Applauses/Applause_Hi_RR
   crowd:
     Guid:
       Data1: 1464843823
@@ -1575,6 +1583,13 @@ MonoBehaviour:
       Data3: -1073699907
       Data4: 1084338456
     Path: event:/UI/Buttons/CharSwish
+  yourTurn:
+    Guid:
+      Data1: 27795442
+      Data2: 1162358377
+      Data3: -1336876881
+      Data4: 90222473
+    Path: event:/UI/Reactions/YourTurn
 --- !u!4 &1262235122
 Transform:
   m_ObjectHideFlags: 0
@@ -1590,6 +1605,43 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1262235123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1262235120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7980b5f2d33e69243a33feef91e80b83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  countInSounds:
+  - Guid:
+      Data1: 1215748429
+      Data2: 1322974543
+      Data3: 1576692100
+      Data4: -274336162
+    Path: event:/UI/Reactions/Countdown 1
+  - Guid:
+      Data1: 440439238
+      Data2: 1267050579
+      Data3: -722851169
+      Data4: -1312057106
+    Path: event:/UI/Reactions/Countdown 2
+  - Guid:
+      Data1: -879785489
+      Data2: 1252428167
+      Data3: 1632804272
+      Data4: -1692009161
+    Path: event:/UI/Reactions/Countdown 3
+  - Guid:
+      Data1: -1356404521
+      Data2: 1106928010
+      Data3: -1222457982
+      Data4: 1528983862
+    Path: event:/UI/Reactions/Countdown 4
 --- !u!1 &1348574398
 GameObject:
   m_ObjectHideFlags: 1
@@ -2501,9 +2553,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1071365773}
     - target: {fileID: 2623974932172434105, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: startTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2623974932172434105, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
       propertyPath: testLocally
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2623974932172434105, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: schubiduTime
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2623974932172434105, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
+      propertyPath: _countInSounds
+      value: 
+      objectReference: {fileID: 1262235123}
     - target: {fileID: 2623974932172434105, guid: 47c8cfa4b7be6194188c414fcba694c5, type: 3}
       propertyPath: _playbackAudio
       value: 

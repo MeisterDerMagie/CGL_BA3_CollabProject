@@ -18,6 +18,7 @@ public class PianoRollTLKoffer : MonoBehaviour
     // scripts
     [SerializeField] private CharDisplayPB _display;
     [SerializeField] private PlaybackScenesAudio _playbackAudio;
+    [SerializeField] private CountInSounds _countInSounds;
     private PianoRollTimer _timer;
     private AudioRoll _audioRoll;
     [SerializeField] private Light _light;
@@ -148,6 +149,8 @@ public class PianoRollTLKoffer : MonoBehaviour
 
     void StartPlayback()
     {
+        if (!testLocally && Unity.Netcode.NetworkManager.Singleton.IsServer) return;
+
         // start backing track
         GetComponentInChildren<BackingTrack>().StartMusic();
         particles.TurnOnParticle(true);
@@ -172,25 +175,54 @@ public class PianoRollTLKoffer : MonoBehaviour
         _ui.Schubidu(1, true);
 
         // display character and prompt
-        if (!testLocally) _ui.SetDisplay(sortedPlayers[currentPlayer]);
+        if (!testLocally)
+        {
+            _ui.SetDisplay(sortedPlayers[currentPlayer]);
+            _playbackAudio.PlayCharSwish();
+            if (!testLocally) _playbackAudio.PlayCatchPhrase(CharacterManager.Instance.GetCharacter(sortedPlayers[currentPlayer].CharacterId).catchPhrase);
+        }
     }
 
     public void NextBeat()
     {
+        if (!testLocally && Unity.Netcode.NetworkManager.Singleton.IsServer) return;
+
         if (currentStage == KofferStages.IDLE) return;
 
         if (_timer.timelineBeat == 1) UpdateStage();
 
-        // set count in text if we're in last bar before the playback or rhythm repeat stage
-        if ((currentStage == KofferStages.COUNTINPB && _timer.timelineBar - barTimer >= countInToPlayback - 1 && counterPlayback) || (currentStage == KofferStages.COUNTINRR && _timer.timelineBar - barTimer >= countInToRhythmRepeat - 1))
+        // set count in text if we're in last bar before the playback stage
+        if ((currentStage == KofferStages.COUNTINPB && _timer.timelineBar - barTimer >= countInToPlayback - 1 && counterPlayback))
         {
             if (_timer.timelineBeat == 1) _ui.CountInText("4");
             else if (_timer.timelineBeat == 3) _ui.CountInText("3");
             else if (_timer.timelineBeat == 5) _ui.CountInText("2");
             else if (_timer.timelineBeat == 7) _ui.CountInText("1");
-
-            if (currentStage == KofferStages.COUNTINRR && _timer.timelineBeat == 1)
+        }
+        // if in last bar before rhythm repeat stage, set count in text, play audio, start recording
+        else if ((currentStage == KofferStages.COUNTINRR && _timer.timelineBar - barTimer >= countInToRhythmRepeat - 1))
+        {
+            if (_timer.timelineBeat == 1)
+            {
+                _ui.CountInText("4");
+                _countInSounds.PlayCountIn(4);
                 _playerInput.StartRecording();
+            }
+            else if (_timer.timelineBeat == 3)
+            {
+                _ui.CountInText("3");
+                _countInSounds.PlayCountIn(3);
+            }
+            else if (_timer.timelineBeat == 5)
+            {
+                _ui.CountInText("2");
+                _countInSounds.PlayCountIn(2);
+            }
+            else if (_timer.timelineBeat == 7)
+            {
+                _ui.CountInText("1");
+                _countInSounds.PlayCountIn(1);
+            }
         }
 
         // if we're about to start playing the last Player's bar --> start scoring for accuracy
@@ -250,7 +282,6 @@ public class PianoRollTLKoffer : MonoBehaviour
 
                     // set player input active when going into the count in to rhythm repeat
                     SetPlayerInput(true);
-                    //_playerInput.StartRecording();
                     _ui.RecFrame(true);
                     _ui.TurnOnLight(false);
                     if (amountPlaybackPlayers == 1)
@@ -264,6 +295,8 @@ public class PianoRollTLKoffer : MonoBehaviour
 
                     // reset display to self
                     if (!testLocally)  _ui.SetDisplayToSelf();
+                    _playbackAudio.PlayCharSwish();
+                    _playbackAudio.PlayYourTurn();
                     #endregion
                 }
                 break;
@@ -313,7 +346,8 @@ public class PianoRollTLKoffer : MonoBehaviour
                             _ui.TurnOnLight(false);
                             _ui.PromptText("");
                             _ui.Schubidu(9);
-                            
+                            _playbackAudio.PlayApplause();
+
                             #endregion
 
                         }
@@ -327,14 +361,17 @@ public class PianoRollTLKoffer : MonoBehaviour
                             barTimer = _timer.timelineBar;
 
                             currentStage = KofferStages.COUNTINPB;
+                            _playbackAudio.PlayApplauseShort();
 
                             _ui.PromptText("");
 
                             // schubidu count in moderation:
                             _ui.Schubidu(amountPlaybackPlayers);
 
-                            // display character and prompt
+                            // display character and prompt + play audio switched player
                             if (!testLocally) _ui.SetDisplay(sortedPlayers[currentPlayer]);
+                            _playbackAudio.PlayCharSwish();
+                            if (!testLocally) _playbackAudio.PlayCatchPhrase(CharacterManager.Instance.GetCharacter(sortedPlayers[currentPlayer].CharacterId).catchPhrase);
                             #endregion
                         }
 
@@ -369,7 +406,6 @@ public class PianoRollTLKoffer : MonoBehaviour
         currentStage = KofferStages.IDLE;
         _playerInput.active = false;
 
-        _playbackAudio.PlayApplause();
         _playbackAudio.StopCrowd();
         PersistentAudioManager.Singleton.FadeInAmbience();
         PersistentAudioManager.Singleton.FadeInMainTheme();

@@ -292,6 +292,7 @@ public class PianoRollPlayback : NetworkBehaviour
                     {
                         timelineStage = PlaybackStage.COUNTIN;
                         timelineTimer = _timer.timelineBar;
+                        _playbackAudio.PlayApplauseShort();
                     }
                     _light.TurnOff();
                 }
@@ -395,6 +396,7 @@ public class PianoRollPlayback : NetworkBehaviour
         _light.TurnOff();
         _display.TurnOffCharacter();
         _playbackAudio.PlayCharSwish();
+        _playbackAudio.PlayApplause();
     }
 
     void End()
@@ -402,7 +404,6 @@ public class PianoRollPlayback : NetworkBehaviour
         GetComponentInChildren<BackingTrack>().StopMusic();
         _particles.TurnOnParticle(false);
         _playbackAudio.StopCrowd();
-        _playbackAudio.PlayApplause();
         PersistentAudioManager.Singleton.FadeInAmbience();
         PersistentAudioManager.Singleton.FadeInMainTheme();
 
