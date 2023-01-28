@@ -7,10 +7,10 @@ using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
 
-public class CreateVersionFileInBuildFolder : IPreprocessBuildWithReport
+public class CreateVersionFileInBuildFolder : IPostprocessBuildWithReport
 {
     public int callbackOrder { get; }
-    public void OnPreprocessBuild(BuildReport report)
+    public void OnPostprocessBuild(BuildReport report)
     {
         //create version file next to the playable .exe
         if (report.summary.platform is BuildTarget.StandaloneWindows or BuildTarget.StandaloneWindows64)
