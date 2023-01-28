@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4673147226391431772}
   - component: {fileID: 1725446488728169448}
-  - component: {fileID: 6494997940868251998}
   m_Layer: 0
   m_Name: DetailedScores
   m_TagString: Untagged
@@ -50,22 +49,6 @@ MonoBehaviour:
   creativityPointsTextField: {fileID: 5984981713861653550}
   playabilityPointsTextField: {fileID: 2247951415649955328}
   performancePointsTextField: {fileID: 7922822692943405562}
---- !u!114 &6494997940868251998
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 792618020062931752}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 951099334
-  AlwaysReplicateAsRoot: 0
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
 --- !u!1 &1005514540495272018
 GameObject:
   m_ObjectHideFlags: 0
