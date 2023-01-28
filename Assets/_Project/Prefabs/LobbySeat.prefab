@@ -369,7 +369,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Klick to enter a name!
+  m_text: click to enter a name!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: eef4b878e55abd94d9a8a4e8a7532e9a, type: 2}
   m_sharedMaterial: {fileID: -7157825288753734987, guid: eef4b878e55abd94d9a8a4e8a7532e9a, type: 2}
@@ -396,8 +396,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 45
-  m_fontSizeBase: 45
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -894,8 +894,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 45
-  m_fontSizeBase: 45
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 16

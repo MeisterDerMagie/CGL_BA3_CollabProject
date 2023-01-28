@@ -980,7 +980,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Mr. Schubidu
+  m_text: Mr. Schubedu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: eef4b878e55abd94d9a8a4e8a7532e9a, type: 2}
   m_sharedMaterial: {fileID: -7157825288753734987, guid: eef4b878e55abd94d9a8a4e8a7532e9a, type: 2}
