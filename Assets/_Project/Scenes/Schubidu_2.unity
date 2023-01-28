@@ -148,7 +148,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: dialogLines.Array.size
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: dialogLines.Array.data[0].text
@@ -157,6 +157,20 @@ PrefabInstance:
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: dialogLines.Array.data[1].text
       value: And yours is just WOW! You should go to prison for that.
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: dialogLines.Array.data[2].text
+      value: 'Next up, its time to make some noise! '
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: dialogLines.Array.data[3].text
+      value: 'You can create your very own composition and try to impress ME..ehh
+        i mean the jury. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
+      propertyPath: dialogLines.Array.data[4].text
+      value: 'But remember, your composition will later get points for playability
+        from the jury. So dont go too crazy! '
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: onSchubiduFinished.m_PersistentCalls.m_Calls.Array.size
