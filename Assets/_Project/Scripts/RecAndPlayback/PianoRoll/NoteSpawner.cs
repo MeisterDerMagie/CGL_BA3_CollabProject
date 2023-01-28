@@ -307,8 +307,8 @@ public class NoteSpawner : MonoBehaviour
     public void DeactivateStartAndEndLine()
     {
         if (startRecLine != null)
-            startRecLine.GetComponent<Notes>().StartLine(false);
+            startRecLine.GetComponent<Notes>().Activate(false);
         if (endRecLine != null)
-            endRecLine.GetComponent<Notes>().StartLine(false);
+            endRecLine.GetComponent<Notes>().Activate(false);
     }
 }

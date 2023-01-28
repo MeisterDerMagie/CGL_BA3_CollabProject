@@ -171,7 +171,12 @@ public class PianoRollPrevKoffer : MonoBehaviour
     void PlayQuarterNote()
     {
         // only spawn lines on 1s and 3s, so on first and fifth eighth
-        if (_timer.previewBeat == 1) _spawner.SpawnLine(_timeline.bpm, 1);
+        if (_timer.previewBeat == 1)
+        {
+            if (currentStage == PianoRollTLKoffer.KofferStages.PLAYBACK && currentBar == 0)
+                _spawner.SpawnLine(_timeline.bpm, 1, true);
+            else _spawner.SpawnLine(_timeline.bpm, 1);
+        }
         if (_timer.previewBeat == 3) _spawner.SpawnLine(_timeline.bpm, 2);
         if (_timer.previewBeat == 5) _spawner.SpawnLine(_timeline.bpm, 3);
         if (_timer.previewBeat == 7) _spawner.SpawnLine(_timeline.bpm, 4);
