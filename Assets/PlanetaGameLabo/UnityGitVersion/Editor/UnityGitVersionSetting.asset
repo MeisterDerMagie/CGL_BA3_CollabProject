@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   versionStringFormat: '%c'
   versionStringFormatWithDiff: '%c_diff-%d'
-  versionStringFormatWithTag: '%t'
-  versionStringFormatWithTagAndDiff: '%t-%d'
+  versionStringFormatWithTag: '%y'
+  versionStringFormatWithTagAndDiff: '%y.diff-%d'
