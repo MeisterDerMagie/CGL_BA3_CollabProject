@@ -118,21 +118,37 @@ public class NoteSpawner : MonoBehaviour
     // used in recording stage to de/activate lines which are already on the way
     public void ActivateLines(bool value)
     {
-        if (currentLines.Count == 0) return;
-        for (int i = currentLines.Count - 1; i >= 0; i--)
+        if (currentLines.Count != 0)
         {
-            if (currentLines[i] != null)
-                currentLines[i].GetComponent<Notes>().Activate(value);
+            for (int i = currentLines.Count - 1; i >= 0; i--)
+            {
+                if (currentLines[i] != null)
+                    currentLines[i].GetComponent<Notes>().Activate(value);
+            }
         }
+        
+        if (fatLines.Count != 0)
+        {
+            for (int i = fatLines.Count - 1; i >= 0 ; i--)
+            {
+                if (fatLines[i] != null)
+                    fatLines[i].GetComponent<Notes>().Activate(value);
+            }
+        }
+
+        if (startRecLine != null) startRecLine.GetComponent<Notes>().Activate(value);
+        if (endRecLine != null) startRecLine.GetComponent<Notes>().Activate(value);
     }
 
     // used to de/activate notes already on the way
     public void ActivateNotes(bool value)
     {
-        if (currentNotes.Count == 0) return;
-        for (int i = currentNotes.Count - 1; i >= 0; i--)
+        if (currentNotes.Count != 0)
         {
-            currentNotes[i].GetComponent<Notes>().Activate(value);
+            for (int i = currentNotes.Count - 1; i >= 0; i--)
+            {
+                currentNotes[i].GetComponent<Notes>().Activate(value);
+            }
         }
     }
 
