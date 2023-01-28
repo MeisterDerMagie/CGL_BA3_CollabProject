@@ -68,10 +68,10 @@ internal class ServerProviderClient
 
         if (args.Metadata != null && args.Metadata.Count > 0)
         {
-            Console.WriteLine("Metadata:");
+            Debug.Log("Metadata:");
             foreach (KeyValuePair<object, object> curr in args.Metadata)
             {
-                Console.WriteLine("  " + curr.Key.ToString() + ": " + curr.Value.ToString());
+                Debug.Log("  " + curr.Key.ToString() + ": " + curr.Value.ToString());
             }
         }
         
@@ -96,12 +96,12 @@ internal class ServerProviderClient
 
     private static void ServerConnected(object sender, ConnectionEventArgs args) 
     {
-        Console.WriteLine(args.IpPort + " connected"); 
+        Debug.Log(args.IpPort + " connected"); 
     }
 
     private static void ServerDisconnected(object sender, DisconnectionEventArgs args)
     {
-        Console.WriteLine(args.IpPort + " disconnected: " + args.Reason.ToString());
+        Debug.Log(args.IpPort + " disconnected: " + args.Reason.ToString());
     }
 
     private static void Logger(Severity sev, string msg)
