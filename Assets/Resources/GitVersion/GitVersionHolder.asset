@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ad9cea23cf44411bbd4e32ef1821b15, type: 3}
+  m_Name: GitVersionHolder
+  m_EditorClassIdentifier: 
+  version:
+    _versionString: 1.0.9.c3e6330e.diff-ece6424
+    _friendlyVersionString: 1.0.9 (c3e6330e.diff-ece6424)
+    _isValid: 1
+    _tag: 
+    _latestTag: 1.0
+    _commitsSinceLatestTag: 9
+    _commitId: c3e6330ede5e15766011298a06f21519620d73b7
+    _diffHash: ece642404be958c6823aa0da510c6f08132192ee

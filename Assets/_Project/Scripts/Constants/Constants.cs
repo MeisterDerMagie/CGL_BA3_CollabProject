@@ -50,8 +50,8 @@ public class Constants : ScriptableObject
 
     private static Constants GetOrCreateInstance()
     {
-        var fileName = "Constants";
-        var assetPath = $"Assets/Resources/{fileName}.asset";
+        string fileName = "Constants";
+        string assetPath = $"Assets/Resources/{fileName}.asset";
 
         var constantsScriptableObject = Resources.Load<Constants>(fileName);
 
