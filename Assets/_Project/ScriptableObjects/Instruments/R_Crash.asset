@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c589d62276e77404498aa48d4be86368, type: 3}
+  m_Name: R_Crash
+  m_EditorClassIdentifier: 
+  instrumentId: 11
+  category: 4
+  friendlyName: Crash
+  soundEvent:
+    Guid:
+      Data1: 1906619565
+      Data2: 1322170124
+      Data3: -1194015351
+      Data4: 560658531
+    Path: event:/Instrument Samples/R_Crash
+  instrumentIcon: {fileID: 21300000, guid: cca8720f2f757d346a9b61b57b4f3060, type: 3}

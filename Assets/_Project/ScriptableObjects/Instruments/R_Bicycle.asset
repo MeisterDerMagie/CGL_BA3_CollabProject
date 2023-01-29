@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c589d62276e77404498aa48d4be86368, type: 3}
+  m_Name: R_Bicycle
+  m_EditorClassIdentifier: 
+  instrumentId: 10
+  category: 4
+  friendlyName: Bicycle
+  soundEvent:
+    Guid:
+      Data1: -76377284
+      Data2: 1158782588
+      Data3: 835182011
+      Data4: -1952113881
+    Path: event:/Instrument Samples/R_Bicycle
+  instrumentIcon: {fileID: 21300000, guid: caff7a33d68a54549b2a19230294d8f3, type: 3}

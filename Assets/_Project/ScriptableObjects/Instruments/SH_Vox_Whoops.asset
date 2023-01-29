@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c589d62276e77404498aa48d4be86368, type: 3}
+  m_Name: SH_Vox_Whoops
+  m_EditorClassIdentifier: 
+  instrumentId: 21
+  category: 1
+  friendlyName: Whoops
+  soundEvent:
+    Guid:
+      Data1: 1600182147
+      Data2: 1169351993
+      Data3: 282293387
+      Data4: 1774168826
+    Path: event:/Instrument Samples/SH_Vox_Whoops
+  instrumentIcon: {fileID: 21300000, guid: 8f87be47af3bde440978302e6d751667, type: 3}
