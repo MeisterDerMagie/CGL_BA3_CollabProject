@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c589d62276e77404498aa48d4be86368, type: 3}
+  m_Name: H_FrenchHorn
+  m_EditorClassIdentifier: 
+  instrumentId: 2
+  category: 3
+  friendlyName: French Horn
+  soundEvent:
+    Guid:
+      Data1: -1274916689
+      Data2: 1181618821
+      Data3: -152657256
+      Data4: 368339963
+    Path: event:/Instrument Samples/H_FrenchHorn
+  instrumentIcon: {fileID: 21300000, guid: 467383241ad11ad4ea86f316b06cd6bf, type: 3}

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c589d62276e77404498aa48d4be86368, type: 3}
+  m_Name: SH_Vox_Yeah
+  m_EditorClassIdentifier: 
+  instrumentId: 22
+  category: 1
+  friendlyName: Yeah
+  soundEvent:
+    Guid:
+      Data1: 1413287112
+      Data2: 1322243255
+      Data3: -2107717452
+      Data4: 1930394623
+    Path: event:/Instrument Samples/SH_Vox_Yeah
+  instrumentIcon: {fileID: 21300000, guid: 67754f909b317c149b60164a3ec508f0, type: 3}
