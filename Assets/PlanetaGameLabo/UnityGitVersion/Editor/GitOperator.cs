@@ -146,7 +146,7 @@ namespace PlanetaGameLabo.UnityGitVersion.Editor
         {
             try
             {
-                return ExecuteGitCommand(enableLightweightTagMatch ? "describe --tags --long" : "describe")
+                return ExecuteGitCommand(enableLightweightTagMatch ? "describe --tags" : "describe")
                     .Replace("\n", string.Empty);
             }
             catch (GitCommandExecutionError e)
