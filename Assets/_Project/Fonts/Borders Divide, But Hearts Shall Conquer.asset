@@ -57,9 +57,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: Borders Divide, But Hearts Shall Conquer
   m_EditorClassIdentifier: 
-  hashCode: 0
+  hashCode: 1828570065
   material: {fileID: -7157825288753734987}
-  materialHashCode: 0
+  materialHashCode: 60363601
   m_Version: 1.1.0
   m_SourceFontFileGUID: b56bece5e0689af43bb025de40e15ae9
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: b56bece5e0689af43bb025de40e15ae9, type: 3}
