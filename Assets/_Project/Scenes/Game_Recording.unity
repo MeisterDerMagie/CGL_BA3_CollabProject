@@ -923,6 +923,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f255a3fd1155744dab9a970a5aaff6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playAmbience: 0
+  stopAmbience: 1
+  stopMusic: 1
+  playMusic: 1
 --- !u!1 &680924603
 GameObject:
   m_ObjectHideFlags: 0
@@ -2694,6 +2698,10 @@ PrefabInstance:
     - target: {fileID: 3123976969892423406, guid: 0cc4d9026e3c4764d8750453da259b12, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.7754128
+      objectReference: {fileID: 0}
+    - target: {fileID: 3123976969892423406, guid: 0cc4d9026e3c4764d8750453da259b12, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.72
       objectReference: {fileID: 0}
     - target: {fileID: 3123976970393794648, guid: 0cc4d9026e3c4764d8750453da259b12, type: 3}
       propertyPath: m_RootOrder

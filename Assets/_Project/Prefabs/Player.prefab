@@ -241,11 +241,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: 523045648
-      Data2: 1269254186
-      Data3: -1722802529
-      Data4: -762897610
-    Path: event:/UI/Applauses/Applause_Short Hi
+      Data1: -751649013
+      Data2: 1326948001
+      Data3: 127035565
+      Data4: -751273934
+    Path: event:/UI/Applauses/Applause_Join
   Event: 
   PlayEvent: 1
   StopEvent: 0
