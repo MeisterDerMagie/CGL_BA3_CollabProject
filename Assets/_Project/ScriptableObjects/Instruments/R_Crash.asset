@@ -22,4 +22,4 @@ MonoBehaviour:
       Data3: -1194015351
       Data4: 560658531
     Path: event:/Instrument Samples/R_Crash
-  instrumentIcon: {fileID: 21300000, guid: cca8720f2f757d346a9b61b57b4f3060, type: 3}
+  instrumentIcon: {fileID: 21300000, guid: 4e36288bc9484984ebc03a77c89c788b, type: 3}
