@@ -829,7 +829,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: dialogLines.Array.data[3].text
-      value: It's like pack your suitcase, but with a rhythm game combined! Don't
+      value: It's like pack your suitcase, but combined with a rhythm game! Don't
         like it? Not my problem.
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
@@ -838,8 +838,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: dialogLines.Array.data[5].text
-      value: Well, since you're here I guess it's the later. Now you will learn how
-        it works( or not)!
+      value: 'Well, since you''re here I guess it''s the later. Now you will learn
+        how it works (or not)! '
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: dialogLines.Array.data[6].text
@@ -857,7 +857,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: dialogLines.Array.data[9].text
-      value: Simple as that, but too complicated for small brains!
+      value: 'Simple as that, but too complicated for small brains! So just try it
+        out. '
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: onSchubiduFinished.m_PersistentCalls.m_Calls.Array.size
