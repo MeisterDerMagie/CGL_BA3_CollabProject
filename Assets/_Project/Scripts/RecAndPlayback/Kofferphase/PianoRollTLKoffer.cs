@@ -145,6 +145,7 @@ public class PianoRollTLKoffer : MonoBehaviour
         yield return new WaitForSeconds(schubiduTime);
 
         StartPlayback();
+        _playbackAudio.StopCrowd();
     }
 
     void StartPlayback()
@@ -406,7 +407,6 @@ public class PianoRollTLKoffer : MonoBehaviour
         currentStage = KofferStages.IDLE;
         _playerInput.active = false;
 
-        _playbackAudio.StopCrowd();
         PersistentAudioManager.Singleton.FadeInAmbience();
         PersistentAudioManager.Singleton.FadeInMainTheme();
 
