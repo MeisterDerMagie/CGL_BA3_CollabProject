@@ -22,4 +22,4 @@ MonoBehaviour:
       Data3: -32596300
       Data4: 1449498046
     Path: event:/Instrument Samples/SR_AnimalCruelty
-  instrumentIcon: {fileID: 21300000, guid: d15a85e28d5683549b2d0ecd3980a7b6, type: 3}
+  instrumentIcon: {fileID: 21300000, guid: 770ec5d6ad68423428a63d23d3179b0e, type: 3}
