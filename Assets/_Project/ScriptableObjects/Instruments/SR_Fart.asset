@@ -22,4 +22,4 @@ MonoBehaviour:
       Data3: -331908979
       Data4: 1037387928
     Path: event:/Instrument Samples/SR_Fart
-  instrumentIcon: {fileID: 21300000, guid: 6850039748956344b9d50a5321275844, type: 3}
+  instrumentIcon: {fileID: 21300000, guid: aa3e4ab1c22ac7b48b992f571bbbb019, type: 3}

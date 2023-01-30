@@ -22,4 +22,4 @@ MonoBehaviour:
       Data3: 835182011
       Data4: -1952113881
     Path: event:/Instrument Samples/R_Bicycle
-  instrumentIcon: {fileID: 21300000, guid: caff7a33d68a54549b2a19230294d8f3, type: 3}
+  instrumentIcon: {fileID: 21300000, guid: 83f7bceb1c675454ab2d2b18ba8eab51, type: 3}
