@@ -132,6 +132,7 @@ public class AccuracyScoring : NetworkBehaviour
         for (int i = 0; i < maxPointsPlayability.Count; i++)
         {
             float playability = (playabilityPoints[i]) / maxPointsPlayability[i];
+            if (playability > 1) playability = 1;
             playabilityPercent.Add(playability);
             if (testLocally) Debug.Log($"Playability for player {i + 1} was {playability}");
         }
