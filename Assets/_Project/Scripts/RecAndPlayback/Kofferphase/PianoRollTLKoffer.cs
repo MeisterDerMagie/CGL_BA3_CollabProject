@@ -407,7 +407,6 @@ public class PianoRollTLKoffer : MonoBehaviour
         currentStage = KofferStages.IDLE;
         _playerInput.active = false;
 
-        PersistentAudioManager.Singleton.FadeInAmbience();
         PersistentAudioManager.Singleton.FadeInMainTheme();
 
         GetComponentInChildren<AccuracyScoring>().SendToServer(testLocally);

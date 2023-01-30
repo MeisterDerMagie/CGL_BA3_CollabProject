@@ -6115,6 +6115,7 @@ GameObject:
   - component: {fileID: 656962254}
   - component: {fileID: 656962253}
   - component: {fileID: 656962255}
+  - component: {fileID: 656962256}
   m_Layer: 0
   m_Name: JurySounds
   m_TagString: Untagged
@@ -6251,6 +6252,36 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &656962256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 656962252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1464843823
+      Data2: 1178480017
+      Data3: 873482940
+      Data4: -201323696
+    Path: event:/UI/Ambience/CrowdWaiting
+  Event: 
+  PlayEvent: 1
+  StopEvent: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &717256175 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6046905706122264679, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
@@ -6634,6 +6665,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f255a3fd1155744dab9a970a5aaff6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playAmbience: 0
+  stopAmbience: 1
+  stopMusic: 1
+  playMusic: 1
 --- !u!4 &1093447284
 Transform:
   m_ObjectHideFlags: 0
