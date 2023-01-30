@@ -834,7 +834,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: dialogLines.Array.data[4].text
-      value: Have you ever even packed a suitcase or can't you afford that luxus?
+      value: Have you ever even packed a suitcase or can't you afford that luxury?
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: dialogLines.Array.data[5].text
@@ -853,7 +853,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: dialogLines.Array.data[8].text
-      value: you will always repeat what was put inside before! YAY!
+      value: You will always repeat what was put inside before! YAY!
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: dialogLines.Array.data[9].text

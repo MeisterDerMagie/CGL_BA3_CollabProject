@@ -548,12 +548,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: dialogLines.Array.data[4].text
-      value: "But do not fret, there is no reason to be \ndissa-point-ed."
+      value: But do not fret, there is no reason to be dissa-point-ed.
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: dialogLines.Array.data[5].text
-      value: "Since chances are high that as you climb high,\nyou fall low, \nlow
-        on points that is! "
+      value: 'Since chances are high that as you climb high,
+
+        you fall low,
+        low on points that is! '
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: onSchubiduFinished.m_PersistentCalls.m_Calls.Array.size
