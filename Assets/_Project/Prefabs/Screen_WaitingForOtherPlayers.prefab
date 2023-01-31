@@ -579,6 +579,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uselessTippTextField: {fileID: 6904494263063418291}
   uselessTipps:
+  - 'Random Tip: "If you want to win you need to try a bit" ~Schubedu'
+  - 'Random Tip: Did you know that schubidu has an alcohol problem? Ya, things make
+    more sense now right? '
+  - 'Random Tip: Impressing Schubedu is not mandatory'
+  - 'Random Tip: A scotch a day keeps the talent, ya hay'
+  - 'Random Tip: To chat with your friends, use the chatbox'
+  - 'Random Tip: Breathing keeps you alive'
+  - 'Random Tip: You can donate the developers some money'
   - 
 --- !u!1001 &112812665875254633
 PrefabInstance:
