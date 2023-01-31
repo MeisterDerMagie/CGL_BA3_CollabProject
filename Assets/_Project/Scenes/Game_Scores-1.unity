@@ -436,6 +436,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1531005259927027098, guid: 5f5525241976bbe4cb3e99cc1d0a4ccd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 356.99997
+      objectReference: {fileID: 0}
     - target: {fileID: 1796295690215163876, guid: 5f5525241976bbe4cb3e99cc1d0a4ccd, type: 3}
       propertyPath: m_Name
       value: DetailedScores_Podium_4
@@ -448,9 +452,25 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 3193401182
       objectReference: {fileID: 0}
+    - target: {fileID: 2896584248154609387, guid: 5f5525241976bbe4cb3e99cc1d0a4ccd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 357
+      objectReference: {fileID: 0}
     - target: {fileID: 2970278985631512258, guid: 5f5525241976bbe4cb3e99cc1d0a4ccd, type: 3}
       propertyPath: m_Name
       value: DetailedScores_Podium_0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3724008649271645921, guid: 5f5525241976bbe4cb3e99cc1d0a4ccd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 357.00003
+      objectReference: {fileID: 0}
+    - target: {fileID: 3819324424790845309, guid: 5f5525241976bbe4cb3e99cc1d0a4ccd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 356.99997
+      objectReference: {fileID: 0}
+    - target: {fileID: 3880946769711239090, guid: 5f5525241976bbe4cb3e99cc1d0a4ccd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 356.99997
       objectReference: {fileID: 0}
     - target: {fileID: 4116938131748980069, guid: 5f5525241976bbe4cb3e99cc1d0a4ccd, type: 3}
       propertyPath: GlobalObjectIdHash
@@ -468,6 +488,10 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 2650086127
       objectReference: {fileID: 0}
+    - target: {fileID: 5018526539373880383, guid: 5f5525241976bbe4cb3e99cc1d0a4ccd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 356.99997
+      objectReference: {fileID: 0}
     - target: {fileID: 5298442576310371879, guid: 5f5525241976bbe4cb3e99cc1d0a4ccd, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 2449659364
@@ -484,6 +508,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DetailedScores_Podium_3
       objectReference: {fileID: 0}
+    - target: {fileID: 5780611199844340005, guid: 5f5525241976bbe4cb3e99cc1d0a4ccd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 356.99997
+      objectReference: {fileID: 0}
     - target: {fileID: 5850996446710280460, guid: 5f5525241976bbe4cb3e99cc1d0a4ccd, type: 3}
       propertyPath: m_Name
       value: DetailedScores_Podium_1
@@ -491,6 +519,10 @@ PrefabInstance:
     - target: {fileID: 6636724192057553725, guid: 5f5525241976bbe4cb3e99cc1d0a4ccd, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 2287692485
+      objectReference: {fileID: 0}
+    - target: {fileID: 7056559163145805827, guid: 5f5525241976bbe4cb3e99cc1d0a4ccd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 356.99997
       objectReference: {fileID: 0}
     - target: {fileID: 7800075599111133821, guid: 5f5525241976bbe4cb3e99cc1d0a4ccd, type: 3}
       propertyPath: m_Name
