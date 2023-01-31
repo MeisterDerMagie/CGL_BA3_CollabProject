@@ -339,18 +339,62 @@ PrefabInstance:
       propertyPath: onMouseEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 3933052614864660279, guid: 9d33d419ce82b8146810f14553b83d4f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -33.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3933052614864660279, guid: 9d33d419ce82b8146810f14553b83d4f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 34.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 3933052614864660279, guid: 9d33d419ce82b8146810f14553b83d4f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -4.630005
+      objectReference: {fileID: 0}
+    - target: {fileID: 3933052614864660279, guid: 9d33d419ce82b8146810f14553b83d4f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -636.3999
+      objectReference: {fileID: 0}
+    - target: {fileID: 5441802778058537171, guid: 9d33d419ce82b8146810f14553b83d4f, type: 3}
+      propertyPath: m_text
+      value: '[PlayerName]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5441802778058537171, guid: 9d33d419ce82b8146810f14553b83d4f, type: 3}
+      propertyPath: m_fontSize
+      value: 34.9
+      objectReference: {fileID: 0}
     - target: {fileID: 5441802778058537171, guid: 9d33d419ce82b8146810f14553b83d4f, type: 3}
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: eef4b878e55abd94d9a8a4e8a7532e9a, type: 2}
+    - target: {fileID: 5441802778058537171, guid: 9d33d419ce82b8146810f14553b83d4f, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 39.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5441802778058537171, guid: 9d33d419ce82b8146810f14553b83d4f, type: 3}
+      propertyPath: m_fontSizeMin
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5441802778058537171, guid: 9d33d419ce82b8146810f14553b83d4f, type: 3}
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: -7157825288753734987, guid: eef4b878e55abd94d9a8a4e8a7532e9a, type: 2}
+    - target: {fileID: 5441802778058537171, guid: 9d33d419ce82b8146810f14553b83d4f, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5441802778058537171, guid: 9d33d419ce82b8146810f14553b83d4f, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
+      objectReference: {fileID: 0}
     - target: {fileID: 6067759325514148229, guid: 9d33d419ce82b8146810f14553b83d4f, type: 3}
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: eef4b878e55abd94d9a8a4e8a7532e9a, type: 2}
+    - target: {fileID: 6067759325514148229, guid: 9d33d419ce82b8146810f14553b83d4f, type: 3}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6067759325514148229, guid: 9d33d419ce82b8146810f14553b83d4f, type: 3}
       propertyPath: m_sharedMaterial
       value: 
