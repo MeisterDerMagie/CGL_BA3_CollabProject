@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class ControlMainTheme : MonoBehaviour
 {
+    [SerializeField] private bool playAmbience = false;
+    [SerializeField] private bool stopAmbience = true;
+    [SerializeField] private bool stopMusic = true;
+    [SerializeField] private bool playMusic = true;
+
     private void Start()
     {
-        PersistentAudioManager.Singleton.FadeOutAmbience();
-        PersistentAudioManager.Singleton.FadeOutMainTheme();
+        if (stopAmbience) PersistentAudioManager.Singleton.FadeOutAmbience();
+        if (stopMusic) PersistentAudioManager.Singleton.FadeOutMainTheme();
     }
 
     public void FadeInAmbienceAndMainTheme()
     {
-        PersistentAudioManager.Singleton.FadeInAmbience();
-        PersistentAudioManager.Singleton.FadeInMainTheme();
+        if (playAmbience) PersistentAudioManager.Singleton.FadeInAmbience();
+        if (playMusic) PersistentAudioManager.Singleton.FadeInMainTheme();
     }
 }

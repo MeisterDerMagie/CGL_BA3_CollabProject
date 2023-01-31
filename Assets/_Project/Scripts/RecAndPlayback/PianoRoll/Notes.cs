@@ -63,6 +63,7 @@ public class Notes : MonoBehaviour
         }
         else
         {
+            /*
             // convert instrumentID to line to chose correct button background:
             int line = 0;
             for (int i = 0; i < PlayerData.LocalPlayerData.InstrumentIds.Count; i++)
@@ -71,7 +72,8 @@ public class Notes : MonoBehaviour
                     line = i;
             }
             if (line >= sprites.Length) line = 0;
-            _objRenderer.sprite = sprites[line];
+            */
+            _objRenderer.sprite = sprites[instrumentID];
 
 
             // set icon image on top of background:

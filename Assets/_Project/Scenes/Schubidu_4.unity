@@ -329,6 +329,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitingScreen: {fileID: 507903665}
+--- !u!1 &976103807
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 976103809}
+  - component: {fileID: 976103808}
+  m_Layer: 0
+  m_Name: Audio
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &976103808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976103807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f255a3fd1155744dab9a970a5aaff6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playAmbience: 0
+  stopAmbience: 1
+  stopMusic: 0
+  playMusic: 0
+--- !u!4 &976103809
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976103807}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1142901809
 GameObject:
   m_ObjectHideFlags: 0
@@ -829,7 +877,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: dialogLines.Array.data[3].text
-      value: It's like pack your suitcase, but with a rhythm game combined! Don't
+      value: It's like pack your suitcase, but combined with a rhythm game! Don't
         like it? Not my problem.
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
@@ -838,8 +886,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: dialogLines.Array.data[5].text
-      value: Well, since you're here I guess it's the later. Now you will learn how
-        it works( or not)!
+      value: 'Well, since you''re here I guess it''s the later. Now you will learn
+        how it works (or not)! '
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: dialogLines.Array.data[6].text
@@ -857,7 +905,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: dialogLines.Array.data[9].text
-      value: Simple as that, but too complicated for small brains!
+      value: 'Simple as that, but too complicated for small brains! So just try it
+        out. '
       objectReference: {fileID: 0}
     - target: {fileID: 11401297505457189, guid: 24b863a4e755f714bb9d13f921afbec0, type: 3}
       propertyPath: onSchubiduFinished.m_PersistentCalls.m_Calls.Array.size

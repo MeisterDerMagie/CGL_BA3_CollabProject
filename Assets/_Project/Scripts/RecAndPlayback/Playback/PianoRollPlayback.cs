@@ -164,6 +164,7 @@ public class PianoRollPlayback : NetworkBehaviour
         _light.TurnOff();
 
         _particles.TurnOnParticle(true);
+        _playbackAudio.StopCrowd();
     }
 
     // only needed for testing
@@ -403,7 +404,6 @@ public class PianoRollPlayback : NetworkBehaviour
     {
         GetComponentInChildren<BackingTrack>().StopMusic();
         _particles.TurnOnParticle(false);
-        _playbackAudio.StopCrowd();
         PersistentAudioManager.Singleton.FadeInAmbience();
         PersistentAudioManager.Singleton.FadeInMainTheme();
 

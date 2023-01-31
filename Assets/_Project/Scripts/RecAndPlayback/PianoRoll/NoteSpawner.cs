@@ -245,6 +245,7 @@ public class NoteSpawner : MonoBehaviour
             if (instrumentID == PlayerData.LocalPlayerData.InstrumentIds[i])
                 line = i;
         }
+        if (line > 3) line = 0;
 
         // instantiate a new note and set position to the far right of the piano roll
         GameObject clone = Instantiate(noteObj, spawns.transform);

@@ -81,8 +81,8 @@ public class PersistentAudioManager : MonoBehaviour
         _mainThemeInstance = RuntimeManager.CreateInstance(mainTheme);
         _ambienceInstance = RuntimeManager.CreateInstance(ambience);
 
-        _mainThemeBus = RuntimeManager.GetBus("bus:/" + "Music/MainTheme");
-        _ambienceBus =  RuntimeManager.GetBus("bus:/" + "Music/Ambience");
+        _mainThemeBus = RuntimeManager.GetBus("bus:/" + "Music/SumMusic/MainTheme");
+        _ambienceBus =  RuntimeManager.GetBus("bus:/" + "Music/SumMusic/Ambience");
         
         _mainThemeBus.getVolume(out _defaultVolumeMainTheme);
         _ambienceBus.getVolume(out _defaultVolumeAmbience);
