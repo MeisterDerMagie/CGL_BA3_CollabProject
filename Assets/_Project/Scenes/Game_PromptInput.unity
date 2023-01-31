@@ -158,7 +158,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 10, y: 187}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &93161085
@@ -783,8 +783,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4283635249
+  m_fontColor: {r: 0.19215688, g: 0.08627451, b: 0.3254902, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -801,8 +801,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 62
+  m_fontSizeBase: 62
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2356,6 +2356,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2790170891465939800, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2879325727017348162, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 2195374811
@@ -2381,12 +2385,20 @@ PrefabInstance:
       value: 2617525869
       objectReference: {fileID: 0}
     - target: {fileID: 5041117303650427626, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5041117303650427626, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 2965211709
       objectReference: {fileID: 0}
     - target: {fileID: 5157414341924387624, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 124840872
+      objectReference: {fileID: 0}
+    - target: {fileID: 5454067373991263851, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5593522514536963964, guid: 65f9ac5ba8276244887abc30b5c11284, type: 3}
       propertyPath: GlobalObjectIdHash
