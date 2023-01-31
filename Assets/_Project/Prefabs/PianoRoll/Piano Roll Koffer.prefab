@@ -166,8 +166,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2921744469000559687}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.02, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalPosition: {x: 0, y: 1.037, z: 0}
+  m_LocalScale: {x: 0.25578958, y: 0.25578958, z: 1.2789478}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2856338659983298547}
@@ -250,8 +250,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3028317293483270501}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.02, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalPosition: {x: 0, y: 1.0369997, z: 0}
+  m_LocalScale: {x: 0.38368434, y: 0.38368434, z: 1.2789478}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2856338659983298547}
@@ -334,8 +334,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3512534751957323646}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.35, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalPosition: {x: 0, y: 0.36199984, z: 0}
+  m_LocalScale: {x: 0.25578958, y: 0.25578958, z: 1.2789478}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2856338659983298547}
@@ -545,13 +545,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae7dee569dee07d45a76996ecb2af8cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  track:
+  localTrack:
     Guid:
-      Data1: -812379756
-      Data2: 1245298029
-      Data3: 810586249
-      Data4: 1595780251
-    Path: event:/Music/Funk
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   lastBeat: 0
   lastBar: 0
   startUnity: -1
@@ -686,7 +686,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdae0190066ce9a47afe9540dfe222ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitFeedback: {fileID: 0}
+  networkHitFeedback: {fileID: 0}
+  localHitFeedback: {fileID: 0}
   dispersion: 0
   targetTimeStamps: []
   targetScoring: []
@@ -833,6 +834,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _display: {fileID: 0}
+  _playbackAudio: {fileID: 0}
+  _countInSounds: {fileID: 0}
   _light: {fileID: 0}
   _ui: {fileID: 0}
   bpm: 110
@@ -1051,8 +1054,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3668509797547771390}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.3333, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalPosition: {x: 0, y: -0.304, z: 0}
+  m_LocalScale: {x: 0.25578958, y: 0.25578958, z: 1.2789478}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2856338659983298547}
@@ -1219,8 +1222,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3935865176276196159}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalPosition: {x: 0, y: -0.97, z: 0}
+  m_LocalScale: {x: 0.25578958, y: 0.25578958, z: 1.2789478}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2856338659983298547}
@@ -6435,8 +6438,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8004435476316509938}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalPosition: {x: 0, y: -0.97, z: 0}
+  m_LocalScale: {x: 0.38368434, y: 0.38368434, z: 1.2789478}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2856338659983298547}
@@ -6519,8 +6522,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8087942211098435955}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.3333, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalPosition: {x: 0, y: -0.30400002, z: 0}
+  m_LocalScale: {x: 0.38368434, y: 0.38368434, z: 1.2789478}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2856338659983298547}
@@ -6687,8 +6690,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8954919095446789289}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.35, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalPosition: {x: 0, y: 0.362, z: 0}
+  m_LocalScale: {x: 0.38368434, y: 0.38368434, z: 1.2789478}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2856338659983298547}
