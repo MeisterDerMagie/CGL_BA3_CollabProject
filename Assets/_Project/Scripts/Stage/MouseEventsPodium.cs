@@ -16,24 +16,28 @@ public class MouseEventsPodium : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        if (!Application.isFocused) return;
         OnMouseEnterEvent?.Invoke(transform.GetSiblingIndex());
         onMouseEnter.Invoke(transform.GetSiblingIndex());
     }
 
     private void OnMouseExit()
     {
+        if (!Application.isFocused) return;
         OnMouseExitEvent?.Invoke(transform.GetSiblingIndex());
         onMouseExit.Invoke(transform.GetSiblingIndex());
     }
 
     private void OnMouseDown()
     {
+        if (!Application.isFocused) return;
         OnMouseDownEvent?.Invoke(transform.GetSiblingIndex());
         onMouseDown.Invoke(transform.GetSiblingIndex());
     }
 
     private void OnMouseUp()
     {
+        if (!Application.isFocused) return;
         OnMouseUpEvent?.Invoke(transform.GetSiblingIndex());
         onMouseUp.Invoke(transform.GetSiblingIndex());
     }
