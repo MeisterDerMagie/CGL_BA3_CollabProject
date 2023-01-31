@@ -56,8 +56,8 @@ public class CSWriterKoffer : MonoBehaviour
 
     private void OnDestroy()
     {
-        WriteFile();
-        WriteFmodFile();
+        //WriteFile();
+        //WriteFmodFile();
     }
 
     public void WriteFile()

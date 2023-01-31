@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
+using Unity.Netcode;
 
 public class CharacterCatchphrase : MonoBehaviour
 {
@@ -38,6 +39,8 @@ public class CharacterCatchphrase : MonoBehaviour
 
     public void InstantCatchPhrase()
     {
+        if (NetworkManager.Singleton == null || NetworkManager.Singleton.IsServer) return;
+        
         instance.getPlaybackState(out PLAYBACK_STATE state);
         if (state == PLAYBACK_STATE.PLAYING) return;
         else RuntimeManager.PlayOneShot(CharacterManager.Instance.GetCharacter(PlayerData.LocalPlayerData.CharacterId).catchPhrase);
