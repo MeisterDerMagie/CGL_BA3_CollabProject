@@ -18,6 +18,7 @@ public class MouseEvents : MonoBehaviour
     
     private void OnMouseEnter()
     {
+        if (!Application.isFocused) return;
         if (UIUtilities.PointerIsOverUI()) return;
         
         OnMouseEnterEvent?.Invoke();
@@ -26,6 +27,7 @@ public class MouseEvents : MonoBehaviour
 
     private void OnMouseExit()
     {
+        if (!Application.isFocused) return;
         if (UIUtilities.PointerIsOverUI()) return;
 
         OnMouseExitEvent?.Invoke();
@@ -34,6 +36,7 @@ public class MouseEvents : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (!Application.isFocused) return;
         if (UIUtilities.PointerIsOverUI()) return;
 
         OnMouseDownEvent?.Invoke();
@@ -42,6 +45,7 @@ public class MouseEvents : MonoBehaviour
 
     private void OnMouseUp()
     {
+        if (!Application.isFocused) return;
         if (UIUtilities.PointerIsOverUI()) return;
 
         OnMouseUpEvent?.Invoke();
