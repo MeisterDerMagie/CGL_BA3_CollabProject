@@ -10110,6 +10110,14 @@ PrefabInstance:
       propertyPath: m_VerticalAlignment
       value: 256
       objectReference: {fileID: 0}
+    - target: {fileID: 1374224457798456598, guid: 3f607dbe69f152849b8a5f73ea4b5c2b, type: 3}
+      propertyPath: m_text
+      value: Enter name here!
+      objectReference: {fileID: 0}
+    - target: {fileID: 1374224457798456598, guid: 3f607dbe69f152849b8a5f73ea4b5c2b, type: 3}
+      propertyPath: m_fontSize
+      value: 28.6
+      objectReference: {fileID: 0}
     - target: {fileID: 2483108067609703102, guid: 3f607dbe69f152849b8a5f73ea4b5c2b, type: 3}
       propertyPath: m_fontSize
       value: 41
